@@ -1,0 +1,189 @@
+<h2><span style="color: #0e68b3; font-size: 24pt;"><strong>Prep</strong></span><strong></strong></h2>
+<p><span style="color: #000000;"><strong>1. Join the slack channel</strong> for <a class="inline_disabled" style="color: #000000;" href="https://join.slack.com/t/math4data/shared_invite/zt-3mm46rkvo-HQOB5qeSW~GdSa16rYqdhA" target="_blank" rel="noopener">Math4Data</a></span></p>
+<p><span style="color: #000000;"><strong>2. Make a marimo notebook</strong> called <code>YourName_MDA.py</code>. This will be your portfolio/ lab book for the module, and will be graded after term finishes.</span></p>
+<p style="padding-left: 40px;"><span style="color: #000000;">First cell: <code>import marimo as mo</code>, &nbsp;<code>import numpy as np</code> and <code>import matplotlib.pyplot as plt</code></span></p>
+<p style="padding-left: 40px;"><span style="color: #000000;">Add a markdown cell with the heading <code>**1.1 Functions**</code>.</span></p>
+<p style="padding-left: 40px;"><span style="color: #000000;">Share -&gt; publish html to web.&nbsp;</span></p>
+<p><span style="color: #000000;"><strong>3. Send me the link</strong> to your notebook on slack as a direct message.</span></p>
+<hr />
+<h2><span style="color: #0e68b3; font-size: 24pt;"><strong>Functions</strong></span></h2>
+<p><span style="color: #000000;">Plotting some common functions with &nbsp;</span><code>matplotlib</code><span style="color: #000000;"> and noting their characteristics ("eyeballing").&nbsp;</span></p>
+<h4><span style="font-size: 18pt; color: #0e68b3;"><strong>Constant (aka Uniform)</strong></span></h4>
+<p><span style="color: #000000;">Written &nbsp;<span style="color: #9242b4;"><img class="equation_image" title="y = c" src="https://canvas.sussex.ac.uk/equation_images/y%2520%253D%2520c?scale=1" alt="LaTeX: y = c" data-equation-content="y = c" data-ignore-a11y-check="" />,</span>&nbsp; where <img class="equation_image" title="c" src="https://canvas.sussex.ac.uk/equation_images/c?scale=1" alt="LaTeX: c" data-equation-content="c" data-ignore-a11y-check="" /> is a constant term (a number), or equivalently <img class="equation_image" title="y = c\, x^0" src="https://canvas.sussex.ac.uk/equation_images/y%2520%253D%2520c%255C%252C%2520x%255E0?scale=1" alt="LaTeX: y = c\, x^0" data-equation-content="y = c\, x^0" data-ignore-a11y-check="" /> (because <img class="equation_image" title="x^0 = 1" src="https://canvas.sussex.ac.uk/equation_images/x%255E0%2520%253D%25201?scale=1" alt="LaTeX: x^0 = 1" data-equation-content="x^0 = 1" data-ignore-a11y-check="" />).</span></p>
+<p><span style="color: #000000;">"A polynomial function of degree 0" = "a zeroth order polynomial".</span></p>
+<p><img id="6264931" src="https://canvas.sussex.ac.uk/courses/37537/files/6264931/preview" alt="y0.png" width="478" height="358" data-api-endpoint="https://canvas.sussex.ac.uk/api/v1/courses/37537/files/6264931" data-api-returntype="File" /></p>
+<h4><span style="font-size: 18pt; color: #0e68b3;"><strong>Linear</strong></span></h4>
+<p><span style="color: #000000;">Written <img class="equation_image" title="y \sim x" src="https://canvas.sussex.ac.uk/equation_images/y%2520%255Csim%2520x?scale=1" alt="LaTeX: y \sim x" data-equation-content="y \sim x" data-ignore-a11y-check="" /> ; spoken: "<img class="equation_image" title="y" src="https://canvas.sussex.ac.uk/equation_images/y?scale=1" alt="LaTeX: y" data-equation-content="y" data-ignore-a11y-check="" />&nbsp;goes like <img class="equation_image" title="x" src="https://canvas.sussex.ac.uk/equation_images/x?scale=1" alt="LaTeX: x" data-equation-content="x" data-ignore-a11y-check="" />".</span></p>
+<p><span style="color: #000000;">"A polynomial function of degree 1"= "a first order polynomial".</span></p>
+<p><span style="color: #000000;">Can be written <img class="equation_image" title="y = ax +b" src="https://canvas.sussex.ac.uk/equation_images/y%2520%253D%2520ax%2520%252Bb%2520?scale=1" alt="LaTeX: y = ax +b" data-equation-content="y = ax +b" data-ignore-a11y-check="" /> where the <span style="color: #0e68b3;"><strong>coefficients</strong></span> <img class="equation_image" title="a, b" src="https://canvas.sussex.ac.uk/equation_images/a%252C%2520b?scale=1" alt="LaTeX: a, b" data-equation-content="a, b" data-ignore-a11y-check="" /> can take any positive or negative value.</span></p>
+<p><span style="color: #000000;">In this example, the coefficient <img class="equation_image" title="a" src="https://canvas.sussex.ac.uk/equation_images/a?scale=1" alt="LaTeX: a" data-equation-content="a" data-ignore-a11y-check="" /> is attached to the <span style="color: #0e68b3;"><strong>gradient term</strong></span>, and&nbsp;<img class="equation_image" title="b" src="https://canvas.sussex.ac.uk/equation_images/b?scale=1" alt="LaTeX: b" data-equation-content="b" data-ignore-a11y-check="" /> to the <strong><span style="color: #0e68b3;">constant term</span>.</strong></span></p>
+<p><span style="color: #000000;">A linear function of <img class="equation_image" title="x" src="https://canvas.sussex.ac.uk/equation_images/x?scale=1" alt="LaTeX: x" data-equation-content="x" data-ignore-a11y-check="" /> is a <span style="color: #0e68b3;"><strong>straight line</strong></span>. If it has no constant term <img class="equation_image" title="b" src="https://canvas.sussex.ac.uk/equation_images/b?scale=1" alt="LaTeX: b" data-equation-content="b" data-ignore-a11y-check="" /> (sometimes called the<strong> <span style="color: #0e68b3;">intercept</span></strong>), it passes through the origin <img class="equation_image" title="\left(0,0\right)" src="https://canvas.sussex.ac.uk/equation_images/%255Cleft(0%252C0%255Cright)?scale=1" alt="LaTeX: \left(0,0\right)" data-equation-content="\left(0,0\right)" data-ignore-a11y-check="" />.</span></p>
+<p><span style="color: #000000;">The<strong><span style="color: #0e68b3;"> first derivative</span> </strong>of<strong> &nbsp;<img class="equation_image" title="y=ax+b" src="https://canvas.sussex.ac.uk/equation_images/y%253Dax%252Bb?scale=1" alt="LaTeX: y=ax+b" data-equation-content="y=ax+b" data-ignore-a11y-check="" />&nbsp; </strong>is constant: <img class="equation_image" title="\dfrac{dy}{dx} = a" src="https://canvas.sussex.ac.uk/equation_images/%255Cdfrac%257Bdy%257D%257Bdx%257D%2520%253D%2520a?scale=1" alt="LaTeX: \dfrac{dy}{dx} = a" data-equation-content="\dfrac{dy}{dx} = a" data-ignore-a11y-check="" /> . We will explore derivatives in the next topic <a title="Calculus I" href="https://canvas.sussex.ac.uk/courses/37537/pages/calculus-i" data-course-type="wikiPages" data-published="true" data-api-endpoint="https://canvas.sussex.ac.uk/api/v1/courses/37537/pages/calculus-i" data-api-returntype="Page">Calculus I</a> .</span></p>
+<p><span style="color: #000000;">Linear functions are <span style="color: #0e68b3;"><strong>monotonic. </strong><span style="color: #000000;">This means they never change direction.&nbsp;</span></span></span></p>
+<p><span style="color: #000000;"><span style="color: #0e68b3;"><span style="color: #000000;">&nbsp;</span></span></span></p>
+<p><img id="6264932" src="https://canvas.sussex.ac.uk/courses/37537/files/6264932/preview" alt="y1.png" width="403" height="303" data-api-endpoint="https://canvas.sussex.ac.uk/api/v1/courses/37537/files/6264932" data-api-returntype="File" /><img id="6264967" src="https://canvas.sussex.ac.uk/courses/37537/files/6264967/preview" alt="add-lin.png" width="413" height="310" data-api-endpoint="https://canvas.sussex.ac.uk/api/v1/courses/37537/files/6264967" data-api-returntype="File" /></p>
+<p>&nbsp;</p>
+<h4><span style="font-size: 18pt; color: #0e68b3;"><strong>Quadratic</strong></span></h4>
+<p><span style="color: #000000;">Written <img class="equation_image" title="y \sim x^2" src="https://canvas.sussex.ac.uk/equation_images/y%2520%255Csim%2520x%255E2?scale=1" alt="LaTeX: y \sim x^2" data-equation-content="y \sim x^2" data-ignore-a11y-check="" />&nbsp;; spoken: "<img class="equation_image" title="y" src="https://canvas.sussex.ac.uk/equation_images/y?scale=1" alt="LaTeX: y" data-equation-content="y" data-ignore-a11y-check="" />&nbsp;goes like <img class="equation_image" title="x" src="https://canvas.sussex.ac.uk/equation_images/x?scale=1" alt="LaTeX: x" data-equation-content="x" data-ignore-a11y-check="" /> squared".</span></p>
+<p><span style="color: #000000;">"A polynomial function of degree 2"&nbsp; = "a second order polynomial".</span></p>
+<p><span style="color: #000000;">Often written <img class="equation_image" title="y=ax^2+bx +c" src="https://canvas.sussex.ac.uk/equation_images/y%253Dax%255E2%252Bbx%2520%252Bc?scale=1" alt="LaTeX: y=ax^2+bx +c" data-equation-content="y=ax^2+bx +c" data-ignore-a11y-check="" /> where <img class="equation_image" title="a, b, c" src="https://canvas.sussex.ac.uk/equation_images/a%252C%2520b%252C%2520c%2520?scale=1" alt="LaTeX: a, b, c" data-equation-content="a, b, c" data-ignore-a11y-check="" /> are constants.</span></p>
+<p><span style="color: #000000;">A quadratic function of <img class="equation_image" title="x" src="https://canvas.sussex.ac.uk/equation_images/x?scale=1" alt="LaTeX: x" data-equation-content="x" data-ignore-a11y-check="" /> can have a constant term, and can have a linear term, but cannot have higher order terms in <img class="equation_image" title="x" src="https://canvas.sussex.ac.uk/equation_images/x?scale=1" alt="LaTeX: x" data-equation-content="x" data-ignore-a11y-check="" />.</span></p>
+<p><span style="color: #000000;">A quadratic function of <img class="equation_image" title="x" src="https://canvas.sussex.ac.uk/equation_images/x?scale=1" alt="LaTeX: x" data-equation-content="x" data-ignore-a11y-check="" /> is a <span style="color: #0e68b3;"><strong>parabola</strong></span>. It is symmetric. If it has no constant term, its minimum touches the origin at <img class="equation_image" title="\left(0,0\right)" src="https://canvas.sussex.ac.uk/equation_images/%255Cleft(0%252C0%255Cright)?scale=1" alt="LaTeX: \left(0,0\right)" data-equation-content="\left(0,0\right)" data-ignore-a11y-check="" />.</span></p>
+<p><span style="color: #000000;">A <span style="color: #0e68b3;"><strong>positive</strong></span> quadratic is <span style="color: #0e68b3;"><strong>convex</strong></span> (like a bowl) and symmetric about its <strong><span style="color: #0e68b3;">local</span> <span style="color: #0e68b3;">minimum</span></strong>, and a <span style="color: #0e68b3;"><strong>negative</strong></span> quadratic is <strong><span style="color: #0e68b3;">concave</span> </strong>and<strong> </strong>symmetric about its<strong> <span style="color: #0e68b3;">local maximum</span>.</strong></span></p>
+<p><span style="color: #000000;">The <span style="color: #0e68b3;"><strong>first </strong><strong>derivative</strong></span> of <img class="equation_image" title="y=ax^2+bx +c" src="https://canvas.sussex.ac.uk/equation_images/y%253Dax%255E2%252Bbx%2520%252Bc?scale=1" alt="LaTeX: y=ax^2+bx +c" data-equation-content="y=ax^2+bx +c" data-ignore-a11y-check="" />&nbsp; is &nbsp;<img class="equation_image" title="\dfrac{dy}{dx} = 2ax + b" src="https://canvas.sussex.ac.uk/equation_images/%255Cdfrac%257Bdy%257D%257Bdx%257D%2520%253D%25202ax%2520%252B%2520b?scale=1" alt="LaTeX: \dfrac{dy}{dx} = 2ax + b" data-equation-content="\dfrac{dy}{dx} = 2ax + b" data-ignore-a11y-check="" />&nbsp; : linear in <img class="equation_image" title="x" src="https://canvas.sussex.ac.uk/equation_images/x?scale=1" alt="LaTeX: x" data-equation-content="x" data-ignore-a11y-check="" />.</span></p>
+<p><strong>Question: are quadratic functions monotonic?</strong></p>
+<p><img id="6264933" src="https://canvas.sussex.ac.uk/courses/37537/files/6264933/preview" alt="y2.png" width="391" height="293" data-api-endpoint="https://canvas.sussex.ac.uk/api/v1/courses/37537/files/6264933" data-api-returntype="File" /><img id="6264968" src="https://canvas.sussex.ac.uk/courses/37537/files/6264968/preview" alt="add-quad.png" width="370" height="277" data-api-endpoint="https://canvas.sussex.ac.uk/api/v1/courses/37537/files/6264968" data-api-returntype="File" /></p>
+<h4><span style="font-size: 18pt; color: #0e68b3;"><strong>Cubic</strong></span></h4>
+<p><span style="color: #000000;">Written <img class="equation_image" title="y \sim x^3" src="https://canvas.sussex.ac.uk/equation_images/y%2520%255Csim%2520x%255E3?scale=1" alt="LaTeX: y \sim x^3" data-equation-content="y \sim x^3" data-ignore-a11y-check="" />&nbsp;; spoken: "<img class="equation_image" title="y" src="https://canvas.sussex.ac.uk/equation_images/y?scale=1" alt="LaTeX: y" data-equation-content="y" data-ignore-a11y-check="" />&nbsp;goes like <img class="equation_image" title="x" src="https://canvas.sussex.ac.uk/equation_images/x?scale=1" alt="LaTeX: x" data-equation-content="x" data-ignore-a11y-check="" /> cubed".</span></p>
+<p><span style="color: #000000;">"A polynomial function of degree 3"&nbsp; = "a third order polynomial".</span></p>
+<p><span style="color: #000000;">Can be written <img class="equation_image" title="y=ax^3+bx^2 +cx + d" src="https://canvas.sussex.ac.uk/equation_images/y%253Dax%255E3%252Bbx%255E2%2520%252Bcx%2520%252B%2520d?scale=1" alt="LaTeX: y=ax^3+bx^2 +cx + d" data-equation-content="y=ax^3+bx^2 +cx + d" data-ignore-a11y-check="" /> &nbsp;where <img class="equation_image" title="a, b, c, d" src="https://canvas.sussex.ac.uk/equation_images/a%252C%2520b%252C%2520c%252C%2520d%2520?scale=1" alt="LaTeX: a, b, c, d" data-equation-content="a, b, c, d" data-ignore-a11y-check="" /> are constants.&nbsp;</span></p>
+<p><span style="color: #000000;">A cubic function of <img class="equation_image" title="x" src="https://canvas.sussex.ac.uk/equation_images/x?scale=1" alt="LaTeX: x" data-equation-content="x" data-ignore-a11y-check="" /> is s-shaped<strong> (<span style="color: #0e68b3;">sigmoid</span>) </strong>and has the same sign as<strong> <img class="equation_image" title="x" src="https://canvas.sussex.ac.uk/equation_images/x?scale=1" alt="LaTeX: x" data-equation-content="x" data-ignore-a11y-check="" />.</strong></span></p>
+<p><span style="color: #000000;">The derivative of <img class="equation_image" title="y=ax^3+bx^2 +cx + d" src="https://canvas.sussex.ac.uk/equation_images/y%253Dax%255E3%252Bbx%255E2%2520%252Bcx%2520%252B%2520d?scale=1" alt="LaTeX: y=ax^3+bx^2 +cx + d" data-equation-content="y=ax^3+bx^2 +cx + d" data-ignore-a11y-check="" />&nbsp; is &nbsp;<img class="equation_image" title="\dfrac{dy}{dx} = 3ax^2 + 2bx + c" src="https://canvas.sussex.ac.uk/equation_images/%255Cdfrac%257Bdy%257D%257Bdx%257D%2520%253D%25203ax%255E2%2520%252B%25202bx%2520%252B%2520c?scale=1" alt="LaTeX: \dfrac{dy}{dx} = 3ax^2 + 2bx + c" data-equation-content="\dfrac{dy}{dx} = 3ax^2 + 2bx + c" data-ignore-a11y-check="" /> :&nbsp;<strong>&nbsp;</strong>quadratic in <img class="equation_image" title="x" src="https://canvas.sussex.ac.uk/equation_images/x?scale=1" alt="LaTeX: x" data-equation-content="x" data-ignore-a11y-check="" />.</span></p>
+<p>&nbsp;</p>
+<p><img id="6264934" src="https://canvas.sussex.ac.uk/courses/37537/files/6264934/preview" alt="y3.png" width="391" height="293" data-api-endpoint="https://canvas.sussex.ac.uk/api/v1/courses/37537/files/6264934" data-api-returntype="File" /><img id="6264966" src="https://canvas.sussex.ac.uk/courses/37537/files/6264966/preview" alt="add-cubic.png" width="422" height="316" data-api-endpoint="https://canvas.sussex.ac.uk/api/v1/courses/37537/files/6264966" data-api-returntype="File" /><strong></strong></p>
+<p>&nbsp;</p>
+<h4><span style="font-size: 18pt; color: #0e68b3;"><strong>Higher Order Polynomials</strong></span></h4>
+<p><span style="font-size: 12pt; color: #000000;">If the order of a polynomial is an odd number, it will resemble <img class="equation_image" title="x^3" src="https://canvas.sussex.ac.uk/equation_images/x%255E3?scale=1.16666875" alt="LaTeX: x^3" data-equation-content="x^3" data-ignore-a11y-check="" /> : an <strong><span style="color: #0e68b3;">odd function</span>, </strong>for which<strong> <img class="equation_image" title="f(-x) =-f(x)" src="https://canvas.sussex.ac.uk/equation_images/f(-x)%2520%253D-f(x)?scale=1" alt="LaTeX: f(-x) =-f(x)" data-equation-content="f(-x) =-f(x)" data-ignore-a11y-check="" /></strong>. </span></p>
+<p><span style="font-size: 12pt; color: #000000;">If it is even, it will resemble <img class="equation_image" title="x^2" src="https://canvas.sussex.ac.uk/equation_images/x%255E2?scale=1.16666875" alt="LaTeX: x^2" data-equation-content="x^2" data-ignore-a11y-check="" />: an <span style="color: #0e68b3;"><strong>even function</strong></span>, for which <img class="equation_image" title="f(-x) =f(x)" src="https://canvas.sussex.ac.uk/equation_images/f(-x)%2520%253Df(x)?scale=1" alt="LaTeX: f(-x) =f(x)" data-equation-content="f(-x) =f(x)" data-ignore-a11y-check="" />.</span></p>
+<p><img id="6264969" src="https://canvas.sussex.ac.uk/courses/37537/files/6264969/preview" alt="all.png" width="504" height="378" data-api-endpoint="https://canvas.sussex.ac.uk/api/v1/courses/37537/files/6264969" data-api-returntype="File" /></p>
+<h4><span style="font-size: 18pt; color: #0e68b3;"><strong>Mystery Polynomial</strong></span></h4>
+<p><span style="font-size: 12pt; color: #000000;">What kind of polynomial is this? We will look at figuring this out shortly.</span></p>
+<p><img id="6283185" src="https://canvas.sussex.ac.uk/courses/37537/files/6283185/preview" alt="mystery.png" width="415" height="311" data-api-endpoint="https://canvas.sussex.ac.uk/api/v1/courses/37537/files/6283185" data-api-returntype="File" /></p>
+<p>&nbsp;</p>
+<h4><span style="font-size: 18pt; color: #0e68b3;"><strong>Absolute Value</strong></span></h4>
+<p><span style="font-size: 12pt; color: #000000;">The absolute value function maps <img class="equation_image" title="y =x\; \mathsf{for}\; x\geq0" src="https://canvas.sussex.ac.uk/equation_images/y%2520%253Dx%255C%253B%2520%255Cmathsf%257Bfor%257D%255C%253B%2520x%255Cgeq0?scale=1" alt="LaTeX: y =x\; \mathsf{for}\; x\geq0" data-equation-content="y =x\; \mathsf{for}\; x\geq0" data-ignore-a11y-check="" />&nbsp;and &nbsp;<img class="equation_image" title="y =-x\; \mathsf{for}\; x&lt;0" src="https://canvas.sussex.ac.uk/equation_images/y%2520%253D-x%255C%253B%2520%255Cmathsf%257Bfor%257D%255C%253B%2520x%253C0?scale=1" alt="LaTeX: y =-x\; \mathsf{for}\; x&lt;0" data-equation-content="y =-x\; \mathsf{for}\; x&lt;0" data-ignore-a11y-check="" />.</span></p>
+<p><span style="font-size: 12pt; color: #000000;">The symbol <img class="equation_image" title="|x|" src="https://canvas.sussex.ac.uk/equation_images/%257Cx%257C?scale=1" alt="LaTeX: |x|" data-equation-content="|x|" data-ignore-a11y-check="" /> indicates the absolute value, also called the <span style="color: #0e68b3;"><strong>modulus</strong></span> or mod of <img class="equation_image" title="x" src="https://canvas.sussex.ac.uk/equation_images/x?scale=1" alt="LaTeX: x" data-equation-content="x" data-ignore-a11y-check="" />.</span></p>
+<p><span style="font-size: 12pt; color: #000000;"><code>python: </code><a href="https://numpy.org/devdocs/reference/generated/numpy.absolute.html" target="_blank" rel="noopener">absolute</a></span></p>
+<p><img id="6264985" src="https://canvas.sussex.ac.uk/courses/37537/files/6264985/preview" alt="abs1.png" width="337" height="337" data-api-endpoint="https://canvas.sussex.ac.uk/api/v1/courses/37537/files/6264985" data-api-returntype="File" /><img id="6264986" src="https://canvas.sussex.ac.uk/courses/37537/files/6264986/preview" alt="abs2.png" width="326" height="326" data-api-endpoint="https://canvas.sussex.ac.uk/api/v1/courses/37537/files/6264986" data-api-returntype="File" /></p>
+<p><span style="font-size: 18pt; color: #0e68b3;"><strong>Reciprocal</strong></span></p>
+<p><span style="color: #000000;"><span style="font-size: 12pt;">The reciprocal function maps <img class="equation_image" title="y =\dfrac{1}{x}" src="https://canvas.sussex.ac.uk/equation_images/y%2520%253D%255Cdfrac%257B1%257D%257Bx%257D?scale=1" alt="LaTeX: y =\dfrac{1}{x}" data-equation-content="y =\dfrac{1}{x}" data-ignore-a11y-check="" /> , such that <img class="equation_image" title="y\to\infty\;\mathsf{for}\; x=0" src="https://canvas.sussex.ac.uk/equation_images/y%255Cto%255Cinfty%255C%253B%255Cmathsf%257Bfor%257D%255C%253B%2520x%253D0?scale=1" alt="LaTeX: y\to\infty\;\mathsf{for}\; x=0" data-equation-content="y\to\infty\;\mathsf{for}\; x=0" data-ignore-a11y-check="" />. </span>Equivalent notation <span style="font-size: 12pt;">&nbsp;is <img class="equation_image" title="y = x^{-1}" src="https://canvas.sussex.ac.uk/equation_images/y%2520%253D%2520x%255E%257B-1%257D?scale=1" alt="LaTeX: y = x^{-1}" data-equation-content="y = x^{-1}" data-ignore-a11y-check="" />. The notation <img class="equation_image" title="y\to\infty" src="https://canvas.sussex.ac.uk/equation_images/y%255Cto%255Cinfty?scale=1" alt="LaTeX: y\to\infty" data-equation-content="y\to\infty" data-ignore-a11y-check="" /> means that "<img class="equation_image" title="y" src="https://canvas.sussex.ac.uk/equation_images/y?scale=1" alt="LaTeX: y" data-equation-content="y" data-ignore-a11y-check="" /> approaches infinity". The value of <img class="equation_image" title="y" src="https://canvas.sussex.ac.uk/equation_images/y?scale=1" alt="LaTeX: y" data-equation-content="y" data-ignore-a11y-check="" /> is <span style="color: #0e68b3;"><strong>undefined</strong></span> at <img class="equation_image" title="x=0" src="https://canvas.sussex.ac.uk/equation_images/x%253D0?scale=1" alt="LaTeX: x=0" data-equation-content="x=0" data-ignore-a11y-check="" />. This means the reciprocal function is <span style="color: #0e68b3;"><strong>discontinuous.</strong></span></span></span></p>
+<p><code>python:</code>&nbsp; <a href="https://numpy.org/devdocs/reference/generated/numpy.reciprocal.html" target="_blank" rel="noopener">reciprocal</a></p>
+<p><img src="https://canvas.sussex.ac.uk/courses/37537/files/6419527/preview" alt="recip-safe.png" data-api-endpoint="https://canvas.sussex.ac.uk/api/v1/courses/37537/files/6419527" data-api-returntype="File" /></p>
+<p><img src="https://canvas.sussex.ac.uk/courses/37537/files/6419528/preview" alt="recip-safe-3.png" data-api-endpoint="https://canvas.sussex.ac.uk/api/v1/courses/37537/files/6419528" data-api-returntype="File" /></p>
+<hr />
+<h4><span style="color: #0e68b3; font-size: 18pt;"><strong>Exercise 1.1</strong></span></h4>
+<p><span style="color: #000000;"><strong>A) Make a plot</strong> of your favourite polynomial, and put it in your portfolio notebook along with the python code you used to make it. Here is some example python in case it helps with a quick-start:</span></p>
+<pre class="lang-py s-code-block"><span style="font-size: 10pt;">def plot_absolute():
+&nbsp; &nbsp; plt.figure( figsize=(6,6) )
+&nbsp; &nbsp; x = np.linspace(-5.,5.,500)&nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; y = np.abs(x)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;
+&nbsp; &nbsp; y2 = np.abs(x**2)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; plt.plot( x, y , c='dodgerblue', lw=2, ls='-', label=r'$y = |x|$')
+&nbsp; &nbsp; plt.plot( x, y2 , c='mediumseagreen', lw=2, ls=':', label=r'$y = |x^2|$')</span>
+<span style="font-size: 10pt;">    plt.grid()
+    plt.xlabel( 'x', fontsize=16)
+    plt.ylabel( 'y', fontsize=16)
+    plt.ylim(0, 5)
+    plt.xlim(-5,5)
+    plt.legend(loc='lower right',fontsize=12)
+    plt.title('My lovely function',fontsize=16)
+    plt.show()
+plot_absolute()
+</span></pre>
+<p><span style="color: #000000;">If you want to make your plots pretty, this is a good resource:</span><strong><span style="color: #000000;">&nbsp;</span></strong><a class="inline_disabled" href="https://matplotlib.org/stable/users/explain/quick_start.html" target="_blank" rel="noopener">matplotlib quickstart</a></p>
+<p>&nbsp;</p>
+<p><strong><span style="color: #000000;">B) Add latex markup formulae to your portfolio notebook.&nbsp;</span></strong></p>
+<p><span style="color: #000000;">Examples:</span></p>
+<table style="border-collapse: collapse; width: 82.1758%; height: 499px;" border="1">
+    <tbody>
+        <tr style="height: 76.8963px;">
+            <td style="width: 29.2165%; height: 76.8963px;"><strong>Result</strong></td>
+            <td style="width: 42.3546%; height: 76.8963px;"><strong>Latex syntax for marimo markdown block</strong></td>
+            <td style="width: 28.416%; height: 76.8963px;"><strong>Tips/gotchas</strong></td>
+        </tr>
+        <tr style="height: 135.028px;">
+            <td style="width: 29.2165%; height: 135.028px;"><img class="equation_image" style="font-family: monospace;" title="y=ax^3+bx^2 +cx + d" src="https://canvas.sussex.ac.uk/equation_images/y%253Dax%255E3%252Bbx%255E2%2520%252Bcx%2520%252B%2520d?scale=1" alt="LaTeX: y=ax^3+bx^2 +cx + d" data-equation-content="y=ax^3+bx^2 +cx + d" data-ignore-a11y-check="" /></td>
+            <td style="width: 42.3546%; height: 135.028px;"><span style="font-family: monospace;">$y = ax^3 + bx^2 + cx + d$</span></td>
+            <td style="width: 28.416%; height: 316.868px;" rowspan="3">
+                <p>(Marimo bug) Don't leave any space between the opening $ and the first character. Same with last character and closing $.</p>
+                <p>\dfrac{numerator}{denominator} typesets as a nice big fraction. If you want a little fraction, use \frac{numerator}{denominator}</p>
+                <p>&nbsp;</p>
+            </td>
+        </tr>
+        <tr style="height: 72.1378px;">
+            <td style="width: 29.2165%; height: 72.1378px;"><img class="equation_image" title="y=|x|" src="https://canvas.sussex.ac.uk/equation_images/y%253D%257Cx%257C?scale=1" alt="LaTeX: y=|x|" data-equation-content="y=|x|" data-ignore-a11y-check="" /></td>
+            <td style="width: 42.3546%; height: 72.1378px;">$y=|x|$</td>
+        </tr>
+        <tr style="height: 109.702px;">
+            <td style="width: 29.2165%; height: 109.702px;"><img class="equation_image" title="\dfrac{dy}{dx} = \pi" src="https://canvas.sussex.ac.uk/equation_images/%255Cdfrac%257Bdy%257D%257Bdx%257D%2520%253D%2520%255Cpi?scale=1" alt="LaTeX: \dfrac{dy}{dx} = \pi" data-equation-content="\dfrac{dy}{dx} = \pi" data-ignore-a11y-check="" /></td>
+            <td style="width: 42.3546%; height: 109.702px;">$\dfrac{dy}{dx} = \pi$</td>
+        </tr>
+    </tbody>
+</table>
+<p>&nbsp;</p>
+<p><span style="background-color: #bfedd2; color: #027634;"><strong>NEW: How to make a table in marimo markdown cell - paste this in and then edit as desired</strong></span></p>
+<p><code><span style="color: #000000;">| Left Aligned | Center Aligned | Right Aligned |<br />| :----------- | :------------: | ------------: |<br />| Text &nbsp; &nbsp; &nbsp; &nbsp; | $y=x^2$ &nbsp; &nbsp; &nbsp; &nbsp;| **bold text** |<br />| *Italic* &nbsp; &nbsp; | $f(x)=\dfrac{1}{x^2}$ &nbsp; &nbsp; &nbsp; &nbsp;| dum de dum |</span></code></p>
+<p>&nbsp;</p>
+<p><span style="color: #000000; font-size: 12pt;">If you are writing a dissertation as part of your MSc, I would recommend using LaTeX. You can find an introduction <a class="inline_disabled" style="color: #000000;" href="https://www.overleaf.com/learn/latex/Learn_LaTeX_in_30_minutes" target="_blank" rel="noopener">here</a> but note that you do not need to look at that for this module, as we will only be using little bits of latex for our notebooks and will learn as we go.</span></p>
+<hr />
+<h2><span style="color: #0e68b3; font-size: 24pt;"><strong>Python Polynomials and a sneak peek at fitting</strong></span></h2>
+<p><span style="color: #000000; font-size: 12pt;">Let's have a look at the mystery polynomial.&nbsp;</span></p>
+<p><span style="color: #000000; font-size: 12pt;"><img id="6283185" src="https://canvas.sussex.ac.uk/courses/37537/files/6283185/preview" alt="mystery.png" width="427" height="320" data-api-endpoint="https://canvas.sussex.ac.uk/api/v1/courses/37537/files/6283185" data-api-returntype="File" /></span></p>
+<p><span style="color: #000000; font-size: 12pt;">Download the data file from here: <a class="instructure_file_link instructure_scribd_file inline_disabled" title="MysteryPolynomial-XY.txt" href="https://canvas.sussex.ac.uk/courses/37537/files/6283184?wrap=1" target="_blank" data-api-endpoint="https://canvas.sussex.ac.uk/api/v1/courses/37537/files/6283184" data-api-returntype="File" rel="noopener">MysteryPolynomial-XY.txt</a></span></p>
+<p class="lang-py s-code-block">We will try to fit the data using a library from <code>numpy</code> called <a class="inline_disabled" href="https://numpy.org/doc/stable/reference/generated/numpy.polyfit.html" target="_blank" rel="noopener">polyfit</a>.</p>
+<p class="lang-py s-code-block">The below code snippet tries to fit polynomials of degree 0 and 1 to the data. The fits are not good because they don't look anything like the data.<br /><br /></p>
+<pre class="lang-py s-code-block">def fitpoly():
+    x,y = np.loadtxt('MysteryPolynomial-XY.txt')
+    plt.plot( x, y ,'ro',label='y=?')
+    for deg in range(2):
+	    pfit,stats = np.polynomial.polynomial.polyfit(x, y, deg, full=True)
+	    yfit = np.polynomial.polynomial.polyval(x, pfit)
+	    plt.plot( x, yfit, label=f'$y \sim x^{deg}$' )
+	    print( f'stats for fit of degree {deg}: {stats}')
+    plt.legend()
+    plt.show()
+fitpoly() 
+</pre>
+<h4><span style="color: #0e68b3; font-size: 18pt;"><strong>Exercise 1.2</strong></span></h4>
+<p><strong>A) Run the code</strong> snippet in your marimo notebook. The plot should look like this:</p>
+<p><img id="6284255" src="https://canvas.sussex.ac.uk/courses/37537/files/6284255/preview" alt="mystery-fit.png" data-api-endpoint="https://canvas.sussex.ac.uk/api/v1/courses/37537/files/6284255" data-api-returntype="File" /></p>
+<p><strong>B) Adapt the code</strong>:</p>
+<p style="padding-left: 40px;">Add comments to describe what each line of code is doing</p>
+<p style="padding-left: 40px;">What is the second object (which we are calling stats) returned by the call to polyfit? Is the <a class="inline_disabled" href="https://numpy.org/doc/stable/reference/generated/numpy.polyfit.html" target="_blank" rel="noopener">documentation</a> clear and helpful?</p>
+<p style="padding-left: 40px;">Adapt the for-loop to show higher-degree polynomial fits</p>
+<p style="padding-left: 40px;">Decide by eyeballing the fits what degree you think the polynomial is.</p>
+<p><strong>C) Discussion.</strong></p>
+<p>&nbsp;</p>
+<p><span style="color: #000000; font-size: 12pt;"><span style="background-color: #bfedd2;"><strong><span style="color: #027634;">*** NEW*** </span></strong></span>The file used to make the mystery data txt file is <a class="instructure_file_link inline_disabled" title="make-mystery-data.py" href="https://canvas.sussex.ac.uk/courses/37537/files/6422400?wrap=1" target="_blank" data-api-endpoint="https://canvas.sussex.ac.uk/api/v1/courses/37537/files/6422400" data-api-returntype="File" rel="noopener">make-mystery-data.py</a></span></p>
+<hr />
+<h2><span style="color: #0e68b3; font-size: 24pt;"><strong>Probability Functions sneak peek</strong></span></h2>
+<p>The <code>scipy.stats</code> library is arguably the most useful resource for data scientists.</p>
+<p>It has a multitude of useful methods, the most boring of which is the <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.uniform.html" target="_blank" rel="noopener">uniform</a> probability distribution, <span data-ogsb="rgb(255, 255, 255)"><code>scipy.stats.uniform</code></span>.&nbsp;</p>
+<p>Let's look at uniform and some of the things we can do with it. Here is a snippet:</p>
+<pre class="lang-py s-code-block">def uniform_prob():
+    from scipy.stats import uniform
+    a = 0.
+    b = 1.
+    n = 1000
+    nrvs = 100
+    u = uniform(loc=a, scale=b)
+    start = u.ppf(q=0.01)
+    stop  = u.ppf(q=0.99)
+    x = np.linspace(start=start, stop=stop, num=n)
+    u_pdf  = u.pdf(x=x)
+    plt.plot(x, u_pdf, label='pdf')
+    u_cdf  = u.cdf( x=x )
+    plt.plot(x, u_cdf, color='red', ls='--', label='cdf')
+    u_rvs  = u.rvs(size=nrvs)
+    plt.hist(u_rvs, density=True,color='lightsteelblue',alpha=0.5,label=f'{nrvs} rvs')
+    plt.title( f'Y ~ Uniform(a={a}, b={a+b})')
+    plt.legend()
+    plt.show()
+uniform_prob()</pre>
+<h4><span style="color: #0e68b3; font-size: 18pt;"><strong>&nbsp;Exercise 1.3 (together)</strong></span></h4>
+<p><strong>A) Run the code</strong> snippet in your marimo notebook.</p>
+<p style="padding-left: 40px;">Everybody's rvs plot is going to look slightly different. Add your name to the title and post in the slack channel so we can compare.</p>
+<p style="padding-left: 40px;"><img id="6284256" src="https://canvas.sussex.ac.uk/courses/37537/files/6284256/preview" alt="uniform-prob.png" data-api-endpoint="https://canvas.sussex.ac.uk/api/v1/courses/37537/files/6284256" data-api-returntype="File" /></p>
+<p style="padding-left: 40px;">Discussion on randomness!</p>
+<p><strong>B) Add comments to the code</strong></p>
+<p style="padding-left: 40px;"><code>uniform(loc=a, scale=b) </code>This is a uniform continuous probability distribution. The parameters specify the lower and upper edge of its domain. It returns an object.</p>
+<p style="padding-left: 40px;"><code>ppf(q) </code>is the <a class="inline_disabled" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.rv_continuous.ppf.html" target="_blank" rel="noopener">percent point function</a> and its argument <code>q</code> specifies the probability as a fraction of 1. It returns a number, which is the value of <code>x</code> for which <code>uniform</code> has value <code>q</code>.</p>
+<p style="padding-left: 40px;"><code>pdf(x) </code>is the probability density function.</p>
+<p style="padding-left: 40px;"><code>cdf(x) </code>is the cumulative distribution function.</p>
+<p style="padding-left: 40px;"><code>rvs(size) </code>is an array of random variates.</p>
+<p><strong>C) Play with the code</strong>.</p>
+<p style="padding-left: 40px;">What happens if you change the <code>scale</code> parameter?</p>
+<p style="padding-left: 40px;">What is <code>pdf(0.5)</code> ?&nbsp;</p>
+<p style="padding-left: 40px;">What is <code>cdf(0.5)</code> ?</p>
+<p style="padding-left: 40px;">What <code>size</code> of <code>rvs</code> array is needed for your distribution to look uniform?</p>
+<pre class="lang-py s-code-block"> </pre>

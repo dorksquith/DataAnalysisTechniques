@@ -1,9 +1,5 @@
 # Proposed Sylabus 2026/27
 
-
-
-
-
 ## Prerequisites
 - essential: access to a computer
 - preferred: knowledge of basic unix commands
@@ -15,13 +11,12 @@
 Look out for the theory dives, as they should give you an opportunity for challenging work.
 
 
-% ==============================
-% DIAGNOSTIC
-% ==============================
+---
+
+## Diagnostic
 
 > The diagnostic is not a test, and does not count towards your grade in any way. The point of it is to enlighten me as to the range of prior educational privilege in this cohort.
 
-## Diagnostic
 <!-- ## Quick Survey
 - Have you ever made a plot using python?
 - Draw this function
@@ -39,7 +34,7 @@ Look out for the theory dives, as they should give you an opportunity for challe
 - What is the difference between these distributions, and which one represents a probability distribution?
 - Explain why logs are essential for numerical manageability in data analysis.
 
-Use logs to explore the behaviour of functions. -->
+Use logs to explore the behaviour of functions. 
 
 If you sold 100 books at \$10 per book, you'd have \$1000 dollars according to [](#eq:book). If instead you publish your Jupyter Book to the web for free, you'd have \$0 dollars!
 
@@ -49,25 +44,14 @@ If you sold 100 books at \$10 per book, you'd have \$1000 dollars according to [
 
 x \times y = z
 :::
+-->
 
+---
 
-% ==============================
-% W1 
-% ==============================
-
-:::{note}
-Workshop 1 is important to get you started on the right track.
-:::
 
 ## W1 Workshop: Basic Skills
 - How to plot data (including recap of functions, series, bases, logarithms)
 
-### Prerequisites
-
-
-:::{note}
-The two week1 lectures will cover terminology essential for your later lectures.
-:::
 
 ## W1 Intro/ Terminology
 - Random Variables
@@ -76,24 +60,11 @@ The two week1 lectures will cover terminology essential for your later lectures.
 - Functions and Probability Distributions 
 - Summary statistics and test statistics
 
-### Prerequisites
-
-
-% ==============================
-% W2 
-% ==============================
-
-:::{note}
-Workshop 2 is particularly important for those with rusty or absent mathematical background, or for those with strong math background who are not familiar with sympy.
-:::
+---
 
 ## W2 Workshop: Basic Skills continued
 - How to do math with python (including recap of sums and products, factorial, calculus)
 
-
-:::{note}
-The two week 2 lectures will cover probability theory basics.
-:::
 
 ## W2 Probability
 - Frequentist and Bayesian Probability
@@ -103,10 +74,7 @@ The two week 2 lectures will cover probability theory basics.
 - Bayes Theorem
 
 
-% ==============================
-% W3
-% ==============================
-
+---
 
 ## W3 Workshop: Probability
 - Bayes theorem and exerices
@@ -121,10 +89,7 @@ The two week 2 lectures will cover probability theory basics.
 - confidence levels and limits
 
 
-% ==============================
-% W4
-% ==============================
-
+---
 
 ## W4 Workshop: 
 - Test Statistics
@@ -137,10 +102,7 @@ The two week 2 lectures will cover probability theory basics.
 - Correlations
 - Statistical and Systematic unertainty
 
-% ==============================
-% W5
-% ==============================
-
+---
 
 ## W5 Workshop: 
 - Describing Data
@@ -151,10 +113,7 @@ The two week 2 lectures will cover probability theory basics.
 - The Central Limit Theorem
 - Gaussian Probabilities
 
-% ==============================
-% W6
-% ==============================
-
+---
 
 ## W6 Workshop: 
 - Gaussian
@@ -164,11 +123,7 @@ The two week 2 lectures will cover probability theory basics.
 - Data versus Hypothesis: Z test and T test
 - Data versus Data: T test and F test (anova)
 
-
-% ==============================
-% W7
-% ==============================
-
+---
 
 ## W7 Workshop: 
 - Normal Tests
@@ -180,10 +135,7 @@ The two week 2 lectures will cover probability theory basics.
 - Uniform
 - Exponential
 
-
-% ==============================
-% W8
-% ==============================
+---
 
 ## W8 Workshop: 
 -  PDFs
@@ -194,10 +146,7 @@ The two week 2 lectures will cover probability theory basics.
 - Bootstrapping
 - Transforms
 
-
-% ==============================
-% W9
-% ==============================
+---
 
 ## W9 Workshop: 
 -  Monte Carlo
@@ -209,10 +158,7 @@ The two week 2 lectures will cover probability theory basics.
 - Chi squared
 - Likelihood ratio
 
-
-% ==============================
-% W10
-% ==============================
+---
 
 ## W10 Workshop: 
 -  Fitting
@@ -223,21 +169,14 @@ The two week 2 lectures will cover probability theory basics.
 - Conjugacy
 - Posteriors
 
-
-% ==============================
-% W11
-% ==============================
+---
 
 ## W11 More Fitting
 - MCMC
 - Metropolis Hastings
 - Tuning
 
-
-
-
-
-
+---
 
 # Bits
 

@@ -1,110 +1,83 @@
-## **Prep**
-
-**1. Join the slack channel** for [Math4Data](https://join.slack.com/t/math4data/shared_invite/zt-3mm46rkvo-HQOB5qeSW~GdSa16rYqdhA)
-
-**2. Make a marimo notebook** called `YourName_MDA.py`. This will be your portfolio/ lab book for the module, and will be graded after term finishes.
-
-First cell: `import marimo as mo`, `import numpy as np` and `import matplotlib.pyplot as plt`
-
-Add a markdown cell with the heading `**1.1 Functions**`.
-
-Share -> publish html to web.
-
-**3. Send me the link** to your notebook on slack as a direct message.
-
----
-
 ## **Functions**
 
 Plotting some common functions with `matplotlib` and noting their characteristics ("eyeballing").
 
 #### **Constant (aka Uniform)**
 
-Written ![LaTeX: y = c](https://canvas.sussex.ac.uk/equation_images/y%2520%253D%2520c?scale=1 "y = c"), where ![LaTeX: c](https://canvas.sussex.ac.uk/equation_images/c?scale=1 "c") is a constant term (a number), or equivalently ![LaTeX: y = c\, x^0](https://canvas.sussex.ac.uk/equation_images/y%2520%253D%2520c%255C%252C%2520x%255E0?scale=1 "y = c\\, x^0") (because ![LaTeX: x^0 = 1](https://canvas.sussex.ac.uk/equation_images/x%255E0%2520%253D%25201?scale=1 "x^0 = 1")).
+$y = c$
 
 "A polynomial function of degree 0" = "a zeroth order polynomial".
 
-![y0.png](https://canvas.sussex.ac.uk/courses/37537/files/6264931/preview)
+![](y0.png)
 
 #### **Linear**
 
-Written ![LaTeX: y \sim x](https://canvas.sussex.ac.uk/equation_images/y%2520%255Csim%2520x?scale=1 "y \\sim x") ; spoken: "![LaTeX: y](https://canvas.sussex.ac.uk/equation_images/y?scale=1 "y") goes like ![LaTeX: x](https://canvas.sussex.ac.uk/equation_images/x?scale=1 "x")".
+$y \sim x$
 
 "A polynomial function of degree 1"= "a first order polynomial".
 
-Can be written ![LaTeX: y = ax +b](https://canvas.sussex.ac.uk/equation_images/y%2520%253D%2520ax%2520%252Bb%2520?scale=1 "y = ax +b") where the **coefficients** ![LaTeX: a, b](https://canvas.sussex.ac.uk/equation_images/a%252C%2520b?scale=1 "a, b") can take any positive or negative value.
-
-In this example, the coefficient ![LaTeX: a](https://canvas.sussex.ac.uk/equation_images/a?scale=1 "a") is attached to the **gradient term**, and ![LaTeX: b](https://canvas.sussex.ac.uk/equation_images/b?scale=1 "b") to the **constant term.**
-
-A linear function of ![LaTeX: x](https://canvas.sussex.ac.uk/equation_images/x?scale=1 "x") is a **straight line**. If it has no constant term ![LaTeX: b](https://canvas.sussex.ac.uk/equation_images/b?scale=1 "b") (sometimes called the **intercept**), it passes through the origin ![LaTeX: \left(0,0\right)](https://canvas.sussex.ac.uk/equation_images/%255Cleft(0%252C0%255Cright)?scale=1 "\\left(0,0\\right)").
-
-The **first derivative** of **![LaTeX: y=ax+b](https://canvas.sussex.ac.uk/equation_images/y%253Dax%252Bb?scale=1 "y=ax+b")** is constant: ![LaTeX: \dfrac{dy}{dx} = a](https://canvas.sussex.ac.uk/equation_images/%255Cdfrac%257Bdy%257D%257Bdx%257D%2520%253D%2520a?scale=1 "\\dfrac{dy}{dx} = a") . We will explore derivatives in the next topic [Calculus I](https://canvas.sussex.ac.uk/courses/37537/pages/calculus-i "Calculus I") .
+$y = ax +b$
+$a$
+$x$
+$y=ax+b$
 
 Linear functions are **monotonic.** This means they never change direction.
 
-![y1.png](https://canvas.sussex.ac.uk/courses/37537/files/6264932/preview)![add-lin.png](https://canvas.sussex.ac.uk/courses/37537/files/6264967/preview)
+![](y1.png)
 
 #### **Quadratic**
 
-Written ![LaTeX: y \sim x^2](https://canvas.sussex.ac.uk/equation_images/y%2520%255Csim%2520x%255E2?scale=1 "y \\sim x^2") ; spoken: "![LaTeX: y](https://canvas.sussex.ac.uk/equation_images/y?scale=1 "y") goes like ![LaTeX: x](https://canvas.sussex.ac.uk/equation_images/x?scale=1 "x") squared".
+$y \sim x^2$
 
 "A polynomial function of degree 2" = "a second order polynomial".
 
-Often written ![LaTeX: y=ax^2+bx +c](https://canvas.sussex.ac.uk/equation_images/y%253Dax%255E2%252Bbx%2520%252Bc?scale=1 "y=ax^2+bx +c") where ![LaTeX: a, b, c](https://canvas.sussex.ac.uk/equation_images/a%252C%2520b%252C%2520c%2520?scale=1 "a, b, c") are constants.
-
-A quadratic function of ![LaTeX: x](https://canvas.sussex.ac.uk/equation_images/x?scale=1 "x") can have a constant term, and can have a linear term, but cannot have higher order terms in ![LaTeX: x](https://canvas.sussex.ac.uk/equation_images/x?scale=1 "x").
-
-A quadratic function of ![LaTeX: x](https://canvas.sussex.ac.uk/equation_images/x?scale=1 "x") is a **parabola**. It is symmetric. If it has no constant term, its minimum touches the origin at ![LaTeX: \left(0,0\right)](https://canvas.sussex.ac.uk/equation_images/%255Cleft(0%252C0%255Cright)?scale=1 "\\left(0,0\\right)").
+$y=ax^2+bx +c$
+$x$
+$x$
 
 A **positive** quadratic is **convex** (like a bowl) and symmetric about its **local minimum**, and a **negative** quadratic is **concave** and  symmetric about its **local maximum.**
 
-The **first** **derivative** of ![LaTeX: y=ax^2+bx +c](https://canvas.sussex.ac.uk/equation_images/y%253Dax%255E2%252Bbx%2520%252Bc?scale=1 "y=ax^2+bx +c") is ![LaTeX: \dfrac{dy}{dx} = 2ax + b](https://canvas.sussex.ac.uk/equation_images/%255Cdfrac%257Bdy%257D%257Bdx%257D%2520%253D%25202ax%2520%252B%2520b?scale=1 "\\dfrac{dy}{dx} = 2ax + b") : linear in ![LaTeX: x](https://canvas.sussex.ac.uk/equation_images/x?scale=1 "x").
+$y=ax^2+bx +c$
 
 **Question: are quadratic functions monotonic?**
 
-![y2.png](https://canvas.sussex.ac.uk/courses/37537/files/6264933/preview)![add-quad.png](https://canvas.sussex.ac.uk/courses/37537/files/6264968/preview)
+![](y2.png)
 
 #### **Cubic**
 
-Written ![LaTeX: y \sim x^3](https://canvas.sussex.ac.uk/equation_images/y%2520%255Csim%2520x%255E3?scale=1 "y \\sim x^3") ; spoken: "![LaTeX: y](https://canvas.sussex.ac.uk/equation_images/y?scale=1 "y") goes like ![LaTeX: x](https://canvas.sussex.ac.uk/equation_images/x?scale=1 "x") cubed".
+$y \sim x^3$
 
 "A polynomial function of degree 3" = "a third order polynomial".
 
-Can be written ![LaTeX: y=ax^3+bx^2 +cx + d](https://canvas.sussex.ac.uk/equation_images/y%253Dax%255E3%252Bbx%255E2%2520%252Bcx%2520%252B%2520d?scale=1 "y=ax^3+bx^2 +cx + d") where ![LaTeX: a, b, c, d](https://canvas.sussex.ac.uk/equation_images/a%252C%2520b%252C%2520c%252C%2520d%2520?scale=1 "a, b, c, d") are constants.
+$y=ax^3+bx^2 +cx + d$
+$x$
+$y=ax^3+bx^2 +cx + d$
 
-A cubic function of ![LaTeX: x](https://canvas.sussex.ac.uk/equation_images/x?scale=1 "x") is s-shaped **(sigmoid)** and has the same sign as **![LaTeX: x](https://canvas.sussex.ac.uk/equation_images/x?scale=1 "x").**
-
-The derivative of ![LaTeX: y=ax^3+bx^2 +cx + d](https://canvas.sussex.ac.uk/equation_images/y%253Dax%255E3%252Bbx%255E2%2520%252Bcx%2520%252B%2520d?scale=1 "y=ax^3+bx^2 +cx + d") is ![LaTeX: \dfrac{dy}{dx} = 3ax^2 + 2bx + c](https://canvas.sussex.ac.uk/equation_images/%255Cdfrac%257Bdy%257D%257Bdx%257D%2520%253D%25203ax%255E2%2520%252B%25202bx%2520%252B%2520c?scale=1 "\\dfrac{dy}{dx} = 3ax^2 + 2bx + c") : quadratic in ![LaTeX: x](https://canvas.sussex.ac.uk/equation_images/x?scale=1 "x").
-
-![y3.png](https://canvas.sussex.ac.uk/courses/37537/files/6264934/preview)![add-cubic.png](https://canvas.sussex.ac.uk/courses/37537/files/6264966/preview)
+![](y3.png)
 
 #### **Higher Order Polynomials**
 
-If the order of a polynomial is an odd number, it will resemble ![LaTeX: x^3](https://canvas.sussex.ac.uk/equation_images/x%255E3?scale=1.16666875 "x^3") : an **odd function,** for which **![LaTeX: f(-x) =-f(x)](https://canvas.sussex.ac.uk/equation_images/f(-x)%2520%253D-f(x)?scale=1 "f(-x) =-f(x)")**.
-
-If it is even, it will resemble ![LaTeX: x^2](https://canvas.sussex.ac.uk/equation_images/x%255E2?scale=1.16666875 "x^2"): an **even function**, for which ![LaTeX: f(-x) =f(x)](https://canvas.sussex.ac.uk/equation_images/f(-x)%2520%253Df(x)?scale=1 "f(-x) =f(x)").
-
-![all.png](https://canvas.sussex.ac.uk/courses/37537/files/6264969/preview)
+$x^3$
+$x^2$![](all.png)
 
 #### **Mystery Polynomial**
 
 What kind of polynomial is this? We will look at figuring this out shortly.
 
-![mystery.png](https://canvas.sussex.ac.uk/courses/37537/files/6283185/preview)
+![](mystery.png)
 
 #### **Absolute Value**
 
-The absolute value function maps ![LaTeX: y =x\; \mathsf{for}\; x\geq0](https://canvas.sussex.ac.uk/equation_images/y%2520%253Dx%255C%253B%2520%255Cmathsf%257Bfor%257D%255C%253B%2520x%255Cgeq0?scale=1 "y =x\\; \\mathsf{for}\\; x\\geq0") and ![LaTeX: y =-x\; \mathsf{for}\; x&lt;0](https://canvas.sussex.ac.uk/equation_images/y%2520%253D-x%255C%253B%2520%255Cmathsf%257Bfor%257D%255C%253B%2520x%253C0?scale=1 "y =-x\\; \\mathsf{for}\\; x&lt;0").
-
-The symbol ![LaTeX: |x|](https://canvas.sussex.ac.uk/equation_images/%257Cx%257C?scale=1 "|x|") indicates the absolute value, also called the **modulus** or mod of ![LaTeX: x](https://canvas.sussex.ac.uk/equation_images/x?scale=1 "x").
+$y =x\\; \mathsf{for}\\; x\geq0$
+$|x|$
 
 `python: `[absolute](https://numpy.org/devdocs/reference/generated/numpy.absolute.html)
 
-![abs1.png](https://canvas.sussex.ac.uk/courses/37537/files/6264985/preview)![abs2.png](https://canvas.sussex.ac.uk/courses/37537/files/6264986/preview)
+![](abs1.png)
 
 **Reciprocal**
 
-The reciprocal function maps ![LaTeX: y =\dfrac{1}{x}](https://canvas.sussex.ac.uk/equation_images/y%2520%253D%255Cdfrac%257B1%257D%257Bx%257D?scale=1 "y =\\dfrac{1}{x}") , such that ![LaTeX: y\to\infty\;\mathsf{for}\; x=0](https://canvas.sussex.ac.uk/equation_images/y%255Cto%255Cinfty%255C%253B%255Cmathsf%257Bfor%257D%255C%253B%2520x%253D0?scale=1 "y\\to\\infty\\;\\mathsf{for}\\; x=0"). Equivalent notation is ![LaTeX: y = x^{-1}](https://canvas.sussex.ac.uk/equation_images/y%2520%253D%2520x%255E%257B-1%257D?scale=1 "y = x^{-1}"). The notation ![LaTeX: y\to\infty](https://canvas.sussex.ac.uk/equation_images/y%255Cto%255Cinfty?scale=1 "y\\to\\infty") means that "![LaTeX: y](https://canvas.sussex.ac.uk/equation_images/y?scale=1 "y") approaches infinity". The value of ![LaTeX: y](https://canvas.sussex.ac.uk/equation_images/y?scale=1 "y") is **undefined** at ![LaTeX: x=0](https://canvas.sussex.ac.uk/equation_images/x%253D0?scale=1 "x=0"). This means the reciprocal function is **discontinuous.**
+$y =\dfrac{1}{x}$
 
 `python:`  [reciprocal](https://numpy.org/devdocs/reference/generated/numpy.reciprocal.html)
 
@@ -144,9 +117,9 @@ If you want to make your plots pretty, this is a good resource:[matplotlib quick
 Examples:
 
 - **Result** **Latex syntax for marimo markdown block** **Tips/gotchas**
-- LaTeX: y=ax^3+bx^2 +cx + d $y = ax^3 + bx^2 + cx + d$ (Marimo bug) Don't leave any space between the opening $ and the first character. Same with last character and closing $. \dfrac{numerator}{denominator} typesets as a nice big fraction. If you want a little fraction, use \frac{numerator}{denominator}
-- LaTeX: y=|x| $y=|x|$
-- LaTeX: \dfrac{dy}{dx} = \pi $\dfrac{dy}{dx} = \pi$
+- $y = ax^3 + bx^2 + cx + d$ (Marimo bug) Don't leave any space between the opening $ and the first character. Same with last character and closing $. \dfrac{numerator}{denominator} typesets as a nice big fraction. If you want a little fraction, use \frac{numerator}{denominator}
+- $y=|x|$
+- $\dfrac{dy}{dx} = \pi$
 
 **NEW: How to make a table in marimo markdown cell - paste this in and then edit as desired**
 
@@ -163,7 +136,7 @@ If you are writing a dissertation as part of your MSc, I would recommend using L
 
 Let's have a look at the mystery polynomial.
 
-![mystery.png](https://canvas.sussex.ac.uk/courses/37537/files/6283185/preview)
+![](mystery.png)
 
 Download the data file from here: [MysteryPolynomial-XY.txt](https://canvas.sussex.ac.uk/courses/37537/files/6283184?wrap=1 "MysteryPolynomial-XY.txt")
 
@@ -189,7 +162,7 @@ fitpoly()
 
 **A) Run the code** snippet in your marimo notebook. The plot should look like this:
 
-![mystery-fit.png](https://canvas.sussex.ac.uk/courses/37537/files/6284255/preview)
+![](mystery-fit.png)
 
 **B) Adapt the code**:
 
@@ -244,7 +217,7 @@ uniform_prob()
 
 Everybody's rvs plot is going to look slightly different. Add your name to the title and post in the slack channel so we can compare.
 
-![uniform-prob.png](https://canvas.sussex.ac.uk/courses/37537/files/6284256/preview)
+![](uniform-prob.png)
 
 Discussion on randomness!
 

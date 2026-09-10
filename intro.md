@@ -1,3 +1,44 @@
+kernelspec:
+  name: python3
+  display_name: 'Python 3'
+
+```{code-cell} python
+hello = "hello"
+there = "there"
+phrase = f"{hello}, {there}!"
+print(phrase)
+```
+
+
+```{code-cell} python3
+:label: example1
+    def plot_absolute():,
+    	plt.figure( figsize=(6,6) ),
+    	x  = np.linspace(-5,5,500),
+    	y  = np.abs(x),
+    	y2 = np.abs(x**2),
+    
+    	plt.plot( x, y , c='dodgerblue', lw=2, ls='-', label=r'$y = |x|$'),
+    	plt.plot( x, y2 , c='mediumseagreen', lw=3, ls=':', label=r'$y = |x^2|$'),
+
+    	plt.grid(),
+    	plt.xlabel( 'x', fontsize=16),
+    	plt.ylabel( 'y', fontsize=16),
+    	plt.ylim(0, 5),
+    	plt.xlim(-5,5),
+    	plt.legend(loc='lower right',fontsize=12),
+    	plt.title('My lovely function',fontsize=16),
+
+		plt.show(),
+
+    plot_absolute()
+```
+
+And here I reference [](#example1).
+
+
+
+
 # Introduction
 
 +++ {"part": "abstract"}
@@ -32,4 +73,12 @@ A photograph of some beautiful mountains to look at whilst reading.
 Hover over [this link to a cool figure](xref:guide#subfigure)!
 
 ![A cool figure with two subfigures](xref:guide#subfigure)
+
+
+
+
+
+
+
+
 

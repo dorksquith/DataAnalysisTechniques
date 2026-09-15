@@ -1,16 +1,25 @@
-kernelspec:
-  name: python3
-  display_name: 'Python 3'
-
 # Introduction
 
 +++ {"part": "abstract"}
 These notes are a work in progress for students of the Data Analysis Techniques module 890F3.
 +++
 
+
+## Why are Probability & Statistics useful?
+
+1. Win games[\*]{style="color: red"}\
+2. Interpret Data $\rightarrow$ Understand Universe better.\
+
 :::{note}
-This is note.
+
+All Scientific results are statistics (usually frequentist, but eg
+particle physics also uses Bayesian).\
+Machine Learning = Statistics.\
+![image](ml-is-stats)
 :::
+
+[\*]{style="color: red"} Requires an absence of knowledge in opponent(s). Not applicable to casinos.
+
 
 This is an equation:
 

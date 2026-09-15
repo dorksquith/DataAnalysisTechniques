@@ -1,0 +1,29 @@
+kernelspec:
+  name: python3
+  display_name: 'Python 3'
+
+# Introduction
+
++++ {"part": "abstract"}
+These notes are a work in progress for students of the Data Analysis Techniques module 890F3.
++++
+
+:::{note}
+This is note.
+:::
+
+This is an equation:
+
+:::{math}
+:name: eq:book
+
+x \times y = z
+:::
+
+Here is a picture: [](#fig:special-sets) 
+
+:::{figure} ../blob/main/figures/SpecialSets.png?raw=true
+:label: fig:special-sets
+
+Some special sets.
+:::

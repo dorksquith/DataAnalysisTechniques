@@ -5,10 +5,6 @@ subtitle: Introduction
 title: Probability & Statistics
 ---
 
-::: frame
-:::
-
-::: frame
 Introduction
 
 - People
@@ -18,16 +14,14 @@ Introduction
 - Why are they useful?\
 
 - What will we learn here?\
-:::
 
-::: frame
 People
 
 I am Dr Lily Asquith, please call me Lily.\
 I am an Experimental Particle Physicist working on Neutrinos (NOvA and
 DUNE experiments).\
 Who are you? **[pollev.com/ilovephysics]{style="color: red"}**\
-![image](pollev1)
+![image](figures/pollev1)
 :::
 
 # Probability & Statistics  {#probability-statistics .unnumbered}

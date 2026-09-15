@@ -22,7 +22,7 @@ x \times y = z
 
 Here is a picture: [](#fig:special-sets) 
 
-:::{figure} ../blob/main/figures/SpecialSets.png?raw=true
+:::{figure} https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/SpecialSets.png
 :label: fig:special-sets
 
 Some special sets.

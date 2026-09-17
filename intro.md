@@ -8,8 +8,8 @@ This module explores how to use probability and statistics to analyse data.
 
 ## Why are Probability & Statistics useful?
 
-1. Win games.\
-2. Understand the Universe better.\
+1. Win games.
+2. Understand the Universe better.
 
 :::{figure} https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/ml-is-stats.png
 :label: fig:scooby

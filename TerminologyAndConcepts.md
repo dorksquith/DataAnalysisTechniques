@@ -166,12 +166,10 @@ True Random Number Generation (TRNG) is an active area of research, and is rapid
 
 
 
-A **Pseudorandom Number** (PRN) is a term used to describe a number in a sequence that appears random, but is produced by a deterministic[^det] process.
-
-[^det]: an outcome is caused by preceding events.
+A **Pseudorandom Number** (PRN) is a term used to describe a number in a sequence that appears random, but is produced by a deterministic process. Deterministic means that an outcome is caused by preceeding events.
 
 
-In this module we will generate PRNs using numpy and scipy.
+In this module we will generate PRNs using ```numpy``` and ```scipy```.
 
 ```{code-cell} python
 

@@ -1,4 +1,4 @@
-# Introduction
+# Data Analysis Techniques
 
 +++ {"part": "abstract"}
 These notes are a work in progress for students of the Data Analysis Techniques module 890F3. Please read the canvas pages carefully for vital information including the course structure, assessment, and suggested reading. 

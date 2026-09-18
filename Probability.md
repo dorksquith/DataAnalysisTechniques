@@ -66,15 +66,32 @@ If A is a subset of S *and* can be S, we use
 Venn diagrams are helpful for visualising relationships.\
 Here $$A\subset S$$ and $$B\subset S$$.\
 
-:::{figure} 
+<!--:::{figure} 
 :label: fig:venn
 :align: left
 ![](https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/S.png)
 ![](https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/A.png)
 ![](https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/B.png)
+:::-->
+
+:::{subfigures}
+:label: fig:venn
+:align: center
+
+:::{figure} https://githubusercontent.com
+:width: 30%
 :::
 
+:::{figure} https://githubusercontent.com
+:width: 30%
+:::
 
+:::{figure} https://githubusercontent.com
+:width: 30%
+:::
+
+Venn diagrams showing datasets S, A, and B.
+:::
 
 
 ### Complement

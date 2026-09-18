@@ -106,11 +106,17 @@ $$A^{\complement}$$, $$\overline{A}$$, and several others.
 
 ![image](NotA.png) ![image](NotB.png)
 
-:::{figure} 
+:::{subfigures} 
 :label: fig:venn_complement
-:align: left
-![](https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/NotA.png)
-![](https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/NotB.png)
+:align: center
+
+:::{figure} https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/NotA.png
+:width: 45%
+:::
+
+:::{figure} https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/NotB.png
+:width: 45%
+:::
 
 :::
 

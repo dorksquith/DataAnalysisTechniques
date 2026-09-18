@@ -76,7 +76,7 @@ Here $$A\subset S$$ and $$B\subset S$$.\
 
 :::{figure-md} fig:venn
 :align: center
-![](https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/S.png){width=30%} ![](https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/A.png){width=30%} ![](https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/B.png){width=30%}
+![](https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/S.png){width=30%} ![](https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/A.png){width=30%} ![](/figures/B.png){width=30%}
 
 Venn diagrams showing datasets S, A, and B.
 :::

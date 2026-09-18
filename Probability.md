@@ -75,7 +75,7 @@ Here $$A\subset S$$ and $$B\subset S$$.\
 :::-->
 
 :::{figure} fig:venn
-:align: center
+:align: left
 
 ```{image} https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/S.png
 :width: 30%
@@ -94,8 +94,10 @@ Venn diagrams showing datasets S, A, and B.
 Test
 
 ::{figure} :label: my-figure :class: grid grid-cols-2 items-end gap-4
+
 ![First image description](/figures/A.png)
 ![Second image description](/figures/B.png)
+
 Main caption for both figures.
 :::
 
@@ -161,7 +163,9 @@ $$A\cap B = \{2,4\}$$\
 :::{figure} 
 :label: fig:venn_intersection
 :align: left
+
 ![](https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/AandB.png)
+
 :::
 
 
@@ -174,27 +178,28 @@ the probability that both A and B are true.
 This is zero when A and B are **Disjoint**
 : (no overlap: mutually exclusive)\
 
-$$P(A\cap B) =0$$ when $$(A\cap B)'$$
+> $P(A\cap B) =0$ when $(A\cap B)'$
 
 Our sets:\
-$$A\cap B = \{2,4\}$$\
-$$P(A\cap B) = 0.2$$: $A$ and $B$ are not mutually exclusive.\
+$A\cap B = \{2,4\}$
+$P(A\cap B) = 0.2$: $A$ and $B$ are not mutually exclusive.\
 
 :::{figure} 
 :label: fig:venn_notAandB
 :align: left
 ![](https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/NotAandB.png)
+
+Venn diagram illustrating the complement of both A and B.
 :::
 
 
-###The **Probability of Union** $P(A\cup B)$
+### The **Probability of Union** $P(A\cup B)$
 :
 the probability that either A or B or both are true. 
 
 $$P(A\cup B) =P(A)+P(B) - P(A\cap B)$$
 
-Our sets:\
-$$P(A\cup B) = 0.5 +0.4 - 0.2 = 0.7$$\
+Our sets: $P(A\cup B) = 0.5 +0.4 - 0.2 = 0.7$
 
 :::{figure} 
 :label: fig:venn_notAandB
@@ -202,57 +207,57 @@ $$P(A\cup B) = 0.5 +0.4 - 0.2 = 0.7$$\
 ![](https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/Axiom3.png)
 :::
 
-###The Kolmogorov Axioms
+### The Kolmogorov Axioms
 
 1. The **Non-Negativity Axiom**
 : for all events A , $P(A) \geq 0$: 'the probability of any event A must be a real number greater than zero.\
 2. The **Normalisation Axiom**
-: $$P(S) =1$$: the probability of the entire sample space is one.\
+$P(S) =1$: the probability of the entire sample space is one.\
 3. The **Countable Additivity Axiom**
 : if A and B are mutually exclusive, $P(A\cup B) =P(A)+P(B)$: the
 probability of their union is the sum of their individual
-probabilities.\
+probabilities.
 
 
 ## Conditional Probability 
 
 The **Conditional Probability**
-$$\label{probCond} P(A | B) = \dfrac{P(A\cap B)}{P(B)}$$
+$$\label{eq:conp} P(A | B) = \dfrac{P(A\cap B)}{P(B)}$$
 
 
 Example:\
-$$A = \{2,4,6,8,10\}$$\
-$$B = \{1,2,3,4\}$$\
-$$A\cap B = \{2,4\}$$\
+$A = \{2,4,6,8,10\}$
+$B = \{1,2,3,4\}$
+$A\cap B = \{2,4\}$
 
-The number of elements in A and B is $$N(A \cap B)$$\
+The number of elements in A and B is $N(A \cap B)$
 
 The proportion of A in B is
-$$\dfrac{N(A\cap B)}{N(B)}$$
+$\dfrac{N(A\cap B)}{N(B)}$
 
 Relative to the original Sample Space S this is:
-$$\dfrac{N(A\cap B)/N(S) }{N(B)/N(S)}$$
+$\dfrac{N(A\cap B)/N(S) }{N(B)/N(S)}$
 
 These are **probabilities**:
-$$\dfrac{P(A\cap B)}{P(B)}$$
+$\dfrac{P(A\cap B)}{P(B)}$
 
 Given that we demand the element must exist in B, this is the
-probability of finding it in A.\
+probability of finding it in A.
 
 If A and B are **Independent**, the conditional probability
-$P(A | B)  = P(A)$.\
+$P(A | B)  = P(A)$.
 
 This is because independence means that B has no effect on A and vice
-versa.\
+versa.
 
-Our example sets are independent. $$P(A| B) = P(A) = 0.5$$.
+Our example sets are independent. $P(A| B) = P(A) = 0.5$.
 
 
 Using the Conditional Probability It is common to use conditional
 probabilities when we have a set of outcomes (A) and a set of choices
-(B).\
+(B).
 
-The Conditional Probability $$P(A | B) = \dfrac{P(A\cap B)}{P(B)}$$ then gives us an answers to the question
+The Conditional Probability then gives us an answers to the question
 : If I choose B, what is the probability of the outcome A?
 
 Conditional Probability looks harmless enough, but can have some
@@ -262,25 +267,31 @@ Problem**.
 
 ## The Monty Hall Problem
 
+TBD
+
 
 ## The Multiplication Rule
 
 Rearrange the **Conditional Probability**
-: $$P(A | B) = \dfrac{P(A\cap B)}{P(B)} \therefore  P(A\cap B) = P(A | B) P(B)$$\
+: $P(A | B) = \dfrac{P(A\cap B)}{P(B)}\;\; \therefore\;\;  P(A\cap B) = P(A | B) P(B)$
 
 **The Multiplication Rule**
-: $$P(A\cap B) = P(A) P(B)$$: If A and B are independent, the probability
+
+**If A and B are independent**, the probability
 of the intersection of A and B is equal to the product of their
-individual probabilities.\
+individual probabilities: $P(A\cap B) = P(A) P(B)$.
 
-Example: I roll a dice twice and get two sixes\
+:::{tip}
+Example: I roll a dice twice and get two sixes:
 
-$$P(six \cap six) = P(six) P(six) = \dfrac{1}{6} \dfrac{1}{6}  = \dfrac{1}{36}$$
-
+$P(six \cap six) = P(six) P(six) = \dfrac{1}{6} \dfrac{1}{6}  = \dfrac{1}{36}$
+:::
 
 ## The Total Probability
 
-In [](#venn_tot) there are N=4 disjoint sets $$B_i$$ intersecting with A, we can see that $$P(A) = \sum \limits_i^4 P(A\cap B_i)$$.\
+In [](#eq:totp1) there are N=4 disjoint sets $B_i$ intersecting with A, we can see that 
+
+$$\label{eq:totp1} P(A) = \sum \limits_i^4 P(A\cap B_i)$$.
 
 
 :::{figure} 
@@ -289,11 +300,9 @@ In [](#venn_tot) there are N=4 disjoint sets $$B_i$$ intersecting with A, we can
 ![](https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/AandB1.png)
 :::
 
-Compare with the Conditional: $$P(A\cap B) = P(A | B) P(B)$$\
+Comparing [](#eq:totp1) with [](#eq:conp), we can write the **Law of Total Probability**:
 
-The **Law of Total Probability** is written:\
-
-$$P(A) = \sum \limits_i^N P(A | B_i) P(B_i)$$.\
+$$\label{eq:totp} P(A) = \sum \limits_i^N P(A | B_i) P(B_i)$$.\
 
 This may seem a bit contrived, but we will see soon that it is
 useful.
@@ -309,7 +318,7 @@ $$P(B\cap A) = P(B | A) P(A)$$\
 **Bayes' Theorem** simply combines these:\
 
 $$
-\label{bayes}
+\label{eq:bayes}
 \begin{aligned}
 P(A | B) = 
 \dfrac{
@@ -342,8 +351,6 @@ P(A| B) = P(A) = 0.5
 P(B| A) = P(B) = 0.4
 \end{aligned}
 $$
-
-> "The so-called theorem tells us nothing!"
 
 :::{tip}
 Bayes' Theorem gets interesting when we consider that it applies to

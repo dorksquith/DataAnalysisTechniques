@@ -74,24 +74,13 @@ Here $$A\subset S$$ and $$B\subset S$$.\
 ![](https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/B.png)
 :::-->
 
-:::{subfigures}
-:label: fig:venn
+:::{figure-md} fig:venn
 :align: center
-
-:::{figure} https://githubusercontent.com
-:width: 30%
-:::
-
-:::{figure} https://githubusercontent.com
-:width: 30%
-:::
-
-:::{figure} https://githubusercontent.com
-:width: 30%
-:::
+![](https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/S.png){width=30%} ![](https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/A.png){width=30%} ![](https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/B.png){width=30%}
 
 Venn diagrams showing datasets S, A, and B.
 :::
+
 
 
 ### Complement
@@ -106,19 +95,14 @@ $$A^{\complement}$$, $$\overline{A}$$, and several others.
 
 ![image](NotA.png) ![image](NotB.png)
 
-:::{subfigures} 
-:label: fig:venn_complement
+
+:::{figure-md} fig:venn_complement
 :align: center
+![](https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/NotA.png){width=45%} ![](https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/NotB.png){width=45%} 
 
-:::{figure} https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/NotA.png
-:width: 45%
+Venn diagrams showing datasets The Complement of A and B.
 :::
 
-:::{figure} https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/NotB.png
-:width: 45%
-:::
-
-:::
 
 
 ### Union

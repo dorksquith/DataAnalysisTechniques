@@ -78,16 +78,25 @@ Here $$A\subset S$$ and $$B\subset S$$.\
 :align: center
 
 ```{image} https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/S.png
-:width=30%
+:width: 30%
 ```
 ```{image} https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/A.png
-:width=30%
+:width: 30%
 ```
 ```{image} /figures/B.png
-:width=30%
+:width: 30%
 ```
 
 Venn diagrams showing datasets S, A, and B.
+:::
+
+
+Test
+
+::{figure} :label: my-figure :class: grid grid-cols-2 items-end gap-4
+![First image description](/figures/A.png)
+![Second image description](/figures/B.png)
+Main caption for both figures.
 :::
 
 

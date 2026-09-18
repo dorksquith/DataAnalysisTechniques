@@ -74,9 +74,18 @@ Here $$A\subset S$$ and $$B\subset S$$.\
 ![](https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/B.png)
 :::-->
 
-:::{figure-md} fig:venn
+:::{figure} fig:venn
 :align: center
-![](https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/S.png){width=30%} ![](https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/A.png){width=30%} ![](/figures/B.png){width=30%}
+
+```{image} https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/S.png
+:width=30%
+```
+```{image} https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/A.png
+:width=30%
+```
+```{image} /figures/B.png
+:width=30%
+```
 
 Venn diagrams showing datasets S, A, and B.
 :::
@@ -96,9 +105,15 @@ $$A^{\complement}$$, $$\overline{A}$$, and several others.
 ![image](NotA.png) ![image](NotB.png)
 
 
-:::{figure-md} fig:venn_complement
+:::{figure} fig:venn_complement
 :align: center
-![](https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/NotA.png){width=45%} ![](https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/NotB.png){width=45%} 
+
+```{image} https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/NotA.png
+:width=45%
+```
+```{image} https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/NotB.png
+:width=45%
+```
 
 Venn diagrams showing datasets The Complement of A and B.
 :::

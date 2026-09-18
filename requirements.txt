@@ -1,6 +1,7 @@
 numpy
 scipy
 matplotlib
+jupyter-book>=2.0.0
 jupyterlab_myst
 jupyter-server
 ipykernel

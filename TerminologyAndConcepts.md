@@ -1,3 +1,8 @@
+---
+kernelspec:
+  name: python3
+  display_name: 'Python 3'
+---
 # Terminology & Concepts
 
 
@@ -19,9 +24,11 @@ Examples:
 - $H_1$: People with messy offices have tidy homes.
 
 
-> All models are wrong, but some are useful.
+
 
 A **Model** is an object, a mathematical equation, or a computer program that can explain how something works, and/or be used to make predictions. 
+
+> All models are wrong, but some are useful.
 
 Examples:
 - a model of a delorian (a toy car based on time-travelling car in back to the future movies, which captures the visual appearance of the machine)  
@@ -67,7 +74,7 @@ $$
 \overline{x}  = \frac{1}{N} \sum\limits_i^N  x_i
 $$
 
-```python
+```{code-cell} python
 import numpy as np 
 x = [5,10,12]
 mean_x = np.mean(x)
@@ -77,7 +84,6 @@ sum_x = np.sum(x)
 mean_x_check = sum_x / len(x)
 
 print(f" mean x : {mean_x}, check: {mean_x_check }")
-
 ```
 
 The **Variance** $V[x]$ (also denoted $v_x$) of $N$ measurements $x_i$ of a random variable $X$ is the sum of the squared differences between each measurement and the mean, divided by the number of measurements:
@@ -151,15 +157,13 @@ We can extract (a limited number of) truly random numbers from eg [](random.org)
 
 True Random Number Generation (TRNG) is an active area of research, and is rapidly changing. Whatever I write here will probably be out of date in two years. A recent exciting development was published in [Nature](https://www.nature.com/articles/s41586-025-09054-3) last summer.
 
-:::{figure} https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/dilbert2.jpg
 
-:label: fig:dilbert
-
-Credit: DILBERT © 2001 Scott Adams [All rights reserved].
-:::
 
 
 A **Pseudorandom Number** (PRN) is a term used to describe a number in a sequence that appears random, but is produced by a deterministic[^det] process.
+
+[^det]: an outcome is caused by preceding events.
+
 
 In this module we will generate PRNs using numpy and scipy.
 
@@ -188,14 +192,18 @@ x_normal_scipy = norm.rvs(loc=7,scale=4.1,size=15)
 
 ```
 
-:::{warning}
+:::{note}
 Human beings tend to have fixed ideas of what random should look like, which is
 amusing if you think about it. If you truly had a random shuffle on your music
 playlist, you would get many repetitions. People don’t like that.
 :::
 
+:::{figure} https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/dilbert2.jpg
+:label: fig:dilbert
 
-[^det]Deterministic: an outcome is caused by preceding events.
+Credit: DILBERT © 2001 Scott Adams [All rights reserved].
+:::
+
 
 
 ## Plots, axes, histograms, bins

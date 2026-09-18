@@ -143,9 +143,59 @@ print(f" (unbiased std x : {unbiased_std_x})")
 
 ## Random and Pseudorandom Numbers
 
+A **Random Number** is a term used to describe a value that is produced by a random (unpredictable) process.
+
+There are many things in the physical world that exhibit random behaviour (such as quantum mechanical processes), but the instruments we use to measure the behaviour often destroy/hide the randomness.
+
+We can extract (a limited number of) truly random numbers from eg [](random.org), which uses atmospheric noise.
+
+True Random Number Generation (TRNG) is an active area of research, and is rapidly changing. Whatever I write here will probably be out of date in two years. A recent exciting development was published in [Nature](https://www.nature.com/articles/s41586-025-09054-3) last summer.
+
 :::{figure} https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/dilbert2.jpg
+
 :label: fig:dilbert
+
+Credit: DILBERT © 2001 Scott Adams [All rights reserved].
 :::
+
+
+A **Pseudorandom Number** (PRN) is a term used to describe a number in a sequence that appears random, but is produced by a deterministic[^det] process.
+
+In this module we will generate PRNs using numpy and scipy.
+
+```python
+
+
+# Generate 10 numbers uniformly distributed between the values of 5 and 95
+
+# using numpy:
+import numpy as np
+rng = np.random.default_rng()
+x_uniform_numpy = rng.uniform(low=5,high=95,size=10)
+
+# using scipy: 
+from scipy.stats import uniform
+x_uniform_scipy = uniform.rvs(loc=5,scale=90,size=10)
+
+# generate 15 numbers from a normal distribution with mean 7 and standard deviation 4.1
+
+# using numpy:
+x_normal = rng.normal(loc=7,scale=4.1,size=15)
+
+# using scipy:
+from scipy.stats import norm
+x_normal_scipy = norm.rvs(loc=7,scale=4.1,size=15)
+
+```
+
+:::{warning}
+Human beings tend to have fixed ideas of what random should look like, which is
+amusing if you think about it. If you truly had a random shuffle on your music
+playlist, you would get many repetitions. People don’t like that.
+:::
+
+
+[^det]Deterministic: an outcome is caused by preceding events.
 
 
 ## Plots, axes, histograms, bins

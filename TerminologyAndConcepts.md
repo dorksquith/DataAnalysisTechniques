@@ -1,8 +1,14 @@
 ---
+jupytext:
+  formats: md:myst
+  text_representation:
+    extension: .md
+    format_name: myst
 kernelspec:
   name: python3
   display_name: 'Python 3'
 ---
+
 # Terminology & Concepts
 
 
@@ -99,7 +105,7 @@ V[x]  = \frac{1}{N-1} \sum\limits_i^N  (x_i - \overline{x})^2
 $$
 
 
-```python
+```{code-cell} python
 import numpy as np 
 x = [5,10,12]
 var_x = np.var(x)
@@ -126,7 +132,7 @@ $$
 \sigma_x  = \sqrt{V[x]}
 $$
 
-```python
+```{code-cell} python
 import numpy as np 
 x = [5,10,12]
 std_x = np.std(x)
@@ -167,7 +173,7 @@ A **Pseudorandom Number** (PRN) is a term used to describe a number in a sequenc
 
 In this module we will generate PRNs using numpy and scipy.
 
-```python
+```{code-cell} python
 
 
 # Generate 10 numbers uniformly distributed between the values of 5 and 95
@@ -211,7 +217,7 @@ Credit: DILBERT © 2001 Scott Adams [All rights reserved].
 * A **Plot** is a visual representation of data (a "graph")
 
 
-```python
+```{code-cell} python
 import matplotlib.pyplot as plt
 
 fig, ax = plt.subplots()
@@ -233,7 +239,7 @@ plt.show()
 
 * A **Histogram** is a bar plot indicating the counts of measurements within defined ranges of values. These ranges are known as **Bins**.
 
-```python
+```{code-cell} python
 import matplotlib.pyplot as plt
 import numpy as np
 rng = np.random.default_rng()
@@ -264,7 +270,7 @@ plt.show()
 
 To "plot on the same axes" means to draw two or more datasets on the same "graph pad".
 
-```python
+```{code-cell} python
 import matplotlib.pyplot as plt
 import numpy as np
 rng = np.random.default_rng()

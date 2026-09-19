@@ -13,6 +13,12 @@ There are two ways of viewing probabilities: Frequentist and Bayesian. In nutshe
 
 A Frequentist, Fernanda, and a Bayesian, Betty, have each misplaced their keys. They will each adopt a different method for finding them based on their different philosophies of probability.
 
+:::{figure} https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/FernandaAndBetty.jpeg
+:label: fig:fernanda-and-betty
+
+Fernanda and Betty.
+:::
+
 Fernanda: my keys are in an unknown location in my home. There is no "probability of them being by the sink", because they are either in a place or not. The only way to locate them is to look in every location methodically.
 
 Betty: my keys are in an unknown location in my home. On the last ten occasions I lost them, they were by the sink three times, so there are most likely to be by the sink and I will start my search there.
@@ -387,3 +393,58 @@ there = "there"
 phrase = f"{hello}, {there}!"
 print(phrase)
 ```
+
+
+::::{grid}
+:gutter: 2
+
+:::{grid-item}
+:outline:
+A
+:::
+:::{grid-item}
+:outline:
+B
+:::
+:::{grid-item}
+:outline:
+C
+:::
+:::{grid-item}
+:outline:
+D
+:::
+
+::::
+
+Cards:
+<!-- https://jupyter-book.readthedocs.io/v1/content/components.html#content-cards -->
+
+::::{grid}
+:gutter: 3
+
+:::{grid-item-card} One!
+Here's the first card.
+:::
+
+:::{grid-item-card} Two!
+Here's the second card.
+:::
+
+:::{grid-item-card} Three!
+Here's the third card.
+:::
+::::
+
+
+Tabs:
+
+````{tab-set}
+```{tab-item} Tab 1 title
+My first tab
+```
+
+```{tab-item} Tab 2 title
+My second tab with `some code`!
+```
+````

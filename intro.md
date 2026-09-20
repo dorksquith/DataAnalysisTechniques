@@ -29,6 +29,7 @@ This module explores how to use probability and statistics to analyse data.
 - [ ] Describe the difference between Discrete and Continuous RVs, and give examples of each
 - [ ] Generate uniformly distributed and normally distributed pseudorandom numbers
 - [ ] Calculate the mean, variance, and standard deviation of a dataset
+- [ ] Make simple plots and histograms in matplotlib
 :::
 
 :::{dropdown} Probability Essentials

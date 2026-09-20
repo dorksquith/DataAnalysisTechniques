@@ -15,16 +15,18 @@ There are two ways of viewing probabilities: Frequentist and Bayesian.
 
 **Bayesian**: the probability of something happening is as per the frequentist definition, but we must "weight" this using our relevant prior knowledge.
 
-
-### Where are my keys?
-
-A Frequentist, Fernanda, and a Bayesian, Betty, have each misplaced their keys. They will each adopt a different method for finding them based on their different philosophies of probability.
+Let's anthropomorphise these interpretations by introducting a Frequentist, Fernanda, and a Bayesian, Betty, imagined by Gemini in [](#fig:fernanda-and-betty).
 
 :::{figure} /figures/FernandaAndBetty.jpeg
 :label: fig:fernanda-and-betty
 
 Fernanda and Betty.
 :::
+
+
+### Where are my keys?
+
+Fernanda and Betty have each misplaced their keys. They will each adopt a different method for finding them based on their different philosophies of probability.
 
 **Fernanda**: my keys are in an unknown location in my home. There is no "probability of them being by the sink", because they are either in a place or not. The only way to locate them is to look in every location methodically.
 
@@ -33,24 +35,26 @@ Fernanda and Betty.
 
 ### Is my coin fair?
 
-Fernanda: would toss the coin a million times and see how many times we get heads.
+**Fernanda**: I will toss the coin a million times and see how many times we get heads.
 
-Betty: would additionally consider what we know about the coin. Did we get it from a joke shop, or a post office?
+**Betty**: I will also toss the coin several times, but before I do so I will consider what we know about the coin. Did we get it from a joke shop, or a post office?
 
 ### Is a pregnancy test correct?
 
-Fernanda would do the test a million times and see how many times were correct.
+**Fernanda**: I will do the test a million times, and count how many times it is correct[^tests].
 
-Betty would also consider what we know about the person taking the test, for example: does the person taking the test have a uterus?
+[^tests]: The question of the pregnancy test is an interesting one, because we have to define exactly what we are asking in order to define the denominator. The probability of a positive test being wrong is not the same as the probability of a wrong test if we are postive...
+
+**Betty**: I will collect data similarly to Fernanda, but will also consider what we know about the person taking the test, for example: do they have a uterus?
 
  
-> It may appear that the Bayesian approach is prone to bias, and less scientific, so I should note that the Bayesian does not "stick to their guns" on the prior knowledge aspect. If the data indicate their prior knowledge is unlikely to be correct, then the prior is updated. 
+> It may appear that the Bayesian approach is prone to bias, so I should note that the Bayesian does not "stick to their guns" on the prior knowledge aspect. If the data indicate their prior knowledge is unlikely to be correct, then the prior is updated. 
 
 
 
 ## Example Sets
 
-Example Sets:
+Let's define some arbitrary example sets:
 
 ```{math}
 :label: our-sets
@@ -61,7 +65,7 @@ A &= \{2,4,6,8,10\}& \\
 B &= \{1,2,3,4\}& \\
 \end{aligned}
 ```
-
+We will use these to demonstrate some terminology numerically.
 
 ## Frequentist Probability
 
@@ -89,7 +93,7 @@ The **Sample Space** S is the set of all possible outcomes of some experiment or
 
 A **Proper Subset** of S is denoted $A\subset S$. This means that A is a subset of S but A$\neq$S. If A is a subset of S *and* can be S, we use $A\subseteq S$
 
-For [our sets](#our-sets), A and B are proper subsets of S.
+For [our sets](#our-sets), A and B are proper subsets of S: $A \subset S$ and $B \subset S$.
 
 
 ## Venn Diagrams
@@ -112,7 +116,7 @@ Venn diagrams are helpful for visualising relationships. Here $A\subset S$ and $
 
 ## Complement $A'$
 
-The **Complement** of a set is denoted by a prime, $A'$; this means 'not A'. Other notations commonly used for the complement include $A^{\complement}$ and $\overline{A}$.
+The **Complement** of a set is denoted by a prime, $A'$; this means 'not A'. Other notations commonly used for the complement (though not by me) include $A^{\complement}$ and $\overline{A}$.
 
 ::::{grid} 1 1 2 2
 
@@ -132,7 +136,7 @@ The **Union** of two sets is written $A\cup B$; this means 'either A, or B, or b
 
 ## Intersection $A\cap B$
 
-The **Intersection** of two sets is written $A\cap B$; this means 'both A and B'. For our sets [](#our-sets), $A\cap B = \{2,4\}$
+The **Intersection** of two sets is written $A\cap B$; this means 'both A and B'. For [our sets](#our-sets), $A\cap B = \{2,4\}$
 
 
 ::::{grid} 1 1 2 2
@@ -169,6 +173,8 @@ The **Complement of the Intersection** is $(A\cap B)'$ and means 'Not in both A 
 Two sets are **Independent** if they are defined without reference to one another (changing one does not impact the other). We could construct **dependent** sets like this for example:
 * $K = {\mathbb{N}}$
 * $J = {K^2}$
+
+[Our sets](#our-sets) are independent.
 
 Two sets are **Mutually Exclusive** if there is no overlap between them. Another word for this is **Disjoint**.
 
@@ -208,10 +214,11 @@ For [our sets](#our-sets): $P(A\cup B) = 0.5 +0.4 - 0.2 = 0.7$
 
 > [Andrey Kolmogorov](https://en.wikipedia.org/wiki/Andrey_Kolmogorov) was a Russian mathematician. You may have heard of the 'KS test', which is used to eg check for overtraining by comparing ML classifier outputs for test and train samples. This is named for Kolomogorov and Nikolai Smirnov. See also 'KANs' - Kolmogorov Arnold Networks [arXiv:2404.19756](https://arxiv.org/abs/2404.19756).
 
-1. The **Non-Negativity Axiom**
-: for all events A , $P(A) \geq 0$: 'the probability of any event A must be a real number greater than zero.
-2. The **Normalisation Axiom** $P(S) =1$: the probability of the entire sample space is one.
-3. The **Countable Additivity Axiom**
+The **Non-Negativity Axiom**
+: $P(A) \geq 0 \;\; \forall A$: 'the probability of any event A must be a real number greater than zero.
+The **Normalisation Axiom** 
+: $P(S) =1$: the probability of the entire sample space is one.
+The **Countable Additivity Axiom**
 : if A and B are **mutually exclusive**, $P(A\cup B) =P(A)+P(B)$: the probability of their union is the sum of their individual probabilities.
 
 
@@ -240,31 +247,38 @@ The condition is that the element must exist in B; P(B) is our denominator.
 
 For [our sets](#our-sets):
 
-* $A\cap B = \{2,4\}$: Events in both A and B
-* $N(A \cap B) = 2$: Count of events in both A and B
-* $\dfrac{N(A\cap B)}{N(B)} = \dfrac{2}{4}$: Fraction of B that is also in A
-* $P(A | B)  = 0.5 $: Probability of A given that we demand B.
+$A\cap B = \{2,4\}$
+: The set of events in both A and B
+
+$N(A \cap B) = 2$
+: The count of events in both A and B
+
+$\dfrac{N(A\cap B)}{N(B)} = \dfrac{2}{4}$
+: The fraction of B that is also in A
+
+$P(A | B)  = 0.5 $
+: The probability of A, given that B is true.
 
 
-If A and B are **Independent**, the conditional probability is $P(A | B)  = P(A)$.
-
-This is because independence means that B has no effect on A and vice
+**If A and B are Independent**, the conditional probability is $P(A | B)  = P(A)$. This is because independence means that B has no effect on A and vice
 versa.
 
-Our example sets are independent: $P(A| B) = P(A) = 0.5$.
+[Our sets](#our-sets) are independent: $P(A| B) = P(A) = 0.5$.
 
 
-Conditional Probability looks harmless enough, but can have some counter-intuitive results illustrated very well in the **Monty Hall Problem**.
+Conditional Probability looks harmless enough, but can have some counter-intuitive results illustrated very well in the **Monty Hall Problem**, which we will think about later.
 
 
 
 ## The Multiplication Rule
 
-Rearranging [](eq:conp): $P(A\cap B) = P(A | B) P(B)$ and noting that for **Independent** A and B, $P(A | B)=P(A)$, we get the very useful **Multiplication Rule**:
-
-**If A and B are independent**, the probability of the intersection of A and B is equal to the product of their individual probabilities: 
+Rearranging [the conditional probability](eq:conp): $P(A\cap B) = P(A | B) P(B)$ and noting that for **Independent** A and B, $P(A | B)=P(A)$, we get the very useful **Multiplication Rule**:
 
 $$\label{eq:multrule} P(A \cap B) = P(A) P(B)$$
+
+
+This states that **if A and B are independent**, the probability of the intersection of A and B is equal to the product of their individual probabilities: 
+
 
 
 Example: I roll a dice twice. What is the probability I will get two sixes?
@@ -274,29 +288,33 @@ $P(six \cap six) = P(six) P(six) = \dfrac{1}{6} \dfrac{1}{6}  = \dfrac{1}{36}$
 
 ## Total Probability (Marginal Probability)
 
-In [](#fig:venn_tot) I have divided S into four quadrants, each of which is a set $B_i$. There are N=4 disjoint sets $B_i$ intersecting with A. 
+In the below tryptich of Venn diagrams, I have divided the Sample Space S into four quadrants, each of which is a set $B_i$. There are N=4 disjoint sets $B_i$ intersecting with A. 
 
-The **Total Probability** of A can be written $\label{eq:totp1} P(A) = \sum \limits_{i=1}^4 P(A\cap B_i)$.
+The **Total Probability** of A can be written as a sum over the four quadrants:
 
-The Total Probability P(A) is also referred to as the **Marginal Probability** of A. This is because we have "Marginalised Out" the probability of B, and are only considering A.
+$$\label{eq:totp1} P(A) = \sum \limits_{i=1}^4 P(A\cap B_i)$$.
+
+
 
 :::{figure} 
 :label: fig:venn_tot
 :align: left
 ![](https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/AandB1.png)
+
+
 :::
 
-Because we know how to write the intersection in terms of the conditional probability [](eq:conp), we can express the Total Probability of A as [](eq:totp).
+Because we know how to write the intersection in terms of the conditional probability [](eq:conp), we can express [](eq:totp1) in terms of the conditional:
 
 $$\label{eq:totp} P(A) = \sum \limits_i^N P(A | B_i) P(B_i)$$.
 
-This may seem a bit contrived, but we will see soon that it is
-useful.
+This may seem a bit contrived, but we will see soon that it is useful.
 
+> The Total Probability P(A) is also referred to as the **Marginal Probability** of A. This is because we have "Marginalised Out" the probability of B, and are only considering A.
 
 ## Bayes' Theorem
 
-To write down Bayes theorem we need only the **Conditional Probability** [](#eq:conp), and to observe that:
+To write down Bayes' theorem we need only the **Conditional Probability** [](#eq:conp), and to observe that:
 
 1. [](#eq:conp) applies to any sets A and B, so we can switch A and B and remain true:
 $$\label{eq:conpB} P(B | A) = \dfrac{P(B\cap A)}{P(A)}$$
@@ -320,12 +338,14 @@ P(B)
 \end{aligned}
 $$
 
-Injecting our independent example sets [](#our-sets) into Bayes' theorem is a little anticlimactic:
+Injecting [our sets](#our-sets) into Bayes' theorem is a little anticlimactic:
 
 * $P(A | B) = P(A)$ because A and B are independent
 * Bayes theorem tells us that $P(A) = \dfrac{P(B) P(A)}{P(B)}$ which is just basic algebra.
 
 Bayes' Theorem gets interesting when we consider that it applies to **any sets $A$ and $B$ that satisfy Kolmogorov's Axioms**.
 
-
+:::{important}
+Using Bayes' theorem does not make one a Bayesian. It is used by Frequentists and Bayesians alike!
+:::
 

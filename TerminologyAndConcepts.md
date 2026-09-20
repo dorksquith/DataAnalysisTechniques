@@ -11,6 +11,7 @@ kernelspec:
 
 # Terminology & Concepts
 
+A brief tour of the important terms and concepts for this module, almost all of which we will revisit in detail later.
 
 <!--Make sure you are familiar with these before embarking on the topics in this module.-->
 
@@ -100,9 +101,7 @@ For example, the probability of dice rolls (any number of dice) **are not** inte
 
 **Continuous RVs** are measurements such as height or temperature that can theoretically take any value on the real number line. 
 
-Note that in the real world, measurements always have a finite precision, so the measurements x of a continuous RV will not strictly be continuous.
-
-What is true in the real world is also in true in your computer. The precision with which python generates CRVs on my machine is ```float64```: precision 15.
+Note that in the real world, measurements always have a finite precision, so the measurements x of a continuous RV will not strictly be continuous. What is true in the real world is also in true in your computer. The precision with which python generates CRVs on my machine is ```float64```: precision 15.
 
 > A continuous RV is still continuous even though its measurements cannot be.
 
@@ -110,7 +109,7 @@ What is true in the real world is also in true in your computer. The precision w
 
 ## Summary Statistics 
 
-**Summary statistics** are numbers that describe the properties of a whole sample (dataset), rather than a single data point. Examples of summary statistics we will use in this module are the sample Sum, Mean, Median, Mode, Minimum, Maximum, Variance, and Standard Deviation.
+**Summary statistics** are numbers that describe the properties of a whole sample (dataset), rather than a single data point. Examples of summary statistics we will use in this module are the sample Sum, Mean, Minimum, Maximum, Variance, and Standard Deviation.
 
 ### Mean $\overline{x}$
 
@@ -132,7 +131,7 @@ mean_x_check = sum_x / len(x)
 print(f" mean x : {mean_x}, check: {mean_x_check }")
 ```
 
-> When we talk about the Theoretical Universe ("Truth") where Probability Distributions live, we often use the term **Expected Value** or **Expectation** rather than Mean. The Expected Value is a parameter, not a summary statistic, and is defined in terms of the Probabilities $p_i$ of the individual measurements rather than as a normalised sum over them: $E[X]  = \sum\limits_i^\infty  x_i p_i$. Lots more on this later.
+> When we are working in the Theoretical Universe where Probability Distributions live, we often use the term **Expected Value** or **Expectation** rather than saying "True Mean". The Expected Value is a parameter, not a summary statistic, and is defined in terms of the Probabilities $p_i$ of the individual measurements rather than as a normalised sum over them: $E[X]  = \sum\limits_i^\infty  x_i p_i$. Lots more on this later.
 
 ### Variance $V[x]$ <a name="intro-variance"></a>
 
@@ -205,6 +204,13 @@ print(f" (unbiased std x : {unbiased_std_x})")
 
 ## Random and Pseudorandom Numbers
 
+:::{figure} /figures/RandomRobot.jpeg
+:label: fig:random-robot
+
+A robot discussing the difference between random and pseudorandom data with their students.
+:::
+
+
 A **Random Number** is a term used to describe a value that is produced by a random (unpredictable) process.
 
 There are many things in the physical world that exhibit random behaviour (such as quantum mechanical processes), but the instruments we use to measure the behaviour often destroy/hide the randomness.
@@ -268,18 +274,22 @@ import matplotlib.pyplot as plt
 
 fig, ax = plt.subplots()
 
-ax.plot(x=[1.41, 1.52, 1.56, 1.61, 1.70 ], 
-	    y=[60, 55, 65, 67, 80], 
+ax.plot([1.41, 1.52, 1.56, 1.61, 1.70 ], 
+	    [60, 55, 65, 67, 80], 
 	    color='skyblue', 
-	    markerstyle='*',
+	    marker='*',
 	    linewidth=2,
-	    label='legend entry' 
+	    label='my lovely data' 
 	    )
 
 ax.set_title("Example of a plot")
 ax.set_xlabel("Height (m)")
 ax.set_ylabel("Weight (kg)")
+plt.legend()
 plt.show()
+# to save and then close the figure
+#plt.savefig("MyFirstPlot.png")
+#plt.clf()
 
 ```
 
@@ -308,6 +318,7 @@ ax.hist(heights,
 ax.set_title("Example of a histogram")
 ax.set_xlabel("Height (m)")
 ax.set_ylabel("Count/ bin")
+plt.legend()
 plt.show()
 
 ```
@@ -327,19 +338,22 @@ weights = rng.normal(loc=65, scale=10, size=1000)
 
 fig, ax = plt.subplots()
 
-ax.plot(heights[:50], weights[:50], 
-	    color='black', 
-	    markerstyle='*',
-	    label='First 50')
+ax.scatter(heights[:500], weights[:500], 
+	    color='lightsteelblue',
+	    alpha=1, 
+	    marker='*',
+	    label='Sample 1')
 
-ax.plot(heights[50:100], weights[50:100], 
-	    color='red', 
-	    markerstyle='o',
-	    label='Second 50')
+ax.scatter(heights[500:1000], weights[500:1000], 
+	    color='mediumvioletred', 
+	    marker='o',
+	    alpha=0.3, 
+	    label='Sample 2')
 
-ax.set_title("Example of a histogram")
+ax.set_title("Two scatter plots on same axes")
 ax.set_xlabel("Height (m)")
 ax.set_ylabel("Weight (kg)")
+plt.legend()
 plt.show()
 
 ```

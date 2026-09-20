@@ -101,13 +101,12 @@ Main caption for both figures.
 
 ### Complement
 
-The **Complement** of a set is denoted by a prime:
-$$A'$$
+The **Complement** of a set is denoted by a prime, $A'$
 : this means 'not A'.\
 
 Other notations commonly used for the complement are
 :
-$$A^{\complement}$$, $$\overline{A}$$, and several others.
+$A^{\complement}$, $\overline{A}$, and several others.
 
 ![image](NotA.png) ![image](NotB.png)
 
@@ -130,13 +129,13 @@ Venn diagrams showing datasets The Complement of A and B.
 ### Union
 
 The **Union** of two sets is written:
-$$A\cup B$$
+$A\cup B$
 : 'either A, or B, or both'.\
 
 
-$$A = \{2,4,6,8,10\}$$\
-$$B = \{1,2,3,4\}$$\
-$$A\cup B = \{1,2,3,4,6,8,10\}$$\
+* $A = \{2,4,6,8,10\}$
+* $B = \{1,2,3,4\}$
+* $A\cup B = \{1,2,3,4,6,8,10\}$
 
 :::{figure} 
 :label: fig:venn_union

@@ -1,27 +1,27 @@
 # Describing Data
 
-## The Sample Mean $\overline{x}$ and the True Mean $E[X]$
+## The Sample Mean  and the True Mean $E[X]$
 
-The sample **Mean** of a RV is calculated as a normalised sum over a finite number of measurements: [](eq:mean). It is a summary statistic calculated from the data.
+The **Sample Mean**, $\overline{x}$, of a RV is calculated as a normalised sum over a finite number of measurements [T&C:mean](eq:mean). It is a **summary statistic** calculated from the data.
 
 
-The **True Mean**, or **Expectation**, is a parameter of the true underlying probability distribution of our RV. 
+The **True Mean** (aka **Expectation**), $E[X]$, is a **parameter** of the true underlying probability distribution of our RV. 
 
-### Discrete RV
+### Discrete Data
 
-For a Discrete RV we can calculate the Expectation in a similar way to [](eq:mean):
+For Discrete data, if we known the underlying probabilities we can calculate the Expectation in a similar way to [T&C:mean](eq:mean):
 
 $$
 \label{eq:expect}
 E[X]  = \sum\limits_i^\infty  x_i p_i
 $$
 
-* The sum is to infinity because in Truth, there are $\infty$ possible values for X.
-* The Probability of observing $x_i$ is $p_i$. Because Probabilities must sum (or integrate) to 1 ([Kolmogorov](#the-kolmogorov-axioms)), the normalisation factor $\dfrac{1}{N}$ is not needed. We are normalising every term in the sum individually, and will get the same result.
+* The sum is infinite because in Truth, there are $\infty$ possible values for X.
+* The Probability of observing $x_i$ is $p_i$. Because Probabilities must sum (or integrate) to 1 [Kolmogorov's normalisation axiom](eq:kolmogorov2), the normalisation factor $\dfrac{1}{N}$ is not needed. Via use of the probability $p_i$ we are normalising every term in the sum individually, and will get the same result.
 
-### Continuous RV
+### Continuous Data
 
-If our random variable RV is Continuous rather than discrete, then it does not make sense to "sum over all possible values", because continuous RVs have an Uncountable Infinity[^infinities] of possible values. Instead, we integrate:
+If our data is Continuous rather than discrete, then it does not make sense to "sum over all possible values", because continuous RVs have an Uncountable Infinity[^infinities] of possible values. Instead, we integrate:
 
 [^infinities]: See this nice blog by Joel Hamkins for an accessible intro to the difference between countable and [uncountable infinites](https://www.infinitelymore.xyz/p/uncountable-infinity)
 
@@ -45,7 +45,7 @@ A series of images showing a data histogram in grey and the true underlying PDF 
 
 ## Notation: $E[X]  \equiv \mu$
 
-> An alternative notation for the expectation E[X] is $\mu$. They have exactly the same meaning. I'm sorry this is confusing, but I think there are strong (pedagogical) arguments for using both forms.
+> An alternative notation for the True Mean, aka Expectation, is $\mu$. This has  exactly the same meaning as $E[X]$. I'm sorry this is confusing, but I think there are strong (pedagogical and aesthetic) arguments for using both forms.
 
 $$
 \label{eq:expectMu}
@@ -54,9 +54,9 @@ $$
 
 ## The Law of Large Numbers (LLN)
 
-In [](#fig:mean-expect-mp4) we see that the mean of a data sample measuring some RV will not exactly correspond to the expectation, which is the true, theoretical mean of the RV.
+In [](#fig:mean-expect-mp4) we see that the Sample Mean $\overline{x}$ does not exactly correspond to the True Mean $E[X]$.
 
-The **Law of Large Numbers (LLN)**[^1] tells us that if we were to increase the size of the data sample to infinity (not possible in real life), the sample mean would approach the expected value with high probability.
+The **Law of Large Numbers (LLN)**[^1] tells us that if we were to increase the size of the data sample to infinity (not possible in real life), the sample mean would approach the true mean with high probability.
 
 [^1]: This is the Weak LLN. The Strong LLN is subtly different, explained quite nicely on [wikipedia](https://en.wikipedia.org/wiki/Law_of_large_numbers).
 
@@ -69,35 +69,26 @@ The sample mean is $\overline{x}$ and the true mean is $\mu \equiv E[X]$. The sy
 
 As is often the case with Statistics, it is helpful to think about what the LLN is **not** telling us. 
 
->The LLN does not imply that if we add some new measurements to a dataset, the mean will get closer to the expectation. We will observe fluctuations of $\overline{x}$ away from $\mu$ for any number of measurements $N<\infty$. 
+>The LLN does not imply that if we add some new measurements to a dataset, the sample mean will (necesarily) get closer to the true mean. We can observe fluctuations of $\overline{x}$ away from $\mu$ for any number of measurements $N<\infty$. 
 
 We can see a fluctuation in the image series [](#fig:mean-expect-mp4) when we compare the $N=1k$ dataset with the $N=10k$ dataset. This is examined in [](#fig:fluc).
 
 
-::::{grid} 1 1 2 2
-\label{fig:fluc}
+:::{figure}
+\label{fig:fluc} /figures/LLN-fluc.png
 
-:::{image} /figures/PLOTDAT2-MeanAndExpec_Norm_Mu0_Sigma1_N1000.png
-
-For $N=1k$ measurements, we observe $|\overline{x} - \mu |=0.0044$.
+For $N=1k$ measurements, we observe $|\overline{x} - \mu |=0.0044$. For $N=10k$ measurements, we observe $|\overline{x} - \mu |=0.0088$.
 :::
 
-:::{image} /figures/PLOTDAT2-MeanAndExpec_Norm_Mu0_Sigma1_N10000.png
 
-For $N=10k$ measurements, we observe $|\overline{x} - \mu |=0.0088$.
-:::
-
-::::
-
-* The mean measured in the smaller 1k sample is closer to the expectation $\mu$ than the mean of the 10k sample. 
-* This is a natural **Statistical Fluctuation**, and does not imply that the LLN is wrong.
+The mean measured in the smaller 1k sample is closer to the expectation $\mu$ than the mean of the 10k sample. This is a natural **Statistical Fluctuation**, and does not imply that the LLN is wrong.
 
 
 ## Sample Variance and Standard Deviation
 
-The sample **Variance** [](#eq:variance) is the square of the sample **Standard Deviation** [](#eq:std). You would be forgiven for wondering why we don't just pick one of these summary statistics and ditch the other for simplicity. We keep this redundancy because they are each crucial in their own worlds, as we shall see.
+The [sample **Variance**](#eq:variance) is the square of the [sample **Standard Deviation**](#eq:std). You would be forgiven for wondering why we don't just pick one of these summary statistics and ditch the other for simplicity; we keep this redundancy because they are each crucial in their own worlds, as we shall see.
 
-The problem with the sample variance is that we can't relate it directly to the measurement, because it has units of $x^2$ rather than $x$. As such, we cannot draw the sample variance on axes with units of $x$. But we can draw the sample Standard Deviation $\sigma_x = \sqrt{V[x]}$.
+The problem with the sample variance is that we can't relate it directly to the measurement, because it has units of $x^2$ rather than $x$. As such, we cannot provide a visual description of the variance on axes with units of $x$. But we can draw the sample Standard Deviation $\sigma_x = \sqrt{V[x]}$.
 
 
 :::{figure} 

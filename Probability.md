@@ -215,11 +215,11 @@ For [our sets](#our-sets): $P(A\cup B) = 0.5 +0.4 - 0.2 = 0.7$
 > [Andrey Kolmogorov](https://en.wikipedia.org/wiki/Andrey_Kolmogorov) was a Russian mathematician. You may have heard of the 'KS test', which is used to eg check for overtraining by comparing ML classifier outputs for test and train samples. This is named for Kolomogorov and Nikolai Smirnov. See also 'KANs' - Kolmogorov Arnold Networks [arXiv:2404.19756](https://arxiv.org/abs/2404.19756).
 
 The **Non-Negativity Axiom**
-: $P(A) \geq 0 \;\; \forall A$: 'the probability of any event A must be a real number greater than zero.
+: $\label{eq:kolmogorov1} P(A) \geq 0 \;\; \forall A$: 'the probability of any event A must be a real number greater than zero.
 The **Normalisation Axiom** 
-: $P(S) =1$: the probability of the entire sample space is one.
+: $\label{eq:kolmogorov2} P(S) =1$: the probability of the entire sample space is one.
 The **Countable Additivity Axiom**
-: if A and B are **mutually exclusive**, $P(A\cup B) =P(A)+P(B)$: the probability of their union is the sum of their individual probabilities.
+: if A and B are **mutually exclusive**, $\label{eq:kolmogorov3} P(A\cup B) =P(A)+P(B)$: the probability of their union is the sum of their individual probabilities.
 
 
 ## Conditional Probability $P(A | B)$
@@ -304,7 +304,7 @@ $$\label{eq:totp1} P(A) = \sum \limits_{i=1}^4 P(A\cap B_i)$$.
 
 :::
 
-Because we know how to write the intersection in terms of the conditional probability [](eq:conp), we can express [](eq:totp1) in terms of the conditional:
+Because we know how to write the intersection in terms of the [conditional probability](eq:conp), we can express the [total probability](eq:totp1) in terms of the conditional:
 
 $$\label{eq:totp} P(A) = \sum \limits_i^N P(A | B_i) P(B_i)$$.
 
@@ -316,12 +316,12 @@ This may seem a bit contrived, but we will see soon that it is useful.
 
 To write down Bayes' theorem we need only the **Conditional Probability** [](#eq:conp), and to observe that:
 
-1. [](#eq:conp) applies to any sets A and B, so we can switch A and B and remain true:
+1. The [conditional probability](#eq:conp) applies to any sets A and B, so we can switch A and B and remain true:
 $$\label{eq:conpB} P(B | A) = \dfrac{P(B\cap A)}{P(A)}$$
 
-2. The intersection is not directional, so $P(B\cap A) \equiv  P(A\cap B)$: The LHS of [](#eq:conp) is equal to the LHS of [](#eq:conpB).
+2. The intersection is not directional, so $P(B\cap A) \equiv  P(A\cap B)$: The LHS [P(A | B)](#eq:conp) is equal to the LHS [P(B | A)](#eq:conpB).
 
-3. The RHS of [](#eq:conp) must equal the RHS of [](#eq:conpB), giving us Bayes' theorem: $ P(A | B) P(B) = P(B | A) P(A)$.
+3. The RHS of []{P(B)}](#eq:conp) must equal the RHS of [](#eq:conpB), giving us Bayes' theorem: $ P(A | B) P(B) = P(B | A) P(A)$.
 
 This is more usually rearranged as:
 

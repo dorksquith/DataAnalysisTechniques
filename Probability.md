@@ -44,7 +44,7 @@ $$
 The **Frequentist Probability** of A is written $P(A) = \dfrac{N_A}{N_S}$: the number of times A occurs in the sample, divided by the number of possible outcomes
 in the sample.
 
-Probabilities:\
+Probabilities for our sets [](#our-sets):
 * $P(S) = N_S/N_S =1$
 * $P(A) = N_A / N_S  = 0.5$
 * $P(B) = N_B / N_S  = 0.4$
@@ -60,16 +60,11 @@ Some special sets.
 
 ### Sample Space & Subsets
 
-The **Sample Space** S
-: the set of all possible outcomes of some experiment or operation.
+The **Sample Space** S is the set of all possible outcomes of some experiment or operation.
 
-A **Proper Subset** of S
-: $A\subset S$:  A is a subset of S but A$\neq$S.
+A **Proper Subset** of S is denoted $A\subset S$. This means that A is a subset of S but A$\neq$S. If A is a subset of S *and* can be S, we use $A\subseteq S$
 
-If A is a subset of S *and* can be S, we use
-: $A\subseteq S$
-
-A and B are proper subsets of S.
+For [](#our-sets), A and B are proper subsets of S.
 
 
 ### Venn Diagrams

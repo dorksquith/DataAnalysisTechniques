@@ -107,13 +107,12 @@ Venn diagrams are helpful for visualising relationships. Here $A\subset S$ and $
 :::{image} /figures/B.png
 :::
 
-Venn diagrams showing datasets S, A, and B.
 ::::
 
 
 ## Complement $A'$
 
-The **Complement** of a set is denoted by a prime, $A'$; this means 'not A'. Other notations commonly used for the complement are $A^{\complement}$, $\overline{A}$, and others.
+The **Complement** of a set is denoted by a prime, $A'$; this means 'not A'. Other notations commonly used for the complement include $A^{\complement}$ and $\overline{A}$.
 
 ::::{grid} 1 1 2 2
 
@@ -123,14 +122,13 @@ The **Complement** of a set is denoted by a prime, $A'$; this means 'not A'. Oth
 :::{image} /figures/NotB.png
 :::
 
-Venn diagrams showing datasets The Complement of A and B.
 ::::
 
 
 
 ### Union $A\cup B$
 
-The **Union** of two sets is written $A\cup B$; this means 'either A, or B, or both'. For our sets [](#our-sets), $A\cup B = \{1,2,3,4,6,8,10\}$
+The **Union** of two sets is written $A\cup B$; this means 'either A, or B, or both'. For [our sets](#our-sets), $A\cup B = \{1,2,3,4,6,8,10\}$
 
 ## Intersection $A\cap B$
 
@@ -145,29 +143,13 @@ The **Intersection** of two sets is written $A\cap B$; this means 'both A and B'
 :::{image} /figures/AandB.png
 :::
 
-Venn diagram illustrating left: the Union and right: the Intersection of the sets A and B.
 ::::
 
-## Independence and Mutual Exclusivity
 
-Two sets are **Independent** if they are defined without reference to one another. Changing one does not impact the other. We can construct **dependent** sets like this for example:
-* $K = {\mathbb{N}}$
-* $J = {K^2}$
-
-Two sets are **Mutually Exclusive** if there is no overlap between them. Another word for this is **Disjoint**.
+The **Complement of the Union** is $(A\cup B)'$ and means 'Not in A and not in B (and not in both)'.
 
 
-## Probability of Intersection (Joint Probability)
-
-* The **Probability of Intersection** $P(A\cap B)$ is the probability that **both A and B** are true. 
-* This is the **Joint Probability**
-* This is zero when A and B are **Disjoint** (no overlap: **Mutually Exclusive**)
-* $P(A\cap B) =0$ when $(A\cap B)'$
-
-For our sets [](#our-sets):
-* $A\cap B = \{2,4\}$
-* $P(A\cap B) = 0.2$
-* $A$ and $B$ are not mutually exclusive.
+The **Complement of the Intersection** is $(A\cap B)'$ and means 'Not in both A and B'.
 
 
 ::::{grid} 1 1 2 2
@@ -178,9 +160,31 @@ For our sets [](#our-sets):
 :::{image} /figures/NotAandB.png
 :::
 
-Venn diagram illustrating the complement of left: the Union and right: the Intersection of the sets A and B.
 ::::
 
+
+
+## Independence and Mutual Exclusivity
+
+Two sets are **Independent** if they are defined without reference to one another (changing one does not impact the other). We could construct **dependent** sets like this for example:
+* $K = {\mathbb{N}}$
+* $J = {K^2}$
+
+Two sets are **Mutually Exclusive** if there is no overlap between them. Another word for this is **Disjoint**.
+
+
+## Probability of Intersection (Joint Probability)
+
+The **Probability of Intersection** $P(A\cap B)$ is the probability that **both A and B** are true. This is also called the **Joint Probability** of A and B.
+
+The Joint Probability is zero when A and B are **Disjoint** (no overlap: **Mutually Exclusive**):
+
+$P(A\cap B) =0$ when $(A\cap B)'$
+
+For [our sets](#our-sets):
+* The intersection is $A\cap B = \{2,4\}$
+* The Joint probability is $P(A\cap B) = 0.2$
+* $A$ and $B$ are not mutually exclusive.
 
 
 ## Probability of Union
@@ -189,28 +193,26 @@ The **Probability of Union** $P(A\cup B)$ is the probability that either A or B 
 
 $$\label{eq:prob-union} P(A\cup B) =P(A)+P(B) - P(A\cap B)$$
 
-Note that the subtraction of the intersection $P(A\cap B)$ in [](#eq:prob-union) is to remove the double counting of that intersection, as illustrated in [](#fig:axiom3).
-
-For our sets [](#our-sets): $P(A\cup B) = 0.5 +0.4 - 0.2 = 0.7$
+Note that the subtraction of the intersection $P(A\cap B)$ in [](#eq:prob-union) is to remove the double counting of that intersection, as illustrated in [](#fig:venn_axiom3).
 
 :::{figure} 
-:label: fig:venn_notAandB
+:label: fig:venn_axiom3
 :align: left
-![](https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/Axiom3.png)
+![](/figures/Axiom3.png)
 :::
+
+For [our sets](#our-sets): $P(A\cup B) = 0.5 +0.4 - 0.2 = 0.7$
+
 
 ## The Kolmogorov Axioms
 
-> [Andrey Kolmogorov](https://en.wikipedia.org/wiki/Andrey_Kolmogorov) was a Russian mathematician. You may have heard of the 'KS test', which is used to eg check for overtraining by comparing ML classifier outputs for test and train samples. This is named for Kolomogorov and Nikolai Smirnov. Also 'KANs' - Kolmogorov Arnold Networks - see [arXiv:2404.19756](https://arxiv.org/abs/2404.19756).
+> [Andrey Kolmogorov](https://en.wikipedia.org/wiki/Andrey_Kolmogorov) was a Russian mathematician. You may have heard of the 'KS test', which is used to eg check for overtraining by comparing ML classifier outputs for test and train samples. This is named for Kolomogorov and Nikolai Smirnov. See also 'KANs' - Kolmogorov Arnold Networks [arXiv:2404.19756](https://arxiv.org/abs/2404.19756).
 
 1. The **Non-Negativity Axiom**
-: for all events A , $P(A) \geq 0$: 'the probability of any event A must be a real number greater than zero.\
-2. The **Normalisation Axiom**
-$P(S) =1$: the probability of the entire sample space is one.\
+: for all events A , $P(A) \geq 0$: 'the probability of any event A must be a real number greater than zero.
+2. The **Normalisation Axiom** $P(S) =1$: the probability of the entire sample space is one.
 3. The **Countable Additivity Axiom**
-: if A and B are **mutually exclusive**, $P(A\cup B) =P(A)+P(B)$: the
-probability of their union is the sum of their individual
-probabilities.
+: if A and B are **mutually exclusive**, $P(A\cup B) =P(A)+P(B)$: the probability of their union is the sum of their individual probabilities.
 
 
 ## Conditional Probability $P(A | B)$
@@ -219,29 +221,25 @@ The **Conditional Probability** is most usefully written:
 
 $$\label{eq:conp} P(A | B) = \dfrac{P(A\cap B)}{P(B)}$$
 
-The notation $ P(A | B) $ means 'the probability of A, given that B is true'. The condition is that B is true.
+The notation $ P(A | B) $ means 'the probability of A, given that B is true'. 
 
-> When we define a function of some variables and parameters as $f(x,y;\theta)$, the semicolon ; is used to indicate the conditional 'pipe' |. The function has variables x and y, and is conditional on the parameter $\theta$.
+> When we define a function of some variables and parameters as $f(x,y;\theta)$, the semicolon ";" is used to indicate the conditional, just as the pipe "|" is used to indicate the conditional in standard probability notation. The function has variables x and y, and is conditional on the parameter $\theta$.
 
-The number of elements in the intersection is $N(A \cap B)$.
+We can understand where [](#eq:conp) comes from as follows:
 
-The proportion of A in B is
-$\dfrac{N(A\cap B)}{N(B)}$
+1. The number of elements in the intersection is $N(A \cap B)$.
 
-Relative to the original Sample Space S this is:
-$\dfrac{N(A\cap B)/N(S) }{N(B)/N(S)}$
+2. The proportion of A in B is $\dfrac{N(A\cap B)}{N(B)}$
 
-These are **probabilities**:
-$\dfrac{P(A\cap B)}{P(B)}$
+3. Relative to the original Sample Space S this is: $\dfrac{N(A\cap B)/N(S) }{N(B)/N(S)}$
 
-Given that we demand the element must exist in B, this is the
-probability of finding it in A.
+4. These are **probabilities**: $\dfrac{P(A\cap B)}{P(B)}$
+
+The condition is that the element must exist in B; P(B) is our denominator. 
 
 
-For our sets, [](#our-sets):
-* $S = \{1,2,3,4,5,6,7,8,9,10\}$
-* $A = \{2,4,6,8,10\}$
-* $B = \{1,2,3,4\}$
+For [our sets](#our-sets):
+
 * $A\cap B = \{2,4\}$: Events in both A and B
 * $N(A \cap B) = 2$: Count of events in both A and B
 * $\dfrac{N(A\cap B)}{N(B)} = \dfrac{2}{4}$: Fraction of B that is also in A
@@ -253,11 +251,8 @@ If A and B are **Independent**, the conditional probability is $P(A | B)  = P(A)
 This is because independence means that B has no effect on A and vice
 versa.
 
-Our example sets are independent. $P(A| B) = P(A) = 0.5$.
+Our example sets are independent: $P(A| B) = P(A) = 0.5$.
 
-
-It is common to use conditional probabilities when we have a set of outcomes (A) and a set of choices (B). The **Conditional Probability** then gives us an answers to the question
-> If I choose B, what is the probability of the outcome A?
 
 Conditional Probability looks harmless enough, but can have some counter-intuitive results illustrated very well in the **Monty Hall Problem**.
 
@@ -279,7 +274,7 @@ $P(six \cap six) = P(six) P(six) = \dfrac{1}{6} \dfrac{1}{6}  = \dfrac{1}{36}$
 
 ## Total Probability (Marginal Probability)
 
-In [](#fig:venn_tot) I have divided S into four quadrants, each of which is a set $B_i$. There are N=4 disjoint sets $B_i, i=1,2,3,4$ intersecting with A. 
+In [](#fig:venn_tot) I have divided S into four quadrants, each of which is a set $B_i$. There are N=4 disjoint sets $B_i$ intersecting with A. 
 
 The **Total Probability** of A can be written $\label{eq:totp1} P(A) = \sum \limits_{i=1}^4 P(A\cap B_i)$.
 
@@ -291,9 +286,9 @@ The Total Probability P(A) is also referred to as the **Marginal Probability** o
 ![](https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/AandB1.png)
 :::
 
-Because we know how to write the intersection in terms of the conditional probability ([](eq:conp)), we can express the Total Probability of A as [](eq:totp).
+Because we know how to write the intersection in terms of the conditional probability [](eq:conp), we can express the Total Probability of A as [](eq:totp).
 
-$$\label{eq:totp} P(A) = \sum \limits_i^N P(A | B_i) P(B_i)$$.\
+$$\label{eq:totp} P(A) = \sum \limits_i^N P(A | B_i) P(B_i)$$.
 
 This may seem a bit contrived, but we will see soon that it is
 useful.
@@ -301,13 +296,16 @@ useful.
 
 ## Bayes' Theorem
 
-We have the **Conditional Probability** $P(A\cap B) = P(A | B) P(B)$, and this applies to any sets A and B, so we can also write $P(B\cap A) = P(B | A) P(A)$.
+To write down Bayes theorem we need only the **Conditional Probability** [](#eq:conp), and to observe that:
 
-The intersection is not directional, so $P(B\cap A) \equiv  P(A\cap B)$, and if the left hand sides of the two forms are equivalent, the right hand sides are also equivalent:
+1. [](#eq:conp) applies to any sets A and B, so we can switch A and B and remain true:
+$$\label{eq:conpB} P(B | A) = \dfrac{P(B\cap A)}{P(A)}$$
 
-$ P(A | B) P(B) = P(B | A) P(A)$
+2. The intersection is not directional, so $P(B\cap A) \equiv  P(A\cap B)$: The LHS of [](#eq:conp) is equal to the LHS of [](#eq:conpB).
 
-This is Bayes' theorem, more usually rearranged as:
+3. The RHS of [](#eq:conp) must equal the RHS of [](#eq:conpB), giving us Bayes' theorem: $ P(A | B) P(B) = P(B | A) P(A)$.
+
+This is more usually rearranged as:
 
 $$
 \label{eq:bayes}

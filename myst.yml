@@ -25,7 +25,11 @@ project:
     - file: Probability.md
     - file: DescribingData.md
     - file: Normal.md
-    
+
+numbering:
+    math:
+      reset: false
+      
 site:
   template: book-theme
   # options:

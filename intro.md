@@ -9,55 +9,55 @@ These notes are a work in progress for students of the Data Analysis Techniques 
 This module explores how to use probability and statistics to analyse data.
 
 * Terminology & Concepts
-[] Define hypothesis, model, theory
-[] Understand the distinction between a population and a sample
-[] Give examples of a random variable, a parameter, and a summary statistic
-[] Calculate the mean, variance, and standard deviation of a dataset
-[] Explain what is meant by the Expectation Value
-[] Generate uniformly distributed and normally distributed pseudorandom numbers
-[] Describe the difference between Discrete and Continuous RVs, and give examples of each
-[] Describe in words the statement of the Law of Large Numbers
+- [] Define hypothesis, model, theory
+- [] Understand the distinction between a population and a sample
+- [] Give examples of a random variable, a parameter, and a summary statistic
+- [] Calculate the mean, variance, and standard deviation of a dataset
+- [] Explain what is meant by the Expectation Value
+- [] Generate uniformly distributed and normally distributed pseudorandom numbers
+- [] Describe the difference between Discrete and Continuous RVs, and give examples of each
+- [] Describe in words the statement of the Law of Large Numbers
 
 
 * Probability Essentials
-[] Describe the Frequentist and Bayesian interpretations of probability.
-[] Understand and express relationships between sets
-[] Correctly interpret Venn diagrams
-[] Calculate the union and intersection of datasets
-[] Describe the meaning of Independent and Mutually Exclusive (Disjoint) sets
-[] Use the formula for calculating the conditional probability
-[] Describe the terms present in Bayes' theorem
+- [] Describe the Frequentist and Bayesian interpretations of probability.
+- [] Understand and express relationships between sets
+- [] Correctly interpret Venn diagrams
+- [] Calculate the union and intersection of datasets
+- [] Describe the meaning of Independent and Mutually Exclusive (Disjoint) sets
+- [] Use the formula for calculating the conditional probability
+- [] Describe the terms present in Bayes' theorem
 
 * The Normal Distribution
-[] Explain why the normal distribution is so prevalent
-[] Understand the concept of a Continuous Random Variables
-[] Explain why the CDF, rather than PDF, must be used for calculating probabilities for continous RVs
-[] Plot the Normal PDF and CDF 
-[] State the formula for calculating the Z value, and calculate Z values
-[] Describe the terms present in the Gaussian PDF
-[] Describe the location and scale parameters, and demonstrate the effect of changing them
-[] State the Central Limit Theorem
+- [] Explain why the normal distribution is so prevalent
+- [] Understand the concept of a Continuous Random Variables
+- [] Explain why the CDF, rather than PDF, must be used for calculating probabilities for continous RVs
+- [] Plot the Normal PDF and CDF 
+- [] State the formula for calculating the Z value, and calculate Z values
+- [] Describe the terms present in the Gaussian PDF
+- [] Describe the location and scale parameters, and demonstrate the effect of changing them
+- [] State the Central Limit Theorem
 
 * Statistics Essentials
-[] Understand the impact of allowing bias to pollute science 
-[] State the criteria for constructing a hypothesis test
-[] Explain what is meant by Critical Regions and Significance Levels
-[] Explain the elements in a Confusion Matrix (True/False Positive/Negative)
-[] Distinguish between Type 1 and Type 2 Errors
-[] Know what can be inferred from a p value
-[] Calculate the p value for a given Test and dataset
-[] Calculate p values from Z values and vice versa
-[] Understand the meanings of the terms Confidence Level, Interval, and Limits. 
+- [] Understand the impact of allowing bias to pollute science 
+- [] State the criteria for constructing a hypothesis test
+- [] Explain what is meant by Critical Regions and Significance Levels
+- [] Explain the elements in a Confusion Matrix (True/False Positive/Negative)
+- [] Distinguish between Type 1 and Type 2 Errors
+- [] Know what can be inferred from a p value
+- [] Calculate the p value for a given Test and dataset
+- [] Calculate p values from Z values and vice versa
+- [] Understand the meanings of the terms Confidence Level, Interval, and Limits. 
 
 * Normal Tests
-[] State what it means for data to be Independent and Identically Distributed (IID)
-[] Define the Standard Error on the Mean (SEM)
-[] Calculate the SEM 
-[] Understand the limitations introduced by small datasets
-[] Design a Z Test to compare the mean of a dataset with the null hypothesis, and calculate the test statistic
-[] Describe the T Test and state when it is preferred over the Z Test
-[] Design a "Student's" T Test to compare the means of two datasets, and calculate the test statistic
-[] Design a F Test (AnoVa) to compare the variances of two datasets, and calculate the test statistic
+- [] State what it means for data to be Independent and Identically Distributed (IID)
+- [] Define the Standard Error on the Mean (SEM)
+- [] Calculate the SEM 
+- [] Understand the limitations introduced by small datasets
+- [] Design a Z Test to compare the mean of a dataset with the null hypothesis, and calculate the test statistic
+- [] Describe the T Test and state when it is preferred over the Z Test
+- [] Design a "Student's" T Test to compare the means of two datasets, and calculate the test statistic
+- [] Design a F Test (AnoVa) to compare the variances of two datasets, and calculate the test statistic
 
 
 
@@ -66,9 +66,9 @@ This module explores how to use probability and statistics to analyse data.
 
 
 * Probability Distribution Functions
-[] Explain what is meant by a Bernoulli Trial
-[] Plot the Bernoulli PMF for some data
-[] Calculate Bernoulli probabilities using the Probability Mass Function
+- [] Explain what is meant by a Bernoulli Trial
+- [] Plot the Bernoulli PMF for some data
+- [] Calculate Bernoulli probabilities using the Probability Mass Function
 [] 
 
 

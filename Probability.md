@@ -19,9 +19,9 @@ A Frequentist, Fernanda, and a Bayesian, Betty, have each misplaced their keys. 
 Fernanda and Betty.
 :::
 
-Fernanda: my keys are in an unknown location in my home. There is no "probability of them being by the sink", because they are either in a place or not. The only way to locate them is to look in every location methodically.
+**Fernanda**: my keys are in an unknown location in my home. There is no "probability of them being by the sink", because they are either in a place or not. The only way to locate them is to look in every location methodically.
 
-Betty: my keys are in an unknown location in my home. On the last ten occasions I lost them, they were by the sink three times, so there are most likely to be by the sink and I will start my search there.
+**Betty**: my keys are in an unknown location in my home. On the last ten occasions I lost them, they were by the sink three times, so there are most likely to be by the sink and I will start my search there.
 
 
 ## Notation
@@ -71,15 +71,10 @@ For [](#our-sets), A and B are proper subsets of S.
 
 Venn diagrams are helpful for visualising relationships. Here $A\subset S$ and $B\subset S$.
 
-:::{figure} https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/SAB.png
-:label: fig:sab
+::::{grid} 1 1 3 3
 
-Venn diagrams showing datasets S, A, and B.
+:::{image} /figures/S.png
 :::
-
-## Test Grid
-
-::::{grid} 1 1 2 2
 
 :::{image} /figures/A.png
 :::
@@ -87,50 +82,24 @@ Venn diagrams showing datasets S, A, and B.
 :::{image} /figures/B.png
 :::
 
+Venn diagrams showing datasets S, A, and B.
 ::::
-
-
-
-
-## Test 1
-
-:::{figure} :label: my-figure :class: grid grid-cols-2 items-end gap-4
-
-![First image description](/figures/A.png)
-![Second image description](/figures/B.png)
-
-Main caption for both figures.
-:::
-
-
-## Test 2
-
-:::{figure} :label: my-figure :class: grid grid-cols-2 items-end 
-
-![First image description](/figures/A.png)
-![Second image description](/figures/B.png)
-
-Main caption for both figures.
-:::
-
 
 
 ### Complement
 
 The **Complement** of a set is denoted by a prime, $A'$; this means 'not A'. Other notations commonly used for the complement are $A^{\complement}$, $\overline{A}$, and others.
 
-:::{figure} fig:venn_complement
-:align: center
+::::{grid} 1 1 2 2
 
-```{image} https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/NotA.png
-:width=45%
-```
-```{image} https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/NotB.png
-:width=45%
-```
+:::{image} /figures/NotA.png
+:::
+
+:::{image} /figures/NotB.png
+:::
 
 Venn diagrams showing datasets The Complement of A and B.
-:::
+::::
 
 
 
@@ -138,27 +107,29 @@ Venn diagrams showing datasets The Complement of A and B.
 
 The **Union** of two sets is written $A\cup B$; this means 'either A, or B, or both'. For our sets [](#our-sets), $A\cup B = \{1,2,3,4,6,8,10\}$
 
-:::{figure} 
-:label: fig:venn_union
-:align: left
-![](https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/AorB.png)
-
-Venn diagram illustrating the Union of the sets A and B.
-:::
-
-
 ### Intersection
 
 The **Intersection** of two sets is written $A\cap B$; this means 'both A and B'. For our sets [](#our-sets), $A\cap B = \{2,4\}$
 
-:::{figure} 
-:label: fig:venn_intersection
-:align: left
 
-![](https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/AandB.png)
+::::{grid} 1 1 2 2
 
-Venn diagram illustrating the Intersection of the sets A and B.
+:::{image} /figures/AorB.png
 :::
+
+:::{image} /figures/AandB.png
+:::
+
+Venn diagram illustrating left: the Union and right: the Intersection of the sets A and B.
+::::
+
+## Independence and Mutual Exclusivity
+
+Two sets are **Independent** if they are defined without reference to one another. Changing one does not impact the other. We can construct **dependent** sets like this for example:
+* $K = {\mathbb{N}}$
+* $J = {K^2}$
+
+Two sets are **Mutually Exclusive** if there is no overlap between them. Another word for this is **Disjoint**.
 
 
 ## Axioms
@@ -172,22 +143,27 @@ For our sets [](#our-sets):
 * $P(A\cap B) = 0.2$
 * $A$ and $B$ are not mutually exclusive.
 
-:::{figure} 
-:label: fig:venn_notAandB
-:align: left
-![](https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/NotAandB.png)
 
-Venn diagram illustrating the complement of both A and B.
+::::{grid} 1 1 2 2
+
+:::{image} /figures/NotAorB.png
 :::
 
+:::{image} /figures/NotAandB.png
+:::
 
-### The **Probability of Union** $P(A\cup B)$
-:
-the probability that either A or B or both are true. 
+Venn diagram illustrating the complement of left: the Union and right: the Intersection of the sets A and B.
+::::
 
-$$P(A\cup B) =P(A)+P(B) - P(A\cap B)$$
 
-Our sets: $P(A\cup B) = 0.5 +0.4 - 0.2 = 0.7$
+
+### The **Probability of Union** $P(A\cup B)$ is the probability that either A or B or both are true. 
+
+$$\label{eq:prob-union} P(A\cup B) =P(A)+P(B) - P(A\cap B)$$
+
+Note that the subtraction of the intersection $P(A\cap B)$ in [](#eq:prob-union) is to remove the double counting of that intersection, as illustrated in [](#fig:axiom3).
+
+For our sets [](#our-sets): $P(A\cup B) = 0.5 +0.4 - 0.2 = 0.7$
 
 :::{figure} 
 :label: fig:venn_notAandB
@@ -197,28 +173,29 @@ Our sets: $P(A\cup B) = 0.5 +0.4 - 0.2 = 0.7$
 
 ### The Kolmogorov Axioms
 
+> [Andrey Kolmogorov](https://en.wikipedia.org/wiki/Andrey_Kolmogorov) was a Russian mathematician. You may have heard of the 'KS test', which is used to eg check for overtraining by comparing ML classifier outputs for test and train samples. This is named for Kolomogorov and Nikolai Smirnov. Also 'KANs' - Kolmogorov Arnold Networks - see [arXiv:2404.19756](https://arxiv.org/abs/2404.19756).
+
 1. The **Non-Negativity Axiom**
 : for all events A , $P(A) \geq 0$: 'the probability of any event A must be a real number greater than zero.\
 2. The **Normalisation Axiom**
 $P(S) =1$: the probability of the entire sample space is one.\
 3. The **Countable Additivity Axiom**
-: if A and B are mutually exclusive, $P(A\cup B) =P(A)+P(B)$: the
+: if A and B are **mutually exclusive**, $P(A\cup B) =P(A)+P(B)$: the
 probability of their union is the sum of their individual
 probabilities.
 
 
 ## Conditional Probability 
 
-The **Conditional Probability**
+The **Conditional Probability** is most usefully written:
+
 $$\label{eq:conp} P(A | B) = \dfrac{P(A\cap B)}{P(B)}$$
 
+The notation $ P(A | B) $ means 'the probability of A, given that B is true'. The condition is that B is true.
 
-Example:\
-$A = \{2,4,6,8,10\}$
-$B = \{1,2,3,4\}$
-$A\cap B = \{2,4\}$
+> When we define a function of some variables and parameters as $f(x,y;\theta)$, the semicolon ; is used to indicate the conditional 'pipe' |. The function has variables x and y, and is conditional on the parameter $\theta$.
 
-The number of elements in A and B is $N(A \cap B)$
+The number of elements in the intersection is $N(A \cap B)$.
 
 The proportion of A in B is
 $\dfrac{N(A\cap B)}{N(B)}$
@@ -232,8 +209,18 @@ $\dfrac{P(A\cap B)}{P(B)}$
 Given that we demand the element must exist in B, this is the
 probability of finding it in A.
 
-If A and B are **Independent**, the conditional probability
-$P(A | B)  = P(A)$.
+
+For our sets, [](#our-sets):
+* $S = \{1,2,3,4,5,6,7,8,9,10\}$
+* $A = \{2,4,6,8,10\}$
+* $B = \{1,2,3,4\}$
+* $A\cap B = \{2,4\}$: Events in both A and B
+* $N(A \cap B) = 2$: Count of events in both A and B
+* $\dfrac{N(A\cap B)}{N(B)} = \dfrac{2}{4}$: Fraction of B that is also in A
+* $P(A | B)  = 0.5 $: Probability of A given that we demand B.
+
+
+If A and B are **Independent**, the conditional probability is $P(A | B)  = P(A)$.
 
 This is because independence means that B has no effect on A and vice
 versa.
@@ -241,45 +228,32 @@ versa.
 Our example sets are independent. $P(A| B) = P(A) = 0.5$.
 
 
-Using the Conditional Probability It is common to use conditional
-probabilities when we have a set of outcomes (A) and a set of choices
-(B).
+It is common to use conditional probabilities when we have a set of outcomes (A) and a set of choices (B). The **Conditional Probability** then gives us an answers to the question
+> If I choose B, what is the probability of the outcome A?
 
-The Conditional Probability then gives us an answers to the question
-: If I choose B, what is the probability of the outcome A?
+Conditional Probability looks harmless enough, but can have some counter-intuitive results illustrated very well in the **Monty Hall Problem**.
 
-Conditional Probability looks harmless enough, but can have some
-counter-intuitive results illustrated very well in the **Monty Hall
-Problem**.
-
-
-## The Monty Hall Problem
-
-TBD
 
 
 ## The Multiplication Rule
 
-Rearrange the **Conditional Probability**
-: $P(A | B) = \dfrac{P(A\cap B)}{P(B)}\;\; \therefore\;\;  P(A\cap B) = P(A | B) P(B)$
+Rearranging [](eq:conp): $P(A\cap B) = P(A | B) P(B)$ and noting that for **Independent** A and B, $P(A | B)=P(A)$, we get the very useful **Multiplication Rule**:
 
-**The Multiplication Rule**
+**If A and B are independent**, the probability of the intersection of A and B is equal to the product of their individual probabilities: 
 
-**If A and B are independent**, the probability
-of the intersection of A and B is equal to the product of their
-individual probabilities: $P(A\cap B) = P(A) P(B)$.
+$$\label{eq:multrule} P(A \cap B) = P(A) P(B)$$
 
-:::{tip}
-Example: I roll a dice twice and get two sixes:
+
+Example: I roll a dice twice. What is the probability I will get two sixes?
 
 $P(six \cap six) = P(six) P(six) = \dfrac{1}{6} \dfrac{1}{6}  = \dfrac{1}{36}$
-:::
+
 
 ## The Total Probability
 
-In [](#eq:totp1) there are N=4 disjoint sets $B_i$ intersecting with A, we can see that 
+In [](#fig:venn_tot) I have divided S into four quadrants, each of which is a set $B_i$. There are N=4 disjoint sets $B_i, i=1,2,3,4$ intersecting with A. 
 
-$$\label{eq:totp1} P(A) = \sum \limits_i^4 P(A\cap B_i)$$.
+The Total Probability of A can be written $\label{eq:totp1} P(A) = \sum \limits_{i=1}^4 P(A\cap B_i)$.
 
 
 :::{figure} 
@@ -288,7 +262,7 @@ $$\label{eq:totp1} P(A) = \sum \limits_i^4 P(A\cap B_i)$$.
 ![](https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/AandB1.png)
 :::
 
-Comparing [](#eq:totp1) with [](#eq:conp), we can write the **Law of Total Probability**:
+Because we know how to write the intersection in terms of the conditional probability ([](eq:conp)), we can express the Total Probability of A as [](eq:totp).
 
 $$\label{eq:totp} P(A) = \sum \limits_i^N P(A | B_i) P(B_i)$$.\
 
@@ -298,12 +272,13 @@ useful.
 
 # Bayes' Theorem
 
-We have the **Conditional Probability**:\
+We have the **Conditional Probability** $P(A\cap B) = P(A | B) P(B)$, and this applies to any sets A and B, so we can also write $P(B\cap A) = P(B | A) P(A)$.
 
-$$P(A\cap B) = P(A | B) P(B)$$, therefore
-$$P(B\cap A) = P(B | A) P(A)$$\
+The intersection is not directional, so $P(B\cap A) \equiv  P(A\cap B)$, and if the left hand sides of the two forms are equivalent, the right hand sides are also equivalent:
 
-**Bayes' Theorem** simply combines these:\
+$ P(A | B) P(B) = P(B | A) P(A)$
+
+This is Bayes' theorem, more usually rearranged as:
 
 $$
 \label{eq:bayes}
@@ -318,115 +293,12 @@ P(B)
 \end{aligned}
 $$
 
+Injecting our independent example sets [](#our-sets) into Bayes' theorem is a little anticlimactic:
 
-On the left we have P of A given B, and on the right P of B given
-A.
+* $P(A | B) = P(A)$ because A and B are independent
+* Bayes theorem tells us that $P(A) = \dfrac{P(B) P(A)}{P(B)}$ which is just basic algebra.
 
-
-Bayes' Theorem for our sets
-
-$$
-\label{bayes-oursets}
-\begin{aligned}
-P(A | B) = 
-\dfrac{
-P(B|A)P(A)
-}
-{
-P(B)
-}
-P(A| B) = P(A) = 0.5
-P(B| A) = P(B) = 0.4
-\end{aligned}
-$$
-
-:::{tip}
-Bayes' Theorem gets interesting when we consider that it applies to
-**any sets $A$ and $B$ that satisfy Kolmogorov's Axioms**.
+Bayes' Theorem gets interesting when we consider that it applies to **any sets $A$ and $B$ that satisfy Kolmogorov's Axioms**.
 
 
 
-
-
-## Refs
-:::{note}
-This is note.
-:::
-
-This is an equation:
-
-:::{math}
-:name: eq:book
-
-x \times y = z
-:::
-
-Here is a picture: [](#fig:special-sets) 
-
-:::{note} Click Me! 👈
-:class: dropdown
-👋 This could be a solution to a problem or contain other detailed explanations.
-:::
-
-
-```{code-cell} python
-hello = "hello"
-there = "there"
-phrase = f"{hello}, {there}!"
-print(phrase)
-```
-
-
-::::{grid}
-:gutter: 2
-
-:::{grid-item}
-:outline:
-A
-:::
-:::{grid-item}
-:outline:
-B
-:::
-:::{grid-item}
-:outline:
-C
-:::
-:::{grid-item}
-:outline:
-D
-:::
-
-::::
-
-Cards:
-<!-- https://jupyter-book.readthedocs.io/v1/content/components.html#content-cards -->
-
-::::{grid}
-:gutter: 3
-
-:::{grid-item-card} One!
-Here's the first card.
-:::
-
-:::{grid-item-card} Two!
-Here's the second card.
-:::
-
-:::{grid-item-card} Three!
-Here's the third card.
-:::
-::::
-
-
-Tabs:
-
-````{tab-set}
-```{tab-item} Tab 1 title
-My first tab
-```
-
-```{tab-item} Tab 2 title
-My second tab with `some code`!
-```
-````

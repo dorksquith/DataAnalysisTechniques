@@ -12,27 +12,23 @@ kernelspec:
 # Terminology & Concepts
 
 
-Make sure you are familiar with these before embarking on the topics in this module.
+<!--Make sure you are familiar with these before embarking on the topics in this module.-->
 
 ## Hypotheses, Models, and Theories
 
 A **Hypothesis** is an educated guess at the outcome of a specific event. 
 
 
-> A Null Hypothesis is one that assumes there is no relationship between two variables, and an Alternative Hypothesis is one that assumes there is. 
+> The **Null Hypothesis**, usually denoted $H_0$, is one that assumes there is no relationship between two variables, and the **Alternative Hypothesis**, usually denoted $H_1$, is one that assumes there is. 
 
-We generally use the $H_0$ as shorthand for "the Null Hypothesis" and $H_1$ or $H_a$ as shorthand for "the Alternative Hypothesis".
-
-Examples:
+For example:
 - $H_0$: There is no correlation between how long we sleep and how long we live.
 - $H_1$: People who sleep well live longer.
-- $H_0$: There is no correlation between the messiness of someone's office and that of their home.
-- $H_1$: People with messy offices have tidy homes.
 
 
 
 
-A **Model** is an object, a mathematical equation, or a computer program that can explain how something works, and/or be used to make predictions. 
+A **Model** is an object, a computer program, or a mathematical equation that can explain how something works, and/or be used to make predictions. 
 
 
 :::{figure} /figures/models
@@ -42,7 +38,7 @@ A Scale Model of a Delorian, a Computer Model of Earth's temperature, and the St
 :::
 
 
-Examples:
+For example:
 - a Scale Model of a delorian (a toy car based on time-travelling car in back to the future movies, which captures the visual appearance of the machine)  
 - a Climate Model (a complex computer program that tells us how much trouble we are in existentially) 
 - the Standard Model of particle physics (a set of mathematical equations describing how the universe works at a fundamental level)
@@ -51,16 +47,22 @@ Examples:
 > When statisticians talk about Toy Models (often shortened to "Toys"), they are referring to a mathematical model that has been simplified. 
 
 
-A **Theory** is the description of a set of models, and the relationships between them. It is complete, and is a candidate explanation for the "Underlying Truth". The Underlying Truth is an abstract concept which cannot be known with certainty. We can test our models and theories, and those which we fail to prove wrong can become highly esteemed. 
+A **Theory** is the description of a set of models, and the relationships between them. It is complete, and is a candidate explanation for the "Underlying Truth". The Underlying Truth is an abstract concept which cannot be known with certainty. We can test our models and theories, and those which we fail to prove wrong tend to grow in esteem. 
 
-> It is not possible to prove that a hypotheses, model, or theory is correct. We can only prove them wrong. 
+> It is not possible to prove that a hypotheses or theory is correct. We can only endeavour to prove them wrong. 
 
 
-A theory that passes all the tests accessible by our imaginations and technological capability may well be wrong - we just haven't asked the right questions or gathered enough data to know yet.
+A theory that passes all the tests accessible by our imaginations and technological capability may well be wrong - we just haven't asked the right questions or gathered enough data to see it.
 
 ## Population and Sample
 
 To test our models we must gather data as evidence. How much data do we need? No amount is ever enough!
+
+:::{figure} /figures/HeartData.jpeg
+:label: fig:heart-data
+
+A robot who loves data.
+:::
 
 The **Population** refers to the maximum number of data points we can possibly gather in terms of the subject of our hypothesis or model. If we are modelling adult human heights in 2026, the population would be all human beings alive in 2026. If we are modelling the heights of women between the ages of 22-25, our population would be all women between the ages of 22 and 25.
 
@@ -71,7 +73,16 @@ A **Sample** is a subset of the population. If certain criteria are met, we can 
 
 ## Random Variables, Parameters, and Statistics
 
-An example of a **Variable** is height. It is a label for a property that can be measured. Any particular heights that we are able to measure are samples from the theoretical distribution of all possible heights. This theoretical distribution has an infinite number of data points, and it lives in the theoretical universe. We call variables such as height **Random Variables (RVs)** because they are in a sense randomly selected instances of height from that infinite-data distribution. The "random" refers to our understanding that the heights of everyone alive today are no more special or representative of the truth than the heights of everyone alive 100 years ago.
+An example of a **Variable** is height. It is a label for a property that can be measured. Any particular heights that we are able to measure are samples from the theoretical distribution of all possible heights. This underlying truth distribution has an infinite number of data points, and it lives in the theoretical universe. 
+
+
+:::{figure} /figures/TheoreticalUniverse.png
+:label: fig:theoretical-universe
+
+An attempt at a visual explanation of the Underlying Truth distribution.
+:::
+
+We call variables such as height **Random Variables (RVs)** because they are in a sense randomly selected instances of height from that infinite-data distribution. The "random" refers to our understanding that the heights of everyone alive today are no more special or representative of the truth than the heights of everyone alive 100 years ago.
 
 A **Parameter** is a number that describes some characteristic of the true underlying distribution, for example the mean height of all humans. 
 

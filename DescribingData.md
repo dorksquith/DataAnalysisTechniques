@@ -114,22 +114,24 @@ It is the sample Standard Deviation that we use to quantify the spread of our da
 * $V[x]  = \frac{1}{N} \sum\limits_i^N  (x_i - \overline{x})^2$: the sample variance in terms of the sample mean.
 * $V[x]  = \sum\limits_i^N  (x_i - \overline{x})^2 p_i$ in terms of the sample mean and the measurement probabilities $p_i$.
 
-To write down a form for the True Variance, we can:
+To write down a form for the True Variance, we can follow a few logical steps:
 
-* Use the expectation $E[x]\equiv \mu$ in place of the sample mean $\overline{x}$
+Sample Mean to True Mean
+: Use the expectation $E[x]\equiv \mu$ in place of the sample mean $\overline{x}$
 
 $(x_i - \overline{x})^2\;\; \rightarrow \;\;(x_i - \mu)^2$
 
+Known probabilty and Infinite data
+: Use the probability $p_i$ instead of normalising by the number of events, and let $N=\infty$
 
-* Use the probability $p_i$ instead of the normalisation by number of events, and let $N=\infty$
+$\frac{1}{N} \sum\limits_i^N (x_i - \mu)^2 \;\; \rightarrow \sum\limits_i^\infty (x_i - \mu)^2 p_i$
 
-$\frac{1}{N} \sum\limits_i^N (x_i - \mu)^2 \;\; \rightarrow \sum\limits_i^\infty (x_i - \mu)^2 p_i
+Expectation definition
+: Use [](#eq:expect) to note that:
 
-* Use the definition of the expectation $E[X]  = \sum\limits_i^\infty  x_i p_i$ to note that:
+$E[X^2]  = \sum\limits_i^\infty  x^2_i p_i \;\; \therefore \;\; E[(X-\mu)^2]  = \sum\limits_i^\infty  (x-\mu)^2 p_i$
 
-$E[X^2]  = \sum\limits_i^\infty  x^2_i p_i \;\; \therefore \;\; E[(X-\mu)^2]  = \sum\limits_i^\infty  (x-\mu)^2_i p_i$
-
-This allows us to write the true variance in terms of the expectation:
+The above steps allow us to write the true variance in terms of the expectation:
 
 $$
 \label{eq:truevar}
@@ -143,7 +145,7 @@ $$
 V[X] = E[X^2] - E^2[X]
 $$
 
-:::{dropdown} Proof that [](eq:truevar2) and [](eq:truevar1) are equivalent
+:::{dropdown} Proof that [](#eq:truevar1) and [](#eq:truevar2) are equivalent
 $$
 \begin{aligned}
 V[X] & = E[\, X^2 + E^2[X] - 2X\,E[X] \,]\\

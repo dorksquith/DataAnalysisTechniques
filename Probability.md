@@ -15,9 +15,12 @@ There are two ways of viewing probabilities: Frequentist and Bayesian.
 
 **Bayesian**: the probability of something happening is as per the frequentist definition, but we must "weight" this using our relevant prior knowledge.
 
+
+### Where are my keys?
+
 A Frequentist, Fernanda, and a Bayesian, Betty, have each misplaced their keys. They will each adopt a different method for finding them based on their different philosophies of probability.
 
-:::{figure} https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/FernandaAndBetty.jpeg
+:::{figure} /figures/FernandaAndBetty.jpeg
 :label: fig:fernanda-and-betty
 
 Fernanda and Betty.
@@ -30,15 +33,15 @@ Fernanda and Betty.
 
 ### Is my coin fair?
 
-A Frequentist would toss the coin a million times and see how many times we get heads.
+Fernanda: would toss the coin a million times and see how many times we get heads.
 
-A Bayesian would also consider what we know about the coin. Did we get it from a joke shop, or a post office?
+Betty: would additionally consider what we know about the coin. Did we get it from a joke shop, or a post office?
 
 ### Is a pregnancy test correct?
 
-A Frequentist would do the test a million times and see how many times were correct.
+Fernanda would do the test a million times and see how many times were correct.
 
-A Bayesian would also consider what we know about the subject. Does the person taking the test have a uterus?
+Betty would also consider what we know about the person taking the test, for example: does the person taking the test have a uterus?
 
  
 > It may appear that the Bayesian approach is prone to bias, and less scientific, so I should note that the Bayesian does not "stick to their guns" on the prior knowledge aspect. If the data indicate their prior knowledge is unlikely to be correct, then the prior is updated. 
@@ -49,14 +52,15 @@ A Bayesian would also consider what we know about the subject. Does the person t
 
 Example Sets:
 
-$$
+```{math}
 :label: our-sets
+
 \begin{aligned}
 S &= \{1,2,3,4,5,6,7,8,9,10\} & \\
 A &= \{2,4,6,8,10\}& \\
 B &= \{1,2,3,4\}& \\
 \end{aligned}
-$$
+```
 
 
 ## Frequentist Probability
@@ -65,14 +69,14 @@ $$
 The **Frequentist Probability** of A is written $P(A) = \dfrac{N_A}{N_S}$: the number of times A occurs in the sample, divided by the number of possible outcomes
 in the sample.
 
-Probabilities for our sets [](#our-sets):
+Probabilities for [our sets](#our-sets):
 * $P(S) = N_S/N_S =1$
 * $P(A) = N_A / N_S  = 0.5$
 * $P(B) = N_B / N_S  = 0.4$
 
 
 ## Special Sets
-:::{figure} https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/SpecialSets.png
+:::{figure} /figures/SpecialSets.png
 :label: fig:special-sets
 
 Some special sets.
@@ -85,7 +89,7 @@ The **Sample Space** S is the set of all possible outcomes of some experiment or
 
 A **Proper Subset** of S is denoted $A\subset S$. This means that A is a subset of S but A$\neq$S. If A is a subset of S *and* can be S, we use $A\subseteq S$
 
-For [](#our-sets), A and B are proper subsets of S.
+For [our sets](#our-sets), A and B are proper subsets of S.
 
 
 ## Venn Diagrams

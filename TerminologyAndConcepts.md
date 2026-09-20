@@ -34,19 +34,12 @@ Examples:
 
 A **Model** is an object, a mathematical equation, or a computer program that can explain how something works, and/or be used to make predictions. 
 
-::::{grid} 1 1 3 3
 
-:::{image} /figures/delorian.jpg
-:::
-
-:::{image} /figures/CM.jpg
-:::
-
-:::{image} /figures/SM.png
-:::
+:::{figure} /figures/models
+:label: fig:models
 
 A Scale Model of a Delorian, a Computer Model of Earth's temperature, and the Standard Model of particle physics.
-::::
+:::
 
 
 Examples:
@@ -58,7 +51,7 @@ Examples:
 > When statisticians talk about Toy Models (often shortened to "Toys"), they are referring to a mathematical model that has been simplified. 
 
 
-A **Theory** is the description of a set of models, and the relationships between them. It is complete, and is a candidate explanation for the **Underlying Truth**. The Underlying Truth is an abstract concept which cannot be known with certainty. We can test our models and theories, and those which we fail to prove wrong can become highly esteemed. 
+A **Theory** is the description of a set of models, and the relationships between them. It is complete, and is a candidate explanation for the "Underlying Truth". The Underlying Truth is an abstract concept which cannot be known with certainty. We can test our models and theories, and those which we fail to prove wrong can become highly esteemed. 
 
 > It is not possible to prove that a hypotheses, model, or theory is correct. We can only prove them wrong. 
 
@@ -78,18 +71,41 @@ A **Sample** is a subset of the population. If certain criteria are met, we can 
 
 ## Random Variables, Parameters, and Statistics
 
-An example of a **Variable** is height. It is a label for a property that can be measured. Any particular heights that we are able to measure are samples from the theoretical distribution of all possible heights. This theoretical distribution has an infinite number of data points, and it lives in the theoretical universe. We call variables such as height Random Variables (RVs) because they are in a sense randomly selected instances of height from that infinite-data distribution. The "random" refers to our understanding that the heights of everyone alive today are no more special or representative of the truth than the heights of everyone alive 100 years ago.
+An example of a **Variable** is height. It is a label for a property that can be measured. Any particular heights that we are able to measure are samples from the theoretical distribution of all possible heights. This theoretical distribution has an infinite number of data points, and it lives in the theoretical universe. We call variables such as height **Random Variables (RVs)** because they are in a sense randomly selected instances of height from that infinite-data distribution. The "random" refers to our understanding that the heights of everyone alive today are no more special or representative of the truth than the heights of everyone alive 100 years ago.
 
 A **Parameter** is a number that describes some characteristic of the true underlying distribution, for example the mean height of all humans. 
 
 A **Statistic** is a number that describes some characteristic of a sample, for example the mean height of all humans in Sussex Uni. 
 
-## Summary Statistics and Test Statistics
 
-Summary statistics are numbers that describe the properties of a whole sample (dataset), rather than a single data point. Examples of summary statistics we will use in this module are the sample Mean, Median, Mode, Minimum, Maximum, Variance, and Standard Deviation.
+## Discrete and Continuous Data
+
+**Discrete RVs** are counts or rates that can only have certain values, rather than any values on the real number line ($\mathbb{R}$). 
+
+> Discrete RVs don’t have to be integers, but they do have to be countable.
+
+For example, the probability of dice rolls (any number of dice) **are not** integers but **are** Discrete. As I increase the number of dice and/or rolls, I can generate lots of probability values from the original set, but there will always be real numbers I cannot generate (gaps).
+
+
+**Continuous RVs** are measurements such as height or temperature that can theoretically take any value on the real number line. 
+
+Note that in the real world, measurements always have a finite precision, so the measurements x of a continuous RV will not strictly be continuous.
+
+What is true in the real world is also in true in your computer. The precision with which python generates CRVs on my machine is ```float64```: precision 15.
+
+> A continuous RV is still continuous even though its measurements cannot be.
+
+
+
+## Summary Statistics 
+
+**Summary statistics** are numbers that describe the properties of a whole sample (dataset), rather than a single data point. Examples of summary statistics we will use in this module are the sample Sum, Mean, Median, Mode, Minimum, Maximum, Variance, and Standard Deviation.
+
+### Mean $\overline{x}$
 
 The **Mean** $\overline{x}$ of $N$ measurements $x_i$ of a random variable $X$ is the sum of all measurements divided by the number of measurements:
 $$
+\label{eq:mean}
 \overline{x}  = \frac{1}{N} \sum\limits_i^N  x_i
 $$
 
@@ -105,18 +121,27 @@ mean_x_check = sum_x / len(x)
 print(f" mean x : {mean_x}, check: {mean_x_check }")
 ```
 
-The **Variance** $V[x]$ (also denoted $v_x$) of $N$ measurements $x_i$ of a random variable $X$ is the sum of the squared differences between each measurement and the mean, divided by the number of measurements:
+> When we talk about the Theoretical Universe ("Truth") where Probability Distributions live, we often use the term **Expected Value** or **Expectation** rather than Mean. The Expected Value is a parameter, not a summary statistic, and is defined in terms of the Probabilities $p_i$ of the individual measurements rather than as a normalised sum over them: $E[X]  = \sum\limits_i^\infty  x_i p_i$. Lots more on this later.
+
+### Variance $V[x]$ <a name="intro-variance"></a>
+
+The sample **Variance** $V[x]$ is a measure of the spread of a dataset $x$ with respect to the mean.
+
 $$
+\label{eq:variance}
 V[x]  = \frac{1}{N} \sum\limits_i^N  (x_i - \overline{x})^2
 $$
 
+The term $(x_i - \overline{x})^2$ is the variance of the $i^{th}$ measurement, $x_i$. The sum is over the $N$ measurements.
 
-We will see later that there is a slightly different definition for the **Unbiased Variance**:
+Sometimes we will see the **Unbiased Variance**:
 
 $$
+\label{eq:varianceU}
 V[x]  = \frac{1}{N-1} \sum\limits_i^N  (x_i - \overline{x})^2
 $$
 
+It is better to use the unbiased form if you have a small dataset. I would probably use this form for $N<100$ as a rule of thumb. More on this later.
 
 ```{code-cell} python
 import numpy as np 
@@ -137,11 +162,12 @@ print(f" (unbiased variance: { unbiased_var_x})")
 
 ```
 
-
+### Standard Deviation $\sigma_x$
 
 The **Standard Deviation** $\sigma_x$ is the square root of the variance.
 
 $$
+\label{eq:std}
 \sigma_x  = \sqrt{V[x]}
 $$
 
@@ -162,7 +188,7 @@ print(f" (unbiased std x : {unbiased_std_x})")
 
 ```
 
-
+## Test Statistics
 
 **Test statistics** are numbers that describe the compatibility of a sample with a hypothesis, or with another sample. Examples are the p value, Z score, Chi squared. We will discuss these at length later.
 
@@ -175,8 +201,6 @@ There are many things in the physical world that exhibit random behaviour (such 
 We can extract (a limited number of) truly random numbers from eg [](random.org), which uses atmospheric noise.
 
 True Random Number Generation (TRNG) is an active area of research, and is rapidly changing. Whatever I write here will probably be out of date in two years. A recent exciting development was published in [Nature](https://www.nature.com/articles/s41586-025-09054-3) last summer.
-
-
 
 
 A **Pseudorandom Number** (PRN) is a term used to describe a number in a sequence that appears random, but is produced by a deterministic process. Deterministic means that an outcome is caused by preceeding events.
@@ -215,7 +239,7 @@ amusing if you think about it. If you truly had a random shuffle on your music
 playlist, you would get many repetitions. People don’t like that.
 :::
 
-:::{figure} https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/dilbert2.jpg
+:::{figure} /figures/dilbert2.jpg
 :label: fig:dilbert
 
 Credit: DILBERT © 2001 Scott Adams [All rights reserved].

@@ -1,5 +1,9 @@
 # Data Analysis Techniques ![ML is stats](/figures/ml-is-stats.png)
 
+:::{warning}
+These notes are under development.
+:::
+
 +++ {"part": "abstract"}
 Notes for Data Analysis Techniques, module 890F3. If you are a student on this module, please read the canvas pages carefully for vital information including the course structure, assessment, and suggested reading. 
 +++

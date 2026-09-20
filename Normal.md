@@ -2,27 +2,17 @@
 
 Many RVs are "Normally Distributed", meaning they follow a Gaussian Probability Distribution. Some examples are shown in are shown in [](#fig:norm-everywhere).
 
-::::{grid} 1 2 2 2
-\label{fig:norm-everywhere}
-
-:::{image} /figures/norm_bp.png
-:::
-
-:::{image} /figures/norm_weight.png
-:::
-
-:::{image} /figures/norm_height.png
-:::
-
-:::{image} /figures/norm_beta.png
-:::
-
-::::
+:::{figure} 
+:label: fig:norm-everywhere
+:align: left
+![](figures/norms.png)
 
 The RVS plotted are blood pressures, baby birth weights, heights of English criminals in 1900, and the difference between the proton speeds measured with two different detectors. These are very different RVs, but when we plot their measured values, they all follow this same shape, with a symmetric distribution around a central value. Why?!
 
 The reason for the apparently unrelated RVs in [](#fig:norm-everywhere) having the same underlying distribution is that **they do have something fundamental in common**: they are all the result of many interrelated factors, which makes them "sums" of different independent variables. We will see that the distribution of a sum will always tend towards a Gaussian distribution (the Central Limit Theorem).
 
+
+## The Gaussian PDF
 
 
 

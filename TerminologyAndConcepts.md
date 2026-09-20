@@ -264,7 +264,7 @@ Credit: DILBERT © 2001 Scott Adams [All rights reserved].
 
 
 
-## Plots, axes, histograms, bins
+## Plots, axes, histograms, bins <a name="intro-plots"></a>
 
 * A **Plot** is a visual representation of data (a "graph")
 
@@ -292,6 +292,13 @@ plt.show()
 #plt.clf()
 
 ```
+:::{figure} /figures/MyFirstPlot.png
+:label: fig:first-plot
+
+Expected output from running the above python snippet.
+:::
+
+
 
 * A **Histogram** is a bar plot indicating the counts of measurements within defined ranges of values. These ranges are known as **Bins**.
 
@@ -323,11 +330,19 @@ plt.show()
 
 ```
 
+:::{figure} /figures/MyFirstHist.png
+:label: fig:first-hist
+
+Expected output from running the above python snippet.
+:::
+
+
 * **Axes** define the space of the plot. A 1D plot has an x axis along the horizontal direction, indicating the values (or bins) for the measurement, and a y axis indicating the count, frequency, or density of those measured values.
 
 To "plot on the same axes" means to draw two or more datasets on the same "graph pad".
 
 ```{code-cell} python
+\label{code:scatter}
 import matplotlib.pyplot as plt
 import numpy as np
 rng = np.random.default_rng()
@@ -357,7 +372,11 @@ plt.legend()
 plt.show()
 
 ```
+:::{figure} /figures/MyFirstScatter.png
+:label: fig:first-scatter
 
+Expected output from running the above python snippet.
+:::
 
 
 

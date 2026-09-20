@@ -24,7 +24,7 @@ Fernanda and Betty.
 **Betty**: my keys are in an unknown location in my home. On the last ten occasions I lost them, they were by the sink three times, so there are most likely to be by the sink and I will start my search there.
 
 
-## Notation
+## Example Sets
 
 Example Sets:
 
@@ -38,7 +38,7 @@ B &= \{1,2,3,4\}& \\
 $$
 
 
-### Frequentist Probability
+## Frequentist Probability
 
 
 The **Frequentist Probability** of A is written $P(A) = \dfrac{N_A}{N_S}$: the number of times A occurs in the sample, divided by the number of possible outcomes
@@ -50,7 +50,7 @@ Probabilities for our sets [](#our-sets):
 * $P(B) = N_B / N_S  = 0.4$
 
 
-### Special Sets
+## Special Sets
 :::{figure} https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/SpecialSets.png
 :label: fig:special-sets
 
@@ -58,7 +58,7 @@ Some special sets.
 :::
 
 
-### Sample Space & Subsets
+## Sample Space & Subsets
 
 The **Sample Space** S is the set of all possible outcomes of some experiment or operation.
 
@@ -67,7 +67,7 @@ A **Proper Subset** of S is denoted $A\subset S$. This means that A is a subset 
 For [](#our-sets), A and B are proper subsets of S.
 
 
-### Venn Diagrams
+## Venn Diagrams
 
 Venn diagrams are helpful for visualising relationships. Here $A\subset S$ and $B\subset S$.
 
@@ -86,7 +86,7 @@ Venn diagrams showing datasets S, A, and B.
 ::::
 
 
-### Complement
+## Complement $A'$
 
 The **Complement** of a set is denoted by a prime, $A'$; this means 'not A'. Other notations commonly used for the complement are $A^{\complement}$, $\overline{A}$, and others.
 
@@ -103,11 +103,11 @@ Venn diagrams showing datasets The Complement of A and B.
 
 
 
-### Union
+### Union $A\cup B$
 
 The **Union** of two sets is written $A\cup B$; this means 'either A, or B, or both'. For our sets [](#our-sets), $A\cup B = \{1,2,3,4,6,8,10\}$
 
-### Intersection
+## Intersection $A\cap B$
 
 The **Intersection** of two sets is written $A\cap B$; this means 'both A and B'. For our sets [](#our-sets), $A\cap B = \{2,4\}$
 
@@ -132,7 +132,7 @@ Two sets are **Independent** if they are defined without reference to one anothe
 Two sets are **Mutually Exclusive** if there is no overlap between them. Another word for this is **Disjoint**.
 
 
-## Axioms
+## Probability of Intersection
 
 * The **Probability of Intersection** $P(A\cap B)$ is the probability that **both A and B** are true. 
 * This is zero when A and B are **Disjoint** (no overlap: **Mutually Exclusive**)
@@ -157,7 +157,9 @@ Venn diagram illustrating the complement of left: the Union and right: the Inter
 
 
 
-### The **Probability of Union** $P(A\cup B)$ is the probability that either A or B or both are true. 
+## Probability of Union
+
+The **Probability of Union** $P(A\cup B)$ is the probability that either A or B or both are true. 
 
 $$\label{eq:prob-union} P(A\cup B) =P(A)+P(B) - P(A\cap B)$$
 
@@ -171,7 +173,7 @@ For our sets [](#our-sets): $P(A\cup B) = 0.5 +0.4 - 0.2 = 0.7$
 ![](https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/Axiom3.png)
 :::
 
-### The Kolmogorov Axioms
+## The Kolmogorov Axioms
 
 > [Andrey Kolmogorov](https://en.wikipedia.org/wiki/Andrey_Kolmogorov) was a Russian mathematician. You may have heard of the 'KS test', which is used to eg check for overtraining by comparing ML classifier outputs for test and train samples. This is named for Kolomogorov and Nikolai Smirnov. Also 'KANs' - Kolmogorov Arnold Networks - see [arXiv:2404.19756](https://arxiv.org/abs/2404.19756).
 
@@ -185,7 +187,7 @@ probability of their union is the sum of their individual
 probabilities.
 
 
-## Conditional Probability 
+## Conditional Probability $P(A | B)$
 
 The **Conditional Probability** is most usefully written:
 
@@ -249,7 +251,7 @@ Example: I roll a dice twice. What is the probability I will get two sixes?
 $P(six \cap six) = P(six) P(six) = \dfrac{1}{6} \dfrac{1}{6}  = \dfrac{1}{36}$
 
 
-## The Total Probability
+## Total Probability
 
 In [](#fig:venn_tot) I have divided S into four quadrants, each of which is a set $B_i$. There are N=4 disjoint sets $B_i, i=1,2,3,4$ intersecting with A. 
 
@@ -270,7 +272,7 @@ This may seem a bit contrived, but we will see soon that it is
 useful.
 
 
-# Bayes' Theorem
+## Bayes' Theorem
 
 We have the **Conditional Probability** $P(A\cap B) = P(A | B) P(B)$, and this applies to any sets A and B, so we can also write $P(B\cap A) = P(B | A) P(A)$.
 

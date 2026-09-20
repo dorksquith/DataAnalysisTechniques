@@ -28,21 +28,19 @@ Betty: my keys are in an unknown location in my home. On the last ten occasions 
 
 ### Frequentist Probability
 
-Example Sets:\
-$$\label{setS} S = \{1,2,3,4,5,6,7,8,9,10\}$$\
-$$\label{setA} A = \{2,4,6,8,10\}$$\
-$$\label{setB} B = \{1,2,3,4\}$$\
+Example Sets:
 
-The **Frequentist Probability** of [](#setA) is written
+* $S = \{1,2,3,4,5,6,7,8,9,10\}$
+* $A = \{2,4,6,8,10\}$
+* $B = \{1,2,3,4\}$
 
-$$P(A) = \dfrac{N_A}{N_S}$$: the number of
-times A occurs in the sample divided by the number of possible outcomes
+The **Frequentist Probability** of A is written $P(A) = \dfrac{N_A}{N_S}$: the number of times A occurs in the sample, divided by the number of possible outcomes
 in the sample.
 
 Probabilities:\
-$$\label{probS} P(S) = N_S/N_S =1$$\
-$$\label{probS} P(A) = N_A / N_S  = 0.5$$\
-$$\label{probS} P(B) = N_B / N_S  = 0.4$$\
+* $P(S) = N_S/N_S =1$
+* $P(A) = N_A / N_S  = 0.5$
+* $P(B) = N_B / N_S  = 0.4$
 
 
 ### Special Sets
@@ -59,18 +57,18 @@ The **Sample Space** S
 : the set of all possible outcomes of some experiment or operation.
 
 A **Proper Subset** of S
-: $$A\subset S$$  A is a subset of S but A$\neq$S.
+: $A\subset S$:  A is a subset of S but A$\neq$S.
 
 If A is a subset of S *and* can be S, we use
-: $$A\subseteq S$$
+: $A\subseteq S$
 
-[](#setA) and [](#setB) are proper subsets of [](#setS).
+A and B are proper subsets of S.
 
 
 ### Venn Diagrams
 
 Venn diagrams are helpful for visualising relationships.\
-Here $$A\subset S$$ and $$B\subset S$$.\
+Here $A\subset S$ and $B\subset S$.\
 
 <!--:::{figure} 
 :label: fig:venn
@@ -80,18 +78,8 @@ Here $$A\subset S$$ and $$B\subset S$$.\
 ![](https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/B.png)
 :::-->
 
-:::{figure} fig:venn
-:align: left
-
-```{image} https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/S.png
-:width: 30%
-```
-```{image} https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/A.png
-:width: 30%
-```
-```{image} /figures/B.png
-:width: 30%
-```
+:::{figure} https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/SAB.png
+:label: fig:sab
 
 Venn diagrams showing datasets S, A, and B.
 :::

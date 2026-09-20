@@ -21,7 +21,9 @@ $$
 
 ### Continuous RV
 
-If our random variable RV is Continuous rather than discrete, then it does not make sense to "sum over all possible values", because continuous RVs have an Uncountable Infinity of possible values. Instead, we integrate:
+If our random variable RV is Continuous rather than discrete, then it does not make sense to "sum over all possible values", because continuous RVs have an Uncountable Infinity[^infinities] of possible values. Instead, we integrate:
+
+[^infinities]: See this nice blog by Joel Hamkins for an accessible intro to the difference between countable and [uncountable infinites](https://www.infinitelymore.xyz/p/uncountable-infinity)
 
 $$
 \label{eq:expectC}
@@ -146,6 +148,7 @@ V[X] = E[X^2] - E^2[X]
 $$
 
 :::{dropdown} Proof that [](#eq:truevar1) and [](#eq:truevar2) are equivalent
+
 $$
 \begin{aligned}
 V[X] & = E[\, X^2 + E^2[X] - 2X\,E[X] \,]\\
@@ -155,6 +158,7 @@ V[X] & = E[\, X^2 + E^2[X] - 2X\,E[X] \,]\\
 	& = E[ X^2] - E^2[X]   \\
 \end{aligned}
 $$
+
 :open:
 
 :::

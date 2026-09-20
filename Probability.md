@@ -26,13 +26,20 @@ Betty: my keys are in an unknown location in my home. On the last ten occasions 
 
 ## Notation
 
-### Frequentist Probability
-
 Example Sets:
 
-* $S = \{1,2,3,4,5,6,7,8,9,10\}$
-* $A = \{2,4,6,8,10\}$
-* $B = \{1,2,3,4\}$
+$$
+:label: our-sets
+\begin{flalign}
+S = \{1,2,3,4,5,6,7,8,9,10\}
+A = \{2,4,6,8,10\}
+B = \{1,2,3,4\}
+\end{flalign}
+$$
+
+
+### Frequentist Probability
+
 
 The **Frequentist Probability** of A is written $P(A) = \dfrac{N_A}{N_S}$: the number of times A occurs in the sample, divided by the number of possible outcomes
 in the sample.
@@ -74,6 +81,20 @@ Venn diagrams are helpful for visualising relationships. Here $A\subset S$ and $
 
 Venn diagrams showing datasets S, A, and B.
 :::
+
+## Test Grid
+
+::::{grid} 1 1 2 2
+
+:::{image} /figures/A.png
+:::
+
+:::{image} /figures/B.png
+:::
+
+::::
+
+
 
 
 ## Test 1
@@ -146,14 +167,13 @@ $A\cup B$
 
 ### Intersection
 
-The **Intersection** of two sets is written:
-$$A\cap B$$
-: 'both A and B'.\
+The **Intersection** of two sets is written $A\cap B$
+: 'both A and B'.
 
 
-$$A = \{2,4,6,8,10\}$$\
-$$B = \{1,2,3,4\}$$\
-$$A\cap B = \{2,4\}$$\
+* $A = \{2,4,6,8,10\}$
+* $B = \{1,2,3,4\}$
+* $A\cap B = \{2,4\}$
 
 :::{figure} 
 :label: fig:venn_intersection
@@ -166,18 +186,14 @@ $$A\cap B = \{2,4\}$$\
 
 ## Axioms
 
-###The **Probability of Intersection** $P(A\cap B)$
-:
-the probability that both A and B are true. 
+* The **Probability of Intersection** $P(A\cap B)$ is the probability that **both A and B** are true. 
+* This is zero when A and B are **Disjoint** (no overlap: **Mutually Exclusive**)
+* $P(A\cap B) =0$ when $(A\cap B)'$
 
-This is zero when A and B are **Disjoint**
-: (no overlap: mutually exclusive)\
-
-> $P(A\cap B) =0$ when $(A\cap B)'$
-
-Our sets:\
-$A\cap B = \{2,4\}$
-$P(A\cap B) = 0.2$: $A$ and $B$ are not mutually exclusive.\
+For our sets [](#our-sets):
+* $A\cap B = \{2,4\}$
+* $P(A\cap B) = 0.2$
+* $A$ and $B$ are not mutually exclusive.
 
 :::{figure} 
 :label: fig:venn_notAandB

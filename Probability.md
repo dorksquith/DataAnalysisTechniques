@@ -31,9 +31,9 @@ Example Sets:
 $$
 :label: our-sets
 \begin{flalign}
-S = \{1,2,3,4,5,6,7,8,9,10\}
-A = \{2,4,6,8,10\}
-B = \{1,2,3,4\}
+S &= \{1,2,3,4,5,6,7,8,9,10\} & \\
+A &= \{2,4,6,8,10\}& \\
+B &= \{1,2,3,4\}& \\
 \end{flalign}
 $$
 
@@ -117,15 +117,7 @@ Main caption for both figures.
 
 ### Complement
 
-The **Complement** of a set is denoted by a prime, $A'$
-: this means 'not A'.\
-
-Other notations commonly used for the complement are
-:
-$A^{\complement}$, $\overline{A}$, and several others.
-
-![image](NotA.png) ![image](NotB.png)
-
+The **Complement** of a set is denoted by a prime, $A'$; this means 'not A'. Other notations commonly used for the complement are $A^{\complement}$, $\overline{A}$, and others.
 
 :::{figure} fig:venn_complement
 :align: center
@@ -144,31 +136,20 @@ Venn diagrams showing datasets The Complement of A and B.
 
 ### Union
 
-The **Union** of two sets is written:
-$A\cup B$
-: 'either A, or B, or both'.\
-
-
-* $A = \{2,4,6,8,10\}$
-* $B = \{1,2,3,4\}$
-* $A\cup B = \{1,2,3,4,6,8,10\}$
+The **Union** of two sets is written $A\cup B$; this means 'either A, or B, or both'. For our sets [](#our-sets), $A\cup B = \{1,2,3,4,6,8,10\}$
 
 :::{figure} 
 :label: fig:venn_union
 :align: left
 ![](https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/AorB.png)
+
+Venn diagram illustrating the Union of the sets A and B.
 :::
 
 
 ### Intersection
 
-The **Intersection** of two sets is written $A\cap B$
-: 'both A and B'.
-
-
-* $A = \{2,4,6,8,10\}$
-* $B = \{1,2,3,4\}$
-* $A\cap B = \{2,4\}$
+The **Intersection** of two sets is written $A\cap B$; this means 'both A and B'. For our sets [](#our-sets), $A\cap B = \{2,4\}$
 
 :::{figure} 
 :label: fig:venn_intersection
@@ -176,6 +157,7 @@ The **Intersection** of two sets is written $A\cap B$
 
 ![](https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/AandB.png)
 
+Venn diagram illustrating the Intersection of the sets A and B.
 :::
 
 

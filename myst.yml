@@ -6,10 +6,9 @@ project:
   description: Module 890F3, University of Sussex
   keywords:
   - jupyter-book
+  - data-analysis
   - statistics
   - probability
-  - math
-  - python
   authors:
   - Lily Asquith
   github: https://github.com/dorksquith/DataAnalysisTechniques
@@ -29,3 +28,16 @@ site:
   # options:
   #   favicon: favicon.ico
   #   logo: site_logo.png
+  head: |
+    <script>
+    window.MathJax = {
+      tex: {
+        packages: {'[+]': ['ams']}
+      },
+      options: {
+        displayAlign: 'left'
+      }
+    };
+    </script>
+execute:
+  execute_notebooks: cache

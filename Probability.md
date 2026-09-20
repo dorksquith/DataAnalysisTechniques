@@ -130,7 +130,7 @@ The **Complement** of a set is denoted by a prime, $A'$; this means 'not A'. Oth
 
 
 
-### Union $A\cup B$
+## Union $A\cup B$
 
 The **Union** of two sets is written $A\cup B$; this means 'either A, or B, or both'. For [our sets](#our-sets), $A\cup B = \{1,2,3,4,6,8,10\}$
 

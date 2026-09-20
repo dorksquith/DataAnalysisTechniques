@@ -285,7 +285,7 @@ Credit: DILBERT © 2001 Scott Adams [All rights reserved].
 
 ## Plots, axes, histograms, bins <a name="intro-plots"></a>
 
-Reference to [](#intro-plots)
+Reference to [](#intro-plots).
 
 
 A **Plot** is a visual representation of data (a "graph"). Try running the ```python``` snippet below to make a ```matplotlib``` plot.

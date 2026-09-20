@@ -30,11 +30,11 @@ Example Sets:
 
 $$
 :label: our-sets
-\begin{flalign}
+\begin{aligned}
 S &= \{1,2,3,4,5,6,7,8,9,10\} & \\
 A &= \{2,4,6,8,10\}& \\
 B &= \{1,2,3,4\}& \\
-\end{flalign}
+\end{aligned}
 $$
 
 

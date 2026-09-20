@@ -92,7 +92,7 @@ A **Parameter** is a number that describes some characteristic of the Underlying
 A **Statistic** is a number that describes some characteristic of a sample, for example the mean height of all humans in Sussex Uni. 
 
 
-## Discrete and Continuous Data
+## Discrete and Continuous Data <a name="discrete"></a>
 
 **Discrete RVs** are counts or rates that can only take certain values, rather than any values on the real number line ($\mathbb{R}$). 
 
@@ -113,7 +113,7 @@ Note that in the real world, measurements always have a finite precision, so the
 
 **Summary statistics** are numbers that describe the properties of a whole sample (dataset), rather than a single data point. Examples of summary statistics we will use in this module are the sample Sum, Mean, Minimum, Maximum, Variance, and Standard Deviation.
 
-We can calculate the sum, min, and max of a dataset in python with the ```numpy``` libraray methods like so:
+We can calculate the ```sum```, ```min```, and ```max``` of a dataset in ```python``` with the ```numpy``` libraray methods like so:
 
 ```{code-cell} python
 import numpy as np 
@@ -126,6 +126,8 @@ print(f" sum x : {sum_x}, check: {sum_x_check }")
 
 min_x = np.min(x)
 max_x = np.max(x)
+
+print(f" min: {min_x}, max: {max_x }")
 
 ```
 
@@ -233,9 +235,9 @@ A **Random Number** is a term used to describe a value that is produced by a ran
 
 There are many things in the physical world that exhibit random behaviour (such as quantum mechanical processes), but the instruments we use to measure the behaviour often destroy/hide the randomness.
 
-We can extract (a limited number of) truly random numbers from eg [random.org]{https://www.random.org/#numbers), which uses atmospheric noise.
+We can extract (a limited number of) truly random numbers from eg [random.org](https://www.random.org/#numbers), which uses atmospheric noise.
 
-True Random Number Generation (TRNG) is an active area of research, and is rapidly changing. Whatever I write here will likely be out of date in two years. A recent(Summer 2025) exciting development was published in [Nature](https://www.nature.com/articles/s41586-025-09054-3).
+True Random Number Generation (TRNG) is an active area of research, and is rapidly changing. Whatever I write here will likely be out of date in two years. A recent (Summer 2025) exciting development was published in [Nature](https://www.nature.com/articles/s41586-025-09054-3).
 
 
 A **Pseudorandom Number** (PRN) is a term used to describe a number in a sequence that appears random, but is produced by a deterministic process. Deterministic means that an outcome is caused by preceeding events.

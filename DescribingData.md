@@ -1,15 +1,15 @@
 # Describing Data
 
-## The Sample Mean  and the True Mean $E[X]$
+## The Sample Mean and the True Mean
 
-The **Sample Mean**, $\overline{x}$, of a RV is calculated as a normalised sum over a finite number of measurements [T&C:mean](eq:mean). It is a **summary statistic** calculated from the data.
+The **Sample Mean**, $\overline{x}$, of a RV is calculated as a normalised sum over a finite number of measurements [](eq:mean). It is a **summary statistic** calculated from the data.
 
 
 The **True Mean** (aka **Expectation**), $E[X]$, is a **parameter** of the true underlying probability distribution of our RV. 
 
 ### Discrete Data
 
-For Discrete data, if we known the underlying probabilities we can calculate the Expectation in a similar way to [T&C:mean](eq:mean):
+For [Discrete data](#discrete), if we known the underlying probabilities we can calculate the Expectation in a similar way to [](eq:mean):
 
 $$
 \label{eq:expect}
@@ -30,9 +30,7 @@ $$
 E[X]  = \int\limits_{-\infty}^\infty  x_i f_X dx
 $$
 
-This looks different from the sum in [](eq:expect) because we have $f_X$ 
- instead of $p_i$. The $p_i$ are individual probabilities, but the $f_X$
- is a **Probability Density Function (PDF)**. It serves exactly the same purpose as the $p_i$ in the sum form for Discrete RVS.
+Note that in [](eq:expectC) we have $f_X$: a **Probability Density Function (PDF)** instead of the individual probabilities $p_i$ used in [](eq:expect). Lots more on PDFs later.
 
 
 :::{figure} 
@@ -179,71 +177,82 @@ Common notation for multiple RVs is as follows:
 Z is the number of Random Variables under consideration, indexed by j.
 
 
-$X = {X_{(1)}, X_{(2)}, ..., X_{(Z)}}$
-: The set of Z Random Variables 
+$X = \{X_{(1)}, X_{(2)}, ..., X_{(Z)}\}$
+: The set of Z **Random Variables** 
 
 Note that the subscripts indicating the RV, $X_{(j)}$, are in brackets. This is because we use the notation $x_i$ (no brackets) to indicate a measurement in a dataset.
 
-> For the heights and weights data set we would have Z=2, with $X = { X_{(1)}, X_{(2)} } = { Height, Weight }$.
+> For the heights and weights data set we would have Z=2, with $X = \{ X_{(1)}, X_{(2)} \} = \{ Height, Weight \}$.
 
 
-$x = {x_{(1)}, x_{(2)}, ..., x_{(Z)}}$
-: The set of Z datasets
+$x = \{x_{(1)}, x_{(2)}, ..., x_{(Z)}\}$
+: The set of Z **datasets**
 
-> For the heights and weights data set we would have $x = { heights, weights }$, where heights and weights are arrays of measurements.
+> For the heights and weights data set we would have $x = \{ heights, weights \}$, where heights and weights are arrays of measurements.
 
 
-* $x_{(j)}= {x_{j,1}, x_{j,2}, ..., x_{j,N} }$
-: the j^{th} dataset of N Measurements
+$x_{(j)}= \{x_{j,1}, x_{j,2}, ..., x_{j,N} \}$
+: the $j^{th}$ dataset of N **Measurements**
 
-> For the heights and weights data set we had N=1k measurements in each of the two $x_{(j)}$, eg $heights = {h_1, h_2, ..., h_{1000}$ .
+> For the heights and weights data set we had N=1k measurements in each of the two $x_{(j)}$, eg $ heights = \{h_1, h_2, ..., h_{1000}\}$ .
 :::
 
 
 ## Covariance
 
-We use the variance (or standard deviation) to quantify how much spread there is in a 1D dataset. For a 2D dataset, we cannot express this with a single summary statistic.
+We use the [variance](eq:varianceU) (or standard deviation) to quantify how much spread there is in a 1D dataset. For a 2D dataset, we cannot express this with a single summary statistic.
 
 If we have two RVs (eg weight and height) and they are **Independent**, we can calculate the two variances as usual. We can then pop these in a 2D array (a matrix):
 
 $$
 \label{eq:covmat-indep}
 
+\begin{bmatrix}
 \mathbf{\Sigma} = \begin{bmatrix}
 \sigma^2_X & 0 \\
 0 & \sigma^2_Y \\
 \end{bmatrix}
 $$
 
-If our RVs are **Dependent**, (if changing one of them affects the other, ie if y is a function of x) then we will also have **cross-term** between their variances. These cross-terms are known as Covariance. 
+If our RVs are **Dependent**, (if changing one of them affects the other, ie if y is a function of x) then we will also have **cross-terms** between their variances. These cross-terms are known as **Covariance** terms. 
 
 $$
 \label{eq:covmat-dep}
 
+\begin{bmatrix}
 \mathbf{\Sigma} = \begin{bmatrix}
-\sigma^2_X & \sigma_{XY} \\
-\sigma_{YX} & \sigma^2_Y \\
+\sigma^2_x & \sigma_{xy} \\
+\sigma_{yx} & \sigma^2_y \\
 \end{bmatrix}
 \equiv
 \begin{bmatrix}
-\sigma^2_X & cov(X,Y) \\
-cov(Y,X) & \sigma^2_Y \\
+\sigma^2_x & cov(x,y) \\
+cov(y,x) & \sigma^2_y \\
 \end{bmatrix}
 $$
 
-The 2D arrays in []{eq:covmat-indep} and []{eq:covmat-dep} are **Covariance Matrices**. They are also sometimes called **Error Matrices**, because the (squared) Standard Deviations they hold are used as the Uncertainties or "Errors" on the measurements. 
+The 2D arrays in [](eq:covmat-indep) and [](eq:covmat-dep) are **Covariance Matrices**. They are also sometimes called **Error Matrices**, because the (squared) Standard Deviations they hold are used as the Uncertainties or "Errors" on the measurements. 
 
-> Covariance Matrices are always square (same number of rows and columns) and they are always symmetric (the pairs of off-diagonal terms are equal, so in our example case $cov(X,Y) = cov(Y,X)$).
+:::{tip}
+Covariance Matrices are always square (same number of rows and columns) and they are always symmetric (the pairs of off-diagonal terms are equal, so in our example case $cov(x,y) = cov(y,x)$).
+:::
 
+We can calculate covariances very easily using ```numpy```:
 
 ```{code-cell} python
 import numpy as np
+
+# make up some datasets for two RVs 
 
 x = [0.88472455, 0.96232018, 0.10713343, 0.41198233, 0.06543451,0.40068931, 0.54846767, 0.46301972, 0.4534936 , 0.2064886 ]
 
 y = [1.45373536, 0.48405628, 1.54298594, 0.21109356, 1.38629819, 1.00615679, 1.63028672, 0.34275748, 1.24847874, 1.03419514]
 
+# put the two lists of fake data points in a 2D array
+
 xy=np.stack((x,y))
+
+# let numpy calculate the covariance matrix
 
 cov_xy = np.cov(xy)
 
@@ -259,7 +268,7 @@ array([[ 0.08777293, -0.03624434],
        [-0.03624434,  0.26879134]]
 ```
 
-Comparing this to our [mathematical definition]{eq:covmat-dep}, we see that:
+Comparing this to our [mathematical definition](eq:covmat-dep), we see that:
 
 * $\sigma^2_x \equiv V[x] = 0.08777293$
 * $\sigma^2_y \equiv V[y] = 0.26879134$
@@ -269,15 +278,28 @@ Comparing this to our [mathematical definition]{eq:covmat-dep}, we see that:
 Check the variances on x and y with those you found from your hand-written functions/ numpy's built in method for variance.  **You will find they do not match the values in the covariance matrix**.
 :::
 
-This is because the values in ```np.cov``` are by default the Unbiased Variances, with normalisation $\dfrac{1}{N-1}$ , while the values returned by ```np.var``` are by default the Biased Variances, with normalisation $\dfrac{1}{N}$.
+The mismatch between the values returned by the ```numpy``` methods ```cov``` and ```var``` is because the values in ```np.cov``` are by default the Unbiased Variances, with normalisation $\dfrac{1}{N-1}$ , while the values returned by ```np.var``` are by default the Biased Variances, with normalisation $\dfrac{1}{N}$.
 
 These differences are very small with large datasets, but for our very small  datasets, the difference is substantial.
 
 We can calculate the Unbiased Variance using ```np.var(x, ddof=1)``` and that will give us the same result as the ```np.cov``` default.
 
-:::{important}
-The (off-diagonal) covariance term $\sigma_{xy}$ holds the deviation of each of the data points, considered individually.
-:::
+Let's consider the off-diagonal covariance term $\sigma_{xy} \equiv cov(x,y)$. 
+
+The individual covariance of each data point is analogous to the [individual deviations]{eq:variancei} of each point in a 1D dataset:
+
+$$
+\label{eq:covtermi}
+\mathsf{cov}(x_i,y_i) = (x_i - \overline{x}) (y_i - \overline{y})
+$$
+
+The covariance cov(x,y) is then the (unbiased) normalised sum over these, analagous to [V[x]](eq:varianceU):
+
+$$
+\label{eq:covterm}
+\mathsf{cov}(x,y) =\mathsf{cov}(y,x) =  \dfrac{1}{N-1} \displaystyle\sum\limits_i \mathsf{cov}(x_i,y_i)
+$$
+
 
 Let's make some very small datasets to check this out by hand:
 
@@ -295,19 +317,24 @@ mean_b = np.mean(b)
 da_0 = mean_a - a[0] # 1.17
 da_1 = mean_a - a[1] # -0.13
 da_2 = mean_a - a[2] # -1.03
+# one line :  da =  [mean_a - ai for ai in a]
 
 db_0 = mean_b - b[0] # -2.33
 db_1 = mean_b - b[1] # -0.33
 db_2 = mean_b - b[2] # 2.67
+# one line :  db =  [mean_b - bi for bi in b]
 
 # multiply together point-by-point:
 cov_0 = da_0 * db_0 # -2.72
 cov_1 = da_1 * db_1 #  0.04
 cov_2 = da_2 * db_2 # -2.76
+# one line :  cov =  [a*b for a,b in zip(da,db) ]
+
 
 # sum and normalise
 norm = 1 / ( len(a)-1 ) # 1/(N-1) unbiased version for small dataset
 cov_ab = norm * (cov_0 + cov_1 + cov_2) #  -2.72
+# one line :  cov_ab =  norm * np.sum(cov)
 
 ```
 
@@ -327,7 +354,7 @@ array([[ 1.22333333, -2.71666667],
 :::{figure} 
 :label: fig:mda-cov
 :align: left
-![](figures/mda-cov)
+![](figures/mda-cov.png)
 
 
 
@@ -343,8 +370,7 @@ To make this more useful, we can define the Linear Correlation Coefficient:
 
 $$
 \label{eq:rho}
-
-\rho(a,b) = \dfrac{\mathsf{cov}(a,b)}{\sigma_a \sigma_b}
+\rho(a,b) = \dfrac{ \mathsf{cov}(a,b) }{ \sigma_a \sigma_b }
 $$
 
 For the datasets a and b defined in our snippet above, we have (from our covariance matrix, top left element $\Sigma_{00}$ ):
@@ -374,11 +400,14 @@ The math notation for the Linear Correlation Matrix is:
 $$
 \label{eq:rhomat}
 
-\mathbf{\rho} = \begin{bmatrix}
+\mathbf{\rho} = 
+\begin{bmatrix}
 1 & \rho_{ab} \\
 \rho_{ba} & 1 \\
 \end{bmatrix}
+
 \equiv
+
 \begin{bmatrix}
 \dfrac{\sigma^2_a}{\sigma_a\sigma_a} & \dfrac{\mathsf{cov}(a,b)}{\sigma_a\sigma_b} \\
 \dfrac{\mathsf{cov}(b,a)}{\sigma_b\sigma_a} &\dfrac{\sigma^2_b}{\sigma_b\sigma_b} \\
@@ -403,7 +432,7 @@ A non-zero $\rho(i,j)$ indicates some linear correlation between the two datase
 :::{figure} 
 :label: fig:rho-wiki
 :align: left
-![](figures/rho-wiki)
+![](figures/rho-wiki.png)
 
 
 All of the x,y distributions on the bottom row have a zero linear correlation coefficient, despite being very obviously related. If x,y were independent, we would expect something more like the middle section of the top row. The bottom row of distributions have $\rho(x,y) =0$ because **the correlations between x and y are not linear**. Hopefully this makes it clear how limited the linear correlation coefficient is!

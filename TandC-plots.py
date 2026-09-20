@@ -72,3 +72,56 @@ ax.set_ylabel("Weight (kg)")
 plt.legend()
 plt.savefig("MyFirstScatter.png")
 plt.clf()
+
+
+# Describing Data: Covariance
+
+# datasets:
+a = np.array([1.1, 2.4, 3.3])
+b = np.array([ 7.0, 5.0, 2.0])
+
+# calculate the means:
+mean_a = np.mean(a)
+mean_b = np.mean(b)
+
+# calculate the deviation of each point from the mean:
+'''
+da_0 = mean_a - a[0] # 1.17
+da_1 = mean_a - a[1] # -0.13
+da_2 = mean_a - a[2] # -1.03
+'''
+# one line :  
+da =  [mean_a - ai for ai in a]
+
+'''
+db_0 = mean_b - b[0] # -2.33
+db_1 = mean_b - b[1] # -0.33
+db_2 = mean_b - b[2] # 2.67
+'''
+# one line :  
+db =  [mean_b - bi for bi in b]
+
+# multiply together point-by-point:
+'''
+cov_0 = da_0 * db_0 # -2.72
+cov_1 = da_1 * db_1 #  0.04
+cov_2 = da_2 * db_2 # -2.76
+'''
+# one line :  
+cov =  [a*b for a,b in zip(da,db) ]
+
+
+# sum and normalise
+norm = 1 / ( len(a)-1 ) # 1/(N-1) unbiased version for small dataset
+#cov_ab = norm * (cov_0 + cov_1 + cov_2) #  -2.72
+# one line :  
+cov_ab =  norm * np.sum(cov)
+
+
+ab = np.stack((a,b))
+
+print(f" np.cov(ab): {np.cov(ab)}") 
+
+
+
+

@@ -34,23 +34,36 @@ Examples:
 
 A **Model** is an object, a mathematical equation, or a computer program that can explain how something works, and/or be used to make predictions. 
 
-> All models are wrong, but some are useful.
+::::{grid} 1 1 2 2
+
+:::{image} /figures/delorian.jpg
+:::
+
+:::{image} /figures/CM.jpg
+:::
+
+:::{image} /figures/SM.png
+:::
+
+A Scale Model of a Delorian, a Computer Model of Earth's temperature, and the Standard Model of particle physics.
+::::
+
 
 Examples:
-- a model of a delorian (a toy car based on time-travelling car in back to the future movies, which captures the visual appearance of the machine)  
-- a Climate model (a complex computer program that tells us how much trouble we are in existentially) 
+- a Scale Model of a delorian (a toy car based on time-travelling car in back to the future movies, which captures the visual appearance of the machine)  
+- a Climate Model (a complex computer program that tells us how much trouble we are in existentially) 
 - the Standard Model of particle physics (a set of mathematical equations describing how the universe works at a fundamental level)
 
 
 > When statisticians talk about Toy Models (often shortened to "Toys"), they are referring to a mathematical model that has been simplified. 
 
 
-A **Theory** is the description of a set of models, and the relationships between them. It is complete, and is a candidate explanation for the *Underlying Truth*. The Underlying Truth is an abstract concept which cannot be known with certainty. We can test our models and theories, and those which we fail to prove wrong can become highly esteemed. 
+A **Theory** is the description of a set of models, and the relationships between them. It is complete, and is a candidate explanation for the **Underlying Truth**. The Underlying Truth is an abstract concept which cannot be known with certainty. We can test our models and theories, and those which we fail to prove wrong can become highly esteemed. 
 
 > It is not possible to prove that a hypotheses, model, or theory is correct. We can only prove them wrong. 
 
 
-A theory that passes all the tests we have thought of, or have the technological capability to perform, may well be wrong - we just haven't asked the right questions or gathered enough data to know yet.
+A theory that passes all the tests accessible by our imaginations and technological capability may well be wrong - we just haven't asked the right questions or gathered enough data to know yet.
 
 ## Population and Sample
 

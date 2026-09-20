@@ -67,16 +67,7 @@ A and B are proper subsets of S.
 
 ### Venn Diagrams
 
-Venn diagrams are helpful for visualising relationships.\
-Here $A\subset S$ and $B\subset S$.\
-
-<!--:::{figure} 
-:label: fig:venn
-:align: left
-![](https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/S.png)
-![](https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/A.png)
-![](https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/B.png)
-:::-->
+Venn diagrams are helpful for visualising relationships. Here $A\subset S$ and $B\subset S$.
 
 :::{figure} https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/SAB.png
 :label: fig:sab
@@ -85,9 +76,20 @@ Venn diagrams showing datasets S, A, and B.
 :::
 
 
-Test
+## Test 1
 
-::{figure} :label: my-figure :class: grid grid-cols-2 items-end gap-4
+:::{figure} :label: my-figure :class: grid grid-cols-2 items-end gap-4
+
+![First image description](/figures/A.png)
+![Second image description](/figures/B.png)
+
+Main caption for both figures.
+:::
+
+
+## Test 2
+
+:::{figure} :label: my-figure :class: grid grid-cols-2 items-end 
 
 ![First image description](/figures/A.png)
 ![Second image description](/figures/B.png)

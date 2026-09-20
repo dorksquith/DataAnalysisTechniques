@@ -1,10 +1,6 @@
-# Data Analysis Techniques
+# Data Analysis Techniques {image}`/figures/ml-is-stats.png`{align=middle, h=2em}
 
-:::{figure} /figures/ml-is-stats.png
-:label: fig:scooby
-:width: 120px
-:align: right
-:::
+
 
 +++ {"part": "abstract"}
 Notes for Data Analysis Techniques, module 890F3. If you are a student on this module, please read the canvas pages carefully for vital information including the course structure, assessment, and suggested reading. 
@@ -29,12 +25,12 @@ This module explores how to use probability and statistics to analyse data.
 - [ ] Describe the difference between Discrete and Continuous RVs, and give examples of each
 - [ ] Generate uniformly distributed and normally distributed pseudorandom numbers
 - [ ] Calculate the mean, variance, and standard deviation of a dataset
-- [ ] Make simple plots and histograms in matplotlib
+- [ ] Make simple ```plot```,  ```hist``` and ```scatter``` in matplotlib
 :::
 
 :::{dropdown} Probability Essentials
-- [ ] Summarise the Frequentist and Bayesian interpretations of probability.
-- [ ] Understand and express relationships between sets
+- [ ] Summarise the Frequentist and Bayesian interpretations of probability
+- [ ] Understand and express relationships between sets ($\subset$, $\cap$, $\cup$, $A'$)
 - [ ] Correctly interpret Venn diagrams
 - [ ] Calculate the union and intersection of datasets
 - [ ] Describe the meaning of Independent and Mutually Exclusive (Disjoint) sets
@@ -42,11 +38,12 @@ This module explores how to use probability and statistics to analyse data.
 - [ ] Describe the terms present in Bayes' Theorem
 :::
 
+:::{dropdown} Describing Data
+- [ ] Explain what is meant by the Expectation Value and how it relates to the Mean.
+- [ ] Describe in words the statement of the Law of Large Numbers
 
 :::{dropdown} The Normal Distribution
 :open:
-- [ ] Explain what is meant by the Expectation Value and how it relates to the Mean.
-- [ ] Describe in words the statement of the Law of Large Numbers
 - [ ] Explain why the normal distribution is so prevalent
 - [ ] Understand the concept of a Continuous Random Variables
 - [ ] Explain why the CDF, rather than PDF, must be used for calculating probabilities for continous RVs

@@ -73,9 +73,10 @@ As is often the case with Statistics, it is helpful to think about what the LLN 
 
 We can see a fluctuation in the image series [](#fig:mean-expect-mp4) when we compare the $N=1k$ dataset with the $N=10k$ dataset. This is examined in [](#fig:fluc).
 
-
-:::{figure}
-\label{fig:fluc} /figures/LLN-fluc.png
+:::{figure} 
+:label: fig:fluc
+:align: left
+![](/figures/LLN-fluc.png)
 
 For $N=1k$ measurements, we observe $|\overline{x} - \mu |=0.0044$. For $N=10k$ measurements, we observe $|\overline{x} - \mu |=0.0088$.
 :::
@@ -99,30 +100,28 @@ The problem with the sample variance is that we can't relate it directly to the 
 Cartoon showing $N=5$ measurements of X, with the standard deviation indicated on the plot.
 :::
 
-It is the sample Standard Deviation that we use to quantify the spread of our data points, giving us an intrinsic **Uncertainty** on each measurement.
+It is the sample Standard Deviation that we use to quantify the spread of our data points, giving us an intrinsic **Uncertainty** on each measurement. This is usually provided visually as error bars or bands.
 
 
 ## True Variance and Standard Deviation
 
-* $V[x]  = \frac{1}{N} \sum\limits_i^N  (x_i - \overline{x})^2$: the sample variance in terms of the sample mean.
-* $V[x]  = \sum\limits_i^N  (x_i - \overline{x})^2 p_i$ in terms of the sample mean and the measurement probabilities $p_i$.
+The most basic definition of the[sample variance](#eq-variance) is with respect to the sample mean. Analogous to the [true mean](#eg:expect), if we know the underlying probabilities we can write down the true variance as:
 
-To write down a form for the True Variance, we can follow a few logical steps:
+$\label{eq:truevar1} V[x]  = \sum\limits_i^N  (x_i - \overline{x})^2 p_i$.
+
+To write []{eq:truevar1} in a more useful form, we can thenfollow a few logical steps:
 
 Sample Mean to True Mean
 : Use the expectation $E[x]\equiv \mu$ in place of the sample mean $\overline{x}$
-
-$(x_i - \overline{x})^2\;\; \rightarrow \;\;(x_i - \mu)^2$
+  $(x_i - \overline{x})^2\;\; \rightarrow \;\;(x_i - \mu)^2$
 
 Known probabilty and Infinite data
 : Use the probability $p_i$ instead of normalising by the number of events, and let $N=\infty$
-
-$\frac{1}{N} \sum\limits_i^N (x_i - \mu)^2 \;\; \rightarrow \sum\limits_i^\infty (x_i - \mu)^2 p_i$
+  $\frac{1}{N} \sum\limits_i^N (x_i - \mu)^2 \;\; \rightarrow \sum\limits_i^\infty (x_i - \mu)^2 p_i$
 
 Expectation definition
 : Use [](#eq:expect) to note that:
-
-$E[X^2]  = \sum\limits_i^\infty  x^2_i p_i \;\; \therefore \;\; E[(X-\mu)^2]  = \sum\limits_i^\infty  (x-\mu)^2 p_i$
+  $E[X^2]  = \sum\limits_i^\infty  x^2_i p_i \;\; \therefore \;\; E[(X-\mu)^2]  = \sum\limits_i^\infty  (x_i-\mu)^2 p_i$
 
 The above steps allow us to write the true variance in terms of the expectation:
 
@@ -131,14 +130,14 @@ $$
 V[X] = E[(X-\mu)^2]
 $$
 
-Another useful form for the true variance in terms of the expectation is:
+Or, with a bit of algebra, in the equally useful form:
 
 $$
 \label{eq:truevar2}
 V[X] = E[X^2] - E^2[X]
 $$
 
-:::{dropdown} Proof that [](#eq:truevar1) and [](#eq:truevar2) are equivalent
+:::{dropdown} Proof that [](#eq:truevar) and [](#eq:truevar2) are equivalent
 
 $$
 \begin{aligned}
@@ -150,7 +149,12 @@ V[X] & = E[\, X^2 + E^2[X] - 2X\,E[X] \,]\\
 \end{aligned}
 $$
 
-:open:
-
 :::
 
+## More than one dimension
+
+In [](#intro-plots) we made a scatter plot of heights versus weights; the heights and weights together form a two dimensional dataset.
+
+
+
+## Covariance

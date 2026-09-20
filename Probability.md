@@ -9,7 +9,11 @@ probably been around much longer than eg written communication.
 
 ## Two Philosophies
 
-There are two ways of viewing probabilities: Frequentist and Bayesian. In nutshell, the Bayesian intepretation involves the introduction of prior knowledge, whereas the frequentist way is to rely purely on the data.
+There are two ways of viewing probabilities: Frequentist and Bayesian.
+
+**Frequentist**: everything is defined in terms of repeated experiments. The probability of something happening can only be defined in terms of how often it is observed to happen.
+
+**Bayesian**: the probability of something happening is as per the frequentist definition, but we must "weight" this using our relevant prior knowledge.
 
 A Frequentist, Fernanda, and a Bayesian, Betty, have each misplaced their keys. They will each adopt a different method for finding them based on their different philosophies of probability.
 
@@ -22,6 +26,23 @@ Fernanda and Betty.
 **Fernanda**: my keys are in an unknown location in my home. There is no "probability of them being by the sink", because they are either in a place or not. The only way to locate them is to look in every location methodically.
 
 **Betty**: my keys are in an unknown location in my home. On the last ten occasions I lost them, they were by the sink three times, so there are most likely to be by the sink and I will start my search there.
+
+
+### Is my coin fair?
+
+A Frequentist would toss the coin a million times and see how many times we get heads.
+
+A Bayesian would also consider what we know about the coin. Did we get it from a joke shop, or a post office?
+
+### Is a pregnancy test correct?
+
+A Frequentist would do the test a million times and see how many times were correct.
+
+A Bayesian would also consider what we know about the subject. Does the person taking the test have a uterus?
+
+ 
+> It may appear that the Bayesian approach is prone to bias, and less scientific, so I should note that the Bayesian does not "stick to their guns" on the prior knowledge aspect. If the data indicate their prior knowledge is unlikely to be correct, then the prior is updated. 
+
 
 
 ## Example Sets
@@ -132,9 +153,10 @@ Two sets are **Independent** if they are defined without reference to one anothe
 Two sets are **Mutually Exclusive** if there is no overlap between them. Another word for this is **Disjoint**.
 
 
-## Probability of Intersection
+## Probability of Intersection (Joint Probability)
 
 * The **Probability of Intersection** $P(A\cap B)$ is the probability that **both A and B** are true. 
+* This is the **Joint Probability**
 * This is zero when A and B are **Disjoint** (no overlap: **Mutually Exclusive**)
 * $P(A\cap B) =0$ when $(A\cap B)'$
 
@@ -251,12 +273,13 @@ Example: I roll a dice twice. What is the probability I will get two sixes?
 $P(six \cap six) = P(six) P(six) = \dfrac{1}{6} \dfrac{1}{6}  = \dfrac{1}{36}$
 
 
-## Total Probability
+## Total Probability (Marginal Probability)
 
 In [](#fig:venn_tot) I have divided S into four quadrants, each of which is a set $B_i$. There are N=4 disjoint sets $B_i, i=1,2,3,4$ intersecting with A. 
 
-The Total Probability of A can be written $\label{eq:totp1} P(A) = \sum \limits_{i=1}^4 P(A\cap B_i)$.
+The **Total Probability** of A can be written $\label{eq:totp1} P(A) = \sum \limits_{i=1}^4 P(A\cap B_i)$.
 
+The Total Probability P(A) is also referred to as the **Marginal Probability** of A. This is because we have "Marginalised Out" the probability of B, and are only considering A.
 
 :::{figure} 
 :label: fig:venn_tot

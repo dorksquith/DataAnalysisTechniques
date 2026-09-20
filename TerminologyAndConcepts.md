@@ -34,7 +34,7 @@ Examples:
 
 A **Model** is an object, a mathematical equation, or a computer program that can explain how something works, and/or be used to make predictions. 
 
-::::{grid} 1 1 2 2
+::::{grid} 1 1 3 3
 
 :::{image} /figures/delorian.jpg
 :::

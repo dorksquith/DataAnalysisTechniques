@@ -8,7 +8,8 @@ These notes are a work in progress for students of the Data Analysis Techniques 
 
 This module explores how to use probability and statistics to analyse data.
 
-* Terminology & Concepts
+:::{dropdown} Terminology & Concepts
+:open:
 - [] Define hypothesis, model, theory
 - [] Understand the distinction between a population and a sample
 - [] Give examples of a random variable, a parameter, and a summary statistic
@@ -17,9 +18,10 @@ This module explores how to use probability and statistics to analyse data.
 - [] Generate uniformly distributed and normally distributed pseudorandom numbers
 - [] Describe the difference between Discrete and Continuous RVs, and give examples of each
 - [] Describe in words the statement of the Law of Large Numbers
+:::
 
-
-* Probability Essentials
+:::{dropdown} Probability Essentials
+:open:
 - [] Describe the Frequentist and Bayesian interpretations of probability.
 - [] Understand and express relationships between sets
 - [] Correctly interpret Venn diagrams
@@ -27,8 +29,11 @@ This module explores how to use probability and statistics to analyse data.
 - [] Describe the meaning of Independent and Mutually Exclusive (Disjoint) sets
 - [] Use the formula for calculating the conditional probability
 - [] Describe the terms present in Bayes' theorem
+:::
 
-* The Normal Distribution
+
+:::{dropdown} The Normal Distribution
+:open:
 - [] Explain why the normal distribution is so prevalent
 - [] Understand the concept of a Continuous Random Variables
 - [] Explain why the CDF, rather than PDF, must be used for calculating probabilities for continous RVs
@@ -37,8 +42,11 @@ This module explores how to use probability and statistics to analyse data.
 - [] Describe the terms present in the Gaussian PDF
 - [] Describe the location and scale parameters, and demonstrate the effect of changing them
 - [] State the Central Limit Theorem
+:::
 
-* Statistics Essentials
+
+:::{dropdown} Statistics Essentials
+:open:
 - [] Understand the impact of allowing bias to pollute science 
 - [] State the criteria for constructing a hypothesis test
 - [] Explain what is meant by Critical Regions and Significance Levels
@@ -48,8 +56,11 @@ This module explores how to use probability and statistics to analyse data.
 - [] Calculate the p value for a given Test and dataset
 - [] Calculate p values from Z values and vice versa
 - [] Understand the meanings of the terms Confidence Level, Interval, and Limits. 
+:::
 
-* Normal Tests
+
+:::{dropdown} Normal Tests
+:open:
 - [] State what it means for data to be Independent and Identically Distributed (IID)
 - [] Define the Standard Error on the Mean (SEM)
 - [] Calculate the SEM 
@@ -58,19 +69,24 @@ This module explores how to use probability and statistics to analyse data.
 - [] Describe the T Test and state when it is preferred over the Z Test
 - [] Design a "Student's" T Test to compare the means of two datasets, and calculate the test statistic
 - [] Design a F Test (AnoVa) to compare the variances of two datasets, and calculate the test statistic
+:::
 
 
+:::{dropdown} Covariance and Correlations
+:open:
 
-* Covariance and Correlations
+:::
 <!-- https://canvas.sussex.ac.uk/courses/37537/pages/11-describing-data -->
 
 
-* Probability Distribution Functions
+:::{dropdown} Probability Distribution Functions
 - [] Explain what is meant by a Bernoulli Trial
 - [] Plot the Bernoulli PMF for some data
 - [] Calculate Bernoulli probabilities using the Probability Mass Function
-[] 
 
+:open:
+
+:::
 
 <!--## What issues might we face?
 

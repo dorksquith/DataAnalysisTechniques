@@ -1,8 +1,29 @@
 # Data Analysis Techniques
 
 +++ {"part": "abstract"}
-These notes are a work in progress for students of the Data Analysis Techniques module 890F3. Please read the canvas pages carefully for vital information including the course structure, assessment, and suggested reading. 
+Notes for Data Analysis Techniques module 890F3. If you are a student on this module, please read the canvas pages carefully for vital information including the course structure, assessment, and suggested reading. 
 +++
+
+## Prerequisites
+
+**Essential**:
+- access to a computer
+- maths to at least the standard of UK A-level
+
+**Preferred**:
+- knowledge of basic unix commands
+- understanding of basic python syntax
+- some undergrad maths including vector calculus, linear algebra, series
+
+
+## Why are Probability & Statistics useful?
+
+1. Win games.
+2. Understand the Universe better.
+
+:::{figure} https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/ml-is-stats.png
+:label: fig:scooby
+:::
 
 ## Syllabus & Learning Outcomes
 
@@ -13,27 +34,27 @@ This module explores how to use probability and statistics to analyse data.
 - [] Define hypothesis, model, theory
 - [] Understand the distinction between a population and a sample
 - [] Give examples of a random variable, a parameter, and a summary statistic
-- [] Calculate the mean, variance, and standard deviation of a dataset
-- [] Explain what is meant by the Expectation Value
-- [] Generate uniformly distributed and normally distributed pseudorandom numbers
 - [] Describe the difference between Discrete and Continuous RVs, and give examples of each
-- [] Describe in words the statement of the Law of Large Numbers
+- [] Generate uniformly distributed and normally distributed pseudorandom numbers
+- [] Calculate the mean, variance, and standard deviation of a dataset
 :::
 
 :::{dropdown} Probability Essentials
 :open:
-- [] Describe the Frequentist and Bayesian interpretations of probability.
+- [] Summarise the Frequentist and Bayesian interpretations of probability.
 - [] Understand and express relationships between sets
 - [] Correctly interpret Venn diagrams
 - [] Calculate the union and intersection of datasets
 - [] Describe the meaning of Independent and Mutually Exclusive (Disjoint) sets
-- [] Use the formula for calculating the conditional probability
-- [] Describe the terms present in Bayes' theorem
+- [] Use the formula for calculating the Conditional Probability
+- [] Describe the terms present in Bayes' Theorem
 :::
 
 
 :::{dropdown} The Normal Distribution
 :open:
+- [] Explain what is meant by the Expectation Value and how it relates to the Mean.
+- [] Describe in words the statement of the Law of Large Numbers
 - [] Explain why the normal distribution is so prevalent
 - [] Understand the concept of a Continuous Random Variables
 - [] Explain why the CDF, rather than PDF, must be used for calculating probabilities for continous RVs
@@ -95,23 +116,4 @@ This module explores how to use probability and statistics to analyse data.
 3. Inaccessible information: the assumption of prior knowledge and/or the use of terminology, notation that is unfamiliar to the students.-->
 
 
-## Prerequisites
 
-Essential:
-- access to a computer
-- maths to at least the standard of UK A-level
-
-Preferred:
-- knowledge of basic unix commands
-- understanding of basic python syntax
-- some undergrad maths including vector calculus, linear algebra, series
-
-
-## Why are Probability & Statistics useful?
-
-1. Win games.
-2. Understand the Universe better.
-
-:::{figure} https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/ml-is-stats.png
-:label: fig:scooby
-:::

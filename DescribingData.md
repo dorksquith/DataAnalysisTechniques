@@ -1,11 +1,15 @@
 # Describing Data
 
-## Mean $\overline{x}$ and Expectation $E[X]$
+## The Sample Mean $\overline{x}$ and the True Mean $E[X]$
 
-The **Mean** of a RV is calculated as a normalised sum over a finite number of measurements: [](eq:mean). It is a summary statistic calculated from the data.
+The sample **Mean** of a RV is calculated as a normalised sum over a finite number of measurements: [](eq:mean). It is a summary statistic calculated from the data.
 
 
-The **Expectation** is the True Mean: a parameter of the true underlying probability distribution of our RV. For a Discrete RV we can calculate the Expectation in a similar way to [](eq:mean):
+The **True Mean**, or **Expectation**, is a parameter of the true underlying probability distribution of our RV. 
+
+### Discrete RV
+
+For a Discrete RV we can calculate the Expectation in a similar way to [](eq:mean):
 
 $$
 \label{eq:expect}
@@ -15,11 +19,13 @@ $$
 * The sum is to infinity because in Truth, there are $\infty$ possible values for X.
 * The Probability of observing $x_i$ is $p_i$. Because Probabilities must sum (or integrate) to 1 ([Kolmogorov](#the-kolmogorov-axioms)), the normalisation factor $\dfrac{1}{N}$ is not needed. We are normalising every term in the sum individually, and will get the same result.
 
+### Continuous RV
+
 If our random variable RV is Continuous rather than discrete, then it does not make sense to "sum over all possible values", because continuous RVs have an Uncountable Infinity of possible values. Instead, we integrate:
 
 $$
 \label{eq:expectC}
-E[X]  = \int\limits_{-\infty}^\infty  x_i f_X dx$
+E[X]  = \int\limits_{-\infty}^\infty  x_i f_X dx
 $$
 
 This looks different from the sum in [](eq:expect) because we have $f_X$ 
@@ -32,14 +38,16 @@ This looks different from the sum in [](eq:expect) because we have $f_X$
 :align: left
 ![](figures/MeanExpect.mp4)
 
-A series of images showing a data histogram in blue and the true underlying PDF as a red dashed line. The size of the dataset is increased by a factor 10 for each step in the sequence of images.
+A series of images showing a data histogram in grey and the true underlying PDF as a red dashed line. The size of the dataset is increased by a factor 10 for each step in the sequence of images.
 :::
 
-> An alternative notation for the expectation E[X] is $\mu$. They have exactly the same meaning. I'm sorry this is confusing, but I think there are strong (pedagogical) arguments for having both forms.
+## Notation: $E[X]  \equiv \mu$
+
+> An alternative notation for the expectation E[X] is $\mu$. They have exactly the same meaning. I'm sorry this is confusing, but I think there are strong (pedagogical) arguments for using both forms.
 
 $$
 \label{eq:expectMu}
-E[X]  \equiv \mu$
+E[X]  \equiv \mu
 $$
 
 ## The Law of Large Numbers (LLN)
@@ -55,13 +63,13 @@ $$
 \lim\limits_{N\to \infty} P(| \overline{x} - \mu | \geq \alpha) =0\;\; \mathsf{for}\;\; \alpha > 0 
 $$
 
-The mean is $\overline{x}$ and the expected value is $\mu \equiv E[X]$. The symbol $\alpha$  is a small number of our choosing, which we can think of as a "tolerance level" for the difference between the sample mean and the true mean.
+The sample mean is $\overline{x}$ and the true mean is $\mu \equiv E[X]$. The symbol $\alpha$  is a small number of our choosing, which we can think of as a "tolerance level" for the difference between the sample mean and the true mean.
 
 As is often the case with Statistics, it is helpful to think about what the LLN is **not** telling us. 
 
 >The LLN does not imply that if we add some new measurements to a dataset, the mean will get closer to the expectation. We will observe fluctuations of $\overline{x}$ away from $\mu$ for any number of measurements $N<\infty$. 
 
-We can see a fluctuation in the image series [](#fig:mean-expect-mp4) when we compare the $N=1k$ dataset with the $N=10k$ dataset. This is examined in [](fig:fluc).
+We can see a fluctuation in the image series [](#fig:mean-expect-mp4) when we compare the $N=1k$ dataset with the $N=10k$ dataset. This is examined in [](#fig:fluc).
 
 
 ::::{grid} 1 1 2 2
@@ -73,6 +81,7 @@ For $N=1k$ measurements, we observe $|\overline{x} - \mu |=0.0044$.
 :::
 
 :::{image} /figures/PLOTDAT2-MeanAndExpec_Norm_Mu0_Sigma1_N10000.png
+
 For $N=10k$ measurements, we observe $|\overline{x} - \mu |=0.0088$.
 :::
 
@@ -84,13 +93,9 @@ For $N=10k$ measurements, we observe $|\overline{x} - \mu |=0.0088$.
 
 ## Sample Variance and Standard Deviation
 
-We defined the sample **Variance** in [Variance $V[x]$](#intro-variance), and noted that the sample **Standard Deviation** is its square root. You would be forgiven for wondering why we don't just pick one of these summary statistics and ditch the other for simplicity.
+The sample **Variance** [](#eq:variance) is the square of the sample **Standard Deviation** [](#eq:std). You would be forgiven for wondering why we don't just pick one of these summary statistics and ditch the other for simplicity. We keep this redundancy because they are each crucial in their own worlds, as we shall see.
 
-The problem with the sample variance is that we can't relate it directly the measurement, because it has units of $x^2$ rather than $x$. 
-
-> Reminder: $V[x]  = \frac{1}{N} \sum\limits_i^N  (x_i - \overline{x})^2$
-
-As such, we cannot draw the sample variance on axes with units of $x$. But we can draw the sample Standard Deviation $\sigma_x = \sqrt{V[x]}$.
+The problem with the sample variance is that we can't relate it directly to the measurement, because it has units of $x^2$ rather than $x$. As such, we cannot draw the sample variance on axes with units of $x$. But we can draw the sample Standard Deviation $\sigma_x = \sqrt{V[x]}$.
 
 
 :::{figure} 

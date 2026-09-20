@@ -12,7 +12,12 @@ project:
   authors:
   - Lily Asquith
   github: https://github.com/dorksquith/DataAnalysisTechniques
-  #exports:
+
+  numbering:
+    math:
+      reset: false
+
+#exports:
   #  - format: pdf
   #    template: lapreprint-typst
   #    articles: intro.md  
@@ -25,10 +30,6 @@ project:
     - file: Probability.md
     - file: DescribingData.md
     - file: Normal.md
-
-numbering:
-    math:
-      reset: false
       
 site:
   template: book-theme

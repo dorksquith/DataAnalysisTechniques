@@ -1,4 +1,4 @@
-# Probability 1
+# Probability Essentials
 
 
 Probability is very important to human beings. We are subject to random

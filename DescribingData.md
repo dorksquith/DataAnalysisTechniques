@@ -9,7 +9,7 @@ The **True Mean** (aka **Expectation**), $E[X]$, is a **parameter** of the true 
 
 ### Discrete Data
 
-For [Discrete data](#discrete), if we known the underlying probabilities we can calculate the Expectation in a similar way to [](eq:mean):
+For [Discrete data](#discrete), if we known the underlying probabilities we can calculate the Expectation in a similar way to [the sample mean](eq:mean):
 
 $$
 \label{eq:expect}
@@ -17,7 +17,7 @@ E[X]  = \sum\limits_i^\infty  x_i p_i
 $$
 
 * The sum is infinite because in Truth, there are $\infty$ possible values for X.
-* The Probability of observing $x_i$ is $p_i$. Because Probabilities must sum (or integrate) to 1 [Kolmogorov's normalisation axiom](eq:kolmogorov2), the normalisation factor $\dfrac{1}{N}$ is not needed. Via use of the probability $p_i$ we are normalising every term in the sum individually, and will get the same result.
+* The Probability of observing $x_i$ is $p_i$. Because Probabilities must sum (or integrate) to 1 [Kolmogorov's normalisation axiom](#eq:kolmogorov2), the normalisation factor $\dfrac{1}{N}$ is not needed. Via use of the probability $p_i$ we are normalising every term in the sum individually, and will get the same result.
 
 ### Continuous Data
 
@@ -27,7 +27,7 @@ If our data is Continuous rather than discrete, then it does not make sense to "
 
 $$
 \label{eq:expectC}
-E[X]  = \int\limits_{-\infty}^\infty  x_i f_X dx
+E[X]  = \int\limits_{-\infty}^\infty  x_i\, f_X\, dx
 $$
 
 Note that in [](eq:expectC) we have $f_X$: a **Probability Density Function (PDF)** instead of the individual probabilities $p_i$ used in [](eq:expect). Lots more on PDFs later.
@@ -85,7 +85,7 @@ The mean measured in the smaller 1k sample is closer to the expectation $\mu$ th
 
 ## Sample Variance and Standard Deviation
 
-The [sample **Variance**](#eq:variance) is the square of the [sample **Standard Deviation**](#eq:std). You would be forgiven for wondering why we don't just pick one of these summary statistics and ditch the other for simplicity; we keep this redundancy because they are each crucial in their own worlds, as we shall see.
+The [sample **Variance**](eq:variance) is the square of the [sample **Standard Deviation**](eq:std). You would be forgiven for wondering why we don't just pick one of these summary statistics and ditch the other for simplicity; we keep this redundancy because they are each crucial in their own worlds, as we shall see.
 
 The problem with the sample variance is that we can't relate it directly to the measurement, because it has units of $x^2$ rather than $x$. As such, we cannot provide a visual description of the variance on axes with units of $x$. But we can draw the sample Standard Deviation $\sigma_x = \sqrt{V[x]}$.
 
@@ -95,7 +95,7 @@ The problem with the sample variance is that we can't relate it directly to the 
 :align: left
 ![](figures/variance-cartoon)
 
-Cartoon showing $N=5$ measurements of X, with the standard deviation indicated on the plot.
+Cartoon showing $N=5$ measurements of X, with the standard deviation $\sigma_x$ indicated on the plot.
 :::
 
 It is the sample Standard Deviation that we use to quantify the spread of our data points, giving us an intrinsic **Uncertainty** on each measurement. This is usually provided visually as error bars or bands.
@@ -103,22 +103,22 @@ It is the sample Standard Deviation that we use to quantify the spread of our da
 
 ## True Variance and Standard Deviation
 
-The most basic definition of the[sample variance](#eq-variance) is with respect to the sample mean. Analogous to the [true mean](#eg:expect), if we know the underlying probabilities we can write down the true variance as:
+The most basic definition of the [sample variance](eq:variance) is with respect to the sample mean. Analogous to the [true mean](eq:expect), if we know the underlying probabilities we can write down the true variance as:
 
 $\label{eq:truevar1} V[x]  = \sum\limits_i^N  (x_i - \overline{x})^2 p_i$.
 
-To write []{eq:truevar1} in a more useful form, we can thenfollow a few logical steps:
+To write [](eq:truevar1) in a more useful form, we can then follow a few logical steps:
 
 Sample Mean to True Mean
-: Use the expectation $E[x]\equiv \mu$ in place of the sample mean $\overline{x}$
+: Use the expectation $\mu \equiv E[x]$ in place of the sample mean $\overline{x}$
   $(x_i - \overline{x})^2\;\; \rightarrow \;\;(x_i - \mu)^2$
 
 Known probabilty and Infinite data
 : Use the probability $p_i$ instead of normalising by the number of events, and let $N=\infty$
-  $\frac{1}{N} \sum\limits_i^N (x_i - \mu)^2 \;\; \rightarrow \sum\limits_i^\infty (x_i - \mu)^2 p_i$
+  $\frac{1}{N} \sum\limits_i^N (x_i - \mu)^2 \;\; \rightarrow \sum\limits_i^\infty (x_i - \mu)^2\, p_i$
 
 Expectation definition
-: Use [](#eq:expect) to note that:
+: Use [](eq:expect) to write:
   $E[X^2]  = \sum\limits_i^\infty  x^2_i p_i \;\; \therefore \;\; E[(X-\mu)^2]  = \sum\limits_i^\infty  (x_i-\mu)^2 p_i$
 
 The above steps allow us to write the true variance in terms of the expectation:
@@ -128,14 +128,14 @@ $$
 V[X] = E[(X-\mu)^2]
 $$
 
-Or, with [a bit of algebra](#a-bit-of-algebra), in the equally useful form:
+Or, with [a bit of algebra](a-bit-of-algebra), in the equally useful form:
 
 $$
 \label{eq:truevar2}
 V[X] = E[X^2] - E^2[X]
 $$
 
-:::{dropdown} Proof that [](#eq:truevar) and [](#eq:truevar2) are equivalent
+:::{dropdown} Proof that [](eq:truevar) and [](eq:truevar2) are equivalent
 :label: a-bit-of-algebra
 $$
 \begin{aligned}
@@ -168,6 +168,8 @@ print(f" dataset shape: {data.shape }")
 
 ```
 
+```dataset shape: (2, 1000)```
+
 Note that our ```data``` is a **Matrix** (a two-dimensional array) with 2 rows and 1000 columns.
 
 :::{dropdown} Notation - not pretty but you should probably read.
@@ -182,19 +184,19 @@ $X = \{X_{(1)}, X_{(2)}, ..., X_{(Z)}\}$
 
 Note that the subscripts indicating the RV, $X_{(j)}$, are in brackets. This is because we use the notation $x_i$ (no brackets) to indicate a measurement in a dataset.
 
-> For the heights and weights data set we would have Z=2, with $X = \{ X_{(1)}, X_{(2)} \} = \{ Height, Weight \}$.
+Our example: Z=2, with $X = \{ X_{(1)}, X_{(2)} \} = \{ Height, Weight \}$.
 
 
 $x = \{x_{(1)}, x_{(2)}, ..., x_{(Z)}\}$
 : The set of Z **datasets**
 
-> For the heights and weights data set we would have $x = \{ heights, weights \}$, where heights and weights are arrays of measurements.
+Our example: $x = \{ heights, weights \}$, where heights and weights are arrays of measurements.
 
 
 $x_{(j)}= \{x_{j,1}, x_{j,2}, ..., x_{j,N} \}$
 : the $j^{th}$ dataset of N **Measurements**
 
-> For the heights and weights data set we had N=1k measurements in each of the two $x_{(j)}$, eg $ heights = \{h_1, h_2, ..., h_{1000}\}$ .
+Our example: N=1k measurements in each of the two $x_{(j)}$, eg $ heights = \{h_1, h_2, ..., h_{1000}\}$ .
 :::
 
 
@@ -207,11 +209,11 @@ If we have two RVs (eg weight and height) and they are **Independent**, we can c
 $$
 \label{eq:covmat-indep}
 
-\begin{bmatrix}
 \mathbf{\Sigma} = \begin{bmatrix}
 \sigma^2_X & 0 \\
 0 & \sigma^2_Y \\
 \end{bmatrix}
+
 $$
 
 If our RVs are **Dependent**, (if changing one of them affects the other, ie if y is a function of x) then we will also have **cross-terms** between their variances. These cross-terms are known as **Covariance** terms. 
@@ -219,7 +221,6 @@ If our RVs are **Dependent**, (if changing one of them affects the other, ie if 
 $$
 \label{eq:covmat-dep}
 
-\begin{bmatrix}
 \mathbf{\Sigma} = \begin{bmatrix}
 \sigma^2_x & \sigma_{xy} \\
 \sigma_{yx} & \sigma^2_y \\
@@ -276,7 +277,6 @@ Comparing this to our [mathematical definition](eq:covmat-dep), we see that:
 
 :::{important}
 Check the variances on x and y with those you found from your hand-written functions/ numpy's built in method for variance.  **You will find they do not match the values in the covariance matrix**.
-:::
 
 The mismatch between the values returned by the ```numpy``` methods ```cov``` and ```var``` is because the values in ```np.cov``` are by default the Unbiased Variances, with normalisation $\dfrac{1}{N-1}$ , while the values returned by ```np.var``` are by default the Biased Variances, with normalisation $\dfrac{1}{N}$.
 
@@ -284,9 +284,11 @@ These differences are very small with large datasets, but for our very small  da
 
 We can calculate the Unbiased Variance using ```np.var(x, ddof=1)``` and that will give us the same result as the ```np.cov``` default.
 
+:::
+
 Let's consider the off-diagonal covariance term $\sigma_{xy} \equiv cov(x,y)$. 
 
-The individual covariance of each data point is analogous to the [individual deviations]{eq:variancei} of each point in a 1D dataset:
+The individual covariance of each data point is analogous to the [individual deviations](eq:variancei) of each point in a 1D dataset:
 
 $$
 \label{eq:covtermi}
@@ -301,7 +303,9 @@ $$
 $$
 
 
-Let's make some very small datasets to check this out by hand:
+Let's make some very small (N=3) datasets to check this out by hand[^note]:
+
+[^note]: I have tried to make this snippet clear, which means it is long. The quick one-liner methods for doing the same thing are given as commented lines for you to use if you feel comfortable with the syntax.
 
 ```{code-cell} python
 
@@ -338,7 +342,7 @@ cov_ab = norm * (cov_0 + cov_1 + cov_2) #  -2.72
 
 ```
 
-The long-route in the snippet above returns the covariance values we will find in the off-diagonal of our Covariance Matrix:
+The snippet above returns the covariance values we will find in the off-diagonal of our Covariance Matrix:
 
 ```{code-cell} python
 

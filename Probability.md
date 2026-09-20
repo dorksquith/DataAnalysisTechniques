@@ -216,8 +216,10 @@ For [our sets](#our-sets): $P(A\cup B) = 0.5 +0.4 - 0.2 = 0.7$
 
 The **Non-Negativity Axiom**
 : $\label{eq:kolmogorov1} P(A) \geq 0 \;\; \forall A$: 'the probability of any event A must be a real number greater than zero.
+
 The **Normalisation Axiom** 
 : $\label{eq:kolmogorov2} P(S) =1$: the probability of the entire sample space is one.
+
 The **Countable Additivity Axiom**
 : if A and B are **mutually exclusive**, $\label{eq:kolmogorov3} P(A\cup B) =P(A)+P(B)$: the probability of their union is the sum of their individual probabilities.
 

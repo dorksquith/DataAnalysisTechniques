@@ -74,6 +74,19 @@ plt.savefig("MyFirstScatter.png")
 plt.clf()
 
 
+# Describing Data: more than one dimension
+
+heights = rng.normal(loc=165, scale=15, size=1000)
+
+weights = rng.normal(loc=65, scale=10, size=1000)
+
+data = np.stack((heights, weights)) # <= you need nested brackets
+
+print(f" dataset shape: {data.shape }")
+
+
+
+
 # Describing Data: Covariance
 
 # datasets:

@@ -162,7 +162,7 @@ $$
 V[x]  = \frac{1}{N} \sum\limits_i^N  (x_i - \overline{x})^2
 $$
 
-The term $(x_i - \overline{x})^2$ is the variance of the $i^{th}$ measurement, $x_i$. The sum is over the $N$ measurements.
+Each term in the sum $\label{eq:variancei}(x_i - \overline{x})^2$ is the variance of the $i^{th}$ measurement, $x_i$, wrt to the mean. The sum is over the $N$ measurements.
 
 Sometimes we will see the **Unbiased Variance**:
 
@@ -284,6 +284,9 @@ Credit: DILBERT © 2001 Scott Adams [All rights reserved].
 
 
 ## Plots, axes, histograms, bins <a name="intro-plots"></a>
+
+Reference to [](#intro-plots)
+
 
 A **Plot** is a visual representation of data (a "graph"). Try running the ```python``` snippet below to make a ```matplotlib``` plot.
 

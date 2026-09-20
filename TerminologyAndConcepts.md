@@ -20,7 +20,7 @@ A brief tour of the important terms and concepts for this module, almost all of 
 A **Hypothesis** is an educated guess at the outcome of a specific event. 
 
 
-> The **Null Hypothesis**, usually denoted $H_0$, is one that assumes there is no relationship between two variables, and the **Alternative Hypothesis**, usually denoted $H_1$, is one that assumes there is. 
+> The **Null Hypothesis**, usually denoted $H_0$, assumes that eg there is no relationship between two variables, and the **Alternative Hypothesis**, usually denoted $H_1$, assumes there is. 
 
 For example:
 - $H_0$: There is no correlation between how long we sleep and how long we live.
@@ -40,18 +40,20 @@ A Scale Model of a Delorian, a Computer Model of Earth's temperature, and the St
 
 
 For example:
-- a Scale Model of a delorian (a toy car based on time-travelling car in back to the future movies, which captures the visual appearance of the machine)  
-- a Climate Model (a complex computer program that tells us how much trouble we are in existentially) 
-- the Standard Model of particle physics (a set of mathematical equations describing how the universe works at a fundamental level)
+- A **Scale Model** of a delorian (a toy car based on time-travelling car in back to the future movies, which captures the visual appearance of the machine)  
+- a **Climate Model** (a complex computer program that tells us how much trouble we are in existentially) 
+- the **Standard Model** of particle physics (a set of mathematical equations describing how the universe works at a fundamental level)
 
-
-> When statisticians talk about Toy Models (often shortened to "Toys"), they are referring to a mathematical model that has been simplified. 
+:::{important}
+When statisticians talk about Toy Models (often shortened to "Toys"), they are referring to a mathematical model that has been simplified. Not Delorians, sadly.
+:::
 
 
 A **Theory** is the description of a set of models, and the relationships between them. It is complete, and is a candidate explanation for the "Underlying Truth". The Underlying Truth is an abstract concept which cannot be known with certainty. We can test our models and theories, and those which we fail to prove wrong tend to grow in esteem. 
 
-> It is not possible to prove that a hypotheses or theory is correct. We can only endeavour to prove them wrong. 
-
+:::{important}
+It is not possible to prove that a hypotheses or theory is correct. We can only endeavour to prove them wrong. 
+:::
 
 A theory that passes all the tests accessible by our imaginations and technological capability may well be wrong - we just haven't asked the right questions or gathered enough data to see it.
 
@@ -67,14 +69,14 @@ A robot who loves data.
 
 The **Population** refers to the maximum number of data points we can possibly gather in terms of the subject of our hypothesis or model. If we are modelling adult human heights in 2026, the population would be all human beings alive in 2026. If we are modelling the heights of women between the ages of 22-25, our population would be all women between the ages of 22 and 25.
 
-A **Sample** is a subset of the population. If certain criteria are met, we can use the sample as a proxy for the population. The Representative Sample must be reasonably large and unbiased. Lots more on this to come.
+A **Sample** is a subset of the population. If certain criteria are met, we can use the sample as a proxy for the population. For a sample to be **Representative** of the Population, it must be reasonably large and it must be unbiased. Lots more on this to come.
 
-> Even if we use the entire population at a given moment as our dataset, we must still recognise that our dataset is limited in size. 
+> Even if we use the entire population at a given moment as our dataset, we must still recognise that our dataset is limited in size (ie it is not infinite). 
 
 
 ## Random Variables, Parameters, and Statistics
 
-An example of a **Variable** is height. It is a label for a property that can be measured. Any particular heights that we are able to measure are samples from the theoretical distribution of all possible heights. This underlying truth distribution has an infinite number of data points, and it lives in the theoretical universe. 
+An example of a **Variable** is height. We can think of "height" as a label for a property that can be measured. Any particular heights that we are able to measure are samples from the theoretical distribution of all possible heights. This underlying truth distribution has an infinite number of data points, and it lives in the theoretical universe. 
 
 
 :::{figure} /figures/TheoreticalUniverse.png
@@ -85,23 +87,23 @@ An attempt at a visual explanation of the Underlying Truth distribution.
 
 We call variables such as height **Random Variables (RVs)** because they are in a sense randomly selected instances of height from that infinite-data distribution. The "random" refers to our understanding that the heights of everyone alive today are no more special or representative of the truth than the heights of everyone alive 100 years ago.
 
-A **Parameter** is a number that describes some characteristic of the true underlying distribution, for example the mean height of all humans. 
+A **Parameter** is a number that describes some characteristic of the Underlying Truth distribution. We often use the symbol $\theta$ to represent a parameter or a set of parameters. 
 
 A **Statistic** is a number that describes some characteristic of a sample, for example the mean height of all humans in Sussex Uni. 
 
 
 ## Discrete and Continuous Data
 
-**Discrete RVs** are counts or rates that can only have certain values, rather than any values on the real number line ($\mathbb{R}$). 
+**Discrete RVs** are counts or rates that can only take certain values, rather than any values on the real number line ($\mathbb{R}$). 
 
 > Discrete RVs don’t have to be integers, but they do have to be countable.
 
-For example, the probability of dice rolls (any number of dice) **are not** integers but **are** Discrete. As I increase the number of dice and/or rolls, I can generate lots of probability values from the original set, but there will always be real numbers I cannot generate (gaps).
+For example, the probability of dice rolls (any number of dice) **are not** integers but **are** Discrete. If we increase the number of dice and/or rolls, we can generate lots of probability values from the original set, but there will always be real numbers we cannot generate (gaps in the real number line).
 
 
 **Continuous RVs** are measurements such as height or temperature that can theoretically take any value on the real number line. 
 
-Note that in the real world, measurements always have a finite precision, so the measurements x of a continuous RV will not strictly be continuous. What is true in the real world is also in true in your computer. The precision with which python generates CRVs on my machine is ```float64```: precision 15.
+Note that in the real world, measurements always have a finite precision, so the measurements of a continuous RV will not strictly be continuous. What is true in the real world is also in true in your computer. The precision with which python generates CRVs on my machine is ```float64```: precision 15.
 
 > A continuous RV is still continuous even though its measurements cannot be.
 
@@ -110,6 +112,22 @@ Note that in the real world, measurements always have a finite precision, so the
 ## Summary Statistics 
 
 **Summary statistics** are numbers that describe the properties of a whole sample (dataset), rather than a single data point. Examples of summary statistics we will use in this module are the sample Sum, Mean, Minimum, Maximum, Variance, and Standard Deviation.
+
+We can calculate the sum, min, and max of a dataset in python with the ```numpy``` libraray methods like so:
+
+```{code-cell} python
+import numpy as np 
+x = [5,10,12]
+sum_x = np.sum(x)
+
+sum_x_check = 5 + 10 + 12
+
+print(f" sum x : {sum_x}, check: {sum_x_check }")
+
+min_x = np.min(x)
+max_x = np.max(x)
+
+```
 
 ### Mean $\overline{x}$
 
@@ -204,7 +222,7 @@ print(f" (unbiased std x : {unbiased_std_x})")
 
 ## Random and Pseudorandom Numbers
 
-:::{figure} /figures/RandomRobot.jpeg
+:::{figure} /figures/RandomRobot.png
 :label: fig:random-robot
 
 A robot discussing the difference between random and pseudorandom data with their students.
@@ -215,13 +233,12 @@ A **Random Number** is a term used to describe a value that is produced by a ran
 
 There are many things in the physical world that exhibit random behaviour (such as quantum mechanical processes), but the instruments we use to measure the behaviour often destroy/hide the randomness.
 
-We can extract (a limited number of) truly random numbers from eg [](random.org), which uses atmospheric noise.
+We can extract (a limited number of) truly random numbers from eg [random.org]{https://www.random.org/#numbers), which uses atmospheric noise.
 
-True Random Number Generation (TRNG) is an active area of research, and is rapidly changing. Whatever I write here will probably be out of date in two years. A recent exciting development was published in [Nature](https://www.nature.com/articles/s41586-025-09054-3) last summer.
+True Random Number Generation (TRNG) is an active area of research, and is rapidly changing. Whatever I write here will likely be out of date in two years. A recent(Summer 2025) exciting development was published in [Nature](https://www.nature.com/articles/s41586-025-09054-3).
 
 
 A **Pseudorandom Number** (PRN) is a term used to describe a number in a sequence that appears random, but is produced by a deterministic process. Deterministic means that an outcome is caused by preceeding events.
-
 
 In this module we will generate PRNs using ```numpy``` and ```scipy```.
 
@@ -266,7 +283,7 @@ Credit: DILBERT © 2001 Scott Adams [All rights reserved].
 
 ## Plots, axes, histograms, bins <a name="intro-plots"></a>
 
-* A **Plot** is a visual representation of data (a "graph")
+A **Plot** is a visual representation of data (a "graph"). Try running the ```python``` snippet below to make a ```matplotlib``` plot.
 
 
 ```{code-cell} python
@@ -300,7 +317,7 @@ Expected output from running the above python snippet.
 
 
 
-* A **Histogram** is a bar plot indicating the counts of measurements within defined ranges of values. These ranges are known as **Bins**.
+A **Histogram** is a bar plot indicating the counts of measurements within defined ranges of values. These ranges are known as **Bins**. Try running the ```python``` snippet below to make a ```matplotlib``` histogram.
 
 ```{code-cell} python
 import matplotlib.pyplot as plt
@@ -337,9 +354,9 @@ Expected output from running the above python snippet.
 :::
 
 
-* **Axes** define the space of the plot. A 1D plot has an x axis along the horizontal direction, indicating the values (or bins) for the measurement, and a y axis indicating the count, frequency, or density of those measured values.
+**Axes** define the space of the plot. A 1D plot (one RV) has an x axis along the horizontal direction, indicating the values (or bins) for the measurement, and a y axis indicating the count, frequency, or density of those measured values. 
 
-To "plot on the same axes" means to draw two or more datasets on the same "graph pad".
+To "plot on the same axes" means to draw two or more datasets on the same "graph pad". Try running the ```python``` snippet below to make two ```matplotlib``` scatter plots on the same axes.
 
 ```{code-cell} python
 \label{code:scatter}

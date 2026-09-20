@@ -39,13 +39,9 @@ This module explores how to use probability and statistics to analyse data.
 :::{dropdown} Describing Data
 - [ ] Explain what is meant by the Expected Value and how it relates to the Mean
 - [ ] Describe in words the statement of the Law of Large Numbers (LLN)
-
-
-
 - [ ] Calculate the expected value for discrete and continuous probability distributions.
 
 :::{dropdown} The Normal Distribution
-:open:
 - [ ] Explain why the normal distribution is so prevalent
 - [ ] Understand the concept of a Continuous Random Variables
 - [ ] Explain why the CDF, rather than PDF, must be used for calculating probabilities for continous RVs
@@ -58,7 +54,6 @@ This module explores how to use probability and statistics to analyse data.
 
 
 :::{dropdown} Statistics Essentials
-:open:
 - [ ] Understand the impact of allowing bias to pollute science 
 - [ ] State the criteria for constructing a hypothesis test
 - [ ] Explain what is meant by Critical Regions and Significance Levels
@@ -72,7 +67,6 @@ This module explores how to use probability and statistics to analyse data.
 
 
 :::{dropdown} Normal Tests
-:open:
 - [ ] State what it means for data to be Independent and Identically Distributed (IID)
 - [ ] Define the Standard Error on the Mean (SEM)
 - [ ] Calculate the SEM 
@@ -85,7 +79,6 @@ This module explores how to use probability and statistics to analyse data.
 
 
 :::{dropdown} Covariance and Correlations
-:open:
 
 :::
 <!-- https://canvas.sussex.ac.uk/courses/37537/pages/11-describing-data -->
@@ -95,9 +88,6 @@ This module explores how to use probability and statistics to analyse data.
 - [] Explain what is meant by a Bernoulli Trial
 - [] Plot the Bernoulli PMF for some data
 - [] Calculate Bernoulli probabilities using the Probability Mass Function
-
-:open:
-
 :::
 
 <!--## What issues might we face?

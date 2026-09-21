@@ -20,7 +20,9 @@ project:
     title: true
     headings: true
     continue: true
-     
+  execute:
+    execute_notebooks: force
+  
 site:
   template: book-theme  
   options:

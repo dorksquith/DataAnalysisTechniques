@@ -134,7 +134,7 @@ You would be forgiven, looking at [](#fig:nsigma), for thinking that 100% of the
 
 Let's plot the Gaussian PDF using the ```norm``` method from the ```scipy.stats``` library:
 
-```{code-cell}
+```{code-cell} python
 import numpy as np 
 import matplotlib.pyplot as plt
 from scipy.stats import norm
@@ -176,7 +176,7 @@ my_norm(1,2)
 
 To go some way towards convincing ourselves that the Gaussian PDF is infinite in range, let's change the scale of the y-axis to be **Logarithmic** using the ```semilogy``` method from ```matplotlib```:
 
-```{code-cell}
+```{code-cell} python
 def my_norm_log(mu,sigma):
 
     norm1 = norm(loc=mu, scale=sigma)

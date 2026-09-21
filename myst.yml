@@ -2,10 +2,15 @@
 version: 1
 
 project:
+
   id: 02b91cfe-3d27-4846-b5f9-f76fef5aea5a
+
   title: Data Analysis Techniques
+
   description: Module 890F3, University of Sussex
+
   authors: Lily Asquith
+
   github: https://github.com/dorksquith/DataAnalysisTechniques
 
   toc:
@@ -16,13 +21,12 @@ project:
     - file: DescribingData.md
     - file: Normal.md
     #- file: notebooks/Test.py
+
   numbering:
     title: true
     headings: true
     continue: true
-  execute:
-    execute_notebooks: force
-  
+ 
 site:
   template: book-theme  
   options:

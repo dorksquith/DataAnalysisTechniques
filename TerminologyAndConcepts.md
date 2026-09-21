@@ -1,9 +1,4 @@
 ---
-jupytext:
-  formats: md:myst
-  text_representation:
-    extension: .md
-    format_name: myst
 kernelspec:
   name: python3
   display_name: 'Python 3'
@@ -246,9 +241,6 @@ A **Pseudorandom Number** (PRN) is a term used to describe a number in a sequenc
 In this module we will generate PRNs using ```numpy``` and ```scipy```.
 
 ```{code-cell} python
-
-
-
 
 # using numpy:
 import numpy as np

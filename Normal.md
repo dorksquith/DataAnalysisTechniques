@@ -56,7 +56,7 @@ $\exp$
 : The exponential function. $\exp{x} \equiv e^x$.
   Euler's number $e\approx 2.718$
 
-$\frac{(x-\mu)^2}{\sigma^2}}$
+$\frac{(x-\mu)^2}{\sigma^2}$
 : The argument of the exponential is a function of both parameters and the RV.
   The numerator $(x-\mu)^2$ is the squared deviation between the RV and the true mean.
   The denominator $\sigma^2$ is the true variance.
@@ -112,19 +112,19 @@ From [](#eq:zsigma), we can see that **the Z value $z$ tells us how many $\sigma
 :label: fig:nsigma
 :align: left
 ![](figures/nsigma.png)
+
+A Gaussian PDF with shaded areas corresponding to $\mu\pm 1\sigma$, $\mu\pm 2\sigma$, and $\mu\pm 3\sigma$.
 :::
 
 
-This tells us how likely our measurement is, because the nature of a Gaussian distribution is such that a given fraction of its area is within a given number of standard deviations from the mean.
+The Z value tells us how likely our measurement is because **the nature of a Gaussian distribution is such that a given fraction of its area is within a given number of standard deviations from the mean**.
 
-## The 68-95-99.7 Rule
+## The 
 
-You may have heard of this rule, which is designed to help people remember what fraction of a Gaussian is within 1-2-3 standard deviations from the mean. We can see this correspondence for ourselves in [](#fig:nsigma), which also notes the **p values**. Notice that subtracting each percentage in the rule from 100% gives us the p values for 1-2-3 $\sigma$.
+You may have heard of the [68-95-99.7 Rule](https://en.wikipedia.org/wiki/68%E2%80%9395%E2%80%9399.7_rule), which is designed to help people remember what fraction of a Gaussian is within 1-2-3 standard deviations from the mean. We can see this correspondence for ourselves in [](#fig:nsigma), which also notes the **p values**. Notice that subtracting each percentage in the rule from 100% gives us the p values for 1-2-3 $\sigma$.
 
-
-:::{tip}
 The neat statistical properties of a Gaussian hold for any choice of the parameters $\mu$, $\sigma$. 
-:::
+
 
 
 ## Probability and The Infinite Range 
@@ -165,7 +165,7 @@ def my_norm(mu,sigma):
 	# pdf = norm.pdf(xvals, loc=mu, scale=sigma) if preferred
 
 	plt.plot( xvals, pdf )  
-    plt.show()
+	plt.show()
 
 
 # call the function for eg mu=1, sigma=2
@@ -199,7 +199,7 @@ $$\label{eq:gaus_kernel} f_X(x) \propto  \exp{\left[-x^2/2\right]} $$
 
 Taking the natural logarithm of this gives us [](#eq:gaus_kernel_log).
 
-$$\label{eq:gaus_kernel_log} \ln{f_X(x)} \propto -x^2/2} $$
+$$\label{eq:gaus_kernel_log} \ln{f_X(x)} \propto -x^2/2 $$
 
 
 Beautifully, [we can show](https://www.youtube.com/watch?v=fWOGfzC3IeY) that:
@@ -210,9 +210,12 @@ However, we cannot write down an analytical solution to the integral of our kern
 
 $$\int\limits_{-\infty}^{\infty} e^{-x^2/2} dx$$
 
-**The integral of the Gaussian PDF  has no analytical solution!**
-
+:::{tip}
+The integral of the Gaussian PDF  has no analytical solution.
 We can always calculate a numerical solution though, so its okay!
+:::
+
+
 
 
 ## Bivariate Gaussian

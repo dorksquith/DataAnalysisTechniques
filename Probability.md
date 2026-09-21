@@ -1,3 +1,14 @@
+---
+jupytext:
+  formats: md:myst
+  text_representation:
+    extension: .md
+    format_name: myst
+kernelspec:
+  name: python3
+  display_name: 'Python 3'
+---
+
 # Probability Essentials
 
 
@@ -65,6 +76,24 @@ A &= \{2,4,6,8,10\}& \\
 B &= \{1,2,3,4\}& \\
 \end{aligned}
 ```
+
+```{code-cell} python
+import numpy as np
+
+# Our sets
+
+S = set(range(1,11)) 
+
+A = {i for i in S if i % 2 == 0} 
+B = {i for i in S if i <5} 
+
+
+print(f"S= {S}")
+print(f"A= {A}")
+print(f"B= {B}")
+```
+
+
 We will use these to demonstrate some terminology numerically.
 
 ## Frequentist Probability
@@ -77,6 +106,25 @@ Probabilities for [our sets](#our-sets):
 * $P(S) = N_S/N_S =1$
 * $P(A) = N_A / N_S  = 0.5$
 * $P(B) = N_B / N_S  = 0.4$
+
+
+
+
+
+```{code-cell} python
+
+P_S = len(S)/len(S) 
+P_A = len(A)/len(S)  
+P_B = len(B)/len(S)  
+
+
+print(f"P(S)= {P_S}")
+print(f"P(A)= {P_A}")
+print(f"P(B)= {P_B}")
+
+```
+
+
 
 
 ## Special Sets
@@ -94,6 +142,18 @@ The **Sample Space** S is the set of all possible outcomes of some experiment or
 A **Proper Subset** of S is denoted $A\subset S$. This means that A is a subset of S but A$\neq$S. If A is a subset of S *and* can be S, we use $A\subseteq S$
 
 For [our sets](#our-sets), A and B are proper subsets of S: $A \subset S$ and $B \subset S$.
+
+```{code-cell} python
+
+A_subset_S = A.issubset(S)
+print(f"A.issubset(S): {A_subset_S}") 
+
+# equivalent method with different python operator
+A_subset_S_alt = A <= S
+print(f"A <= S: {A_subset_S_alt}" ) 
+
+```
+
 
 
 ## Venn Diagrams
@@ -134,6 +194,12 @@ The **Complement** of a set is denoted by a prime, $A'$; this means 'not A'. Oth
 
 The **Union** of two sets is written $A\cup B$; this means 'either A, or B, or both'. For [our sets](#our-sets), $A\cup B = \{1,2,3,4,6,8,10\}$
 
+```{code-cell} python
+AUB = A|B 
+print (f"Union AUB ={AUB}")
+```
+
+
 ## Intersection $A\cap B$
 
 The **Intersection** of two sets is written $A\cap B$; this means 'both A and B'. For [our sets](#our-sets), $A\cap B = \{2,4\}$
@@ -149,6 +215,10 @@ The **Intersection** of two sets is written $A\cap B$; this means 'both A and B'
 
 ::::
 
+```{code-cell} python
+AnB = A&B # {2,4}
+print (f"Intersection AnB ={AnB}")
+```
 
 The **Complement of the Union** is $(A\cup B)'$ and means 'Not in A and not in B (and not in both)'.
 
@@ -210,18 +280,28 @@ Note that the subtraction of the intersection $P(A\cap B)$ in [](#eq:prob-union)
 For [our sets](#our-sets): $P(A\cup B) = 0.5 +0.4 - 0.2 = 0.7$
 
 
+```{code-cell} python
+P_AUB = len(AUB)/len(S) # 0.7
+P_AnB = len(AnB)/len(S) # 0.2
+print("P(AUB) = ",P_AUB )
+print(f"P(A) +P(B) - P(AnB) = {P_A} + {P_B} - {P_AnB} = {P_A+P_B-P_AnB}")
+```
+
 ## The Kolmogorov Axioms
 
 > [Andrey Kolmogorov](https://en.wikipedia.org/wiki/Andrey_Kolmogorov) was a Russian mathematician. You may have heard of the 'KS test', which is used to eg check for overtraining by comparing ML classifier outputs for test and train samples. This is named for Kolomogorov and Nikolai Smirnov. See also 'KANs' - Kolmogorov Arnold Networks [arXiv:2404.19756](https://arxiv.org/abs/2404.19756).
 
 The **Non-Negativity Axiom**
-: $\label{eq:kolmogorov1} P(A) \geq 0 \;\; \forall A$: 'the probability of any event A must be a real number greater than zero.
+: The probability of any event A must be a real number greater than zero.
+  $$\label{eq:kolmogorov1} P(A) \geq 0 \;\; \forall A $$
 
 The **Normalisation Axiom** 
-: $\label{eq:kolmogorov2} P(S) =1$: the probability of the entire sample space is one.
+: The probability of the entire sample space is one.
+  $$\label{eq:kolmogorov2} P(S) =1$$: 
 
 The **Countable Additivity Axiom**
-: if A and B are **mutually exclusive**, $\label{eq:kolmogorov3} P(A\cup B) =P(A)+P(B)$: the probability of their union is the sum of their individual probabilities.
+: If A and B are **mutually exclusive**, the probability of their union is the sum of their individual probabilities.
+  $$\label{eq:kolmogorov3} P(A\cup B) =P(A)+P(B)$$: 
 
 
 ## Conditional Probability $P(A | B)$
@@ -249,21 +329,27 @@ The condition is that the element must exist in B; P(B) is our denominator.
 
 For [our sets](#our-sets):
 
-$A\cap B = \{2,4\}$
-: The set of events in both A and B
+$A\cap B = \{2,4\}$: The set of events in both A and B
 
-$N(A \cap B) = 2$
-: The count of events in both A and B
+$N(A \cap B) = 2$: The count of events in both A and B
 
-$\dfrac{N(A\cap B)}{N(B)} = \dfrac{2}{4}$
-: The fraction of B that is also in A
+$\dfrac{N(A\cap B)}{N(B)} = \dfrac{2}{4}$: The fraction of B that is also in A
 
-$P(A | B)  = 0.5 $
-: The probability of A, given that B is true.
+$P(A | B)  = 0.5 $: The probability of A, given that B is true.
 
 
-**If A and B are Independent**, the conditional probability is $P(A | B)  = P(A)$. This is because independence means that B has no effect on A and vice
-versa.
+```{code-cell} python
+P_AgivenB = P_AnB / P_B # 0.2/0.4 = 0.5
+
+print("P(A|B) = ", P_AgivenB )
+
+P_BgivenA = P_AnB / P_A 
+
+print("P(B|A) = ", P_BgivenA )
+```
+
+
+**If A and B are Independent**, the conditional probability is $$\label{eq:conpInd}P(A | B)  = P(A)$$. This is because independence means that B has no effect on A and vice versa.
 
 [Our sets](#our-sets) are independent: $P(A| B) = P(A) = 0.5$.
 
@@ -274,7 +360,7 @@ Conditional Probability looks harmless enough, but can have some counter-intuiti
 
 ## The Multiplication Rule
 
-Rearranging [the conditional probability](eq:conp): $P(A\cap B) = P(A | B) P(B)$ and noting that for **Independent** A and B, $P(A | B)=P(A)$, we get the very useful **Multiplication Rule**:
+Rearranging [the conditional probability](#eq:conp): $P(A\cap B) = P(A | B) P(B)$ and noting that for **Independent** A and B, $P(A | B)=P(A)$, we get the very useful **Multiplication Rule**:
 
 $$\label{eq:multrule} P(A \cap B) = P(A) P(B)$$
 
@@ -288,13 +374,13 @@ Example: I roll a dice twice. What is the probability I will get two sixes?
 $P(six \cap six) = P(six) P(six) = \dfrac{1}{6} \dfrac{1}{6}  = \dfrac{1}{36}$
 
 
-## Total Probability (Marginal Probability)
+## Total Probability
 
 In the below tryptich of Venn diagrams, I have divided the Sample Space S into four quadrants, each of which is a set $B_i$. There are N=4 disjoint sets $B_i$ intersecting with A. 
 
 The **Total Probability** of A can be written as a sum over the four quadrants:
 
-$$\label{eq:totp1} P(A) = \sum \limits_{i=1}^4 P(A\cap B_i)$$.
+$$\label{eq:totp1} P(A) = \sum \limits_{i=1}^4 P(A\cap B_i)$$
 
 
 
@@ -306,9 +392,9 @@ $$\label{eq:totp1} P(A) = \sum \limits_{i=1}^4 P(A\cap B_i)$$.
 
 :::
 
-Because we know how to write the intersection in terms of the [conditional probability](eq:conp), we can express the [total probability](eq:totp1) in terms of the conditional:
+Because we know how to write the intersection in terms of the [conditional probability](#eq:conp), we can express the [total probability](#eq:totp1) in terms of the conditional:
 
-$$\label{eq:totp} P(A) = \sum \limits_i^N P(A | B_i) P(B_i)$$.
+$$\label{eq:totp} P(A) = \sum \limits_i^N P(A | B_i) P(B_i)$$
 
 This may seem a bit contrived, but we will see soon that it is useful.
 
@@ -321,9 +407,9 @@ To write down Bayes' theorem we need only the **Conditional Probability** [](#eq
 1. The [conditional probability](#eq:conp) applies to any sets A and B, so we can switch A and B and remain true:
 $$\label{eq:conpB} P(B | A) = \dfrac{P(B\cap A)}{P(A)}$$
 
-2. The intersection is not directional, so $P(B\cap A) \equiv  P(A\cap B)$: The LHS [P(A | B)](#eq:conp) is equal to the LHS [P(B | A)](#eq:conpB).
+2. The intersection is not directional, so $P(B\cap A) \equiv  P(A\cap B)$.
 
-3. The RHS of []{P(B)}](#eq:conp) must equal the RHS of [](#eq:conpB), giving us Bayes' theorem: $ P(A | B) P(B) = P(B | A) P(A)$.
+3. This equality gives us Bayes' theorem: $ P(A | B) P(B) = P(B | A) P(A)$.
 
 This is more usually rearranged as:
 
@@ -345,9 +431,9 @@ Injecting [our sets](#our-sets) into Bayes' theorem is a little anticlimactic:
 * $P(A | B) = P(A)$ because A and B are independent
 * Bayes theorem tells us that $P(A) = \dfrac{P(B) P(A)}{P(B)}$ which is just basic algebra.
 
-Bayes' Theorem gets interesting when we consider that it applies to **any sets $A$ and $B$ that satisfy Kolmogorov's Axioms**.
+Bayes' Theorem gets interesting when we consider that it applies to **any sets $A$ and $B$ that satisfy Kolmogorov's Axioms**, as we shall see later.
 
-:::{important}
+:::{important} Bayes' Theorem is not "Bayesian"
 Using Bayes' theorem does not make one a Bayesian. It is used by Frequentists and Bayesians alike!
 :::
 

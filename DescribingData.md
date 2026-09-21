@@ -1,36 +1,48 @@
+---
+jupytext:
+  formats: md:myst
+  text_representation:
+    extension: .md
+    format_name: myst
+kernelspec:
+  name: python3
+  display_name: 'Python 3'
+---
+
 # Describing Data
 
 ## The Sample Mean and the True Mean
 
-The **Sample Mean**, $\overline{x}$, of a RV is calculated as a normalised sum over a finite number of measurements [](eq:mean). It is a **summary statistic** calculated from the data.
+The **Sample Mean**, $\overline{x}$, of a RV is calculated as a normalised sum over a finite number of measurements [](#eq:mean). It is a **summary statistic** calculated from the data.
 
 
 The **True Mean** (aka **Expectation**), $E[X]$, is a **parameter** of the true underlying probability distribution of our RV. 
 
 ### Discrete Data
 
-For [Discrete data](#discrete), if we known the underlying probabilities we can calculate the Expectation in a similar way to [the sample mean](eq:mean):
+For [Discrete data](#discrete), if we known the underlying probabilities we can calculate the Expectation in a similar way to [the sample mean](#eq:mean):
 
-$$
-\label{eq:expect}
+```{math}
+:label: eq:expect
 E[X]  = \sum\limits_i^\infty  x_i p_i
-$$
+```
 
 * The sum is infinite because in Truth, there are $\infty$ possible values for X.
 * The Probability of observing $x_i$ is $p_i$. Because Probabilities must sum (or integrate) to 1 [Kolmogorov's normalisation axiom](#eq:kolmogorov2), the normalisation factor $\dfrac{1}{N}$ is not needed. Via use of the probability $p_i$ we are normalising every term in the sum individually, and will get the same result.
 
 ### Continuous Data
 
-If our data is Continuous rather than discrete, then it does not make sense to "sum over all possible values", because continuous RVs have an Uncountable Infinity[^infinities] of possible values. Instead, we integrate:
+If our data is Continuous rather than Discrete, then it does not make sense to "sum over all possible values", because continuous RVs have an Uncountable Infinity[^infinities] of possible values. Instead, we integrate:
 
 [^infinities]: See this nice blog by Joel Hamkins for an accessible intro to the difference between countable and [uncountable infinites](https://www.infinitelymore.xyz/p/uncountable-infinity)
 
-$$
-\label{eq:expectC}
-E[X]  = \int\limits_{-\infty}^\infty  x_i\, f_X\, dx
-$$
+```{math}
+:label: eq:expectC
 
-Note that in [](eq:expectC) we have $f_X$: a **Probability Density Function (PDF)** instead of the individual probabilities $p_i$ used in [](eq:expect). Lots more on PDFs later.
+E[X]  = \int\limits_{-\infty}^\infty  x_i\, f_X\, dx
+```
+
+Note that in [](#eq:expectC) we have $f_X$: a **Probability Density Function (PDF)** instead of the individual probabilities $p_i$ used in [](#eq:expect). Lots more on PDFs later.
 
 
 :::{figure} 
@@ -45,25 +57,27 @@ A series of images showing a data histogram in grey and the true underlying PDF 
 
 > An alternative notation for the True Mean, aka Expectation, is $\mu$. This has  exactly the same meaning as $E[X]$. I'm sorry this is confusing, but I think there are strong (pedagogical and aesthetic) arguments for using both forms.
 
-$$
-\label{eq:expectMu}
+```{math}
+:label: eq:expectMu
+
 E[X]  \equiv \mu
-$$
+```
 
 ## The Law of Large Numbers (LLN)
 
 In [](#fig:mean-expect-mp4) we see that the Sample Mean $\overline{x}$ does not exactly correspond to the True Mean $E[X]$.
 
-The **Law of Large Numbers (LLN)**[^1] tells us that if we were to increase the size of the data sample to infinity (not possible in real life), the sample mean would approach the true mean with high probability.
+The **Law of Large Numbers (LLN)**[^1] tells us that if we were to increase the size of the data sample to infinity (not possible in real life), the sample mean $\overline{x}$ would approach the true mean $\mu$ with high probability.
 
 [^1]: This is the Weak LLN. The Strong LLN is subtly different, explained quite nicely on [wikipedia](https://en.wikipedia.org/wiki/Law_of_large_numbers).
 
-$$
-\label{eq:lln}
-\lim\limits_{N\to \infty} P(| \overline{x} - \mu | \geq \alpha) =0\;\; \mathsf{for}\;\; \alpha > 0 
-$$
+```{math}
+:label: eq:lln
 
-The sample mean is $\overline{x}$ and the true mean is $\mu \equiv E[X]$. The symbol $\alpha$  is a small number of our choosing, which we can think of as a "tolerance level" for the difference between the sample mean and the true mean.
+\lim\limits_{N\to \infty} P(| \overline{x} - \mu | \geq \alpha) =0\;\; \mathsf{for}\;\; \alpha > 0 
+```
+
+The symbol $\alpha$  is a small number of our choosing, which we can think of as a "tolerance level" for the difference between the sample mean and the true mean.
 
 As is often the case with Statistics, it is helpful to think about what the LLN is **not** telling us. 
 
@@ -85,7 +99,7 @@ The mean measured in the smaller 1k sample is closer to the expectation $\mu$ th
 
 ## Sample Variance and Standard Deviation
 
-The [sample **Variance**](eq:variance) is the square of the [sample **Standard Deviation**](eq:std). You would be forgiven for wondering why we don't just pick one of these summary statistics and ditch the other for simplicity; we keep this redundancy because they are each crucial in their own worlds, as we shall see.
+The [sample **Standard Deviation**](#eq:std) is the square root of the [sample **Variance**](#eq:variance). You would be forgiven for wondering why we don't just pick one of these summary statistics and ditch the other for simplicity; we keep this redundancy because they are each crucial in their own worlds, as we shall see.
 
 The problem with the sample variance is that we can't relate it directly to the measurement, because it has units of $x^2$ rather than $x$. As such, we cannot provide a visual description of the variance on axes with units of $x$. But we can draw the sample Standard Deviation $\sigma_x = \sqrt{V[x]}$.
 
@@ -103,41 +117,43 @@ It is the sample Standard Deviation that we use to quantify the spread of our da
 
 ## True Variance and Standard Deviation
 
-The most basic definition of the [sample variance](eq:variance) is with respect to the sample mean. Analogous to the [true mean](eq:expect), if we know the underlying probabilities we can write down the true variance as:
+The most basic definition of the [sample variance](#eq:variance) is with respect to the sample mean. Analogous to the [true mean](#eq:expect), if we know the underlying probabilities we can write down the true variance as:
 
-$\label{eq:truevar1} V[x]  = \sum\limits_i^N  (x_i - \overline{x})^2 p_i$.
+$$\label{eq:truevar1} V[x]  = \sum\limits_i^{\infty}  (x_i - \overline{x})^2\, p_i$$
 
-To write [](eq:truevar1) in a more useful form, we can then follow a few logical steps:
+To write [](#eq:truevar1) in a more useful form, we can then follow these logical steps:
 
 Sample Mean to True Mean
 : Use the expectation $\mu \equiv E[x]$ in place of the sample mean $\overline{x}$
+  
   $(x_i - \overline{x})^2\;\; \rightarrow \;\;(x_i - \mu)^2$
 
-Known probabilty and Infinite data
-: Use the probability $p_i$ instead of normalising by the number of events, and let $N=\infty$
-  $\frac{1}{N} \sum\limits_i^N (x_i - \mu)^2 \;\; \rightarrow \sum\limits_i^\infty (x_i - \mu)^2\, p_i$
-
 Expectation definition
-: Use [](eq:expect) to write:
-  $E[X^2]  = \sum\limits_i^\infty  x^2_i p_i \;\; \therefore \;\; E[(X-\mu)^2]  = \sum\limits_i^\infty  (x_i-\mu)^2 p_i$
+: Use [](#eq:expect) to write:  
+  
+  $E[X^2]  = \sum\limits_i^\infty  x^2_i p_i$
+  
+  $E[(X-\mu)^2]  = \sum\limits_i^\infty  (x_i-\mu)^2 p_i$
 
 The above steps allow us to write the true variance in terms of the expectation:
 
-$$
-\label{eq:truevar}
+```{math}
+:label: eq:truevar
+
 V[X] = E[(X-\mu)^2]
-$$
+```
 
-Or, with [a bit of algebra](a-bit-of-algebra), in the equally useful form:
+Or, with [a bit of algebra](#a-bit-of-algebra), in the equally useful form:
 
-$$
-\label{eq:truevar2}
+```{math}
+:label: eq:truevar2
+
 V[X] = E[X^2] - E^2[X]
-$$
+```
 
-:::{dropdown} Proof that [](eq:truevar) and [](eq:truevar2) are equivalent
+:::{dropdown} Proof that [](#eq:truevar) and [](#eq:truevar2) are equivalent
 :label: a-bit-of-algebra
-$$
+```{math}
 \begin{aligned}
 V[X] & = E[\, X^2 + E^2[X] - 2X\,E[X] \,]\\
 	& = E[\, X^2\,] + E[\, E^2[X] \,]- E[\,2X\,E[X] \,]\;\; because\; E[A+B] = E[A] + E[B] \\
@@ -145,13 +161,13 @@ V[X] & = E[\, X^2 + E^2[X] - 2X\,E[X] \,]\\
 	& = E[ X^2] + E^2[X]  - 2E^2[X]   \\	
 	& = E[ X^2] - E^2[X]   \\
 \end{aligned}
-$$
+```
 
 :::
 
 ## More than one dimension
 
-In [](#intro-plots) we made a scatter plot of height versus weight; the heights and weights together form a two dimensional dataset.
+In [](#intro-scatter) we made a scatter plot of height versus weight; the heights and weights together form a two dimensional dataset.
 
 
 ```{code-cell} python
@@ -168,58 +184,62 @@ print(f" dataset shape: {data.shape }")
 
 ```
 
-```dataset shape: (2, 1000)```
-
 Note that our ```data``` is a **Matrix** (a two-dimensional array) with 2 rows and 1000 columns.
+
+
 
 :::{dropdown} Notation - not pretty but you should probably read.
 
 Common notation for multiple RVs is as follows:
 
-Z is the number of Random Variables under consideration, indexed by j.
+$Z$ is the number of Random Variables under consideration, indexed by $j$.
 
 
-$X = \{X_{(1)}, X_{(2)}, ..., X_{(Z)}\}$
-: The set of Z **Random Variables** 
+The set of $Z$ **Random Variables** is denoted $X = \{X_{(1)}, X_{(2)}, ..., X_{(Z)}\}$
+ 
 
-Note that the subscripts indicating the RV, $X_{(j)}$, are in brackets. This is because we use the notation $x_i$ (no brackets) to indicate a measurement in a dataset.
+Note that the subscripts indicating the $j^{th}$ RV, $X_{(j)}$, are in brackets. This is because we use the notation $x_i$ (no brackets) to indicate a measurement in a dataset.
 
-Our example: Z=2, with $X = \{ X_{(1)}, X_{(2)} \} = \{ Height, Weight \}$.
-
-
-$x = \{x_{(1)}, x_{(2)}, ..., x_{(Z)}\}$
-: The set of Z **datasets**
-
-Our example: $x = \{ heights, weights \}$, where heights and weights are arrays of measurements.
+For [our example](#intro-scatter): 
+* $Z=2$
+* $X = \{ X_{(1)}, X_{(2)} \} = \{ \mathsf{Height, Weight} \}$.
 
 
-$x_{(j)}= \{x_{j,1}, x_{j,2}, ..., x_{j,N} \}$
-: the $j^{th}$ dataset of N **Measurements**
+The set of $Z$ **datasets** is denoted $x = \{x_{(1)}, x_{(2)}, ..., x_{(Z)}\}$
 
-Our example: N=1k measurements in each of the two $x_{(j)}$, eg $ heights = \{h_1, h_2, ..., h_{1000}\}$ .
+For [our example](#intro-scatter): 
+* $x = \{ \texttt{heights, weights} \}$, where $\texttt{heights}$ and $\texttt{weights}$ are arrays of measurements.
+
+The $j^{th}$ dataset of N **Measurements** is denoted $x_{(j)}= \{x_{j,1}, x_{j,2}, ..., x_{j,N} \}$
+
+
+For [our example](#intro-scatter):
+* $N=1k$ 
+* $x_{(1)} = \texttt{heights} = \{h_1, h_2, ..., h_{1000}\}$.
+* $x_{(2)} = \texttt{weights} = \{w_1, w_2, ..., w_{1000}\}$.
 :::
 
 
 ## Covariance
 
-We use the [variance](eq:varianceU) (or standard deviation) to quantify how much spread there is in a 1D dataset. For a 2D dataset, we cannot express this with a single summary statistic.
+We use the [variance](#eq:varianceU) (or standard deviation) to quantify how much spread there is in a 1D dataset. For a 2D dataset, we cannot express this with a single summary statistic.
 
 If we have two RVs (eg weight and height) and they are **Independent**, we can calculate the two variances as usual. We can then pop these in a 2D array (a matrix):
 
-$$
-\label{eq:covmat-indep}
+```{math}
+:label: eq:covmat-indep
 
 \mathbf{\Sigma} = \begin{bmatrix}
 \sigma^2_X & 0 \\
 0 & \sigma^2_Y \\
 \end{bmatrix}
 
-$$
+```
 
 If our RVs are **Dependent**, (if changing one of them affects the other, ie if y is a function of x) then we will also have **cross-terms** between their variances. These cross-terms are known as **Covariance** terms. 
 
-$$
-\label{eq:covmat-dep}
+```{math}
+:label: eq:covmat-dep
 
 \mathbf{\Sigma} = \begin{bmatrix}
 \sigma^2_x & \sigma_{xy} \\
@@ -227,12 +247,12 @@ $$
 \end{bmatrix}
 \equiv
 \begin{bmatrix}
-\sigma^2_x & cov(x,y) \\
-cov(y,x) & \sigma^2_y \\
+\sigma^2_x & \mathsf{cov}(x,y) \\
+\mathsf{cov}(y,x) & \sigma^2_y \\
 \end{bmatrix}
-$$
+```
 
-The 2D arrays in [](eq:covmat-indep) and [](eq:covmat-dep) are **Covariance Matrices**. They are also sometimes called **Error Matrices**, because the (squared) Standard Deviations they hold are used as the Uncertainties or "Errors" on the measurements. 
+The 2D arrays in [](#eq:covmat-indep) and [](#eq:covmat-dep) are **Covariance Matrices**. They are also sometimes called **Error Matrices**, because the (squared) Standard Deviations they hold are used as the Uncertainties or "Errors" on the measurements. 
 
 :::{tip}
 Covariance Matrices are always square (same number of rows and columns) and they are always symmetric (the pairs of off-diagonal terms are equal, so in our example case $cov(x,y) = cov(y,x)$).
@@ -247,7 +267,7 @@ import numpy as np
 
 x = [0.88472455, 0.96232018, 0.10713343, 0.41198233, 0.06543451,0.40068931, 0.54846767, 0.46301972, 0.4534936 , 0.2064886 ]
 
-y = [1.45373536, 0.48405628, 1.54298594, 0.21109356, 1.38629819, 1.00615679, 1.63028672, 0.34275748, 1.24847874, 1.03419514]
+y = [1.45373536, 0.48405628, 1.54298594, 0.21109356, 1.38629819, 1.00615679, 1.63028672, 0.34275748, 1.24847874, 1.03419514]
 
 # put the two lists of fake data points in a 2D array
 
@@ -261,15 +281,9 @@ print(f"Cov matrix: {cov_xy}")
 
 ```
 
-The datasets above are defined exactly (no random sampling) so we should all see the same output from the above snippet:
+The datasets above are defined exactly (no random sampling) so we will all see the same output from the above snippet every time we run it.
 
-```
-array([[ 0.08777293, -0.03624434],
-
-       [-0.03624434,  0.26879134]]
-```
-
-Comparing this to our [mathematical definition](eq:covmat-dep), we see that:
+Comparing this to our [mathematical definition](#eq:covmat-dep), we see that:
 
 * $\sigma^2_x \equiv V[x] = 0.08777293$
 * $\sigma^2_y \equiv V[y] = 0.26879134$
@@ -286,26 +300,26 @@ We can calculate the Unbiased Variance using ```np.var(x, ddof=1)``` and that wi
 
 :::
 
-Let's consider the off-diagonal covariance term $\sigma_{xy} \equiv cov(x,y)$. 
+Let's consider the off-diagonal covariance term $\sigma_{xy} \equiv \mathsf{cov}(x,y)$. 
 
-The individual covariance of each data point is analogous to the [individual deviations](eq:variancei) of each point in a 1D dataset:
+The individual covariance of each data point is analogous to the [individual deviations](#eq:variancei) of each point in a 1D dataset:
 
 $$
 \label{eq:covtermi}
 \mathsf{cov}(x_i,y_i) = (x_i - \overline{x}) (y_i - \overline{y})
 $$
 
-The covariance cov(x,y) is then the (unbiased) normalised sum over these, analagous to [V[x]](eq:varianceU):
+The covariance cov(x,y) is then the (unbiased) normalised sum over these, analagous to [V[x]](#eq:varianceU):
 
-$$
-\label{eq:covterm}
+```{math}
+:label: eq:covterm
 \mathsf{cov}(x,y) =\mathsf{cov}(y,x) =  \dfrac{1}{N-1} \displaystyle\sum\limits_i \mathsf{cov}(x_i,y_i)
-$$
+```
 
 
 Let's make some very small (N=3) datasets to check this out by hand[^note]:
 
-[^note]: I have tried to make this snippet clear, which means it is long. The quick one-liner methods for doing the same thing are given as commented lines for you to use if you feel comfortable with the syntax.
+[^note]: I have tried to make this snippet clear, which means it is long. In my experience there is no such thing as over-commented code, and most code is horribly under-commented.
 
 ```{code-cell} python
 
@@ -317,28 +331,35 @@ b = np.array([ 7.0, 5.0, 2.0])
 mean_a = np.mean(a)
 mean_b = np.mean(b)
 
-# calculate the deviation of each point from the mean:
-da_0 = mean_a - a[0] # 1.17
-da_1 = mean_a - a[1] # -0.13
-da_2 = mean_a - a[2] # -1.03
-# one line :  da =  [mean_a - ai for ai in a]
+# calculate the deviation of each point in a from the mean of a:
 
-db_0 = mean_b - b[0] # -2.33
-db_1 = mean_b - b[1] # -0.33
-db_2 = mean_b - b[2] # 2.67
-# one line :  db =  [mean_b - bi for bi in b]
+# individual steps for clarity:
+# da_0 = mean_a - a[0] # 1.17
+# da_1 = mean_a - a[1] # -0.13
+# da_2 = mean_a - a[2] # -1.03
+
+# one-liner, giving us da = [da_0 , da_1, da_2]
+da =  [mean_a - ai for ai in a]
+
+# same thing for b:
+
+# db_0 = mean_b - b[0] # -2.33
+# db_1 = mean_b - b[1] # -0.33
+# db_2 = mean_b - b[2] # 2.67
+db =  [mean_b - bi for bi in b]
 
 # multiply together point-by-point:
-cov_0 = da_0 * db_0 # -2.72
-cov_1 = da_1 * db_1 #  0.04
-cov_2 = da_2 * db_2 # -2.76
-# one line :  cov =  [a*b for a,b in zip(da,db) ]
+# cov_0 = da_0 * db_0 # -2.72
+# cov_1 = da_1 * db_1 #  0.04
+# cov_2 = da_2 * db_2 # -2.76
+cov =  [a*b for a,b in zip(da,db) ]
 
 
 # sum and normalise
 norm = 1 / ( len(a)-1 ) # 1/(N-1) unbiased version for small dataset
-cov_ab = norm * (cov_0 + cov_1 + cov_2) #  -2.72
-# one line :  cov_ab =  norm * np.sum(cov)
+cov_ab =  norm * np.sum(cov)
+
+print(f"cov_ab: {cov_ab}")
 
 ```
 
@@ -348,81 +369,94 @@ The snippet above returns the covariance values we will find in the off-diagonal
 
 ab = np.stack((a,b))
 
-print(f" np.cov(ab): {np.cov(ab)}" 
+print(f" np.cov(ab): {np.cov(ab)}")
 
-# output:
-array([[ 1.22333333, -2.71666667],
-       [-2.71666667,  6.33333333]])
 ```
+
+Note that ```np.cov``` returns the whole covariance matrix rather than the covariance terms in the off-diagonal. We can access them like so:
+
+```{code-cell} python
+
+covmat_01 = np.cov(ab)[0][1]
+print(f" cov(a,b): {covmat_01}")
+
+covmat_10 = np.cov(ab)[1][0]
+print(f" cov(b,a): {covmat_10}")
+
+```
+
+We can visualise the covariance terms with a [scatter plot of a versus b](#fig:mda-cov). The 3 shaded areas indicate the covariances of each of the three data points with respect to the mean of a (denoted $\langle a \rangle$, which is equivalent to $\overline{a}$) shown as a dotted red line and the mean of b, $\langle b \rangle$, shown as a dotted blue line.
+
 
 :::{figure} 
 :label: fig:mda-cov
 :align: left
-![](figures/mda-cov.png)
+![](figures/mda_cov.png)
+:::
 
 
 
 ## Linear Correlations
 
-We can see from the [scatter plot](fig:mda-cov) that as a increases, b decreases. This could indicate that the variables a and b are somehow dependent on one another.
+We can see from the above scatter plot that as a increases, b decreases. This could indicate that the variables a and b are somehow dependent on one another.
 
 
-The covariance of -2.72 is negative, encoding the negative relationship between a and b. The negative sign tells us that as a increases, b decreases. But the magnitude of the value 2.72 is not at all helpful - the size of this value only tells us about the range of one or both of the datasets rather than how they "vary together".
+The covariance term $\mathsf{cov}(a,b)\approx  -2.72$ is negative, encoding the negative relationship between a and b. But the magnitude of the covariance term, $|\mathsf{cov}(a,b)|\approx  2.72$ is not at all helpful - the size of this value only tells us about the range of one or both of the datasets rather than how they "vary together".
 
 
-To make this more useful, we can define the Linear Correlation Coefficient:
+To make the magnitude of the covariance term more useful, we can define the **Linear Correlation Coefficient**:
 
-$$
-\label{eq:rho}
+```{math}
+:label: eq:rho
 \rho(a,b) = \dfrac{ \mathsf{cov}(a,b) }{ \sigma_a \sigma_b }
-$$
+```
 
 For the datasets a and b defined in our snippet above, we have (from our covariance matrix, top left element $\Sigma_{00}$ ):
 
-* $\sigma_a = \sqrt{1.22333333} \approx 1.106...$ 
-* $\sigma_b = \sqrt{6.33333333} \approx 2.517...$
+* $\sigma_a = \sqrt{1.223...} \approx 1.106...$ 
+* $\sigma_b = \sqrt{6.333...} \approx 2.517...$
 * $\rho(a,b) \approx \dfrac{-2.717...}{(1.106... )(2.517...)} \approx -0.976$
 
 :::{important}
 I have put ellipses (...) on the rounded numbers above to indicate that I am absolutely not rounding those numbers at any point before reaching the end of the calculation. Doing that would introduce horrible and unecessary inaccuracies. 
 :::
 
-We can access the linear correlation coefficient directly with ```numpy```:
+We can access the Linear Correlation Coefficient $\rho(a,b)$ directly with ```numpy```:
 
 ```{code-cell} python
 
 rho_ab = np.corrcoef(ab)
 
-# output:
-array([[ 1.        , -0.97599541],
-       [-0.97599541,  1.        ]])
+print(f"rho_ab: {rho_ab}")
 ```
 
+The math notation for the **Linear Correlation Matrix** is:
 
-The math notation for the Linear Correlation Matrix is:
+```{math}
+:label: eq:rhomat
 
-$$
-\label{eq:rhomat}
 
-\mathbf{\rho} = 
-\begin{bmatrix}
-1 & \rho_{ab} \\
-\rho_{ba} & 1 \\
-\end{bmatrix}
-
-\equiv
+\mathbf{\Rho} = 
 
 \begin{bmatrix}
 \dfrac{\sigma^2_a}{\sigma_a\sigma_a} & \dfrac{\mathsf{cov}(a,b)}{\sigma_a\sigma_b} \\
 \dfrac{\mathsf{cov}(b,a)}{\sigma_b\sigma_a} &\dfrac{\sigma^2_b}{\sigma_b\sigma_b} \\
 \end{bmatrix}
-$$
+
+\equiv
+
+
+\begin{bmatrix}
+1 & \rho(a,b) \\
+\rho(b,a) & 1 \\
+\end{bmatrix}
+```
 
 
 ## Limitations of the Linear Correlation Coefficient
 
 
-The [Linear Correlation Matrix](eq:rhomat) is the normalised covariance matrix, with diagonal elements equal to 1, and off-diagonals symmetric and equal to the linear correlation coefficients.
+The [Linear Correlation Matrix](#eq:rhomat) is the normalised covariance matrix, with diagonal elements equal to 1, and off-diagonals symmetric and equal to the linear correlation coefficients $\rho(a,b)$.
 
 The correlations can have any values between -1 and 1, with extremes indicating:
 
@@ -431,12 +465,15 @@ The correlations can have any values between -1 and 1, with extremes indicating:
 * $\rho(i,j)=-1$ : Perfect Negative Linear Correlation between the two RVs.
 
 
-A non-zero $\rho(i,j)$ indicates some linear correlation between the two datasets, but **the reverse is not true**. The linear correlation can be zero between datasets that are obviously related, as illustrated by this nice example from wikipedia by By DenisBoigelot, CC0:
+A non-zero $\rho(i,j)$ indicates some linear correlation between the two datasets, but **the reverse is not true**. The linear correlation can be zero between datasets that are obviously related, as illustrated in [](#fig:rho-wiki).
 
 :::{figure} 
 :label: fig:rho-wiki
 :align: left
-![](figures/rho-wiki.png)
+![](figures/rho_wiki.png)
+
+By DenisBoigelot, CC0, from [wikipedia](https://commons.wikimedia.org/wiki/File:Correlation_examples2.svg).
+:::
 
 
 All of the x,y distributions on the bottom row have a zero linear correlation coefficient, despite being very obviously related. If x,y were independent, we would expect something more like the middle section of the top row. The bottom row of distributions have $\rho(x,y) =0$ because **the correlations between x and y are not linear**. Hopefully this makes it clear how limited the linear correlation coefficient is!

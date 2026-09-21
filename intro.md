@@ -1,3 +1,14 @@
+---
+jupytext:
+  formats: md:myst
+  text_representation:
+    extension: .md
+    format_name: myst
+kernelspec:
+  name: python3
+  display_name: 'Python 3'
+---
+
 # Data Analysis Techniques ![ML is stats](/figures/ml-is-stats.png)
 
 :::{warning}
@@ -7,6 +18,9 @@ These notes are under development.
 +++ {"part": "abstract"}
 Notes for Data Analysis Techniques, module 890F3. If you are a student on this module, please read the canvas pages carefully for vital information including the course structure, assessment, and suggested reading. 
 +++
+
+
+## Notebooks
 
 
 <!--## Why are Probability & Statistics useful?
@@ -82,9 +96,6 @@ This module explores how to use probability and statistics to analyse data.
 :::
 
 
-:::{dropdown} Covariance and Correlations
-
-:::
 <!-- https://canvas.sussex.ac.uk/courses/37537/pages/11-describing-data -->
 
 

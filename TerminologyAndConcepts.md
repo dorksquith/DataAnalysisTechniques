@@ -44,14 +44,14 @@ For example:
 - a **Climate Model** (a complex computer program that tells us how much trouble we are in existentially) 
 - the **Standard Model** of particle physics (a set of mathematical equations describing how the universe works at a fundamental level)
 
-:::{important}
+:::{important} Toys?
 When statisticians talk about Toy Models (often shortened to "Toys"), they are referring to a mathematical model that has been simplified. Not Delorians, sadly.
 :::
 
 
 A **Theory** is the description of a set of models, and the relationships between them. It is complete, and is a candidate explanation for the "Underlying Truth". The Underlying Truth is an abstract concept which cannot be known with certainty. We can test our models and theories, and those which we fail to prove wrong tend to grow in esteem. 
 
-:::{important}
+:::{important} 
 It is not possible to prove that a hypotheses or theory is correct. We can only endeavour to prove them wrong. 
 :::
 
@@ -91,8 +91,8 @@ A **Parameter** is a number that describes some characteristic of the Underlying
 
 A **Statistic** is a number that describes some characteristic of a sample, for example the mean height of all humans in Sussex Uni. 
 
-
-## Discrete and Continuous Data <a name="discrete"></a>
+(discrete)=
+## Discrete and Continuous Data
 
 **Discrete RVs** are counts or rates that can only take certain values, rather than any values on the real number line ($\mathbb{R}$). 
 
@@ -153,7 +153,8 @@ print(f" mean x : {mean_x}, check: {mean_x_check }")
 
 > When we are working in the Theoretical Universe where Probability Distributions live, we often use the term **Expected Value** or **Expectation** rather than saying "True Mean". The Expected Value is a parameter, not a summary statistic, and is defined in terms of the Probabilities $p_i$ of the individual measurements rather than as a normalised sum over them: $E[X]  = \sum\limits_i^\infty  x_i p_i$. Lots more on this later.
 
-### Variance $V[x]$ <a name="intro-variance"></a>
+(intro-variance)=
+### Variance $V[x]$ 
 
 The sample **Variance** $V[x]$ is a measure of the spread of a dataset $x$ with respect to the mean.
 
@@ -162,7 +163,7 @@ $$
 V[x]  = \frac{1}{N} \sum\limits_i^N  (x_i - \overline{x})^2
 $$
 
-Each term in the sum $\label{eq:variancei}(x_i - \overline{x})^2$ is the variance of the $i^{th}$ measurement, $x_i$, wrt to the mean. The sum is over the $N$ measurements.
+Each term in the sum $$\label{eq:variancei}(x_i - \overline{x})^2$$ is the variance of the $i^{th}$ measurement, $x_i$, wrt to the mean. The sum is over the $N$ measurements.
 
 Sometimes we will see the **Unbiased Variance**:
 
@@ -224,7 +225,7 @@ print(f" (unbiased std x : {unbiased_std_x})")
 
 ## Random and Pseudorandom Numbers
 
-:::{figure} /figures/RandomRobot.png
+:::{figure} /figures/RandomRobot.jpg
 :label: fig:random-robot
 
 A robot discussing the difference between random and pseudorandom data with their students.
@@ -247,11 +248,13 @@ In this module we will generate PRNs using ```numpy``` and ```scipy```.
 ```{code-cell} python
 
 
-# Generate 10 numbers uniformly distributed between the values of 5 and 95
+
 
 # using numpy:
 import numpy as np
 rng = np.random.default_rng()
+
+# Generate 10 numbers uniformly distributed between the values of 5 and 95
 x_uniform_numpy = rng.uniform(low=5,high=95,size=10)
 
 # using scipy: 
@@ -261,11 +264,14 @@ x_uniform_scipy = uniform.rvs(loc=5,scale=90,size=10)
 # generate 15 numbers from a normal distribution with mean 7 and standard deviation 4.1
 
 # using numpy:
-x_normal = rng.normal(loc=7,scale=4.1,size=15)
+x_normal_numpy = rng.normal(loc=7,scale=4.1,size=15)
 
 # using scipy:
 from scipy.stats import norm
 x_normal_scipy = norm.rvs(loc=7,scale=4.1,size=15)
+
+print(f"* scipy normal PRNs, mean: {np.mean(x_normal_scipy):.3f}")
+
 
 ```
 
@@ -283,10 +289,10 @@ Credit: DILBERT © 2001 Scott Adams [All rights reserved].
 
 
 
-## Plots, axes, histograms, bins <a name="intro-plots"></a>
+## Plots, axes, histograms, bins
 
-Reference to [](#intro-plots).
-
+(intro-plot)=
+### ```plot```
 
 A **Plot** is a visual representation of data (a "graph"). Try running the ```python``` snippet below to make a ```matplotlib``` plot.
 
@@ -314,12 +320,9 @@ plt.show()
 #plt.clf()
 
 ```
-:::{figure} /figures/MyFirstPlot.png
-:label: fig:first-plot
 
-Expected output from running the above python snippet.
-:::
-
+(intro-hist)=
+### ```hist```
 
 
 A **Histogram** is a bar plot indicating the counts of measurements within defined ranges of values. These ranges are known as **Bins**. Try running the ```python``` snippet below to make a ```matplotlib``` histogram.
@@ -352,19 +355,18 @@ plt.show()
 
 ```
 
-:::{figure} /figures/MyFirstHist.png
-:label: fig:first-hist
-
-Expected output from running the above python snippet.
-:::
 
 
 **Axes** define the space of the plot. A 1D plot (one RV) has an x axis along the horizontal direction, indicating the values (or bins) for the measurement, and a y axis indicating the count, frequency, or density of those measured values. 
 
 To "plot on the same axes" means to draw two or more datasets on the same "graph pad". Try running the ```python``` snippet below to make two ```matplotlib``` scatter plots on the same axes.
 
+(intro-scatter)=
+### ```scatter```
+
 ```{code-cell} python
-\label{code:scatter}
+:label: code-scatter
+
 import matplotlib.pyplot as plt
 import numpy as np
 rng = np.random.default_rng()
@@ -394,11 +396,7 @@ plt.legend()
 plt.show()
 
 ```
-:::{figure} /figures/MyFirstScatter.png
-:label: fig:first-scatter
 
-Expected output from running the above python snippet.
-:::
 
 
 

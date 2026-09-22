@@ -55,32 +55,39 @@ This module explores how to use probability and statistics to analyse data.
 :::
 
 :::{dropdown} Describing Data
-- [ ] Explain what is meant by the Expected Value and how it relates to the Mean
+- [ ] Explain what is meant by the Expectation and how it relates to the Mean
 - [ ] Describe in words the statement of the Law of Large Numbers (LLN)
-- [ ] Calculate the expected value for discrete and continuous probability distributions.
+- [ ] Calculate the expectation for discrete and continuous probability distributions.
+- [ ] Describe the Law of Large Numbers (LLN)
+- [ ] Express the True Variance in terms of the Expectation
+- [ ] Understand the terms in the Covariance Matrix
+- [ ] Calculate covariance with numpy
+- [ ] Be aware of the different results returned by numpy's cov and var, and how to harmonise
+- [ ] Calculate the linear correlations between two datasets with numpy
+- [ ] Understand that an absence of linear correlations does not imply independence 
+
 
 :::{dropdown} The Normal Distribution
 - [ ] Explain why the normal distribution is so prevalent
-- [ ] Understand the concept of a Continuous Random Variables
 - [ ] Explain why the CDF, rather than PDF, must be used for calculating probabilities for continous RVs
 - [ ] Plot the Normal PDF and CDF 
 - [ ] State the formula for calculating the Z value, and calculate Z values
 - [ ] Describe the terms present in the Gaussian PDF
 - [ ] Describe the location and scale parameters, and demonstrate the effect of changing them
-- [ ] State the Central Limit Theorem
+- [ ] State the Central Limit Theorem (CLT)
 :::
 
 
-:::{dropdown} Statistics Essentials
+:::{dropdown} Hypothesis Tests
 - [ ] Understand the impact of allowing bias to pollute science 
 - [ ] State the criteria for constructing a hypothesis test
 - [ ] Explain what is meant by Critical Regions and Significance Levels
 - [ ] Explain the elements in a Confusion Matrix (True/False Positive/Negative)
 - [ ] Distinguish between Type 1 and Type 2 Errors
-- [ ] Know what can be inferred from a p value
+- [ ] Know what can and cannot be inferred from a p value
 - [ ] Calculate the p value for a given Test and dataset
 - [ ] Calculate p values from Z values and vice versa
-- [ ] Understand the meanings of the terms Confidence Level, Interval, and Limits. 
+- [ ] Understand the meanings of the terms Confidence, Significance, Purity, and Efficiency. 
 :::
 
 

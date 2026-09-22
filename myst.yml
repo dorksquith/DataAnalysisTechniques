@@ -23,6 +23,7 @@ project:
     - file: DescribingData.md
     - file: Normal.md
     - file: Stats.md
+    - file: NormalTests.md
     #- file: notebooks/Test.py
 
   numbering:

@@ -9,7 +9,7 @@ kernelspec:
   display_name: 'Python 3'
 ---
 
-# Statistical Tests
+# Hypothesis Tests
 
 ## Hypotheses
 
@@ -602,3 +602,37 @@ CriticalValue(0.05)
 
 ```
 
+## A Cautionary Tale
+
+
+[](#fig:zbad) is a plot made by Erik Van Zwet, Adrian Barnett. The red histogram is the data showing the Z values reported over decades of peer-reviewed articles in medical journals.
+
+:::{figure} 
+:label: fig:zbad
+
+![](figures/Z_plot.png)
+
+Histogram of the Z values reported in a few decades of articles.
+:::
+
+The sides of the distribution look Gaussian, which is what we would expect, but is has a gigantic hole blown out of the centre, which is where we could expect most of the data to be.
+
+The hole is for results reporting z values of less than around 2 standard deviations, which correspond to p values of greater than about 2%. The data we expect to see in the middle is for all of the experiments which fail to reject the Null Hypothesis, given that Significance Levels between around 1-5% are commonly chosen.
+
+Why aren't these people reporting findings with large p values?
+
+What this indicates is that medical scientists are not publishing results that fail to reject the null hypothesis, which is bad science.
+
+Given that experiments can take years of work, one would strongly expect people to publish even if their work did not support some flashy alternative hypothesis, and get them a new espresso machine or similar. So, this jagged edge with enormous spikes at "just enough to support a flashy claim" p values is suggestive of dodgy practices, for example designing the test to support the alternative hypothesis :scream:. This is terrible science. The analysis of this data has hopefully led to much more stringent peer review of these kinds of results.
+
+## Learning Objectives Checklist
+
+- [ ] Understand the impact of allowing bias to pollute science 
+- [ ] State the criteria for constructing a hypothesis test
+- [ ] Explain what is meant by Critical Regions and Significance Levels
+- [ ] Explain the elements in a Confusion Matrix (True/False Positive/Negative)
+- [ ] Distinguish between Type 1 and Type 2 Errors
+- [ ] Know what can and cannot be inferred from a p value
+- [ ] Calculate the p value for a given Test and dataset
+- [ ] Calculate p values from Z values and vice versa
+- [ ] Understand the meanings of the terms Confidence, Significance, Purity, and Efficiency. 

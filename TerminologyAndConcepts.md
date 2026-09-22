@@ -390,6 +390,14 @@ plt.show()
 
 ```
 
+## Learning Objectives Checklist
 
+- [ ] Define hypothesis, model, theory
+- [ ] Understand the distinction between a population and a sample
+- [ ] Give examples of a random variable, a parameter, and a summary statistic
+- [ ] Describe the difference between Discrete and Continuous RVs, and give examples of each
+- [ ] Generate uniformly distributed and normally distributed pseudorandom numbers
+- [ ] Calculate the mean, variance, and standard deviation of a dataset
+- [ ] Make simple ```plot```,  ```hist``` and ```scatter``` in matplotlib
 
 

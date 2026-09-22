@@ -30,7 +30,7 @@ The reason for the apparently unrelated RVs in [](#fig:norm-everywhere) having t
 
 The Gaussian (aka Normal) Probability Distribution Function (PDF) is given in [](#eq:gaus_pdf). It describes Continuous RVs (eg blood pressure, height, weight, proton speed differences).
 
-$$\label{eq:gaus_pdf} f_X (x; \mu,\sigma) = \dfrac{1}{\sqrt{ 2\pi\sigma^2} } \exp{-\frac{1}{2} \frac{(x-\mu)^2}{\sigma^2}}$$
+$$\label{eq:gaus_pdf} f_X (x; \mu,\sigma) = \dfrac{1}{\sqrt{ 2\pi\sigma^2} } \exp{\left[-\frac{1}{2} \frac{(x-\mu)^2}{\sigma^2}}\right]$$
 
 A plot of the Gaussian for a choice of parameters is shown in [](#fig:gaussian).
 
@@ -38,6 +38,8 @@ A plot of the Gaussian for a choice of parameters is shown in [](#fig:gaussian).
 :label: fig:gaussian
 :align: left
 ![](figures/PLOTDAT-MeanSigmaFWHM-1.png)
+
+A Gaussian PDF with the mean $\mu$ indicated by the red dashed vertical line.
 :::
 
 It may be helpful to consider each term in [](#eq:gaus_pdf) while looking at the plot.
@@ -45,18 +47,18 @@ It may be helpful to consider each term in [](#eq:gaus_pdf) while looking at the
 
  $f_X (x; \mu,\sigma)$
  : The notation for a PDF describing a continuous RV, X.
-  The parameters $\mu$ and $\sigma$ are the conditionals.
+  The value of $f_X$ for a given $x$ depends on (is conditional on) the values of the parameters $\mu$ and $\sigma$.
 
 $\dfrac{ 1 }{ \sqrt{ 2\pi\sigma^2} }$
-: The "constant" piece is a function of the true variance $\sigma^2$.
-  We say this piece is constant because it does not vary with x.
+: The "constant" term is a function of the true standard deviation $\sigma$.
+  We say this term is constant because it does not vary with x.
   This term tells us the max height of the distribution, because the max of $\exp[-y]$ is 1 (when $y=0$).
 
 $\exp$
-: The exponential function. $\exp{x} \equiv e^x$.
+: The exponential function. $\exp{[y]} \equiv e^y$.
   Euler's number $e\approx 2.718$
 
-$\frac{(x-\mu)^2}{\sigma^2}$
+$\dfrac{(x-\mu)^2}{\sigma^2}$
 : The argument of the exponential is a function of both parameters and the RV.
   The numerator $(x-\mu)^2$ is the squared deviation between the RV and the true mean.
   The denominator $\sigma^2$ is the true variance.
@@ -75,19 +77,21 @@ The **scale parameter**, $\sigma$, is the True Standard Deviation of the distrib
 :label: fig:gaussian_params
 :align: left
 ![](figures/Norm_mu0_sigma1.png)
+
+An illustration of the PDF stretching when we increase the scale parameter $\sigma$, and shifting when we change the location parameter $\mu$.
 :::
 
 ## The Standard Normal PDF and Z value
 
 If we choose the mean of the distribution to be zero and set the standard deviation to be 1, 
 
-$$\mu=0,\; \sigma=1$$
+$$\mu=0,\; \sigma=1$$,
 
 we can write down the **Standard Normal PDF**:
 
 $$\label{eq:standard-norm} f_X(x) = \dfrac{1}{ \sqrt{2\pi}} \exp{\left[-\dfrac{x^2}{2}\right]}$$
 
-This form is a little simpler to look at, but is just a single instantiation of an infinite family of possible Gaussians. 
+The Standard Normal PDF is a single instance of an infinite family of possible Gaussians. 
 
 Instead of fixing the parameters to the specific values $\mu=0,\; \sigma=1$, we can gobble them up into a new RV, $z$:
 
@@ -101,7 +105,7 @@ Notice that this form looks is identical to the [Standard Normal PDF](#eq:standa
 
 The new variable [](#eq:z) is known as the Standard Normal variable, the pull, the Z score, the Z statistic, the Z value. Many different names for the same guy. I will call it the **Z value** because it is very closely related to the **p value**, as we shall see shortly.
 
-Notice that rearranging [](#eq:z)] gives:
+Notice that rearranging [](#eq:z) gives:
 
 $$\label{eq:zsigma} x = z\,\sigma + \mu$$
 
@@ -119,7 +123,7 @@ A Gaussian PDF with shaded areas corresponding to $\mu\pm 1\sigma$, $\mu\pm 2\si
 
 The Z value tells us how likely our measurement is, because the nature of a Gaussian distribution is such that a given fraction of its area is within a given number of standard deviations from the mean.
 
-You may have heard of the [68-95-99.7 Rule](https://en.wikipedia.org/wiki/68%E2%80%9395%E2%80%9399.7_rule), which is designed to help people remember what fraction of a Gaussian is within 1-2-3 standard deviations from the mean. We can see this correspondence for ourselves in [](#fig:nsigma), which also notes the **p values**. Notice that subtracting each percentage in the rule from 100% gives us the p values for 1-2-3 $\sigma$.
+You may have heard of the [68-95-99.7 Rule](https://en.wikipedia.org/wiki/68%E2%80%9395%E2%80%9399.7_rule), which is designed to help people remember what fraction of a Gaussian PDF is within 1-2-3 standard deviations from the mean. We can see this correspondence for ourselves in [](#fig:nsigma), which also notes the **p values**. Notice that subtracting each percentage in the rule from 100% gives us the p values for 1-2-3 $\sigma$.
 
 The neat statistical properties of a Gaussian hold for any choice of the parameters $\mu$, $\sigma$. 
 
@@ -159,8 +163,8 @@ def my_norm(mu,sigma):
 	# the PDF, which we already set the parameters for, is just a function of x:
 	pdf = norm.pdf(xvals) 
 
-	# could also do 
-	# pdf = norm.pdf(xvals, loc=mu, scale=sigma) if preferred
+	# could also do this in one line if preferred:
+	# pdf = norm.pdf(xvals, loc=mu, scale=sigma) 
 
 	plt.plot( xvals, pdf )  
 	plt.show()
@@ -189,7 +193,7 @@ def my_norm_log(mu,sigma):
 my_norm_log(1,2)
 ```
 
-On the log scale plot, we can see that the Gaussian PDF has non-zero probabilities all the way to $+/- 10 \sigma$. We can also see the the **log of the Gaussian PDF is a parabola** ($y \sim - x^2$).
+On the log scale plot, we can see that the Gaussian PDF has non-zero probabilities all the way to $\pm 10 \sigma$. We can also see the the **log of the Gaussian PDF is a parabola** ($y \sim - x^2$).
 
 We can write down the most basic form (**Kernel**) of the Gaussian as [](#eq:gaus_kernel); at its heart, the Gaussian is just an exponential distribution of the square of our RV.
 
@@ -239,14 +243,27 @@ My height is dependent on many factors. My parents' heights are the most obvious
 
 My height is the result of the sum of all of these effects. That is why the distribution of heights is Gaussian.
 
-Here is a "still cartoon" (the animator I have been using is not working) showing the mean and sum of the scores from rolling 1,2,3,4 dice. We can see the distribution already starts to take a Gaussian shape with N=4.
+[Here](#fig:clt1) is a series of histograms showing the mean and sum of the total scores from rolling 1,2,3,4 dice. We can see the distribution already starts to take a Gaussian shape with N=4. [Here](#fig:clt2) is the mean distribution for larger values of N, with a True Gaussian distribution drawn on the same axes (the red dashed line).
+
+:::{figure} 
+:label: fig:clt1
+:align: left
+![](figures/CLT1.png)
+
+:::
+
+:::{figure} 
+:label: fig:clt2
+:align: left
+![](figures/CLT2.png)
+
+:::
+
 
 
 ## Probablities for a Continuous RV
 
-A PDF $f_X(x|\theta)$ is a **Probability Density Function**. It has integral 1, and describes the distribution of probabilities for a **Continuous** Random Variable.
-
-I have used the symbol $\theta$ to represent the parameters of the PDF.  In the case of a normal distribution, the parameters are $\theta = \mu, \sigma$ as we know.
+A PDF $f_X(x|\theta)$ is a **Probability Density Function**. It has integral 1, and describes the distribution of probabilities for a **Continuous** Random Variable. I have used the symbol $\theta$ to represent the parameters of the PDF.  In the case of a normal distribution, the parameters are $\theta = \mu, \sigma$ as we know.
 
 Because X is **Continuous**, there is no limit to the precision its values ($x_i$) can take. There are an infinite number of possible values. This means there is an infinitesimally small (zero) probability for any exact value $x_i$.
 
@@ -255,7 +272,7 @@ We cannot calculate the probability for any exact value of the RV X, but we can 
 ## The Cumulative Distribution Function (CDF)
 
 
-The CDF returns the probability of measuring the RV with some value equal to or less than a given value.
+The CDF returns the probability of measuring the RV with some value equal to or less than a given value. For a Continuous RV $X$, the CDF is written in [](#eq:cdf_cont). For a Discrete RV $K$, the integral is replaced with a sum, [](#eq:cdf_disc). 
 
 ```{math}
 :label: eq:cdf_cont
@@ -264,8 +281,6 @@ F(x) = P(X\leq x) = \displaystyle \int \limits_{-\infty}^{x} f_X(x|\theta)\, dx
 
 ```
 
-For a Discrete RV $K$, the integral is replaced with a sum:
-
 ```{math}
 :label: eq:cdf_disc
 
@@ -273,9 +288,9 @@ F(k) = P(K\leq k) = \displaystyle \sum_{K\leq k} p(k|\theta)\, dk
 
 ```
 
-We have already noted that there is no analytical solution to the integral of the Gaussian PDF. But we only need to solve the integral numerically to calculate probabilities this way. 
+We have already noted that there is no **analytical** solution to the integral of the Gaussian PDF. But we only need to solve the integral **numerically** to calculate probabilities this way. 
 
-The ```scipy.stats.norm``` function is the easiest way to do this (we used to use look-up tables, so many text books will advise you to do this. Don't bother, life is easier now).
+The ```scipy.stats.norm``` function is the easiest way to do this; we used to use look-up tables, so many text books will advise you to do this. Life is easier now.
 
 
 ```{code-cell} python
@@ -305,8 +320,10 @@ The CDF values are probabilities. They are cumulative. So if $x=0.1$, ```norm.cd
 To find the probability of eg $0.15 < x <0.16$, we can subtract the probability from the lower end from that of the upper end:
 
 ```{code-cell} python
-prob_upto_015 = norm1.cdf(0.15)
-prob_upto_016 = norm1.cdf(0.16)
+mu,sigma = 0,1
+
+prob_upto_015 = norm.cdf(mu, sigma, 0.15)
+prob_upto_016 = norm.cdf(mu, sigma, 0.16)
 
 prob_015_to_016 = prob_upto_016 - prob_upto_015
 ```
@@ -315,9 +332,9 @@ prob_015_to_016 = prob_upto_016 - prob_upto_015
 
 ## Multivariate Gaussian
 
-A Gaussian distribution of more than one RV makes for some nice visual tools, and felt like a good opportunity to introduce the ```seaborn``` and ```pandas``` packages.
+A Gaussian distribution of more than one RV makes for some nice visual tools, and felt like a good opportunity to use the ```seaborn``` and ```pandas``` packages.
 
-The Multivariate Gaussian PDF is very similar to the [univariate version](eq:gaus_pdf), the main difference being that we have the Covariance Matrix $\Sigma$ in place of the variance $\sigma^2$
+The Multivariate Gaussian PDF is very similar to the [univariate version](eq:gaus_pdf), the main difference being that we have the [Covariance Matrix](#eq:covmat-dep) $\Sigma$ in place of the variance $\sigma^2$.
 
 ```{math}
 :label: eq:gaus_multi
@@ -348,7 +365,7 @@ def MultiVariateGaus(mu,covmat):
 	g = sns.JointGrid(x=df["x"], y=df["y"])
 
 	# 2D plot
-	g.plot_joint(sns.kdeplot,fill=True)
+	g.plot_joint(sns.kdeplot,fill=True,label=f"{covmat}")
 
 	# include the 1D distributions above and to the right of the 2D plot
 	g.plot_marginals(sns.histplot,fill=True)
@@ -361,7 +378,12 @@ def MultiVariateGaus(mu,covmat):
 	g.ax_joint.set_xlabel(r'x',fontsize=16)
 	g.ax_joint.set_ylabel(r'y',fontsize=16)
 
+	# print the label (covariance matrix) on the plot
+	plt.legend()
+
 	plt.show()
+
+	return df
 
 # call the function, passing the true means and the covariance matrix as arguments
 
@@ -371,23 +393,38 @@ mu = [0, 0]
 # example of no covariance term, equal sigmas (sqrt(5))
 cov = [[5,0],[0,5]] 
 
-MultiVariateGaus(mu,cov)
-
+# calling the function makes the plot and returns the dataframe
+df = MultiVariateGaus(mu,cov)
 
 # try a broader x-distribution
 cov2 = [[10,0],[0,5]] 
-MultiVariateGaus(mu,cov2)
+df2 = MultiVariateGaus(mu,cov2)
 
 # add covariance in the off-diagonal
 cov3 = [[10,5],[5,5]] 
-MultiVariateGaus(mu,cov3)
+df3 = MultiVariateGaus(mu,cov3)
+
+# print the first five (x,y) vals from the DataFrame
+print(f"{df3.iloc[:5, :5]} ")
+
+# print the sample mean for x 
+print(f"mean x: {df3.x.mean()} ")
+
+# print the sample standard deviation for y 
+print(f"std y: {df3.y.std()} ")
+
+# print the maximum value of y 
+print(f"std y: {df3.y.max()} ")
 
 ```
 
+## Learning Objectives Checklist
 
-- [] Explain why the CDF, rather than PDF, must be used for calculating probabilities for continous RVs
-- [] Plot the Normal PDF and CDF 
-- [] State the formula for calculating the Z value, and calculate Z values
-- [] Describe the terms present in the Gaussian PDF
-- [] Describe the location and scale parameters, and demonstrate the effect of changing them
-- [] State the Central Limit Theorem
+- [ ] Explain why the normal distribution is so prevalent
+- [ ] Explain why the CDF, rather than PDF, must be used for calculating probabilities for continous RVs
+- [ ] Plot the Normal PDF and CDF 
+- [ ] State the formula for calculating the Z value, and calculate Z values
+- [ ] Describe the terms present in the Gaussian PDF
+- [ ] Describe the location and scale parameters, and demonstrate the effect of changing them
+- [ ] State the Central Limit Theorem
+

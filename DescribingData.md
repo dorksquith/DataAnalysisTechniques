@@ -53,6 +53,32 @@ Note that in [](#eq:expectC) we have $f_X$: a **Probability Density Function (PD
 A series of images showing a data histogram in grey and the true underlying PDF as a red dashed line. The size of the dataset is increased by a factor 10 for each step in the sequence of images.
 :::
 
+### Independent & Identically Distributed (IID)
+
+A collection of RVs is Independent & Identically Distributed (IID) if:
+
+1. They are all Mutually Independent and
+
+2. They all have the same underlying probability distribution.
+
+Mutually independent RVs: measuring any of them has no effect on the probabilities of the others.
+
+
+Example:
+
+The result of tossing a coin once is a RV, X. It can have values $x={heads, tails}$.
+
+The result of tossing the coin again is also a RV, let's call it Y. The same values are possible.
+
+The result of the first toss does not have any effect on the result of the second toss. So the RVs X and Y  are Mutually Independent.
+
+The probability of each toss coming up heads is identical, so the RVs are Identically Distributed.
+
+**This is true even if the coin is not fair, because it is the same coin being tossed both times.**
+
+
+
+
 ## Notation: $E[X]  \equiv \mu$
 
 > An alternative notation for the True Mean, aka Expectation, is $\mu$. This has  exactly the same meaning as $E[X]$. I'm sorry this is confusing, but I think there are strong (pedagogical and aesthetic) arguments for using both forms.
@@ -478,3 +504,16 @@ By DenisBoigelot, CC0, from [wikipedia](https://commons.wikimedia.org/wiki/File:
 
 All of the x,y distributions on the bottom row have a zero linear correlation coefficient, despite being very obviously related. If x,y were independent, we would expect something more like the middle section of the top row. The bottom row of distributions have $\rho(x,y) =0$ because **the correlations between x and y are not linear**. Hopefully this makes it clear how limited the linear correlation coefficient is!
 
+
+## Learning Objectives Checklist
+
+- [ ] Explain what is meant by the Expectation and how it relates to the Mean
+- [ ] Describe in words the statement of the Law of Large Numbers (LLN)
+- [ ] Calculate the expectation for discrete and continuous probability distributions.
+- [ ] Describe the Law of Large Numbers (LLN)
+- [ ] Express the True Variance in terms of the Expectation
+- [ ] Understand the terms in the Covariance Matrix
+- [ ] Calculate covariance with numpy
+- [ ] Be aware of the different results returned by numpy's cov and var, and how to harmonise
+- [ ] Calculate the linear correlations between two datasets with numpy
+- [ ] Understand that an absence of linear correlations does not imply independence 

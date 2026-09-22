@@ -46,6 +46,7 @@ When statisticians talk about Toy Models (often shortened to "Toys"), they are r
 
 A **Theory** is the description of a set of models, and the relationships between them. It is complete, and is a candidate explanation for the "Underlying Truth". The Underlying Truth is an abstract concept which cannot be known with certainty. We can test our models and theories, and those which we fail to prove wrong tend to grow in esteem. 
 
+(discovery)=
 :::{important} 
 It is not possible to prove that a hypotheses or theory is correct. We can only endeavour to prove them wrong. 
 :::

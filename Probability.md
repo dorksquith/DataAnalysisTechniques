@@ -303,7 +303,7 @@ The **Countable Additivity Axiom**
 : If A and B are **mutually exclusive**, the probability of their union is the sum of their individual probabilities.
   $$\label{eq:kolmogorov3} P(A\cup B) =P(A)+P(B)$$: 
 
-
+(cond-prob)=
 ## Conditional Probability $P(A | B)$
 
 The **Conditional Probability** is most usefully written:

@@ -16,16 +16,19 @@ kernelspec:
 A Hypothesis is an educated guess at the explanation for some occurrence. It must
 be based on real observations and it must be testable.
 
-For example, if I collect some data (and I do not know the underlying PDF) I may
+Example
+: if I collect some data (and I do not know the underlying PDF) I may
 observe that it looks like exponential decay, when I plot it, but it has some lumps and bumps, so something more interesting could possibly be going on...
 
-The **Null Hypothesis** $H_0$ is the educated guess that the most obvious (boring?)
+The **Null Hypothesis** $H_0$
+: is the educated guess that the most obvious (boring?)
 explanation for the data is the correct one. For the example above, the Null
 Hypothesis could be that the data is indeed $\sim$Expon($\lambda$)[^probs].
 
 [^probs]: The notation $\sim$ Expon($\lambda$) means "follows an exponential distribution". The parameter of the exponential distribution is $\lambda$. We will meet many distributions later and refer to them in this way: $\sim$ DistributionName(parameters) or $\sim$ DistributionName(parameter values).
 
-The **Alternative Hypothesis** $H_1$ is an alternative to $H_0$. For the example above, the Alternative Hypothesis would be that the lumps and bumps are exciting resonances that will win your research group a Nobel prize and pay for a new espresso machine.
+The **Alternative Hypothesis** $H_1$
+: is an alternative to $H_0$. For the example above, the Alternative Hypothesis would be that the lumps and bumps are exciting resonances that will win your research group a Nobel prize and pay for a new espresso machine.
 
 ### Example: The Higgs
 

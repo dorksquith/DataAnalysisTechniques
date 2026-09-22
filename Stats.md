@@ -63,7 +63,7 @@ we look at our data.
 :::{figure} 
 :label: fig:espresso
 :align: right
-:width: 40%
+:width: 10%
 
 ![](figures/espresso.jpg)
 
@@ -74,7 +74,7 @@ A beautiful espresso machine.
 
 ## Critical Regions
 
-A Critical Region $W$ is a region of the Sample Space $S$ in which the probability of finding the data, given the Null Hypothesis, is very small^[verysmall].
+A Critical Region $W$ is a region of the Sample Space $S$ in which the probability of finding the data, given the Null Hypothesis, is very small[^verysmall].
 
 [^verysmall]: "very small" is a qualititive term, which will be defined quantatively as part of our test.
 
@@ -83,35 +83,31 @@ A Critical Region $W$ is a region of the Sample Space $S$ in which the probabili
 :align: right
 :width: 40%
 
-![](figures/RobotCritRegion.png)
+![](figures/RobotCritRegion.jpeg)
 
 A Robot showing their friends a simple critical region.
 :::
 
-The region $W$ can have any shape, making it suitable for tests involving multivariate data. The simplest possible definition of W for univariate data would be to draw a vertical line (a ‘cut’) and define W as being on one side of it, as illustrated by our robot friends in [](#fig:robot-critregion).
+The region $W$ can have any shape, making it suitable for tests involving multivariate data. The simplest possible definition of $W$ for univariate data would be to draw a vertical line (a ‘cut’) and define $W$ as being on one side of it, as illustrated by our robot friends in [](#fig:robot-critregion).
 
-A **Positive Result** means that we have found our data x in the critical region, W , and so we **reject the Null Hypothesis**.
+A **Positive Result** means that we have found our data x in the critical region, $W$, and so we **reject the Null Hypothesis**.
 
 > Reminder: One cannot prove a hypothesis. Hypotheses can only be rejected or not rejected.
 
 
 
-We stated above that W is a region of the Sample Space in which the
-probability of finding the data, given the Null Hypothesis, is **very small**.
+We stated above that $W$ is a region of the Sample Space in which the
+probability of finding the data, given the Null Hypothesis, is **very small**. What does very small mean?
 
-What does very small mean?
+A popular choice in the wide world (but not in my world) is to set a tolerance level of $5\%$. We define our region $W$ such that there is a 5% or lower probability of finding the data in that region, given the null hypothesis $H_0$.
 
-A popular choice in the wide world (but not in my world) is to set a tolerance level of $5%$. We define our region W such that there is a 5% or lower probability of finding the data in that region, given the null hypothesis $H_0$.
-
-This tolerance level is called the **Significance Level, $\alpha$**
-
-
+This tolerance level is called the **Significance Level, $\alpha$**, and it provides the upper limit on the conditional probablity in [](#eq:testW).
 
 
 $$\label{eq:testW} P(x \in W | H_0) \leq \alpha $$
 
 
-
+> The **Confidence Level** is also set by our choice of $\alpha$, as $CL = 1-\alpha$.
 
 
 Once we when we have decided on $W$ and $\alpha$, we can look at (‘unblind’) our data.
@@ -130,35 +126,36 @@ In reality, it is impossible to find a $W$ that is not consistent with both $H_0
 :::{figure} 
 :label: fig:critregion
 :align: right
-:width: 40%
+:width: 20%
 
 ![](figures/CriticalRegion_5.png)
 
-A cartoon showing the PDFs for the Null (top) and alternative (bottom) hypotheses.
+A cartoon showing the PDFs for the Null (top) and Alternative (bottom) hypotheses.
 :::
 
-In this simplified example, the critical region that provides us with a significance level $\alpha=5%$ exludes more than half of the distribution for the alternative hypothesis. In life we may find that our critical region eliminates much larger fractions of the alternative hypothesis probability space. We need to think carefully about how we define our critical regions to ensure we mazimize our **Sensitivity** to the data. 
+In the simplified example of [](#fig:critregion), the critical region that provides us with a significance level of $\alpha=5\%$ exludes more than half of the distribution for the Alternative Hypothesis. In life, we may find that our critical region eliminates much larger fractions of $H_1$. We need to think carefully about how we define our critical regions to ensure we mazimize our **Sensitivity** to the data. 
 
-Defining a critical region can involve carefully defining a test statistic, which could be eg the output from a multivariate classifier, that minimises the overlap between $H_0$ and $H_1$. Minimizing this overlap maximizes our sensitivity. We must also choose our siginficance level $\alpha$ in parallel with defining W.
+Defining a critical region involves carefully defining a test statistic[^examp] that minimizes the overlap between $H_0$ and $H_1$. Minimizing this overlap maximizes our sensitivity. We must also choose our significance level $\alpha$ in parallel with defining $W$.
+
+[^examp]: The test statistic may be the output from a multivariate classifier, for example.
 
 ### The Hypotheses as Universes
 
-Notice that [](#eq:testW) is a Conditional Probability. The Condition is $H_0$; that is, we are conditioning on the Truth, which cannot be known by us.
+Notice that [](#eq:testW) is a Conditional Probability. The Condition is $H_0$: we are conditioning on the Truth, which cannot be known by us.
 
 We previously noted that the [True Underlying Distribution](#fig:theoretical-universe) lives in the Theoretical Universe. In our real, physical universe all we can do is look at statistically-limited (finite) samples from it.
 
-When we consider a hypothesis, we are considering a theoretical universe in which that hypothesis is correct. The null and alternative hypotheses cannot both be correct in the same universe. So, when we design a test that is conditional on $H_0$, we are simply testing the compatibility of our real universe data with one possible theoretical universe. The same goes for $H_1$ and any other Hypothetical Universe we care to think up. 
+When we consider a hypothesis, we are considering a theoretical universe in which that hypothesis is correct. The null and alternative hypotheses cannot both be correct in the same universe. So, when we design a test that is conditional on $H_0$, we are simply testing the compatibility of our data from the physical universe with one possible theoretical universe. The same goes for $H_1$ and any other Hypothetical Universe we care to think up. 
 
 ### Purity and Efficiency
 
-
-There are several ways in which purity and efficiency can be usefully defined. 
-
+The Purity and Efficiency are commonly used metrics in scientific data analysis.
 Here is a simple definition of **Purity**:
 
 $$
 :label: eq:purity1
-\mathsf{Purity} =  \dfrac{\mathsf{Number correctly classified as A}{\mathsf{ Total number classified as A}}
+
+\mathsf{Purity} =  \dfrac{\mathsf{Number correctly classified as A}}{\mathsf{ Total number classified as A}}
 $$
 
 
@@ -168,13 +165,15 @@ Using a lower case symbol a for the classification and an upper case symbol A fo
 
 $$
 :label: eq:purity2
-p =  \dfrac{\mathsf{ N(A \cap a) }{\mathsf{ N(a)}}
+
+p =  \dfrac{\mathsf{ N(A \cap a) }}{\mathsf{ N(a)}}
 $$
 
 Using the reasoning in [](#cond-prob), we can therefore write the purity as a [Conditional Probability](#eq:conp):
 
 $$
 :label: eq:purity3
+
 p = P(A|a) 
 $$
 
@@ -184,20 +183,22 @@ Here is a simple definition of **Efficiency**:
 $$
 :label: eq:efficiency1
 
-\mathsf{Efficiency} = \dfrac{\mathsf{Number correctly classified as A}{\mathsf{ Total number that are truly A}}
+\mathsf{Efficiency} = \dfrac{\mathsf{Number correctly classified as A}}{\mathsf{ Total number that are truly A}}
 $$
 
 The more concise form is:
 
 $$
 :label: eq:efficiency2
-e =  \dfrac{\mathsf{ N(A \cap a) }{\mathsf{ N(A)}}
+
+e =  \dfrac{\mathsf{ N(A \cap a)} }{\mathsf{ N(A)}}
 $$
 
 And as a conditional probability:
 
 $$
 :label: eq:efficiency3
+
 e = P(a|A) 
 $$
 

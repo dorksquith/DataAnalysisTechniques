@@ -214,9 +214,9 @@ We can always calculate a numerical solution though, so its okay!
 :::
 
 
-
-
 ## Bivariate Gaussian
+
+
 
 
 ## The Central Limit Theorem (CLT)

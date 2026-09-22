@@ -18,7 +18,7 @@ be based on real observations and it must be testable.
 
 Example
 : if I collect some data (and I do not know the underlying PDF) I may
-observe that it looks like exponential decay, when I plot it, but it has some lumps and bumps, so something more interesting could possibly be going on...
+observe that it looks like eg exponential decay when I plot it, but it has some lumps and bumps, so something more interesting could possibly be going on...
 
 The **Null Hypothesis** $H_0$
 : is the educated guess that the most obvious (boring?)
@@ -33,7 +33,7 @@ The **Alternative Hypothesis** $H_1$
 ### Example: The Higgs
 
 After waiting forever for the LHC to get going after some unfortunate stalls due to
-bad soldering and a ferret, we started to see ‘Higgs-like’ signs in 2011. The plot in [](#fig:higgs) shows the Null Hypothesis (no Higgs) as a red dashed line and the Alternative Hypothesis (Higgs) as a solid red line. In this case, we were not able to disprove the Alternative Hypothesis, and we have still not been able to disprove it. When a particle physicist talks about Discovery (the D-word) we mean we have failed to disprove the opposite ()[#discovery].
+bad soldering and a ferret, we started to see ‘Higgs-like’ signs in 2011. The plot in [](#fig:higgs) shows the Null Hypothesis (no Higgs) as a red dashed line and the Alternative Hypothesis (Higgs) as a solid red line. In this case, we were not able to disprove the Alternative Hypothesis, and we have still not been able to disprove it. When a particle physicist talks about Discovery (the D-word) we mean that we have not yet managed to exclude the alternative hypothesis.
 
 
 
@@ -48,17 +48,20 @@ Higgs hunting, back in the day.
 
 ## Bias
 
-My tangible excitement at the idea of an
-Alternative Hypothesis should raise a big red flag.
 Anyone who has done [Harvard’s excellent
-Unconscious Bias tests](https://implicit.harvard.edu/implicit/takeatest.html) will know that humans are hopeless at being unbiased, and hopeless at being aware that we have a bias.
-This means that if we are going to do excellent
+Unconscious Bias tests](https://implicit.harvard.edu/implicit/takeatest.html) will know that humans are hopeless at being unbiased, and hopeless at being aware of our biases.
+If we are going to do excellent
 science, and not just come up with whatever result
 means we get a new espresso machine, **we have to
 remove any chance of introducing bias**.
 One way of doing this is to set out **very strict
-criteria** for the null and alternate hypotheses before
+criteria** for the **Hypothesis Test** before
 we look at our data.
+
+The two strict criteria for designing a statistical test that is not prone to bias:
+
+1. Define a critical region, $W$
+2. Choose a significance level, $\alpha$
 
 :::{figure} 
 :label: fig:espresso
@@ -72,7 +75,7 @@ A beautiful espresso machine.
 
 
 
-## Critical Regions
+## Critical Region and Significance Level
 
 A Critical Region $W$ is a region of the Sample Space $S$ in which the probability of finding the data, given the Null Hypothesis, is very small[^verysmall].
 
@@ -114,10 +117,6 @@ $$\label{eq:cl} CL = 1-\alpha$$.
 
 Once we when we have decided on $W$ and $\alpha$, we can look at (‘unblind’) our data.
 
-The two strict criteria for designing a statistical test that is not prone to bias:
-
-1. Define a critical region, $W$
-2. Choose a significance level, $\alpha$
 
 
 ### Choosing a Critical Region is challenging
@@ -163,27 +162,29 @@ Here is a simple definition of **Purity**:
 ```{math}
 :label: eq:purity1
 
-\mathsf{Purity} =  \dfrac{\mathsf{Number correctly classified as A}}{\mathsf{ Total number classified as A}}
+\mathsf{Purity} =  \dfrac{\mathsf{Number\; correctly\; classified\; as\; A}}{\mathsf{ Total\; number\; classified\; as\; A}}
 ```
 
 
 Notice that the numerator uses the word "Correctly", which indicates we have knowledge of the Truth. 
 
-Using a lower case symbol a for the classification and an upper case symbol A for the truth, we can write this definition of **Purity** more concisely:
+Using a lower case symbol **a** for the classification and an upper case symbol **A** for the truth, we can write this definition of **Purity** more concisely:
 
 ```{math}
 :label: eq:purity2
 
-p =  \dfrac{\mathsf{ N(A \cap a) }}{\mathsf{ N(a)}}
+\mathsf{Purity}  =  \dfrac{\mathsf{ N(A \cap a) }}{\mathsf{ N(a)}}
 ```
 
-Using the reasoning in [](#cond-prob), we can therefore write the purity as a [Conditional Probability](#eq:conp):
+Using the reasoning in [](#cond-prob), we can therefore write the purity as a Conditional Probability:
 
 ```{math}
 :label: eq:purity3
 
-p = P(A|a) 
+\mathsf{Purity}  = P(A|a) 
 ```
+
+[](#eq:purity3): the Purity is the probability of the truth being **A**, given that the classification is **a**.
 
 
 Here is a simple definition of **Efficiency**:
@@ -191,7 +192,7 @@ Here is a simple definition of **Efficiency**:
 ```{math}
 :label: eq:efficiency1
 
-\mathsf{Efficiency} = \dfrac{\mathsf{Number correctly classified as A}}{\mathsf{ Total number that are truly A}}
+\mathsf{Efficiency} = \dfrac{\mathsf{Number\; correctly\; classified\; as\; A}}{\mathsf{ Total\; number\; that\; are\; truly\; A}}
 ```
 
 The more concise form is:
@@ -199,7 +200,7 @@ The more concise form is:
 ```{math}
 :label: eq:efficiency2
 
-e =  \dfrac{\mathsf{ N(A \cap a)} }{\mathsf{ N(A)}}
+\mathsf{Efficiency} =  \dfrac{\mathsf{ N(A \cap a)} }{\mathsf{ N(A)}}
 ```
 
 And as a conditional probability:
@@ -207,15 +208,18 @@ And as a conditional probability:
 ```{math}
 :label: eq:efficiency3
 
-e = P(a|A) 
+\mathsf{Efficiency} = P(a|A) 
 ```
+[](#eq:efficiency3): the Efficiency is the probability of the classification is **a**, given that the truth is **A**.
 
 
 ### Contingency Tables
 
-A Contingency Table allows us to summarise the efficiency and purity of our tests in terms of the Truth: True/False and the Classification:Postive/Negative. 
+A Contingency Table allows us to summarise the efficiency and purity of a test statistic in terms of the Truth: True/False and the Classification:Postive/Negative[^nonbin].
 
-:::{table} Contingency Table Example in terms of sets A (truth) and a (classification).
+[^nonbin]: We are not limited to binary classification, just using the simplest form here.
+
+:::{table} Contingency Table Example in terms of sets **A** (the truth) and **a** (classification).
 :widths: auto
 :align: center
 
@@ -227,7 +231,7 @@ A Contingency Table allows us to summarise the efficiency and purity of our test
 
 
 
-Example: I have 100 robots, 41 of whom were designed by my friend Alf.  I am attempting to predict which ones are Alf's design using their features. My classifier identifies 60 robots as being designed by Alf. Of these 60, 37 are in fact Alf's (I was right), and 23 are not (I was wrong). 
+Example: I have 100 robots, 41 of whom were designed by my friend Alf.  I am attempting to predict which ones are Alf's design using their features. My classifier identifies 60 robots as being designed by Alf. Of these 60, 37 are in fact Alf's (my classifier was right), and 23 are not (my classifier was wrong). 
 
 Summary:
 * $N(a\cap A) = 37$
@@ -235,34 +239,34 @@ Summary:
 * $N(a'\cap A) = 4$ (inferred, 41-37)
 * $N(a'\cap A') = 36$ (inferred, 40-4)
 
-:::{table} Contingency Table for Alf's robots.
+Note that we are now able to fill out the whole table using the information above and basic logic. But just because the logic is "basic", doesn't mean that it is easy to get your head round making and using contingency tables. It takes practice.
+
+:::{table} Contingency Table summarising the performance of my classifier.
 :widths: auto
 :align: center
 
 |      | a   | a'  | Total |
 | ---  | --- | --- | --- |
-| A    | 37  | 4   | 41  |
-| A'   | 23  | 36  | 59  |
-| Total| 60  | 40  | 100 |
+| **A**    | 37  | 4   | 41  |
+| **A'**   | 23  | 36  | 59  |
+| **Total**| 60  | 40  | 100 |
 :::
 
-Note that we are able to fill out the whole table using the information above and basic logic. But just because the logic is "basic", doesn't mean that it is easy to get your head round making and using contingency tables. It takes practice.
 
 For this example, the purity is calculated in [](#purity-alf) and the efficiency in [](#efficiency-alf). 
 
 ```{math}
 :label: purity-alf
 
-p = P(A|a) = N( A\cap a) / N( a ) = 37/60 \approx 62\%
+\mathsf{Purity} = P(A|a) = N( A\cap a) / N( a ) = 37/60 \approx 62\%
 
 ```
 
-The efficiency is:
 
 ```{math}
 :label: efficiency-alf
 
-e = P(a|A) = N( A\cap a) / N( A ) = 37/41  \approx 90\%
+\mathsf{Efficiency} = P(a|A) = N( A\cap a) / N( A ) = 37/41  \approx 90\%
 
 ```
 
@@ -279,7 +283,7 @@ Choosing a small value of $\alpha$ in the construction of our [test](#eq:testW) 
 
 But, a smaller value of $\alpha$ is achieved by shifting the region such that we increase the overlap with  $H_1$, lowering the test's **efficiency** for the alternative hypothesis. The efficiency for $H_1$ is referred to as the **Power of the test**.
 
-> Small $\alpha$ = low efficiency for $H_1$ = low[Power](#eq:cl) 
+> Small $\alpha$ = low efficiency for $H_1$ = low [Power](#eq:power) 
 
 
 <!--
@@ -291,36 +295,45 @@ $$-->
 
 
 
-**Efficiency (Power, sensitivity to $H_1$) is more important: choose larger $\alpha$**
-If you are **Statistically Limited** (suffering from a small dataset) you will probably try to maximise efficiency at the cost of purity. But, choosing a larger significance level $\alpha$ means the findings of your test are less significant, so less likely to be published or considered important. As such, it is often a good choice to gather more data, such that a stronger (smaller) choice of $\alpha$ can be used.
+**If Efficiency (Power, sensitivity to $H_1$) is more important: choose larger $\alpha$**
+: If you are **Statistically Limited** (suffering from a small dataset) you will probably try to maximise efficiency at the cost of purity. But, choosing a larger significance level $\alpha$ means the findings of your test are less significant, so less likely to be published or considered important. As such, it is often a good choice to gather more data, such that a stronger (smaller) choice of $\alpha$ can be used.
 
 
 **Purity (Significance) is more important: choose smaller $\alpha$**
-There may be motivation to make $\alpha$ very small in an effort to make the critical region "Ultra Pure". The alternative hypotheses (there is often more than one of these) must be considered carefully for this decision, as we don't usually want to define a region W that has been cleansed not only of $H_0$, but also most of $H_1$.
+: There may be motivation to make $\alpha$ very small in an effort to make the critical region "Ultra Pure". The alternative hypotheses (there is often more than one of these) must be considered carefully for this decision, as we don't usually want to define a region $W$ that has been cleansed not only of $H_0$, but also most of $H_1$.
 
 
-When we are designing a Test Statistic, which might be a ML Classifier for example, a useful plot to make is called a **ROC Curve**. This is a plot of the True Positive Rate (TPR) versus the False Positive Rate (FPR) for a given Alternative Hypothesis.
+When we are designing a Test Statistic, which might be a ML Classifier for example, a useful plot to make is called a **ROC Curve**. This is a plot of the True Positive Rate (TPR) versus the False Positive Rate (FPR) for a given Alternative Hypothesis[^equiv]. An example ROC curve is shown in [](#fig:roc)
 
-Let's label a positive classification as a, and a negative classification as a'.
+[^equiv]: one could also choose to make a ROC curve in terms of the True Negative Rate and False Negative Rate, if preferred.
 
-We will use A to indicate that the truth is $H_1$, and A' to indicate that the truth is $H_0$.
+:::{figure} 
+:label: fig:roc
+![](figures/ROC.png)
+
+A ROC curve summarising the performance of two different classifiers, NN and LR, in terms of their True Positive and False Positive Rates.
+:::
+
+Let's label a positive classification as **a**, and a negative classification as **a'**.
+
+We will use **A** to indicate that the truth is $H_1$, and **A'** to indicate that the truth is $H_0$.
 
 
-The True Positive Rate can then be written as [](#eq:tpr):
+The **True Positive Rate (TPR)** can then be written as [](#eq:tpr):
 
-$$
+```{math}
 :label: eq:tpr
 
 TPR = \dfrac{N(a \cap A)}{N(A)} = P(a|A)
-$$
+```
 
-The False Positive Rate is [](#eq:fpr):
+The **False Positive Rate (FPR)** is [](#eq:fpr):
 
-$$
+```{math}
 :label: eg:fpr
 
 FPR = \dfrac{N(a \cap A')}{N(A')} = P(a|A')
-$$
+```
 <!--
 :::{figure} 
 :label: fig:robot-critregion
@@ -354,18 +367,20 @@ shockingly common (see later).-->
 
 ## Limitations of the Statistical Test
 
-If we find our data satisfies our [predefined statistical test](#eq:testW) (ie, if we find our data $x$ in $W$, $x\in W$) then this is a **Positive Result** and we have some responsibility to publish.
+If we find our data excludes $H_0$ according to our [predefined statistical test](#eq:testW) (ie, if we find our data $x$ in $W$, $x\in W$) then this is a **Positive Result** and we have some responsibility to publish.
 
-> It is very common in many fields of research to choose a **Significance Level** of $\alpha= 5%$, but this would give me major heebie jeebies. The statistical test for rejecting $H_0$ has a **False Positive Rate** of up to 5%, which to me seems enormous. This is a one in twenty chance that I could make a claim that is wrong.
+:::{note}
+It is very common in many fields of research to choose a **Significance Level** of $\alpha= 5\%$, but this would give me major heebie jeebies. The statistical test for rejecting $H_0$ has a **False Positive Rate** of up to 5%, which to me seems enormous. This is a one in twenty chance that I could make a claim that is wrong.
+:::
 
-If we find a Positive Result and are wrong, this is a **False Positive**, and is called a **Type 1 Error**.
+If we find a Positive Result and are wrong, this is a **False Positive**, and is called a **Type 1 Error** :scream:.
 
-If we find our data fails our [predefined statistical test](#eq:testW) (ie, if we find our data $x$ outside $W$, $x\notin W$), then this is a **Negative Result**: we have failed to reject $H_0$. This does not mean $H_0$ is correct; a hypothesis cannot be shown to be correct. It could be that we just got unlucky - the data ended up in some other critical region that we did not choose for our predefined statistical test.
+If we find our data does not exclude $H_0$ according to our [predefined statistical test](#eq:testW) (ie, if we find our data $x$ outside $W$, $x\notin W$), then this is a **Negative Result**: we have failed to reject $H_0$. This does not mean $H_0$ is correct; a hypothesis cannot be shown to be correct. It could be that we just got unlucky - the data ended up in some other critical region that we did not choose for our predefined statistical test.
 
 If we find a Negative Result and are wrong, this is a **False Negative**, and is called a **Type 2 Error**.
 
 
-Because **we can never know the truth**, a positive result is either exciting or very embarrassing, and we have no way of knowing which. We can reduce the probability of embarrassment by making $\alpha$ very small, but this is only possible if we have lots of data and can design our phase space such that discernment between $H_0$ and $H_1$ is possible with a very small value of $\alpha$.
+Because **we can never know the truth**, a positive result is either exciting or very embarrassing, and we have no way of knowing which. We can reduce the probability of embarrassment by making $\alpha$ smaller, but this is only possible if we have lots of data and can design our phase space such that discernment between $H_0$ and $H_1$ is possible with a very small value of $\alpha$.
 
 
 ### Probabilities are Conditional on the Unknown
@@ -377,7 +392,7 @@ Because **we can never know the truth**, a positive result is either exciting or
 
 ![](figures/CriticalRegion-Wrongness_5.png)
 
-The probabilities of a False Positive (Type 1 Error) and False Negative (Type 2 Error) are set by our choice of $\alpha$ and W in the test design.
+The probabilities of a False Positive (Type 1 Error) and False Negative (Type 2 Error) are set by our choice of $\alpha$ and W in the test design. The two plots shown here live in differrent hypothetical universe, only one (or neither) of which can be correct.
 :::
 
 
@@ -394,7 +409,7 @@ $$P(\mathsf{Negative} | H_1) + P(\mathsf{Positive}| H_1) =1 $$
 
 The Conditional Probability of a False Negative is labeled as $P(\mathsf{neg}|H_1)=\beta$ in [](#fig:falsepos). 
 
-> The "power of a test" (efficiency for $H_1$) is 1-$\beta$)
+> The "power of a test" (efficiency for $H_1$) is $\mathsf{Power} = 1-$\beta$)
 
 
 :::{important} 
@@ -438,13 +453,13 @@ If we measure a test statistic that yields a P Value of 3%, we can say that our 
 
 This is a strange thing to say, if you think about it. We can never know if the null hypothesis is true or not, but we are quoting a result conditional on it being so.
 
-> I would personally not interpret a p value of 3% as suggestive that we should reject $H_0$. In particle physics, we only claim "discovery" if we measure a p value of < 0.00006%, and would not even raise an eyebrow for p values above 1%.
+> I would personally not interpret a p value of 3% as suggestive that we should reject $H_0$. In particle physics, we only claim "discovery" if we measure a p value of < 0.00006%, and would not even raise an eyebrow for P Values above 1%. However, we are very spoiled in terms of how much data we have...
 
 
 
 ## Worked Example
 
-In these examples we will assuming our Null Hypothesis $H_0$ is a Standard Normal  PDF, with $\mu=0$  and $\sigma=1$[^snorm].
+Let's assume our Null Hypothesis $H_0$ is a Standard Normal PDF, with $\mu=0$  and $\sigma=1$[^snorm].
 
 [^snorm]: The parameter values $\mu=0, \sigma=1$  are the default parameter values assumed when we call ```scipy.stats norm``` . 
 
@@ -461,14 +476,14 @@ The Normal PDF is often referred to with shorthand: 
 The Standard Normal PDF shown as a blue dotted line. The pink vertical dashed lines indicate the range of the critical region $W$. The shaded areas under the curve on the left and right are each 2.5\% of the area under the entire PDF.
 :::
 
-Because Norm describes the behaviour of a Continous RV, we must use the CDF to calculate probabilities.
+Because Norm describes the behaviour of a Continous RV, we must use the **Cumulative Distribution Function (CDF)** to calculate probabilities.
 
 The CDF on the LHS of [](#fig:pz-cdf) is given in [](#eq:cdf-alpha), where the $\alpha/2$ is because the Normal distribution is symmetric (two-tailed), such that we can define our critical region on either side, and the total integral of both sides is our significance level, $\alpha$.
 
 ```{math} 
 :label: eq:cdf-alpha 
 
-\mathsf{P(X \leq x) = \displaystyle \int \limits_{-\infty}^{x} f_X(x|\theta)\, dx = \alpha/2}
+\mathsf{P(X \leq x_L) = \displaystyle \int \limits_{-\infty}^{x_L} f_X(x|\theta)\, dx = \alpha/2}
 ```
 
 For the RHS of [](#fig:pz-cdf), the distribution we would have the same integral with opposite limits:
@@ -476,21 +491,33 @@ For the RHS of [](#fig:pz-cdf), the distribution we would have the same integral
 ```{math} 
 :label: eq:cdf-alpha2 
 
-\mathsf{P(X\geq x) = \displaystyle \int \limits_{x}^{\infty} f_X(x|\theta)\, dx} = \alpha/2
+\mathsf{P(X\geq x_R) = \displaystyle \int \limits_{x_R}^{\infty} f_X(x|\theta)\, dx} = \alpha/2
 
 ```
 
-Note that [](#eq:cdf-alpha2) is **not a CDF** because it is giving the "probability greater than". The CDF integral must start at $x=-\infty$ by definition.
+Note that [](#eq:cdf-alpha2) is **not a CDF** because it is giving the "probability greater than". The CDF integral must start at $x=-\infty$ by definition, and always gives us "the probability of less than or equal to".
 
-To calculate the Probability of measuring an absolute value within some range, $|X| \leq x$, we must find the CDF for the lower bound and subtract it from the CDF from the upper bound.
+To calculate the Probability of measuring an absolute value within some range, $|X| \leq x$, we must calculate the CDF to the lower bound ($-\infty, x_L$) and subtract it from the CDF from the upper bound ($-\infty, x_R$). I have attempted to illustrate this in [](#fig:cdf2side).
 
-The simplest way to show this is with a Standard Normal ($\mu=0, \sigma=1$) distribution, for which the RV is:
+
+:::{figure} 
+:label: fig:cdf2side
+
+![](figures/CDF2sided.png)
+
+To calculate the probability within a range, we must subtract the CDF to the lower bound from the CDF to the upper bound.
+:::
+
+
+
+
+The simplest way to denomstrate this is with a Standard Normal ($\mu=0, \sigma=1$) distribution, for which the RV is:
 
 $$
 Z = \dfrac{X-\mu}{\sigma} = X
 $$
 
-When the RV has a value of $x=+1$, we are $1\sigma$ to the right of the mean value $\mu=0$, and when the RV has a value of $x=-1$, we are $1\sigma$ to the left of the mean value $\mu=0$.
+When the RV has a value of $z=+1$, we are $1\sigma$ to the right of the mean value $\mu=0$, and when the RV has a value of $z=-1$, we are $1\sigma$ to the left of the mean value $\mu=0$.
 
 ```{code-cell}
 import numpy as np
@@ -501,8 +528,12 @@ def InsideProbability(z):
 	# area under curve to the left
 	prob_neginfnty_L = norm.cdf(-z)
 
+	print(f"P(Z<=-{z}): {prob_neginfnty_L}")
+
 	# area under curve to the right
 	prob_neginfnty_R = norm.cdf(z)
+
+	print(f"P(Z<={z}): {prob_neginfnty_R}")
 
 	# area between the pink dashed lines
 	prob_inside = norm.cdf(z) - norm.cdf(-z)
@@ -517,7 +548,7 @@ InsideProbability(3.65)
 
 ```
 
-The (one-sided) P Value is the area under one tail of the distribution, with one limit being infinity and the other being the value of x that we measure. So, if the Z Value is the "inside probability", equal to the **Cumulative Probability** and accessible with ```norm.cdf()``` the P Value can be though of as the "outside probability", equal to the **Survival Function** and accessible with ```norm.sf()```.
+The (one-sided) P Value is the area under one tail of the distribution, with one limit being infinity and the other being the RV value that we measure. So, if the Z Value is the "inside probability", equal to the **CDF** and accessible with ```norm.cdf()``` the P Value can be thought of as the "outside probability", equal to the **Survival Function** and accessible with ```norm.sf()```.
 
 
 ```{code-cell}
@@ -539,30 +570,30 @@ OutsideProbability(3.65)
 > We calculate a two-sided significance if the Alternative Hypothesis is eg "$H_0$ is wrong", whereas we would calculate a one-sided significance if it were eg "$\mu>0$".
 
 
-The "inside probability" for $|Z|\leq 1$ is 68.3%. This means that in 68.3% of an infinite number of repeated experiments, we expect to measure a Z Value **less than** $1\sigma$ of the mean, if the null hypothesis is correct.
+The "inside probability" for $|Z|\leq 1$ is 68.3%. This means that in 68.3% of an infinite number of repeated experiments, we expect to measure the RV **within** $1\sigma$ of the mean, if the null hypothesis is correct.
 
 
-The "outside probability" for $|Z|\leq 1$ is  100% - 68.3% = 31.7%. This is our P Value. This means that in 31.7% of an infinite number of repeated experiments, we expect to measure a Z Value **more than** $1\sigma$ from the mean, if the null hypothesis is correct.
+The "outside probability" for $|Z|> 1$ is  100% - 68.3% = 31.7%. This is our P Value. This means that in 31.7% of an infinite number of repeated experiments, we expect to measure the RV **more than** $1\sigma$ from the mean, if the null hypothesis is correct.
 
-### Find the critical value(s) for a chosen significance level
+### Find the Critical Region for a chosen significance level
 
-If we know we want eg $\alpha=5\%$ for our significance level, we can find the critical region using the **Percent Point Function**,  ```z_crit = ppf(prob)```. The argument ```prob``` is the CDF, aka the probability of finding a value lower than the specified $\alpha$ value.
+If we know we want eg $\alpha=5\%$ for our significance level, we can find the corresponding critical region boundaries using the **Percent Point Function**,  ```z_crit = ppf(alpha)```. 
 
 
 ```{code-cell}
 def CriticalValue(alpha):
 
-	# chosen two-sided significance level: 5%
-	alpha = 0.05 
-
 	# cumulative probability from -infty to upper bound: 
 	cdf_rhs = 1 - alpha/2 
 
-	# critical value of the RV at the upper bound 
-
+	# value of the RV at the upper bound 
 	z_crit_rhs = norm.ppf(cdf_rhs) 
 
-	z_crit_lhs = norm.ppf(1-cdf_rhs) 
+	# cumulative probability from -infty to lower bound: 
+	cdf_lhs = alpha/2 
+
+	# value of the RV at the lower bound 
+	z_crit_lhs = norm.ppf(cdf_lhs) 
 
 	print(f"Critical Region for alpha = {alpha}: {z_crit_lhs}< Z < {z_crit_rhs}")
 

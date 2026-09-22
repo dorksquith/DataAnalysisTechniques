@@ -204,12 +204,120 @@ If you have only a handful of measurements, and there is no way to collect more 
 **Option3 - The Bayesian approach**: use "common sense": my own experience of sleeping tells me that there can be natural +/- 1.5 H fluctuations on the number of hours I sleep each night. I expect that this could be as high as +/- 3H  in some people. I will use $\mathsf{\widehat{\sigma} = \mathsf{3H}}$. Less sad and safe than the frequentists' "abstinence" approach, but reasonable in my opinion, given the very conservative (over-inflated, really) estimate. And it just feels wrong to not share my data at all, given that there is some limited information in it.
 
 
+## The Z Test
+
+Example usage: Test if the sample mean $\overline{x}$ equals a hypothesised mean $\mu_0$.
+
+Restrictions: Data are $\mathsf{X\sim Norm(\mu,\sigma)}$, True Variance $\sigma^2$ is known[^wot].
+ 
+[^wot]: Why on earth would we know the true variance? This is very unrealistic, so is not used irl. But this is the "official" definition, so I am sharing it with you as-is.
+
+Recall that the [Z value](#eq:z) for a measurement x tells us how many standard deviations away from the mean that value is.
+
+The Z Test statistic uses this statistic slightly differently, because we no longer want to compare a measurement (x) to a summary statistic ($\overline{x}$). Now, we want to compare a summary statistic ($\overline{x}$) to a hypothesis ($\mu_0$):
+
+```{math}
+:label: eq:zstat
+
+\mathsf{z\; test\; statistic = \dfrac{ \overline{x}-\mu_{_0} }{ \mathsf{SEM}} }
+
+```
+
+The measurement (x) is replaced with the sample mean,$\overline{x}$,  and the reference ($\overline{x}$) is replaced with the True Mean of the Null Hypothesis $\mu_0$ with which we are comparing our data.
+
+It would not make sense to use the sample standard deviation in the denominator, because we are comparing means rather than values, so the correct thing to use in the denominator is the Standard Error on the Mean, SEM.
+
+
+Z Test Example: Is the mean sleep achieved by residents of Stockport equal to that predicted by the null hypothesis?
+* Null Hypothesis: $H_0$: the mean has value $\mathsf{\mu_0 = 7.33\,H}$.
+
+1. Design Test:
+- Significance Level : $\alpha=0.05$
+- Alternate hypothesis, $H_1$:  $\mathsf{\mu_0 \textcolor{red}{\neq} 7.33\,H}$ : this means the test is two-sided.
+2. Look at Data (I am using N=100) :
+- Sample mean: $\overline{x} = \mathsf{7.40\,H}$
+- Sample variance: $V[x] = \mathsf{1.68\,H^2}$
+- Sample size: $N=100$  (a rule of thumb is don't do a Z Test with $N<30$ )
+3. Calculate SEM, Z value:
+- The formula is: $\mathsf{SEM} = \sigma_{\overline{x}}  = \dfrac{\sigma_{true} }{\sqrt{N}}$
+- But, we don't know the true standard deviation. We will have to Estimate it. We know the variance of the sample, so we will use that, and remind ourselves these are Estimates by giving them little hats to wear:
+$\mathsf{\widehat{SEM} = \hat{\sigma}_{\overline{x}} = \dfrac{\sigma_{x} }{\sqrt{N-1}}   }$
+
+:::{note} Note 1
+By using the data to  Estimate the true variance, and therefore the SEM, this is not really a Z Test any more. It is now the same form as Students' T Test (next), but Student's T has a key difference as we shall see.
+:::
+
+
+:::{note} Note 2
+If you are interested: why did the denominator change from $\mathsf{\sqrt{N} \rightarrow \sqrt{N-1}}$ ?
+
+The full answer to this question is surprisingly long (statistics, eh?). The short answer is that it is because we are using the sample variance to estimate the true variance, and this estimate is known to be Biased.
+
+$\mathsf{V[X] = \dfrac{N}{N-1}\; V[x]}$: The true variance V[X] is slightly underestimated by the sample variance V[x].
+
+$\mathsf{\sigma_{true} = \sqrt{ \dfrac{N}{N-1}}\; \sigma_{x}}$ : The standard deviation is the square root of the variance.
+
+$\mathsf{\dfrac{\sigma_{true}}{\sqrt{N}} =  \dfrac{1}{\sqrt{N}} \dfrac{\sqrt{N}}{\sqrt{N-1}}\; \sigma_{x}
+=  \dfrac{\sigma_{x}}{\sqrt{N-1}}\; }$ : We recover our Unbiased Estimate of the True Variance.
+:::
+
+:::{note} Note 3
+
+The difference between $\sigma_x$ and $\sigma_{\overline{x}}$ is clearly of crucial importance!
+
+* $\sigma_x$ is a summary statistic for the sample, telling us how much variability is within the sample. 
+
+* $\sigma_{\overline{x}}$ is not a summary statistic; it is a theoretical statistic, and it tells us how precise our mean measurement will be for a given number of measurements, N , and a true underlying variability, $\sigma_{true}$.
+
+:::
+
+
+
+Back to work:
+
+3. Calculate Estimated SEM and Test Statistic:
+
+We have the variance $V[x] = \mathsf{1.68\,H^2}$ so the square root of this gives us our numerator, the sample standard deviation:
+$\mathsf{ \widehat{SEM} =\dfrac{\sigma_{x} }{\sqrt{N-1}}   =  \dfrac{\sqrt{1.68\,H^2}}{\sqrt{99}}    \approx 0.130\,H  }  $
+
+
+```{math}
+\mathsf{Estimated\;z\; test\; statistic= \dfrac{ \overline{x}-\mu_{_0} }{\mathsf{SEM}} 
+= \dfrac{ 7.40\, H - 7.33\, H }{0.13\, H} \approx  0.538}
+```
+An estimated  test statistic of 0.538 means that our data mean is 0.538 standard deviations above the value the Null Hypothesis claims is the true mean.
+
+To convert this into a p value that we can use directly to reject or not-reject $H_0$, we use python: 
+
+```{code-cell}
+from scipy.stats import norm
+
+# the two-sided p-value is 2* the survival function
+
+p_value = 2*norm.sf( abs(0.538) )
+
+print(f"P value: {p_value}")
+
+```
+
+This p value is (much) larger than our pre-decided significance level, $0.59 > 0.05$ , so  the result is Negative, we do not reject the null hypothesis.
+
+
+## The Student's T Test
+
+## The Student's T Test: two samples
+
+## The F Test (one-way ANOVA)
+
+## Two-sample F Test Example
+
 
 
 ## Learning Objectives Checklist
 
 - [ ] State what it means for data to be Independent and Identically Distributed (IID)
 - [ ] Define the Standard Error on the Mean (SEM)
+- [ ] State the two factors that go into the SEM estimate.
 - [ ] Calculate the SEM 
 - [ ] Understand the limitations introduced by small datasets
 - [ ] Design a Z Test to compare the mean of a dataset with the null hypothesis, and calculate the test statistic

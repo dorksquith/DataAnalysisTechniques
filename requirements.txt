@@ -6,3 +6,5 @@ jupyterlab_myst
 jupyter-server
 ipykernel
 marimo
+seaborn
+pandas

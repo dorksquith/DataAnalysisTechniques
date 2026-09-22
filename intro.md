@@ -20,15 +20,6 @@ Notes for Data Analysis Techniques, module 890F3. If you are a student on this m
 +++
 
 
-## Notebooks
-
-
-<!--## Why are Probability & Statistics useful?
-
-1. Win games.
-2. Understand the Universe better.-->
-
-
 
 ## Syllabus & Learning Outcomes
 

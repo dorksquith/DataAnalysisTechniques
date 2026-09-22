@@ -3,6 +3,8 @@ version: 1
 
 project:
 
+  jupyter: true
+
   id: 02b91cfe-3d27-4846-b5f9-f76fef5aea5a
 
   title: Data Analysis Techniques

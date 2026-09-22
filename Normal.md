@@ -119,8 +119,6 @@ A Gaussian PDF with shaded areas corresponding to $\mu\pm 1\sigma$, $\mu\pm 2\si
 
 The Z value tells us how likely our measurement is because **the nature of a Gaussian distribution is such that a given fraction of its area is within a given number of standard deviations from the mean**.
 
-## The 
-
 You may have heard of the [68-95-99.7 Rule](https://en.wikipedia.org/wiki/68%E2%80%9395%E2%80%9399.7_rule), which is designed to help people remember what fraction of a Gaussian is within 1-2-3 standard deviations from the mean. We can see this correspondence for ourselves in [](#fig:nsigma), which also notes the **p values**. Notice that subtracting each percentage in the rule from 100% gives us the p values for 1-2-3 $\sigma$.
 
 The neat statistical properties of a Gaussian hold for any choice of the parameters $\mu$, $\sigma$. 
@@ -227,7 +225,6 @@ We can always calculate a numerical solution though, so its okay!
 ## The Cumulative Distribution Function (CDF)
 
 
-## Critical Regions Revisited
 
 
 

@@ -22,6 +22,7 @@ project:
     - file: Probability.md
     - file: DescribingData.md
     - file: Normal.md
+    - file: Stats.md
     #- file: notebooks/Test.py
 
   numbering:

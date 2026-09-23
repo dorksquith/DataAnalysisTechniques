@@ -413,7 +413,7 @@ $$\label{eq:conpB} P(B | A) = \dfrac{P(B\cap A)}{P(A)}$$
 
 This is more usually rearranged as:
 
-:::{card}
+:::{card} Bayes Theorem
 $$
 \label{eq:bayes}
 \begin{aligned}

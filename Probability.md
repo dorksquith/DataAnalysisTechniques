@@ -63,7 +63,7 @@ Fernanda and Betty have each misplaced their keys. They will each adopt a differ
 
 
 
-## Example Sets
+## Sets
 
 Let's define some arbitrary example sets:
 
@@ -96,38 +96,10 @@ print(f"B= {B}")
 
 We will use these to demonstrate some terminology numerically.
 
-## Frequentist Probability
-
-
-The **Frequentist Probability** of A is written $P(A) = \dfrac{N_A}{N_S}$: the number of times A occurs in the sample, divided by the number of possible outcomes
-in the sample.
-
-Probabilities for [our sets](#our-sets):
-* $P(S) = N_S/N_S =1$
-* $P(A) = N_A / N_S  = 0.5$
-* $P(B) = N_B / N_S  = 0.4$
 
 
 
-
-
-```{code-cell} python
-
-P_S = len(S)/len(S) 
-P_A = len(A)/len(S)  
-P_B = len(B)/len(S)  
-
-
-print(f"P(S)= {P_S}")
-print(f"P(A)= {P_A}")
-print(f"P(B)= {P_B}")
-
-```
-
-
-
-
-## Special Sets
+### Special Sets
 :::{figure} /figures/SpecialSets.png
 :label: fig:special-sets
 
@@ -135,7 +107,7 @@ Some special sets.
 :::
 
 
-## Sample Space & Subsets
+### Sample Space & Subsets
 
 The **Sample Space** S is the set of all possible outcomes of some experiment or operation.
 
@@ -156,7 +128,7 @@ print(f"A <= S: {A_subset_S_alt}" )
 
 
 
-## Venn Diagrams
+### Venn Diagrams
 
 Venn diagrams are helpful for visualising relationships. Here $A\subset S$ and $B\subset S$.
 
@@ -174,7 +146,7 @@ Venn diagrams are helpful for visualising relationships. Here $A\subset S$ and $
 ::::
 
 
-## Complement $A'$
+### Complement $A'$
 
 The **Complement** of a set is denoted by a prime, $A'$; this means 'not A'. Other notations commonly used for the complement (though not by me) include $A^{\complement}$ and $\overline{A}$.
 
@@ -190,7 +162,7 @@ The **Complement** of a set is denoted by a prime, $A'$; this means 'not A'. Oth
 
 
 
-## Union $A\cup B$
+### Union $A\cup B$
 
 The **Union** of two sets is written $A\cup B$; this means 'either A, or B, or both'. For [our sets](#our-sets), $A\cup B = \{1,2,3,4,6,8,10\}$
 
@@ -200,7 +172,7 @@ print (f"Union AUB ={AUB}")
 ```
 
 
-## Intersection $A\cap B$
+### Intersection $A\cap B$
 
 The **Intersection** of two sets is written $A\cap B$; this means 'both A and B'. For [our sets](#our-sets), $A\cap B = \{2,4\}$
 
@@ -238,7 +210,7 @@ The **Complement of the Intersection** is $(A\cap B)'$ and means 'Not in both A 
 
 
 
-## Independence and Mutual Exclusivity
+### Independence and Mutual Exclusivity
 
 Two sets are **Independent** if they are defined without reference to one another (changing one does not impact the other). We could construct **dependent** sets like this for example:
 * $K = {\mathbb{N}}$
@@ -249,7 +221,39 @@ Two sets are **Independent** if they are defined without reference to one anothe
 Two sets are **Mutually Exclusive** if there is no overlap between them. Another word for this is **Disjoint**.
 
 
-## Probability of Intersection (Joint Probability)
+## Frequentist Probability
+
+
+The **Frequentist Probability** of A is written $P(A) = \dfrac{N_A}{N_S}$: the number of times A occurs in the sample, divided by the number of possible outcomes
+in the sample.
+
+Probabilities for [our sets](#our-sets):
+* $P(S) = N_S/N_S =1$
+* $P(A) = N_A / N_S  = 0.5$
+* $P(B) = N_B / N_S  = 0.4$
+
+
+
+
+
+```{code-cell} python
+
+P_S = len(S)/len(S) 
+P_A = len(A)/len(S)  
+P_B = len(B)/len(S)  
+
+
+print(f"P(S)= {P_S}")
+print(f"P(A)= {P_A}")
+print(f"P(B)= {P_B}")
+
+```
+
+
+
+
+
+### Probability of Intersection (Joint Probability)
 
 The **Probability of Intersection** $P(A\cap B)$ is the probability that **both A and B** are true. This is also called the **Joint Probability** of A and B.
 
@@ -263,7 +267,7 @@ For [our sets](#our-sets):
 * $A$ and $B$ are not mutually exclusive.
 
 
-## Probability of Union
+### Probability of Union
 
 The **Probability of Union** $P(A\cup B)$ is the probability that either A or B or both are true. 
 
@@ -287,7 +291,7 @@ print("P(AUB) = ",P_AUB )
 print(f"P(A) +P(B) - P(AnB) = {P_A} + {P_B} - {P_AnB} = {P_A+P_B-P_AnB}")
 ```
 
-## The Kolmogorov Axioms
+### The Kolmogorov Axioms
 
 > [Andrey Kolmogorov](https://en.wikipedia.org/wiki/Andrey_Kolmogorov) was a Russian mathematician. You may have heard of the 'KS test', which is used to eg check for overtraining by comparing ML classifier outputs for test and train samples. This is named for Kolomogorov and Nikolai Smirnov. See also 'KANs' - Kolmogorov Arnold Networks [arXiv:2404.19756](https://arxiv.org/abs/2404.19756).
 
@@ -304,7 +308,7 @@ The **Countable Additivity Axiom**
   $$\label{eq:kolmogorov3} P(A\cup B) =P(A)+P(B)$$: 
 
 (cond-prob)=
-## Conditional Probability $P(A | B)$
+### Conditional Probability $P(A | B)$
 
 The **Conditional Probability** is most usefully written:
 
@@ -358,7 +362,7 @@ Conditional Probability looks harmless enough, but can have some counter-intuiti
 
 
 
-## The Multiplication Rule
+### The Multiplication Rule
 
 Rearranging [the conditional probability](#eq:conp): $P(A\cap B) = P(A | B) P(B)$ and noting that for **Independent** A and B, $P(A | B)=P(A)$, we get the very useful **Multiplication Rule**:
 
@@ -374,7 +378,7 @@ Example: I roll a dice twice. What is the probability I will get two sixes?
 $P(six \cap six) = P(six) P(six) = \dfrac{1}{6} \dfrac{1}{6}  = \dfrac{1}{36}$
 
 
-## Total Probability
+### Total Probability
 
 In the below tryptich of Venn diagrams, I have divided the Sample Space S into four quadrants, each of which is a set $B_i$. There are N=4 disjoint sets $B_i$ intersecting with A. 
 

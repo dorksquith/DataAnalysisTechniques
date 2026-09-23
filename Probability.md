@@ -413,6 +413,7 @@ $$\label{eq:conpB} P(B | A) = \dfrac{P(B\cap A)}{P(A)}$$
 
 This is more usually rearranged as:
 
+:::{card}
 $$
 \label{eq:bayes}
 \begin{aligned}
@@ -425,6 +426,7 @@ P(B)
 }
 \end{aligned}
 $$
+:::
 
 Injecting [our sets](#our-sets) into Bayes' theorem is a little anticlimactic:
 

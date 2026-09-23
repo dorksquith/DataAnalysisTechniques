@@ -32,7 +32,6 @@ project:
     title: true
     headings: true
     equation:
-      enabled: true
       continue: true
  
 site:

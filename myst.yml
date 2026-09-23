@@ -31,7 +31,9 @@ project:
   numbering:
     title: true
     headings: true
-    continue: true
+    equation:
+      enabled: true
+      continue: true
  
 site:
   template: book-theme  

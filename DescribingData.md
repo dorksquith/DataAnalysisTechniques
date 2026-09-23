@@ -88,7 +88,7 @@ $$\label{eq:expect_multind} E(XY) = E(X) E(Y) $$
 [](#eq:expect_multind) **is only true if X and Y are mutually independent**. See [](#eq:multrule).
 
 
-(LLN):
+(LLN)=
 ## The Law of Large Numbers (LLN)
 
 In [](#fig:mean-expect-mp4) we see that the Sample Mean $\overline{x}$ does not exactly correspond to the True Mean $E[X]$.
@@ -191,7 +191,7 @@ V[X] & = E[\, X^2 + E^2[X] - 2X\,E[X] \,]\\
 
 :::
 
-(VarianceAlgebra):
+(VarianceAlgebra)=
 ### Variance Algebra
 
 Some very useful properties of Variance:

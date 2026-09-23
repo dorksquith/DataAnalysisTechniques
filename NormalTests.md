@@ -268,29 +268,39 @@ The measurement (x) is replaced with the sample mean, $\overline{x}$,  and the 
 
 ### Z Test Example: Hours slept in Stockport
 
-**Null Hypothesis**
+**Null Hypothesis:**
 : $H_0$: the mean number of hours slept by adult women is $\mathsf{\mu_0 = 7.33\,H}$.
 
-**Question**
+**Research Question:**
 : Is the mean sleep achieved by residents of Stockport equal to that predicted by the **Null Hypothesis**?
 
 
-```{card} Design Test
+```{card} [1] Design Test
 - Significance Level : $\alpha=0.05$
 - Alternate hypothesis, $H_1$:  $\mathsf{\mu_0 \textcolor{red}{\neq} 7.33\,H}$ : this means the test is two-sided.
 ```
 
-```{card} Look at Data:
+```{card} [2] Look at Data:
 - Sample mean: $\overline{x} = \mathsf{7.40\,H}$
 - Sample variance: $V[x] = \mathsf{1.68\,H^2}$
 - Sample size: $N=100$
 ```
 
-```{card} Calculate [Test Statistic](#eq:zstat)
+````{card} [3] Calculate [Test Statistic](#eq:zstat)
 - The formula for the denominator is $\mathsf{SEM} = \sigma_{\overline{x}}  = \dfrac{\sigma_{true} }{\sqrt{N}}$
 - But, we don't know the true standard deviation. We will have to **Estimate** it[^note1]. We know the variance of the sample, so we will use that, and remind ourselves these are Estimates by giving them little hats to wear:
 $\mathsf{\widehat{SEM} = \hat{\sigma}_{\overline{x}} = \dfrac{\sigma_{x} }{\sqrt{N-1}}   }$[^note2]
+
+We have the variance $V[x] = \mathsf{1.68\,H^2}$ so the square root of this gives us our numerator, the sample standard deviation:
+$\mathsf{ \widehat{SEM} =\dfrac{\sigma_{x} }{\sqrt{N-1}}   =  \dfrac{\sqrt{1.68\,H^2}}{\sqrt{99}}    \approx 0.130\,H  }  $
+
+
+```{math}
+\mathsf{Estimated\;z\; test\; statistic= \dfrac{ \overline{x}-\mu_{_0} }{\mathsf{SEM}} 
+= \dfrac{ 7.40\, H - 7.33\, H }{0.13\, H} \approx  0.538}
 ```
+
+````
 
 [^note1]: By using the data to **Estimate** the true variance, and therefore the SEM, this is not really a Z Test any more. It is now the same form as Students' T Test (next), but Student's T has a key difference as we shall see.
 
@@ -309,23 +319,11 @@ $\mathsf{\dfrac{\sigma_{true}}{\sqrt{N}} =  \dfrac{1}{\sqrt{N}} \dfrac{\sqrt{N}}
 -->
 
 
-Back to work:
-
-3. Calculate Estimated SEM and Test Statistic:
-
-We have the variance $V[x] = \mathsf{1.68\,H^2}$ so the square root of this gives us our numerator, the sample standard deviation:
-$\mathsf{ \widehat{SEM} =\dfrac{\sigma_{x} }{\sqrt{N-1}}   =  \dfrac{\sqrt{1.68\,H^2}}{\sqrt{99}}    \approx 0.130\,H  }  $
-
-
-```{math}
-\mathsf{Estimated\;z\; test\; statistic= \dfrac{ \overline{x}-\mu_{_0} }{\mathsf{SEM}} 
-= \dfrac{ 7.40\, H - 7.33\, H }{0.13\, H} \approx  0.538}
-```
 An estimated  test statistic of 0.538 means that our data mean is 0.538 standard deviations above the value the Null Hypothesis claims is the true mean.
 
-To convert this into a p value that we can use directly to reject or not-reject $H_0$, we use python: 
+To [convert this into a p value](#pfromz) that we can use directly to reject or not-reject $H_0$, we use python: 
 
-```{code-cell}
+```{code-cell} python
 from scipy.stats import norm
 
 # the two-sided p-value is 2* the survival function

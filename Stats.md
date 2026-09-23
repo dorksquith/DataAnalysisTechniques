@@ -551,6 +551,7 @@ InsideProbability(3.65)
 
 ```
 
+(pfromz)=
 ### Find the p value from the Z value
 
 The (one-sided) P Value is the area under one tail of the distribution, with one limit being infinity and the other being the RV value that we measure. So, if the Z Value is the "inside probability", equal to the **CDF** and accessible with ```norm.cdf()``` the P Value can be thought of as the "outside probability", equal to the **Survival Function** and accessible with ```norm.sf()```.

@@ -30,6 +30,7 @@ E[X]  = \sum\limits_i^\infty  x_i p_i
 * The sum is infinite because in Truth, there are $\infty$ possible values for X.
 * The Probability of observing $x_i$ is $p_i$. Because Probabilities must sum (or integrate) to 1 [Kolmogorov's normalisation axiom](#eq:kolmogorov2), the normalisation factor $\dfrac{1}{N}$ is not needed. Via use of the probability $p_i$ we are normalising every term in the sum individually, and will get the same result.
 
+
 ### Continuous Data
 
 If our data is Continuous rather than Discrete, then it does not make sense to "sum over all possible values", because continuous RVs have an Uncountable Infinity[^infinities] of possible values. Instead, we integrate:
@@ -54,12 +55,6 @@ A series of images showing a data histogram in grey and the true underlying PDF 
 :::
 
 
-###
-
-
-
-
-
 
 ### Notation: $E[X]  \equiv \mu$
 
@@ -71,24 +66,26 @@ A series of images showing a data histogram in grey and the true underlying PDF 
 E[X]  \equiv \mu
 ```
 
-(ExpectationAlgebra):
+(ExpectationAlgebra)=
 ### Expectation Algebra
 
 Some very useful properties of Expectation:
 
+The expectation of a sum (difference) is the sum (difference) of the expectations. 
 $$\label{eq:expect_sum} E(X \pm Y) = E(X) \pm E(Y)$$
-: The expectation of a sum (difference) is the sum (difference) of the expectations. 
 
+If we add a constant $b$ to a RV, we add the same constant to its expecation.
 $$\label{eq:expect_addc} E(X + b) = E(X) + b$$
-: If we add a constant $b$ to a RV, we add the same constant to its expecation
-
+ 
+If we multiply an RV by a constant $a$ , we multiply its expecation by the same constant.
 $$\label{eq:expect_multc} E(aX) = aE(X)$$
-: If we multiply an RV by a constant $a$ , we multiply its expecation by the same constant
+ 
 
-For the special case of Independent RVs only:
+For the special case of Independent RVs only, the expectation of the product is the product of the expectations.
 
 $$\label{eq:expect_multind} E(XY) = E(X) E(Y) $$
-: the expectation of the product is the product of the expectations. This is only true if X and Y are mutually independent. See [](#eq:multrule).
+
+[](#eq:expect_multind) **is only true if X and Y are mutually independent**. See [](#eq:multrule).
 
 
 (LLN):
@@ -199,25 +196,21 @@ V[X] & = E[\, X^2 + E^2[X] - 2X\,E[X] \,]\\
 
 Some very useful properties of Variance:
 
+If we multiply an RV by a constant $a$ , we multiply its expecation by the same constant **squared**.
 $$\label{eq:var_multc} V(aX) = a^2 V(X)$$
-: If we multiply an RV by a constant $a$ , we multiply its expecation by the same constant **squared**.
 
 
-$$\label{eq:var_add} V(X + Y) = V[X] + V[Y]$$
-: Adding a constant to an RV does not alter its variance.
-
-
+The variance of a constant $b$ is zero.
 $$\label{eq:var_const} V[b] = 0 $$
-: The variance of a constant $b$ is zero. 
-
+  
+Adding a constant to an RV does not alter its variance.
 $$\label{eq:var_addc} V(X + b) = V[X]$$
-: Adding a constant to an RV does not alter its variance.
-
-
-For the special case of Independent RVs only:
+ 
+For the special case of Independent RVs only, the variance of a sum is the sum of the variances:
 
 $$\label{eq:var_sumind} V(X + Y) = V(X) + V(Y)$$
-: The variance of a sum is the sum of the variances. **This is only true if X and Y are mutually independent.** Compare with [](eq:expect_multind).
+
+[](#eq:var_sumind) **is only true if X and Y are mutually independent.** Compare with [](eq:expect_multind).
 
 
 
@@ -541,10 +534,9 @@ All of the x,y distributions on the bottom row have a zero linear correlation co
 - [ ] Explain what is meant by the Expectation and how it relates to the Mean
 - [ ] Describe in words the statement of the Law of Large Numbers (LLN)
 - [ ] Calculate the expectation for discrete and continuous probability distributions.
-- [ ] Describe the Law of Large Numbers (LLN)
 - [ ] Express the True Variance in terms of the Expectation
-- [ ] Understand the terms in the Covariance Matrix
+- [ ] Understand the meaning of the terms in the Covariance Matrix
 - [ ] Calculate covariance with numpy
-- [ ] Be aware of the different results returned by numpy's cov and var, and how to harmonise
+- [ ] Be aware of the different results returned by numpy's cov and var, and know how to harmonise
 - [ ] Calculate the linear correlations between two datasets with numpy
-- [ ] Understand that an absence of linear correlations does not imply independence 
+- [ ] Understand that an absence of linear correlation does not imply independence 

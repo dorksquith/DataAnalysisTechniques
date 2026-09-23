@@ -23,7 +23,7 @@ A selection of normal distributions (sources unclear at time of writing, TBD).
 
 The RVS plotted are blood pressures, baby birth weights, heights of English criminals in 1900, and the difference between the proton speeds measured with two different detectors. These are very different RVs, but when we plot their measured values, they all follow this same shape, with a symmetric distribution around a central value. Why?!
 
-The reason for the apparently unrelated RVs in [](#fig:norm-everywhere) having the same underlying distribution is that **they do have something fundamental in common**: they are all the result of many interrelated factors, which makes them "sums" of different independent variables. We will see that the distribution of a sum will always tend towards a Gaussian distribution (the Central Limit Theorem).
+The reason for the apparently unrelated RVs in [](#fig:norm-everywhere) having the same underlying distribution is that **they do have something fundamental in common**: they are all the result of many interrelated factors, which makes them "sums" of different independent variables. We will see that the distribution of a sum will always tend towards a Gaussian distribution (the [Central Limit Theorem](#CLT)).
 
 
 ## The Gaussian PDF
@@ -63,7 +63,7 @@ $\dfrac{(x-\mu)^2}{\sigma^2}$
   The numerator $(x-\mu)^2$ is the squared deviation between the RV and the true mean.
   The denominator $\sigma^2$ is the true variance.
 
-## Parameters
+### Parameters: $\mu, \sigma$
 
 
 The Gaussian has two parameters, $\mu$ and $\sigma$. The effects of the values of these on the PDF are illustrated in [](#fig:gaussian_params).
@@ -81,7 +81,7 @@ The **scale parameter**, $\sigma$, is the True Standard Deviation of the distrib
 An illustration of the PDF stretching when we increase the scale parameter $\sigma$, and shifting when we change the location parameter $\mu$.
 :::
 
-## The Standard Normal PDF and Z value
+### The Standard Normal PDF and Z value
 
 If we choose the mean of the distribution to be zero and set the standard deviation to be 1, 
 
@@ -129,7 +129,7 @@ The neat statistical properties of a Gaussian hold for any choice of the paramet
 
 
 
-## Probability and The Infinite Range 
+### Probability and The Infinite Range 
 
 Looking at [](#fig:nsigma), you could be forgiven for thinking that 100% of the distribution is covered by a Z value of perhaps 4 or 5 $\sigma$, but in fact **the Gaussian distribution has an infinite range**, never reaching zero in probability.
 
@@ -232,7 +232,7 @@ $$\int\limits_{-\infty}^{\infty} e^{-x^2/2} dx$$
 The integral of the Gaussian PDF has **no analytical solution**. We can always calculate a numerical solution though, so its okay!
 
 
-
+(CLT)=
 ## The Central Limit Theorem (CLT)
 
 The CLT answers the question: Why are so many things Gaussian-distributed? 
@@ -269,7 +269,7 @@ Because X is **Continuous**, there is no limit to the precision its values ($x_i
 
 We cannot calculate the probability for any exact value of the RV X, but we can calculate the probability that X lies in some range of values. We do this using the Cumulative Distribution Function (CDF).
 
-## The Cumulative Distribution Function (CDF)
+### The Cumulative Distribution Function (CDF)
 
 
 The CDF returns the probability of measuring the RV with some value equal to or less than a given value. For a Continuous RV $X$, the CDF is written in [](#eq:cdf_cont). For a Discrete RV $K$, the integral is replaced with a sum, [](#eq:cdf_disc). 
@@ -421,10 +421,10 @@ print(f"std y: {df3.y.max()} ")
 ## Learning Objectives Checklist
 
 - [ ] Explain why the normal distribution is so prevalent
-- [ ] Explain why the CDF, rather than PDF, must be used for calculating probabilities for continous RVs
-- [ ] Plot the Normal PDF and CDF 
-- [ ] State the formula for calculating the Z value, and calculate Z values
 - [ ] Describe the terms present in the Gaussian PDF
 - [ ] Describe the location and scale parameters, and demonstrate the effect of changing them
 - [ ] State the Central Limit Theorem
+- [ ] Explain why the CDF, rather than PDF, must be used for calculating probabilities for continous RVs
+- [ ] Plot the Normal PDF and CDF 
+- [ ] State the formula for calculating the Z value, and calculate Z values
 

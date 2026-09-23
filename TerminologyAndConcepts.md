@@ -104,7 +104,7 @@ Note that in the real world, measurements always have a finite precision, so the
 > A continuous RV is still continuous even though its measurements cannot be.
 
 
-(IID):
+(IID)=
 ## Independent & Identically Distributed (IID) Data
 
 A collection of RVs is Independent & Identically Distributed (IID) if:
@@ -221,7 +221,7 @@ The **Standard Deviation** $\sigma_x$ is the square root of the variance.
 
 $$
 \label{eq:std}
-\sigma_x  = \sqrt{V[x]}
+\sigma_x  = \sqrt{V[x]} = \sqrt{ \frac{1}{N-1} \sum\limits_i^N  (x_i - \overline{x})^2 }
 $$
 
 ```{code-cell} python

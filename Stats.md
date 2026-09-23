@@ -46,7 +46,9 @@ Higgs hunting, back in the day.
 :::
 
 
-## Bias
+## Designing a Test
+
+### Bias
 
 Anyone who has done [Harvard’s excellent
 Unconscious Bias tests](https://implicit.harvard.edu/implicit/takeatest.html) will know that humans are hopeless at being unbiased, and hopeless at being aware of our biases.
@@ -75,7 +77,7 @@ A beautiful espresso machine.
 
 
 
-## Critical Region and Significance Level
+### Critical Region and Significance Level
 
 A Critical Region $W$ is a region of the Sample Space $S$ in which the probability of finding the data, given the Null Hypothesis, is very small[^verysmall].
 
@@ -119,7 +121,8 @@ Once we when we have decided on $W$ and $\alpha$, we can look at (‘unblind’)
 
 
 
-### Choosing a Critical Region is challenging
+**Choosing a Critical Region is challenging**
+
 
 In reality, it is impossible to find a $W$ that is not consistent with both $H_0$ and $H_1$. There will always be overlap between them, as I have attemped to illustrate in [](#fig:critregion). 
 
@@ -457,7 +460,7 @@ This is a strange thing to say, if you think about it. We can never know if the 
 
 
 
-## Worked Example
+## Worked Example: Standard Norm
 
 Let's assume our Null Hypothesis $H_0$ is a Standard Normal PDF, with $\mu=0$  and $\sigma=1$[^snorm].
 
@@ -547,6 +550,8 @@ InsideProbability(1)
 InsideProbability(3.65)
 
 ```
+
+### Find the p value from the Z value
 
 The (one-sided) P Value is the area under one tail of the distribution, with one limit being infinity and the other being the RV value that we measure. So, if the Z Value is the "inside probability", equal to the **CDF** and accessible with ```norm.cdf()``` the P Value can be thought of as the "outside probability", equal to the **Survival Function** and accessible with ```norm.sf()```.
 

@@ -413,8 +413,7 @@ $$\label{eq:conpB} P(B | A) = \dfrac{P(B\cap A)}{P(A)}$$
 
 This is more usually rearranged as:
 
-:::{card} Bayes Theorem
-:header: Bayes' Theorem
+```{card} Bayes Theorem
 
 $$
 \label{eq:bayes}
@@ -428,7 +427,7 @@ P(B)
 }
 \end{aligned}
 $$
-:::
+```
 
 Injecting [our sets](#our-sets) into Bayes' theorem is a little anticlimactic:
 

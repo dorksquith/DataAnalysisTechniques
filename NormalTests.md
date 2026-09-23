@@ -1,26 +1,22 @@
 # Normal Tests
 
-## The Standard Error on the Mean
+## Distribution of Means
 
 Real world measurements do not have infinite datasets. One consequence of this is that the variance in our small datasets will not accurately reflect the true variance of the underlying PDF.
 
-A set of 50 measurements of X will have some mean, $\overline{x}$, which is a summary statistic of the measurements.
-
-A different set of 50 measurements of X will have some other mean, because real world measurements are samples from a distribution (PDF or PMF) of an infinite number of measurements, languishing in the theoretical universe.
+<!--A set of 50 measurements of X will have some mean, $\overline{x}$, which is a summary statistic of the measurements. A different set of 50 measurements of X will have some other mean, because real world measurements are samples from a distribution (PDF or PMF) of an infinite number of measurements, languishing in the theoretical universe.-->
 
 We know from the [CLT](#CLT) that if we measure the mean from many independent samples, then plot the measured means, we will get a Gaussian distribution (given large enough sample sizes, although the  $N\rightarrow \infty$ criterion in the CLT is clearly impossible to achieve in real life!).
 
-Note: I am using $N$ to denote the size of each sample, which is what the CLT cares about. I am using $n$  for the number of samples, which is the number of means we will have to plot.
+<!--Note: I am using $N$ to denote the size of each sample, which is what the CLT cares about. I am using $n$  for the number of samples, which is the number of means we will have to plot.-->
 
-Example:
+**Example**:
 
-I have $n=80$ employees, and send each of them to a different town in the UK and ask each of them to record the number of text messages sent in the last day by $N=50$ adult women, randomly selected on the streets.
+I have $n=80$ employees, and send each of them to a different town in the UK and ask each of them to record the number of text messages sent in the last day by $N=50$ adult women, randomly selected on the streets. At the end of this endeavour, each employee will have an [IID](#IID) sample with some mean and variance, such that my combined sample will be formed of $n=80$ means. The distribution of these mean values will resemble a Gaussian, even though the sample sizes were $N=50$, which is nowhere near the $N\rightarrow \infty$ suggested by the CLT.
 
-At the end of this endeavour, each employee will have an [IID](#IID) sample with some mean and variance, such that my combined sample will be formed of $n=80$ means.
+> **IID Reminder**:  They are **Independent**, because the mean measured in Stockport will have no effect on the mean measured in Brixton.  They are **Identically Distributed** because we are asking the same question everywhere: how many texts have you sent in the last 24H.
 
-**IID Reminder**:  They are **Independent**, because the mean measured in Stockport will have no effect on the mean measured in Brixton.  They are **Identically Distributed** because we are asking the same question everywhere: how many texts have you sent in the last 24H.
 
-The distribution of these mean values will resemble a Gaussian, even though the sample sizes were $N=50$, which is nowhere near the $N\rightarrow \infty$ suggested by the CLT :smile:.
 
 
 **Question**:  How confident are we in this resulting Gaussian-like distribution of means?
@@ -31,13 +27,14 @@ If I did this exact same experiment again on a different day in 80 other towns, 
 We quantify the uncertainty on the mean of the Gaussian using the **Standard Error on the Mean (SEM)**.
 
 
+### The Expectation of the mean $E[\overline{x}] = E[X]$
 
+The mean of our measurements (yes, it is a mean of means), $\overline{x}$, will not be the same as the True Mean , E[X], but they will be similar [](#LLN).
 
-The mean of our measurements (yes, it is a mean of means), $\overline{x}$, will not be the same as the True Mean , E[X], but they will be similar, and if we took all possible measurements they would be the same.
-
-Mathematically, we can show that the Expected Value of (each of) the sample means E[$\overline{x}$] is equal to the True Mean E[X].
+We can [show](#eq:expect_mean) that the Expectation of (each of) the sample means E[$\overline{x}$] is equal to the True Mean E[X], where we have used [](#eq:expect_sum) for the second step.
 
 ```{math}
+:label: eq:expect_mean
 
 \begin{align*}
 
@@ -59,15 +56,22 @@ Mathematically, we can show that the Expected Value of (each of) the sample mean
 
 ```
 
+
+### The Variance on the mean $V[\overline{x}] = \dfrac{1}{N}V[X]$
+
 The Standard Deviation of our measurements (the SEM) will also not be the same as the True Standard Deviation , and we don't expect it to ever be, even if each employee asks a million people, because they are different things. The SEM is the measured variation of the means, which will depend on $N$ (how many people each of my employees ask for their data), whereas the True Standard Deviation is a fixed value, a parameter of the underlying distribution.
 
 
-The Variance on the measured means is $\mathsf{V[\,\overline{x}\,] = \sigma^2_{\overline{x}} = \mathsf{SEM}^2}$.
+We can [show](#eq:var_mean) that the Variance of the sample means V[$\overline{x}$] is equal to the True Variance[X] divided by the number of measurements $N$, where we have used [](#eq:var_sum) and [](#eq:var_multc).
 
-The True Variance is $\mathsf{V[X] = \sigma^2_{true} }$.
+<!--The Variance on the measured means is $\mathsf{V[\,\overline{x}\,] = \sigma^2_{\overline{x}} = \mathsf{SEM}^2}$.
+
+The True Variance is $\mathsf{V[X] = \sigma^2_{true} }$.-->
 
 
 ```{math}
+:label: eq:var_mean
+
 \begin{align*}
 \mathsf{V\left[\,\overline{x}\,\right] }&
 \mathsf{= V\left[\dfrac{1}{N}\sum\limits_i^Nx_i\right] }
@@ -92,16 +96,22 @@ The True Variance is $\mathsf{V[X] = \sigma^2_{true} }$.
 ```
 
 
-What this proof tells us: the variance on the measured means, $\mathsf{V[\,\overline{x}\,]}$, is smaller than the True Variance, V[X] by a factor $N$.
+The [proof](#eq:var_mean) tells us that the variance on the measured means, $\mathsf{V[\,\overline{x}\,]}$, is **smaller than the True Variance, V[X] by a factor $N$**.
 
-If my employees asked ten times as many people for their data, the means they get will be more reliable, and the variances would become ten times smaller.
+```{math}
+:label: eq:var_mean1
 
-The True Variance is irreducible. It is a property of the underlying PDF that lives in the theoretical universe.
+\mathsf{V[X] = \dfrac{1}{N}\,V[X]
 
-The Variance on the  Means is a (linear) function of this True Mean, and also has a strong inverse dependence on the number of measurements we take.
+```
 
-In a nutshell, **the more measurements we take, the smaller the uncertainty on our measurement becomes**.
+<!--If my employees asked ten times as many people for their data, the means they get will be more reliable, and the variances would become ten times smaller.
 
+The True Variance is irreducible. It is a property of the underlying PDF that lives in the theoretical universe.-->
+
+The Variance on the  Means is a (linear) function of this True Mean, and also has a strong inverse dependence on the number of measurements we take. In a nutshell, **the more measurements we take, the smaller the uncertainty on our measurement becomes**.
+
+### The Standard Error on the Mean $\mathsf{SEM} = \sigma_{\overline{x}}$
 
 The Standard Error on the Mean is the square root of the Variance on the sample means:
 
@@ -110,6 +120,8 @@ $$ \mathsf{\mathsf{SEM} = \sigma_{\overline{x}}  = \dfrac{\sigma_{true} }{\sqrt{
 
 This is an important result for Normal Tests, as we shall see.
 
+
+## Example: A Tale of Three Cities
 
 Let's consider the data displayed in the plot below. I have asked people in three different cities to collect data on the number of hours slept the previous night. In this example, each of them have asked N=2 people.
 
@@ -204,7 +216,7 @@ If you have only a handful of measurements, and there is no way to collect more 
 **Option3 - The Bayesian approach**: use "common sense": my own experience of sleeping tells me that there can be natural +/- 1.5 H fluctuations on the number of hours I sleep each night. I expect that this could be as high as +/- 3H  in some people. I will use $\mathsf{\widehat{\sigma} = \mathsf{3H}}$. Less sad and safe than the frequentists' "abstinence" approach, but reasonable in my opinion, given the very conservative (over-inflated, really) estimate. And it just feels wrong to not share my data at all, given that there is some limited information in it.
 
 
-## The Z Test
+## The Z Test: compare data mean with hypothesis mean
 
 Example usage: Test if the sample mean $\overline{x}$ equals a hypothesised mean $\mu_0$.
 
@@ -214,7 +226,7 @@ Restrictions: Data are $\mathsf{X\sim Norm(\mu,\sigma)}$, True Variance $\sigma^
 
 Recall that the [Z value](#eq:z) for a measurement x tells us how many standard deviations away from the mean that value is.
 
-The Z Test statistic uses this statistic slightly differently, because we no longer want to compare a measurement (x) to a summary statistic ($\overline{x}$). Now, we want to compare a summary statistic ($\overline{x}$) to a hypothesis ($\mu_0$):
+The Z Test defines this statistic slightly differently, because we no longer want to compare a measurement (x) to a summary statistic ($\overline{x}$). Now, we want to compare a summary statistic ($\overline{x}$) to a hypothesis ($\mu_0$):
 
 ```{math}
 :label: eq:zstat
@@ -228,37 +240,51 @@ The measurement (x) is replaced with the sample mean,$\overline{x}$,  and the r
 It would not make sense to use the sample standard deviation in the denominator, because we are comparing means rather than values, so the correct thing to use in the denominator is the Standard Error on the Mean, SEM.
 
 
-Z Test Example: Is the mean sleep achieved by residents of Stockport equal to that predicted by the null hypothesis?
-* Null Hypothesis: $H_0$: the mean has value $\mathsf{\mu_0 = 7.33\,H}$.
+### Z Test Example: Hours slept in Stockport
+
+**Null Hypothesis**: $H_0$: the mean number of hours slept by adult women is $\mathsf{\mu_0 = 7.33\,H}$.
+
+Is the mean sleep achieved by residents of Stockport equal to that predicted by the **Null Hypothesis**?
+
 
 1. Design Test:
 - Significance Level : $\alpha=0.05$
 - Alternate hypothesis, $H_1$:  $\mathsf{\mu_0 \textcolor{red}{\neq} 7.33\,H}$ : this means the test is two-sided.
-2. Look at Data (I am using N=100) :
+2. Look at Data:
 - Sample mean: $\overline{x} = \mathsf{7.40\,H}$
 - Sample variance: $V[x] = \mathsf{1.68\,H^2}$
-- Sample size: $N=100$  (a rule of thumb is don't do a Z Test with $N<30$ )
+- Sample size: $N=100$
 3. Calculate SEM, Z value:
 - The formula is: $\mathsf{SEM} = \sigma_{\overline{x}}  = \dfrac{\sigma_{true} }{\sqrt{N}}$
-- But, we don't know the true standard deviation. We will have to Estimate it. We know the variance of the sample, so we will use that, and remind ourselves these are Estimates by giving them little hats to wear:
+- But, we don't know the true standard deviation. We will have to **Estimate** it. We know the variance of the sample, so we will use that, and remind ourselves these are Estimates by giving them little hats to wear:
 $\mathsf{\widehat{SEM} = \hat{\sigma}_{\overline{x}} = \dfrac{\sigma_{x} }{\sqrt{N-1}}   }$
 
+
+::::{dropdown} Important Notes: please read
+
 :::{note} Note 1
-By using the data to  Estimate the true variance, and therefore the SEM, this is not really a Z Test any more. It is now the same form as Students' T Test (next), but Student's T has a key difference as we shall see.
+By using the data to **Estimate** the true variance, and therefore the SEM, this is not really a Z Test any more. It is now the same form as Students' T Test (next), but Student's T has a key difference as we shall see.
 :::
 
-
+(UnbiasedVariance):
 :::{note} Note 2
 If you are interested: why did the denominator change from $\mathsf{\sqrt{N} \rightarrow \sqrt{N-1}}$ ?
 
-The full answer to this question is surprisingly long (statistics, eh?). The short answer is that it is because we are using the sample variance to estimate the true variance, and this estimate is known to be Biased.
+The full answer to this question is surprisingly long[^proof]  (statistics, eh?). The short answer is that it is because we are using the sample variance to estimate the true variance, and this estimate is known to be Biased.
 
-$\mathsf{V[X] = \dfrac{N}{N-1}\; V[x]}$: The true variance V[X] is slightly underestimated by the sample variance V[x].
+[^proof] I did a [proof of this](#fig:fig:lilyproof_varbias) last year when I first started teaching this module because I could not find one anywhere. It is long. If you can find a shorter way, please send it to me.
 
-$\mathsf{\sigma_{true} = \sqrt{ \dfrac{N}{N-1}}\; \sigma_{x}}$ : The standard deviation is the square root of the variance.
+
+$\mathsf{V[X] = \dfrac{N}{N-1}\; V[x]}$
+: The true variance V[X] is slightly underestimated by the sample variance V[x].
+
+$\mathsf{\sigma_{true} = \sqrt{ \dfrac{N}{N-1}}\; \sigma_{x}}$
+: The standard deviation is the square root of the variance.
 
 $\mathsf{\dfrac{\sigma_{true}}{\sqrt{N}} =  \dfrac{1}{\sqrt{N}} \dfrac{\sqrt{N}}{\sqrt{N-1}}\; \sigma_{x}
-=  \dfrac{\sigma_{x}}{\sqrt{N-1}}\; }$ : We recover our Unbiased Estimate of the True Variance.
+=  \dfrac{\sigma_{x}}{\sqrt{N-1}}\; }$
+: We recover our Unbiased Estimate of the True Variance.
+
 :::
 
 :::{note} Note 3
@@ -271,7 +297,7 @@ The difference between $\sigma_x$ and $\sigma_{\overline{x}}$ is clearly of cruc
 
 :::
 
-
+::::
 
 Back to work:
 
@@ -324,3 +350,12 @@ This p value is (much) larger than our pre-decided significance level, $0.59 > 0
 - [ ] Describe the T Test and state when it is preferred over the Z Test
 - [ ] Design a "Student's" T Test to compare the means of two datasets, and calculate the test statistic
 - [ ] Design a F Test (AnoVa) to compare the variances of two datasets, and calculate the test statistic
+
+
+:::{figure}
+:label: fig:lilyproof_varbias
+
+![](/figures/var-proof-long.png)
+
+Proof that the variance is a biased estimator for the true variance.
+:::

@@ -104,6 +104,32 @@ Note that in the real world, measurements always have a finite precision, so the
 > A continuous RV is still continuous even though its measurements cannot be.
 
 
+(IID):
+## Independent & Identically Distributed (IID) Data
+
+A collection of RVs is Independent & Identically Distributed (IID) if:
+
+1. They are all Mutually Independent and
+
+2. They all have the same underlying probability distribution.
+
+Mutually independent RVs: measuring any of them has no effect on the probabilities of the others.
+
+
+**Example**:
+
+The result of tossing a coin once is a RV, X. It can have values $x=\{heads, tails\}$.
+
+The result of tossing the coin again is also a RV, let's call it Y. The same values are possible.
+
+The result of the first toss does not have any effect on the result of the second toss. So the RVs X and Y  are **Mutually Independent**.
+
+The probability of each toss coming up heads is identical, so the RVs are **Identically Distributed**.
+
+> **This is true even if the coin is not fair, because it is the same coin being tossed both times.**
+
+
+
 
 ## Summary Statistics 
 
@@ -168,7 +194,7 @@ $$
 V[x]  = \frac{1}{N-1} \sum\limits_i^N  (x_i - \overline{x})^2
 $$
 
-It is better to use the unbiased form if you have a small dataset. I would probably use this form for $N<100$ as a rule of thumb. More on this later.
+It is better to use the unbiased form if you have a small dataset. I would probably use this form for $N<100$ as a rule of thumb. More on this [later](#UnbiasedVariance).
 
 ```{code-cell} python
 import numpy as np 

@@ -11,7 +11,7 @@ kernelspec:
 
 # Describing Data
 
-## The Sample Mean and the True Mean
+## Mean and Expectation
 
 The **Sample Mean**, $\overline{x}$, of a RV is calculated as a normalised sum over a finite number of measurements [](#eq:mean). It is a **summary statistic** calculated from the data.
 
@@ -53,33 +53,15 @@ Note that in [](#eq:expectC) we have $f_X$: a **Probability Density Function (PD
 A series of images showing a data histogram in grey and the true underlying PDF as a red dashed line. The size of the dataset is increased by a factor 10 for each step in the sequence of images.
 :::
 
-### Independent & Identically Distributed (IID)
 
-A collection of RVs is Independent & Identically Distributed (IID) if:
-
-1. They are all Mutually Independent and
-
-2. They all have the same underlying probability distribution.
-
-Mutually independent RVs: measuring any of them has no effect on the probabilities of the others.
-
-
-Example:
-
-The result of tossing a coin once is a RV, X. It can have values $x={heads, tails}$.
-
-The result of tossing the coin again is also a RV, let's call it Y. The same values are possible.
-
-The result of the first toss does not have any effect on the result of the second toss. So the RVs X and Y  are Mutually Independent.
-
-The probability of each toss coming up heads is identical, so the RVs are Identically Distributed.
-
-**This is true even if the coin is not fair, because it is the same coin being tossed both times.**
+###
 
 
 
 
-## Notation: $E[X]  \equiv \mu$
+
+
+### Notation: $E[X]  \equiv \mu$
 
 > An alternative notation for the True Mean, aka Expectation, is $\mu$. This has  exactly the same meaning as $E[X]$. I'm sorry this is confusing, but I think there are strong (pedagogical and aesthetic) arguments for using both forms.
 
@@ -89,6 +71,27 @@ The probability of each toss coming up heads is identical, so the RVs are Identi
 E[X]  \equiv \mu
 ```
 
+(ExpectationAlgebra):
+### Expectation Algebra
+
+Some very useful properties of Expectation:
+
+$$\label{eq:expect_sum} E(X \pm Y) = E(X) \pm E(Y)$$
+: The expectation of a sum (difference) is the sum (difference) of the expectations. 
+
+$$\label{eq:expect_addc} E(X + b) = E(X) + b$$
+: If we add a constant $b$ to a RV, we add the same constant to its expecation
+
+$$\label{eq:expect_multc} E(aX) = aE(X)$$
+: If we multiply an RV by a constant $a$ , we multiply its expecation by the same constant
+
+For the special case of Independent RVs only:
+
+$$\label{eq:expect_multind} E(XY) = E(X) E(Y) $$
+: the expectation of the product is the product of the expectations. This is only true if X and Y are mutually independent. See [](#eq:multrule).
+
+
+(LLN):
 ## The Law of Large Numbers (LLN)
 
 In [](#fig:mean-expect-mp4) we see that the Sample Mean $\overline{x}$ does not exactly correspond to the True Mean $E[X]$.
@@ -123,7 +126,7 @@ For $N=1k$ measurements, we observe $|\overline{x} - \mu |=0.0044$. For $N=10k$ 
 The mean measured in the smaller 1k sample is closer to the expectation $\mu$ than the mean of the 10k sample. This is a natural **Statistical Fluctuation**, and does not imply that the LLN is wrong.
 
 
-## Sample Variance and Standard Deviation
+## Variance and Standard Deviation
 
 The [sample **Standard Deviation**](#eq:std) is the square root of the [sample **Variance**](#eq:variance). You would be forgiven for wondering why we don't just pick one of these summary statistics and ditch the other for simplicity; we keep this redundancy because they are each crucial in their own worlds, as we shall see.
 
@@ -141,7 +144,7 @@ Cartoon showing $N=5$ measurements of X, with the standard deviation $\sigma_x$ 
 It is the sample Standard Deviation that we use to quantify the spread of our data points, giving us an intrinsic **Uncertainty** on each measurement. This is usually provided visually as error bars or bands.
 
 
-## True Variance and Standard Deviation
+### True Variance and Standard Deviation
 
 The most basic definition of the [sample variance](#eq:variance) is with respect to the sample mean. Analogous to the [true mean](#eq:expect), if we know the underlying probabilities we can write down the true variance as:
 
@@ -191,7 +194,35 @@ V[X] & = E[\, X^2 + E^2[X] - 2X\,E[X] \,]\\
 
 :::
 
-## More than one dimension
+(VarianceAlgebra):
+### Variance Algebra
+
+Some very useful properties of Variance:
+
+$$\label{eq:var_multc} V(aX) = a^2 V(X)$$
+: If we multiply an RV by a constant $a$ , we multiply its expecation by the same constant **squared**.
+
+
+$$\label{eq:var_add} V(X + Y) = V[X] + V[Y]$$
+: Adding a constant to an RV does not alter its variance.
+
+
+$$\label{eq:var_const} V[b] = 0 $$
+: The variance of a constant $b$ is zero. 
+
+$$\label{eq:var_addc} V(X + b) = V[X]$$
+: Adding a constant to an RV does not alter its variance.
+
+
+For the special case of Independent RVs only:
+
+$$\label{eq:var_sumind} V(X + Y) = V(X) + V(Y)$$
+: The variance of a sum is the sum of the variances. **This is only true if X and Y are mutually independent.** Compare with [](eq:expect_multind).
+
+
+
+
+## Multivariate Data
 
 In [](#intro-scatter) we made a scatter plot of height versus weight; the heights and weights together form a two dimensional dataset.
 
@@ -246,7 +277,7 @@ For [our example](#intro-scatter):
 :::
 
 
-## Covariance
+### Covariance
 
 We use the [variance](#eq:varianceU) (or standard deviation) to quantify how much spread there is in a 1D dataset. For a 2D dataset, we cannot express this with a single summary statistic.
 
@@ -422,7 +453,7 @@ We can visualise the covariance terms with a [scatter plot of a versus b](#fig:m
 
 
 
-## Linear Correlations
+### Linear Correlations
 
 We can see from the above scatter plot that as a increases, b decreases. This could indicate that the variables a and b are somehow dependent on one another.
 
@@ -479,7 +510,7 @@ The math notation for the **Linear Correlation Matrix** is:
 ```
 
 
-## Limitations of the Linear Correlation Coefficient
+### Limitations of the Linear Correlation Coefficient
 
 
 The [Linear Correlation Matrix](#eq:rhomat) is the normalised covariance matrix, with diagonal elements equal to 1, and off-diagonals symmetric and equal to the linear correlation coefficients $\rho(a,b)$.

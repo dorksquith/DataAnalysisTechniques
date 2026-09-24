@@ -21,11 +21,17 @@ This module explores how to use probability and statistics to analyse data and i
 
 The materials for the first volume are largely ready, with the topic pages available via the menu to the ←left of this page. 
 
-On each page you will see a "power button" ⏻ below the page heading on the right ↗; press this to connect the jupyter server. Once connected, a "play button" ▷ will appear - press this to run the python snippets embedded in the corresponding page.
+**Instructions**
+: On each page you will see a "power button" ⏻ on the right below the page heading. Press this to connect the jupyter server. Once connected, a "play button" ▷ will appear - press this to run the python snippets embedded in the corresponding page.
 
-I am in the process of converting and uploading exercises for all the topics. For Terminology & Concepts and Probability Essentials, there are some good exercises in the OpenStax book which I have linked from those pages.
+**Exercises**
+: I am in the process of converting and uploading exercises (math and python) for all the topics. For Terminology & Concepts and Probability Essentials, there are some good exercises in the OpenStax book which I have linked from those pages.
 
-The dropdowns below list the **Learning Objectives** for each topic.
+**Prerequisites**
+: I have tried to assume the smallest possible amount of math background for Volume 1. 
+
+**Outlines & Learning Objectives**
+: The dropdowns below list the **Learning Objectives** for each topic.
 
 [//]: # ( Terminology & Concepts)
 [//]: # ( Relies on: N/A)
@@ -153,7 +159,7 @@ The dropdowns below list the **Learning Objectives** for each topic.
 
 ## Volume 2: Parameter Estimation & Fitting (```wip```)
 
-This volume forms the second part of the module, and the materials are ```wip``` (work in progress). I have put the Outline/ Learning Objectives here so you can get an idea of what will we cover.
+This volume forms the second part of the module, and the materials are ```wip``` (work in progress). I have put the Outline/ Learning Objectives here so you can get an idea of what will we cover. These will be subject to change as we get our ducks in a row.
 
 [//]: # ( Estimation Essentials)
 [//]: # ( Relies on: )
@@ -164,10 +170,10 @@ This volume forms the second part of the module, and the materials are ```wip```
 [//]: # ( openstax: )
 (los:Estimation)=
 :::{dropdown} Estimation Essentials
-[ ] Describe Point and Interval Estimation with examples
-[ ] Explain the Bootstrap Method
-[ ] Implement the Bootstrap Method to esimate uncertainties
-[ ] Define Consistency, Bias, and Minimum Variance and explain their importance for estimators
+- [ ] Describe Point and Interval Estimation with examples
+- [ ] Explain the Bootstrap Method
+- [ ] Implement the Bootstrap Method to esimate uncertainties
+- [ ] Define Consistency, Bias, and Minimum Variance and explain their importance for estimators
 <!--[ ] Maybe,  Method of Moments-->
 :::
 
@@ -179,24 +185,26 @@ This volume forms the second part of the module, and the materials are ```wip```
 [//]: # ( scipy.stats: )
 [//]: # ( matplotlib.pyplot:)
 [//]: # ( openstax: )
-(los:PMFLikelihood)=
-:::{dropdown} Discrete Probabilities & Likelihoods
-- Bayes theorem revisited: for discrete RVs
+<!--
+	- Bayes theorem revisited: for discrete RVs
 - Bernoulli: "the single coin toss"
 - Binomial: "repeated coin tosses"
 - Poisson: "number of emails per hour"
+-->
 
-[ ] Explain what is meant by a Bernoulli Trial
-[ ] Plot the Bernoulli PMF for some data
-[ ] Show that the Bernoulli PMF is a valid probability distribution
-[ ] Calculate Bernoulli probabilities using the PMF
-[ ] Show that the Expectation and Variance of $K\sim \mathsf{Bernoulli}(p)$ are both equal to p 
-[ ] Explain the relationship between the Bernoulli and Binomial distributions and parameters
-[ ] Calculate the Binomial Coefficient
-[ ] Calculate the Expectation and Variance for $K\sim \mathsf{Binomial}(n,p)$
-[ ] Estimate the fairness of a coin using the Binomial Likelihood
-[ ] Describe the properties of $k\sim \mathsf{Poisson}(\lambda)$
-[ ] Calculate and use the Poisson Likelihood
+(los:PMFLikelihood)=
+:::{dropdown} Discrete Probabilities & Likelihoods
+- [ ] Explain what is meant by a Bernoulli Trial
+- [ ] Plot the Bernoulli PMF for some data
+- [ ] Show that the Bernoulli PMF is a valid probability distribution
+- [ ] Calculate Bernoulli probabilities using the PMF
+- [ ] Show that the Expectation and Variance of $K\sim \mathsf{Bernoulli}(p)$ are both equal to p 
+- [ ] Explain the relationship between the Bernoulli and Binomial distributions and parameters
+- [ ] Calculate the Binomial Coefficient
+- [ ] Calculate the Expectation and Variance for $K\sim \mathsf{Binomial}(n,p)$
+- [ ] Estimate the fairness of a coin using the Binomial Likelihood
+- [ ] Describe the properties of $k\sim \mathsf{Poisson}(\lambda)$
+- [ ] Calculate and use the Poisson Likelihood
 
 :::
 
@@ -217,13 +225,13 @@ This volume forms the second part of the module, and the materials are ```wip```
 -->
 (los:PDFLikelihood)=
 :::{dropdown} Continuous Probabilities & Likelihoods
-[ ] Show that the Uniform PDF is valid
-[ ] Calculate the Expectation for $X\sim \mathsf{Uniform}(a,b)$
-[ ] Write down the PDF for $X\sim \mathsf{Expon}(\lambda)$
-[ ] Compare $X\sim \mathsf{Expon}(\lambda)$ with $K\sim Poisson(\lambda)$, explaining why one is continuous and the other discrete
-[ ] Explain the Memoryless property of $\mathsf{Expon}(\lambda)$
-[ ] Know when to use a Beta PDF
-[ ] Describe the Beta PDF parameters
+- [ ] Show that the Uniform PDF is valid
+- [ ] Calculate the Expectation for $X\sim \mathsf{Uniform}(a,b)$
+- [ ] Write down the PDF for $X\sim \mathsf{Expon}(\lambda)$
+- [ ] Compare $X\sim \mathsf{Expon}(\lambda)$ with $K\sim Poisson(\lambda)$, explaining why one is continuous and the other discrete
+- [ ] Explain the Memoryless property of $\mathsf{Expon}(\lambda)$
+- [ ] Know when to use a Beta PDF
+- [ ] Describe the Beta PDF parameters
 :::
 
 
@@ -245,12 +253,12 @@ This volume forms the second part of the module, and the materials are ```wip```
 
 (los:MLM)=
 :::{dropdown} Maximum Likelihood Method
-[ ] Describe what is meant by the bias of an estimator
-[ ] Calculate the Mean Squared Error
-[ ] Understand that sometimes, the best estimator for the job is the biased estimator
-[ ] Understand what the Hessian (curvature) matrix represents
-[ ] Describe the three ways to calculate parameter uncertainties for MLE
-[ ] Maybe a hard math thing like the Fisher Information - we will decide together
+- [ ] Describe what is meant by the bias of an estimator
+- [ ] Calculate the Mean Squared Error
+- [ ] Understand that sometimes, the best estimator for the job is the biased estimator
+- [ ] Understand what the Hessian (curvature) matrix represents
+- [ ] Describe the three ways to calculate parameter uncertainties for MLE
+- [ ] Maybe a hard math thing like the Fisher Information - we will decide together
 :::
 
 
@@ -272,10 +280,10 @@ This volume forms the second part of the module, and the materials are ```wip```
 
 (los:MLM)=
 :::{dropdown} Linear Regression
-[ ] Understand what Residuals are
-[ ] Calculate Pearson's Chi Squared Statistic
-[ ] Explain what happens when you call ```fit```
-[ ] Know how to deal with outliers
+- [ ] Understand what Residuals are
+- [ ] Calculate Pearson's Chi Squared Statistic
+- [ ] Explain what happens when you call ```fit```
+- [ ] Know how to deal with outliers
 :::
 
 [//]: # ( Model Tests)
@@ -287,9 +295,9 @@ This volume forms the second part of the module, and the materials are ```wip```
 [//]: # ( openstax: )
 (los:ModelTests)=
 :::{dropdown} Model Tests
-[ ] Understand how Chi Squared is used for a fit
-[ ] Calculate the Log Likelihood Ratio (LLR)
-[ ] Calculate the Akaike and Bayes Information Criteria (AIC and BIC)
+- [ ] Understand how Chi Squared is used for a fit
+- [ ] Calculate the Log Likelihood Ratio (LLR)
+- [ ] Calculate the Akaike and Bayes Information Criteria (AIC and BIC)
 :::
 
 [//]: # ( Bayesian Inference)
@@ -312,13 +320,13 @@ This volume forms the second part of the module, and the materials are ```wip```
 -->
 (los:Bayes)=
 :::{dropdown} Bayesian Inference
-[ ] Apply Bayes theorem to Bernoulli data
-[ ] Understand that the probability of testing sick if your are sick is not the same as the probability of being sick if you test sick.
-[ ] Describe the meaning of the terms prior, evidence, and posterior
-[ ] Understand the meaning and use of conjugate priors
-[ ] Calculate the Maximum A Posteriori (MAP) and Credible Interval
-[ ] Explain the difference between a Credible Interval and a Confidence Interval
-[ ] Understand what a Predictive Posterior is
+- [ ] Apply Bayes theorem to Bernoulli data
+- [ ] Understand that the probability of testing sick if your are sick is not the same as the probability of being sick if you test sick.
+- [ ] Describe the meaning of the terms prior, evidence, and posterior
+- [ ] Understand the meaning and use of conjugate priors
+- [ ] Calculate the Maximum A Posteriori (MAP) and Credible Interval
+- [ ] Explain the difference between a Credible Interval and a Confidence Interval
+- [ ] Understand what a Predictive Posterior is
 :::
 
 [//]: # ( Predictions)
@@ -330,10 +338,10 @@ This volume forms the second part of the module, and the materials are ```wip```
 [//]: # ( openstax: )
 (los:Predictions)=
 :::{dropdown} Predictions
-[ ] Understand the method of Markov Chain Monte Carlo (MCMC)
-[ ] Describe the Metropolis Hastings algorithm
-[ ] Make a predictive sampling distribution with the Metropolis Hastings algorithm 
-[ ] Demonstrate the importance of Hyperparamer Tuning
+- [ ] Understand the method of Markov Chain Monte Carlo (MCMC)
+- [ ] Describe the Metropolis Hastings algorithm
+- [ ] Make a predictive sampling distribution with the Metropolis Hastings algorithm 
+- [ ] Demonstrate the importance of Hyperparamer Tuning
 :::
 
 
@@ -343,10 +351,15 @@ This volume forms the second part of the module, and the materials are ```wip```
 ### Bookmarks
 
 I recommend Bookmarking these excellent resources:
-- [Stat Proofs](https://statproofbook.github.io/): Hallulajah! Almost all the proofs you will ever need.
-- [Probability Playground](https://probabilityplayground.com/normal.html): Essential for visual learners, brilliant way to enhance understanding of PDFs.
 
-### Computing and Math Essentials
+[Stat Proofs](https://statproofbook.github.io/)
+: Hallulajah! Almost all the proofs you will ever need.
+
+[Probability Playground](https://probabilityplayground.com/normal.html)
+: A great resource for visual learners to enhance understanding of PDFs.
+
+
+### Computing
 
 [**Essential: Github Quickstart**](https://docs.github.com/en/get-started/git-basics/set-up-git)
 : If you don't already have a github, please set one up. Set up a repository for this module. You will not regret getting on top of this.
@@ -372,17 +385,22 @@ I recommend Bookmarking these excellent resources:
 :::
 
 
+### Math
+
 - [Helping Engineers Learn Math (HELM)](https://www.lboro.ac.uk/departments/mlsc/student-resources/helm-workbooks/): If your math is rusty, I recommend looking at the relevant workbooks here.
 
+<!--
 :::{tip} Avoiding Overwhelm
 If you go through all the links in the dropdown below, you will find yourself in a situation of lots of open browser tabs, an impending feeling of doom, and no more insight the math than you had before you looked at this page.
 
 Make yourself comfortable, and follow the suggested module structure in these notes. These resources are not going anywhere, and the notes will refer to them at the appropriate moments.
 
-I have tried my best to assume the smallest possible amount of math background for Volume 1.
+
 
 :::
+-->
 
+<!--
 :::{dropdown} The HELM workbooks relevant to this module
 
  - [HELM 6](https://www.lboro.ac.uk/media/media/schoolanddepartments/mlsc/downloads/HELM%20Workbook%206%20Exponential%20and%20Logarithmic%20Functions.pdf): Exponential and Logarithmic Functions
@@ -403,6 +421,7 @@ I have tried my best to assume the smallest possible amount of math background f
 - [HELM 44](https://www.lboro.ac.uk/media/media/schoolanddepartments/mlsc/downloads/HELM%20Workbook%2044%20Analysis%20of%20Variance.pdf): Analysis of Variance (Anova)
 
 :::
+-->
 
 - [Stats Course by Glen Cowan](https://www.pp.rhul.ac.uk/~cowan/stat_course.html): If this is not your first rodeo[^rodeo], this is a good lecture course to dip into for more challenging work. It is the one I followed as a PhD student, and is geared towards particle physicists. 
 - [Stats Course by Mark Thomson](https://www.hep.phy.cam.ac.uk/~thomson/lectures/lectures.html): If this is not your second rodeo, these is an excellent set of very condensed notes - best suited to experts who need to brush up. Also geared towards particle physicists.

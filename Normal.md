@@ -30,7 +30,7 @@ The reason for the apparently unrelated RVs in [](#fig:norm-everywhere) having t
 
 The Gaussian (aka Normal) Probability Distribution Function (PDF) is given in [](#eq:gaus_pdf). It describes Continuous RVs (eg blood pressure, height, weight, proton speed differences).
 
-$$\label{eq:gaus_pdf} f_X (x; \mu,\sigma) = \dfrac{1}{\sqrt{ 2\pi\sigma^2} } \exp{\left[-\frac{1}{2} \frac{(x-\mu)^2}{\sigma^2}}\right]$$
+$$\label{eq:gaus_pdf} f_X (x; \mu,\sigma) = \dfrac{1}{\sqrt{ 2\pi\sigma^2} } \exp{ \left[ -\frac{1}{2} \frac{(x-\mu)^2}{\sigma^2}} \right]}$$
 
 A plot of the Gaussian for a choice of parameters is shown in [](#fig:gaussian).
 
@@ -161,10 +161,10 @@ def my_norm(mu,sigma):
 	# but unless we choose mu=0, this will give us a wonky view of the pdf
 
 	# the PDF, which we already set the parameters for, is just a function of x:
-	pdf = norm.pdf(xvals) 
+	pdf = norm1.pdf(xvals) 
 
 	# could also do this in one line if preferred:
-	# pdf = norm.pdf(xvals, loc=mu, scale=sigma) 
+	# pdf = norm1.pdf(xvals, loc=mu, scale=sigma) 
 
 	plt.plot( xvals, pdf )  
 	plt.show()

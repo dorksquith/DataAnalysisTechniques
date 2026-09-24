@@ -28,36 +28,83 @@ This module is currently organised in two volumes:
 <!-- 
 	Relies on: N/A
 	Notes: Week2-RandomVars/Data.tex
-	
-
 	 -->
 ```{card} Terminology & Concepts
+Prerequisites
+: None
 
+Python 
+: ```numpy``` : ```sum,min,max,mean,var,std,random```
+  ```scipy.stats``` : ```uniform, norm``` 
+  ```matplotlib.pyplot``` : ```plot, hist, scatter```
+
+OpenStax Practice Problems
+: https://openstax.org/books/introductory-statistics-2e/pages/1-practice
 ``` 
 
 <!-- 
 	Relies on: N/A
 	Notes: Week1-Probability/Probability.tex
-	
-
 	 -->
 ```{card} Probability Essentials
+Prerequisites
+: None
 
+Python Libraries
+: ```set, range, issubset, <=, |, &,```
+  ```scipy.stats``` methods: ```randint, norm``` 
+  ```matplotlib.pyplot``` methods: ```stem, plot```
+
+OpenStax Practice Problems
+: https://openstax.org/books/introductory-statistics-2e/pages/3-practice
 ```
+
+
 
 ```{card} Describing Data
+Prerequisites
+: None
+
+Python Libraries
+: ```numpy``` : ```random, stack, shape, cov, corrcoef```
+  ```scipy.stats``` methods: ```randint, norm``` 
+  ```matplotlib.pyplot``` methods: ```stem, plot```
+
 
 ```
+
+
 
 ```{card} The Normal Distribution
+Prerequisites
+: None
+
+Python Libraries
+: ```numpy``` : ```linspace, ```
+  ```scipy.stats``` : ```norm.pdf, norm.cdf, multivariate_normal,``` 
+  ```matplotlib.pyplot```: ```semilogy```
+  ```pandas```: ```DataFrame```
+  ```seaborn```: ```JointGrid.plot_joint, kdeplot, JointGrid.plot_marginals, histplot``` 
 
 ```
+
+
+
 
 ```{card} Hypothesis Tests
 
+Python Libraries
+: ```scipy.stats``` : ```norm.cdf, norm.sf, norm.ppf``` 
+
 ```
 
+
+
+
 ```{card} Normal Tests
+
+Python Libraries
+: ```scipy.stats``` : ```norm.cdf, norm.sf, norm.ppf``` 
 
 ```
 

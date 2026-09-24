@@ -164,10 +164,11 @@ This volume forms the second part of the module, and the materials are ```wip```
 [//]: # ( openstax: )
 (los:Estimation)=
 :::{dropdown} Estimation Essentials
-- Point and Interval Estimation
-- The Bootstrap
-- Consistency, Bias, and Minimum Variance
-- Method of Moments
+[ ] Describe Point and Interval Estimation with examples
+[ ] Explain the Bootstrap Method
+[ ] Implement the Bootstrap Method to esimate uncertainties
+[ ] Define Consistency, Bias, and Minimum Variance and explain their importance for estimators
+<!--[ ] Maybe,  Method of Moments-->
 :::
 
 
@@ -207,14 +208,15 @@ This volume forms the second part of the module, and the materials are ```wip```
 [//]: # ( scipy.stats: )
 [//]: # ( matplotlib.pyplot:)
 [//]: # ( openstax: )
-(los:PDFLikelihood)=
-:::{dropdown} Continuous Probabilities & Likelihoods
+<!--
 - Bayes theorem revisited: for continuous RVs
 - Uniform: "flat"
 - Exponential: "waiting time for a taxi"
 - Gamma: "waiting time for $n^{th}$ taxi"
 - Beta: "the chameleon"
-
+-->
+(los:PDFLikelihood)=
+:::{dropdown} Continuous Probabilities & Likelihoods
 [ ] Show that the Uniform PDF is valid
 [ ] Calculate the Expectation for $X\sim \mathsf{Uniform}(a,b)$
 [ ] Write down the PDF for $X\sim \mathsf{Expon}(\lambda)$
@@ -232,19 +234,23 @@ This volume forms the second part of the module, and the materials are ```wip```
 [//]: # ( scipy.stats: )
 [//]: # ( matplotlib.pyplot:)
 [//]: # ( openstax: )
-(los:MLM)=
-:::{dropdown} Maximum Likelihood Method
-- The MLE for Norm(mu,sigma)
+<!--
+	- The MLE for Norm(mu,sigma)
 - Estimator Bias and Mean Squared Error
 - Parameter Uncertainties
 -- Monte Carlo
 -- Fisher Information and Minimum Variance Bound
 -- Graphical Method
+-->
 
+(los:MLM)=
+:::{dropdown} Maximum Likelihood Method
 [ ] Describe what is meant by the bias of an estimator
-[ ] Calculate the MSE
+[ ] Calculate the Mean Squared Error
 [ ] Understand that sometimes, the best estimator for the job is the biased estimator
 [ ] Understand what the Hessian (curvature) matrix represents
+[ ] Describe the three ways to calculate parameter uncertainties for MLE
+[ ] Maybe a hard math thing like the Fisher Information - we will decide together
 :::
 
 
@@ -255,15 +261,21 @@ This volume forms the second part of the module, and the materials are ```wip```
 [//]: # ( scipy.stats: )
 [//]: # ( matplotlib.pyplot:)
 [//]: # ( openstax: )
-(los:MLM)=
-:::{dropdown} Linear Regression
-- Residuals and Pearson's Chi Squared
-- Chi Squared with binned data
+<!--
+	- Chi Squared with binned data
 - The method of Least Squares (LSQ)
 - Parameter uncertainties with LSQ
 - Python methods
 - Outliers
 - Nonlinear Methods
+-->
+
+(los:MLM)=
+:::{dropdown} Linear Regression
+[ ] Understand what Residuals are
+[ ] Calculate Pearson's Chi Squared Statistic
+[ ] Explain what happens when you call ```fit```
+[ ] Know how to deal with outliers
 :::
 
 [//]: # ( Model Tests)
@@ -275,9 +287,9 @@ This volume forms the second part of the module, and the materials are ```wip```
 [//]: # ( openstax: )
 (los:ModelTests)=
 :::{dropdown} Model Tests
-- Chi Squared
-- Log Likelihood Ratio (LLR)
-- Akaike and Bayes Information Criteria (AIC and BIC)
+[ ] Understand how Chi Squared is used for a fit
+[ ] Calculate the Log Likelihood Ratio (LLR)
+[ ] Calculate the Akaike and Bayes Information Criteria (AIC and BIC)
 :::
 
 [//]: # ( Bayesian Inference)
@@ -287,9 +299,7 @@ This volume forms the second part of the module, and the materials are ```wip```
 [//]: # ( scipy.stats: )
 [//]: # ( matplotlib.pyplot:)
 [//]: # ( openstax: )
-(los:Bayes)=
-:::{dropdown} Bayesian Inference
-- Bayes theorem revisited: evidence, prior, likelihood, posterior
+<!--- Bayes theorem revisited: evidence, prior, likelihood, posterior
 - Bernoulli Likelihood example: covid tests 
 - Constant Evidence
 - Prior Distribution
@@ -299,6 +309,16 @@ This volume forms the second part of the module, and the materials are ```wip```
 - Credible Intervals
 - Poisson-Gamma
 - Predictive Posterior
+-->
+(los:Bayes)=
+:::{dropdown} Bayesian Inference
+[ ] Apply Bayes theorem to Bernoulli data
+[ ] Understand that the probability of testing sick if your are sick is not the same as the probability of being sick if you test sick.
+[ ] Describe the meaning of the terms prior, evidence, and posterior
+[ ] Understand the meaning and use of conjugate priors
+[ ] Calculate the Maximum A Posteriori (MAP) and Credible Interval
+[ ] Explain the difference between a Credible Interval and a Confidence Interval
+[ ] Understand what a Predictive Posterior is
 :::
 
 [//]: # ( Predictions)
@@ -310,9 +330,10 @@ This volume forms the second part of the module, and the materials are ```wip```
 [//]: # ( openstax: )
 (los:Predictions)=
 :::{dropdown} Predictions
-- Markov Chain Monte Carlo (MCMC)
-- Metropolis Hastings
-- Hyperparamer Tuning
+[ ] Understand the method of Markov Chain Monte Carlo (MCMC)
+[ ] Describe the Metropolis Hastings algorithm
+[ ] Make a predictive sampling distribution with the Metropolis Hastings algorithm 
+[ ] Demonstrate the importance of Hyperparamer Tuning
 :::
 
 

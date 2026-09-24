@@ -200,7 +200,7 @@ This volume forms the second part of the module, and the materials are ```wip```
 :::
 
 
-[//]: # ( Special Probability Distributions)
+[//]: # ( Continuous Probabilities & Likelihoods)
 [//]: # ( Relies on: )
 [//]: # ( Notes: Bayes revisited Week10-Bayesian/BayesianStats.tex, Likelihood:Week7-Tools/Tools.tex pmfs: Week4-PDFs/SpecialPDFs.tex )
 [//]: # ( numpy: )
@@ -208,7 +208,7 @@ This volume forms the second part of the module, and the materials are ```wip```
 [//]: # ( matplotlib.pyplot:)
 [//]: # ( openstax: )
 (los:PDFLikelihood)=
-:::{dropdown} Special Probability Distributions
+:::{dropdown} Continuous Probabilities & Likelihoods
 - Bayes theorem revisited: for continuous RVs
 - Uniform: "flat"
 - Exponential: "waiting time for a taxi"

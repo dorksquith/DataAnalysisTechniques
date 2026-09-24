@@ -1,5 +1,45 @@
 # Exercises
 
+(ex:pvals_truefalse)=
+## P Values: True or False?
+
+1. Finding a p value of 7% when I have set a Significance Level of 5% means I have confirmed the Null Hypothesis.
+
+2.  Finding a p value of 1% when I have set a Significance Level of 2% means I have rejected the Null Hypothesis.
+
+3.  Finding a p value of 1% means that there is a 1% probability my conclusions are wrong
+
+4. The False Positive rate is the probability of incorrectly rejecting the Null Hypothesis, given that it is true.
+
+5. The sum of the False Positive and True Positive rates must equal 1 
+
+6. The sum of the False Positive and True Negative rates must equal 1 
+
+7. To test the Null Hypothesis, I need to specify the test by choosing a Significance Level and a Critical Region.
+
+8. It is okay to look at my data before designing the test if I am an honest person, as I won't be prone to bias.
+
+
+
+(ex:pval_zval_cdf)=
+## CDF, Z value, P Value
+Make a scipy.stats.norm distribution with $\mu=1$, $\sigma=2$. This is our null hypothesis.
+
+1. Plot the CDF for 100 values of X from $-5\sigma < x < 5\sigma$
+
+2. Find the critical values of x for which we can define a two-sided critical region with a significance level of $\alpha=1\%$
+
+3. What would be the p value corresponding to a measurement of $x=-4.5$?
+
+4. What is the Z value for this measurement, in sigmas?
+
+5. What is the probability that our measurement will fall within 5 standard deviations of the mean?
+
+6. How would you interpret finding a measurement outside the 5 sigma region?
+
+
+
+
 (ex:mean-var-std)=
 ## Mean, Variance, and Standard Deviation
 
@@ -76,7 +116,7 @@ You are given the following information:
 3. There are no false negatives.
 4. In the population at large, one person in a thousand has the disease.
 
-> What is the probability that the person tested actually has the disease?
+a) What is the probability that the person tested actually has the disease?
 
 
 

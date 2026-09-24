@@ -642,3 +642,42 @@ What this indicates is that medical scientists are not publishing results that f
 
 Given that experiments can take years of work, one would strongly expect people to publish even if their work did not support some flashy alternative hypothesis, and get them a new espresso machine or similar. So, this jagged edge with enormous spikes at "just enough to support a flashy claim" p values is suggestive of dodgy practices, for example designing the test to support the alternative hypothesis :scream:. This is terrible science. The analysis of this data has hopefully led to much more stringent peer review of these kinds of results.
 
+### Summary of some useful scipy.stats methods
+
+```{code-cell} python
+
+from scipy.stats import norm
+
+# set up a normal distribution with mu=3, sigma=4
+
+mynorm = norm(loc=3, scale=4)
+
+# statistics
+# z = x-mu / sigma
+
+# choose a value of the RV
+x = 1
+
+# returns the PDF (density) value for X=x. This is NOT a probability! If it were, it would be zero.
+mynorm.pdf(x)    
+
+# returns the CDF: the probability that X <= x
+mynorm.cdf(x)
+
+# sanity check: CDF at x=infinity must equal 1
+import numpy as np
+mynorm.cdf(np.inf)
+
+# returns the probability of finding X >= x. This is the p value.
+mynorm.sf(x) 
+
+
+# returns the value (x) for which the cumulative probability X<=x is 95%
+mynorm.ppf(0.95)  
+
+# returns the value (x) for which the p value is 0.05
+mynorm.isf(0.05)  
+
+# Note that ppf(a) is equivalent to isf(1-a)
+
+```

@@ -26,7 +26,7 @@ project:
     - file: Stats.md
     - file: NormalTests.md
     #- file: notebooks/Test.py
-    - file: Exercises.md
+    #- file: Exercises.md
 
   numbering:
     title: true

@@ -7,15 +7,25 @@ jupytext:
 kernelspec:
   name: python3
   display_name: 'Python 3'
+numbering: false
+
 ---
 
-# Data Analysis Techniques ![ML is stats](/figures/ml-is-stats.png)
+# Data Analysis Techniques 890F3 ![ML is stats](/figures/ml-is-stats.png)
 
 
 This module explores how to use probability and statistics to analyse data and is currently organised in two volumes.
 
 
-## Volume 1
+## Volume 1: Probability & Statistics
+
+The materials for the first volume are largely ready, with the topic pages available via the menu to the left of this page. 
+
+On each page you will see a "power button" below the page heading on the right; press this to connect the jupyter server. Once connected, a "play button" will appear - press this to run the python snippets embedded in the corresponding page.
+
+I am in the process of converting and uploading exercises for all the topics. For Terminology & Concepts and Probability Essentials, there are some good exercises in the OpenStax book which I have linked from those pages.
+
+The dropdowns below list the **Learning Objectives** for each topic.
 
 [//]: # ( Terminology & Concepts)
 [//]: # ( Relies on: N/A)
@@ -24,7 +34,7 @@ This module explores how to use probability and statistics to analyse data and i
 [//]: # ( scipy.stats: uniform, norm )
 [//]: # ( matplotlib.pyplot: plot, hist, scatter )
 [//]: # ( openstax: https://openstax.org/books/introductory-statistics-2e/pages/1-practice )
-(los:T&C)=
+(los:Term)=
 :::{dropdown} Terminology & Concepts
 - [ ] Define hypothesis, model, theory
 - [ ] Understand the distinction between a population and a sample
@@ -68,13 +78,13 @@ This module explores how to use probability and statistics to analyse data and i
 - [ ] Explain what is meant by the Expectation and how it relates to the Mean
 - [ ] Describe in words the statement of the Law of Large Numbers (LLN)
 - [ ] Calculate the Expectation for discrete and continuous probability distributions.
-- [ ] State the Law of Large Numbers (LLN)
 - [ ] Express the True Variance in terms of the Expectation
 - [ ] Understand the terms in the Covariance Matrix
 - [ ] Calculate covariance with numpy
 - [ ] Be aware of the different results returned by numpy's cov and var, and how to harmonise
 - [ ] Calculate the linear correlations between two datasets with numpy
 - [ ] Understand that an absence of linear correlations does not imply independence 
+:::
 
 
 [//]: # ( The Normal Distribution)
@@ -142,6 +152,8 @@ This module explores how to use probability and statistics to analyse data and i
 
 ## Volume 2: Parameter Estimation & Fitting
 
+This volume forms the second part of the module, and the materials are ```wip``` (work in progress). I have put the Outline/ Learning Objectives here so you can get an idea of what will we cover.
+
 [//]: # ( Estimation Essentials)
 [//]: # ( Relies on: )
 [//]: # ( Notes: bootstrap: Week11-MCMC/MCMC-Part1.tex, rest:Week7-Tools/Tools.tex )
@@ -171,20 +183,19 @@ This module explores how to use probability and statistics to analyse data and i
 - Bernoulli: "the single coin toss"
 - Binomial: "repeated coin tosses"
 - Poisson: "number of emails per hour"
-
-- [ ] Explain what is meant by a Bernoulli Trial
-- [ ] Plot the Bernoulli PMF for some data
-- [ ] Show that the Bernoulli PMF is a valid probability distribution
-- [ ] Calculate Bernoulli probabilities using the PMF
-- [ ] Show that the Expectation and Variance of K~Bernoulli(p) are both equal to p 
-- [ ] Explain the relationship between the Bernoulli and Binomial distributions and parameters
-- [ ] Calculate the Binomial Coefficient
-- [ ] Calculate the Expectation and Variance for K~Binomial(n,p)
-- [ ] Estimate the fairness of a coin using the Binomial Likelihood
-- [ ] Describe the properties of k~Poisson(\lambda)
-- [ ] Calculate and use the Poisson Likelihood
-
+[ ] Explain what is meant by a Bernoulli Trial
+[ ] Plot the Bernoulli PMF for some data
+[ ] Show that the Bernoulli PMF is a valid probability distribution
+[ ] Calculate Bernoulli probabilities using the PMF
+[ ] Show that the Expectation and Variance of $K\sim Bernoulli(p)$ are both equal to p 
+[ ] Explain the relationship between the Bernoulli and Binomial distributions and parameters
+[ ] Calculate the Binomial Coefficient
+[ ] Calculate the Expectation and Variance for $K\simBinomial(n,p)$
+[ ] Estimate the fairness of a coin using the Binomial Likelihood
+[ ] Describe the properties of $k\simPoisson(\lambda)$
+[ ] Calculate and use the Poisson Likelihood
 :::
+
 
 [//]: # ( Special Probability Distributions)
 [//]: # ( Relies on: )
@@ -200,14 +211,13 @@ This module explores how to use probability and statistics to analyse data and i
 - Exponential: "waiting time for a taxi"
 - Gamma: "waiting time for nth taxi"
 - Beta: "the chameleon"
-
-- [ ] Show that the uniform PDF is valid
-- [ ] Calculate the Expectation for X~Uniform(a,b)
-- [ ] Write down the PDF for X~Expon($\lambda$)
-- [ ] Compare X~Expon($\lambda$) with K~Poisson($\lambda$), explaining why one is continuous and the other discrete
-- [ ] Explain the Memoryless property of Expon($\lambda$)
-- [ ] Know when to use a Beta PDF
-- [ ] Describe the Beta PDF parameters
+[ ] Show that the Uniform PDF is valid
+[ ] Calculate the Expectation for $X\sim Uniform(a,b)$
+[ ] Write down the PDF for $X\sim Expon(\lambda)$
+[ ] Compare $X\sim Expon(\lambda)$ with $K\sim Poisson(\lambda)$, explaining why one is continuous and the other discrete
+[ ] Explain the Memoryless property of Expon($\lambda$)
+[ ] Know when to use a Beta PDF
+[ ] Describe the Beta PDF parameters
 :::
 
 
@@ -226,7 +236,6 @@ This module explores how to use probability and statistics to analyse data and i
 -- Monte Carlo
 -- Fisher Information and Minimum Variance Bound
 -- Graphical Method
-
 [ ] Describe what is meant by the bias of an estimator
 [ ] Calculate the MSE
 [ ] Understand that sometimes, the best estimator for the job is the biased estimator
@@ -262,7 +271,7 @@ This module explores how to use probability and statistics to analyse data and i
 (los:ModelTests)=
 :::{dropdown} Model Tests
 - Chi Squared
-- Likelihood Ratio (LLR)
+- Log Likelihood Ratio (LLR)
 - Akaike and Bayes Information Criteria (AIC and BIC)
 :::
 

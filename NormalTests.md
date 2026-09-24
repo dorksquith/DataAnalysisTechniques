@@ -231,7 +231,7 @@ If we have only a handful of measurements, and there is no way to collect more d
   Dangerous! Almost everyone has almost no understanding of statistics and uncertainty. Because it is both hard and boring :).
 
 **Option2 - The Frequentist Approach**
-: I cannot know my uncertainty from such a small sample, so I will not share the incomplete measurement of the mean. 
+: I cannot know my uncertainty from such a small sample, so I will not share the incomplete measurement of the mean. 
   Sad but safe.
 
 **Option3 - The Bayesian approach**
@@ -265,7 +265,7 @@ The Z Test defines this statistic slightly differently, because we no longer wan
 
 The measurement (x) is replaced with the sample mean, $\overline{x}$,  and the reference ($\overline{x}$) is replaced with the True Mean of the Null Hypothesis $\mu_0$ with which we are comparing our data. It would not make sense to use the sample standard deviation in the denominator, because we are comparing means rather than values, so the correct thing to use in the denominator is the SEM.
 
-
+(ZTestExample)=
 ### Z Test Example: Hours slept in Stockport
 
 **Null Hypothesis:**
@@ -286,25 +286,21 @@ The measurement (x) is replaced with the sample mean, $\overline{x}$,  and the 
 - Sample size: $N=100$
 ```
 
-````{card} [3] Calculate [Test Statistic](#eq:zstat)
+```{card} [3] Calculate [Test Statistic](#eq:zstat)
 - The formula for the denominator is $\mathsf{SEM} = \sigma_{\overline{x}}  = \dfrac{\sigma_{true} }{\sqrt{N}}$
-- But, we don't know the true standard deviation. We will have to **Estimate** it[^note1]. We know the variance of the sample, so we will use that, and remind ourselves these are Estimates by giving them little hats to wear:
+- We don't know $\sigma_{true}$ so we will **Estimate** it[^note1]. We know the variance of the sample, so we will use that, and remind ourselves these are Estimates by giving them little hats to wear:
 $\mathsf{\widehat{SEM} = \hat{\sigma}_{\overline{x}} = \dfrac{\sigma_{x} }{\sqrt{N-1}}   }$[^note2]
+- $V[x] = \mathsf{1.68\,H^2}$ so the square root of this gives us our numerator, the sample standard deviation.
 
-We have the variance $V[x] = \mathsf{1.68\,H^2}$ so the square root of this gives us our numerator, the sample standard deviation:
-$\mathsf{ \widehat{SEM} =\dfrac{\sigma_{x} }{\sqrt{N-1}}   =  \dfrac{\sqrt{1.68\,H^2}}{\sqrt{99}}    \approx 0.130\,H  }  $
+- $\mathsf{ \widehat{SEM} =\dfrac{\sigma_{x} }{\sqrt{N-1}}   =  \dfrac{\sqrt{1.68\,H^2}}{\sqrt{99}}    \approx 0.130\,H  }$
+-$\mathsf{Estimated\;z\; test\; statistic= \dfrac{ \overline{x}-\mu_{_0} }{\mathsf{SEM}} 
+= \dfrac{ 7.40\, H - 7.33\, H }{0.13\, H} \approx  0.538}$
 
-
-```{math}
-\mathsf{Estimated\;z\; test\; statistic= \dfrac{ \overline{x}-\mu_{_0} }{\mathsf{SEM}} 
-= \dfrac{ 7.40\, H - 7.33\, H }{0.13\, H} \approx  0.538}
 ```
-
-````
 
 [^note1]: By using the data to **Estimate** the true variance, and therefore the SEM, this is not really a Z Test any more. It is now the same form as Students' T Test (next), but Student's T has a key difference as we shall see.
 
-[^note2]: Why did the denominator change from $\mathsf{\sqrt{N} \rightarrow \sqrt{N-1}}$? The short answer is that it is because we are using the sample variance to estimate the true variance, and this estimate is known to be Biased. I did a [proof of this](#fig:fig:lilyproof_varbias) last year when I first started teaching this module because I could not find one anywhere. It is long. If you can find a shorter way, please send it to me.
+[^note2]: Why did the denominator change from $\mathsf{\sqrt{N} \rightarrow \sqrt{N-1}}$? The short answer is that it is because we are using the sample variance to estimate the true variance, and this estimate is known to be Biased. I did a [proof of this](#fig:fig:lilyproof_varbias) (bottom of this page) last year when I first started teaching this module because I could not find one anywhere. It is long. If you can find a shorter way, please send it to me.
 
 <!--
 $\mathsf{V[X] = \dfrac{N}{N-1}\; V[x]}$
@@ -321,6 +317,9 @@ $\mathsf{\dfrac{\sigma_{true}}{\sqrt{N}} =  \dfrac{1}{\sqrt{N}} \dfrac{\sqrt{N}}
 
 An estimated  test statistic of 0.538 means that our data mean is 0.538 standard deviations above the value the Null Hypothesis claims is the true mean.
 
+
+
+
 To [convert this into a p value](#pfromz) that we can use directly to reject or not-reject $H_0$, we use python: 
 
 ```{code-cell} python
@@ -334,10 +333,73 @@ print(f"P value: {p_value}")
 
 ```
 
-This p value is (much) larger than our pre-decided significance level, $0.59 > 0.05$ , so  the result is Negative, we do not reject the null hypothesis.
+This p value is (much) larger than our pre-decided significance level, $0.59 > 0.05$ , so  **the result is Negative, we do not reject the null hypothesis**.
+
+> It may be helpful to keep a reference such as [](#fig:pvalzval) to hand to help with getting an understanding of how Z values and p values are related. It is very simple to convert one to another, but even better to have an instinct such as knowing a Z value of 0.5 puts us right in the peak of the normal distribution.
+
+:::{figure} 
+:label: fig:pvalzval
+![](figures/StandardNormPvalZval.png)
+
+The p value and Z value.
+:::
 
 
 ## The Student's T Test
+
+The one-sample T Test is very similar to the Z Test, but is **particularly well suited to small datasets**. This is because instead of using the Normal distribution, it uses the Student's T[^student] distribution, which is like the Normal distribution but with fatter tails [](#fig:tpdf).
+
+[^student]: William Gosset is the Student. He used a code name at his employers' (Guiness) request.
+
+The T distribution has one parameter: the number of degrees of freedom, with symbol [$\nu$](#eq:Tnu). The T PDF $\nu=1$ corresponds to a sample size of $N=2$, because we are measuring a single parameter, the mean. For reasonably sized datasets of $N \gapprox 30$, the T distribution and Norm are barely distinguishable.
+
+```{math}
+:label: eq:Tnu
+
+\nu = \mathsf{N_{measurements} - N_{parameters}}
+
+```
+
+
+:::{figure} 
+:label: fig:tpdf
+![](figures/StudentsT2.png)
+
+The T PDF for different values of the parameter $\nu$ (Number of degrees of freedom) on a linear scale (left) and on a log scale (right). The standard normal distribution Norm(0,1) is also shown as a red dashed line.
+:::
+
+
+
+### T Test Example: Hours slept in Brixton
+
+**Null Hypothesis:**
+: $H_0$: the mean number of hours slept by adult women is $\mathsf{\mu_0 = 7.33\,H}$.
+
+**Research Question:**
+: Is the mean sleep achieved by residents of Brixton equal to that predicted by the **Null Hypothesis**?
+
+
+```{card} [1] Design Test
+- Significance Level : $\alpha=0.05$
+- Alternate hypothesis, $H_1$:  $\mathsf{\mu_0 \textcolor{red}{\neq} 7.33\,H}$ : this means the test is two-sided.
+```
+
+```{card} [2] Look at Data
+- Sample mean: $\overline{x} = \mathsf{8.14\,H}$
+- Sample variance: $V[x] = \mathsf{0.31\,H^2}$
+- Sample size: $N=3$
+```
+
+```{card} [3] Calculate [Test Statistic](#eq:zstat)
+- $\mathsf{ \widehat{SEM} =\dfrac{\sigma_{x} }{\sqrt{N-1}}   =  \dfrac{\sqrt{0.31\,H^2}}{\sqrt{3}}    \approx 0.321\,H  }$
+-$\mathsf{Estimated\;T\; test\; statistic= \dfrac{ \overline{x}-\mu_{_0} }{\mathsf{SEM}} 
+= \dfrac{ 8.14\, H - 7.33\, H }{0.321\, H} \approx  2.52}$
+
+```
+
+
+
+
 
 ## The Student's T Test: two samples
 

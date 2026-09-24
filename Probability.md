@@ -290,7 +290,7 @@ P_AnB = len(AnB)/len(S) # 0.2
 print("P(AUB) = ",P_AUB )
 print(f"P(A) +P(B) - P(AnB) = {P_A} + {P_B} - {P_AnB} = {P_A+P_B-P_AnB}")
 ```
-
+(kolmogorov)=
 ### The Kolmogorov Axioms
 
 > [Andrey Kolmogorov](https://en.wikipedia.org/wiki/Andrey_Kolmogorov) was a Russian mathematician. You may have heard of the 'KS test', which is used to eg check for overtraining by comparing ML classifier outputs for test and train samples. This is named for Kolomogorov and Nikolai Smirnov. See also 'KANs' - Kolmogorov Arnold Networks [arXiv:2404.19756](https://arxiv.org/abs/2404.19756).
@@ -301,11 +301,11 @@ The **Non-Negativity Axiom**
 
 The **Normalisation Axiom** 
 : The probability of the entire sample space is one.
-  $$\label{eq:kolmogorov2} P(S) =1$$: 
+  $$\label{eq:kolmogorov2} P(S) =1$$ 
 
 The **Countable Additivity Axiom**
 : If A and B are **mutually exclusive**, the probability of their union is the sum of their individual probabilities.
-  $$\label{eq:kolmogorov3} P(A\cup B) =P(A)+P(B)$$: 
+  $$\label{eq:kolmogorov3} P(A\cup B) =P(A)+P(B)$$ 
 
 (cond-prob)=
 ### Conditional Probability $P(A | B)$
@@ -443,6 +443,132 @@ Bayes' Theorem gets interesting when we consider that it applies to **any sets $
 :::{important} Bayes' Theorem is not "Bayesian"
 Using Bayes' theorem does not make one a Bayesian. It is used by Frequentists and Bayesians alike!
 :::
+
+
+## Probability Distributions
+
+We can express probabilities as single numbers, for example the probability of getting six when I roll a die is $p_6 = \frac{1}{6}$, if the die is fair and has six sides. 
+
+More helpfully, we can express probabilities in terms of the RV and some parameters. For example, when I roll a fair die with $n$ sides, the probability of getting a number $x$ is $p_x = \frac{1}{n}$. This is a **Probability Distribution**[^admit].
+
+[^admit] This is admittedly a very boring probability distribution, because it is flat (Uniform), with every value having the same probability. 
+
+There are two kinds of Probability Distributions:
+1. Probability Mass Functions (PMFs), for discrete RVs
+2. Probability Density Functions (PDFs), for continuous RVs
+
+
+::::{tab-set}
+:::{tab-item} PMFs
+
+The score from rolling a die (or any number of dice) is a Discrete RV. The probability of measuring a given value $k$ for a Discrete RV $K$ is described by a **Probability Mass Function (PMF)** $p_K(k)$.
+
+The **Support** S of a PMF is the set of all values with a non-zero probability of occurring.
+
+A PMF must satisfy the [Kolmogorov Axioms](#kolmogorov), which we usually write down in a slightly different format when talking about PMFs:
+
+$$\label{eq:kolmogorov1pmf} p_K(k) > 0\;\;\; \forall\;\; k \in S $$
+
+$$\label{eq:kolmogorov2pmf} \sum\limits_{k\in S} p_K(k) =1 $$
+
+$$\label{eq:kolmogorov3pmf} P(k \in A) = \sum\limits_{k\in A} p_K(k) $$
+
+```{code-cell}
+import matplotlib.pyplot as plt
+import numpy as np
+
+# randint is a uniform distribution of integers
+from scipy.stats import randint
+
+lo=1
+hi=6
+
+# the upper limit of a range is the maximum value **plus 1**
+k = np.arange(lo, hi+1 ) 
+
+# theoretical discrete uniform distribution of dice roll probabilities
+dist = randint(low=lo, high=hi+1) 
+
+# we can ask the distribution for its support
+support = dist.support() 
+
+print(f"dist.support(): {dist.support()}") 
+
+# we can ask the distribution for its PMF
+pmf = dist.pmf(k) 
+
+# Plot the score values on the x-axis and the corresponding PMF values on the y-axis
+plt.stem(k, pmf)
+
+plt.xlabel("Dice Score")
+plt.ylabel("Probability")
+plt.xlim(0,7)
+plt.ylim(0)
+plt.show()
+
+```
+
+
+:::
+:::{tab-item} PDFs
+
+The probability of measuring a given value $x$ for a Continuous RV $X$ is described by a **Probability Density Function (PDF)** $f_X(x)$.
+
+As per a PMF, the **Support** S of a PDF is the set of all values with a non-zero probability of occurring.
+
+ A PDF must also satisfy the [Kolmogorov Axioms](#kolmogorov), but we now write the second and third conditions as integrals:
+
+$$\label{eq:kolmogorov1pdf} f_X(x) > 0\;\;\; \forall\;\; x \in S $$
+
+$$\label{eq:kolmogorov2pdf} \int\limits_{S} f_X(x) dx =1 $$
+
+$$\label{eq:kolmogorov3pdf} P(x \in A) = \int\limits_{A} f_X(x) dx $$
+
+```{important} Density
+Notice that we are not labelling the y-axis as **Density** rather than Probability for the PDF. This is because the probability of measuring any single value for "X" is zero. This can seem a bit odd; it is a consequence of Continuous RVs having an uncountable infinity of possible values, so the only way such an RV can satisfy [Kolmogorov 2](#eq:kolmogorov2pdf) is to demand the probability of any exact value is zero.
+```
+
+```{code-cell}
+import matplotlib.pyplot as plt
+import numpy as np
+
+# norm is a distribution describing a continuous RV
+from scipy.stats import norm
+
+# theoretical normal distribution of some continuous RV (this is "standard normal", with default parameters mean=0 and standard deviation=1)
+
+dist = norm() 
+
+# we can ask the distribution for its support
+support = dist.support() 
+
+# note that norm has a support of -infty, infty! We will come back to this
+print(f"dist.support(): {dist.support()}") 
+
+# set a range of x values for the plot. 100 values is enough for a smooth plot.
+x = np.linspace(-5,5,100)
+
+# we can ask the distribution for its PDF
+pdf = dist.pdf(x) 
+
+# Plot the RV on the x-axis and the corresponding PDF values on the y-axis
+plt.plot(x, PDF)
+
+plt.xlabel("X")
+plt.ylabel("Density")
+plt.xlim(-5,5)
+plt.ylim(0)
+plt.show()
+
+```
+:::
+::::
+
+
+
+
+
+
 
 ## Learning Objectives Checklist
 

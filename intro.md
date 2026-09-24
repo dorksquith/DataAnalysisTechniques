@@ -11,6 +11,7 @@ kernelspec:
 
 # Data Analysis Techniques ![ML is stats](/figures/ml-is-stats.png)
 
+<!--
 :::{warning}
 These notes are under development.
 :::
@@ -18,6 +19,109 @@ These notes are under development.
 +++ {"part": "abstract"}
 Notes for Data Analysis Techniques, module 890F3. If you are a student on this module, please read the canvas pages carefully for vital information including the course structure, assessment, and suggested reading. 
 +++
+-->
+
+This module is currently organised in two volumes:
+
+## Volume 1: Probability & Statistics Essentials
+
+<!-- 
+	Relies on: N/A
+	Notes: Week2-RandomVars/Data.tex
+	
+
+	 -->
+```{card} Terminology & Concepts
+
+``` 
+
+<!-- 
+	Relies on: N/A
+	Notes: Week1-Probability/Probability.tex
+	
+
+	 -->
+```{card} Probability Essentials
+
+```
+
+```{card} Describing Data
+
+```
+
+```{card} The Normal Distribution
+
+```
+
+```{card} Hypothesis Tests
+
+```
+
+```{card} Normal Tests
+
+```
+
+
+
+
+```{card} Estimation Essentials
+- Point and Interval Estimation
+% - Percentiles and Quartiles
+- The Bootstrap
+%- Confidence Intervals
+- Consistency, Bias, and Minimum Variance
+- Method of Moments
+
+``` 
+
+## Volume 2: Parameter Estimation & Fitting
+
+```{card} Probability & Likelihood
+- Bayes theorem revisited
+
+```
+
+```{card} Special PDFs
+- Bernoulli
+- Binomial
+- Poisson
+- Uniform
+- Exponential
+- Beta
+```
+
+```{card} Maximum Likelihood Method
+
+```
+
+
+<!-- 
+	Relies on Log Like Normal, Poisson, refers to MLE, Cramers rule, Taylor expansion, Hessian
+	Notes: Week9-Fits-Tests/LeastSquares.tex
+	 -->
+```{card}  Linear Regression
+- Residuals
+- The method of Least Squares (LSQ)
+- Parameter uncertainties with LSQ
+- Python methods
+- Outliers
+- Nonlinear Methods
+```
+
+
+<!-- 
+	Relies on: Least Squares, normal tests, degrees of freedom, variance and expectation
+	Mentions: gamma function,
+	Notes Chi Squared: Week9-Fits-Tests/TestStatistics.tex
+	s18-s26 Chi Squared and the Standard Normal RV
+
+	 -->
+```{card} Model Tests
+- Chi Squared
+- Likelihood Ratio (LLR)
+- Akaike and Bayes Information Criteria (AIC and BIC)
+
+```
 
 
 

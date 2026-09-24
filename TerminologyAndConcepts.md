@@ -22,8 +22,6 @@ For example:
 - $H_1$: People who sleep well live longer.
 
 
-
-
 A **Model** is an object, a computer program, or a mathematical equation that can explain how something works, and/or be used to make predictions. 
 
 
@@ -43,7 +41,6 @@ For example:
 When statisticians talk about Toy Models (often shortened to "Toys"), they are referring to a mathematical model that has been simplified. Not Delorians, sadly.
 :::
 
-
 A **Theory** is the description of a set of models, and the relationships between them. It is complete, and is a candidate explanation for the "Underlying Truth". The Underlying Truth is an abstract concept which cannot be known with certainty. We can test our models and theories, and those which we fail to prove wrong tend to grow in esteem. 
 
 (discovery)=
@@ -52,6 +49,7 @@ It is not possible to prove that a hypotheses or theory is correct. We can only 
 :::
 
 A theory that passes all the tests accessible by our imaginations and technological capability may well be wrong - we just haven't asked the right questions or gathered enough data to see it.
+
 
 ## Population and Sample
 
@@ -87,8 +85,11 @@ A **Parameter** is a number that describes some characteristic of the Underlying
 
 A **Statistic** is a number that describes some characteristic of a sample, for example the mean height of all humans in Sussex Uni. 
 
-(discrete)=
+
 ## Discrete and Continuous Data
+
+(discrete)= 
+### Discrete RVs
 
 **Discrete RVs** are counts or rates that can only take certain values, rather than any values on the real number line ($\mathbb{R}$). 
 
@@ -96,6 +97,8 @@ A **Statistic** is a number that describes some characteristic of a sample, for 
 
 For example, the probability of dice rolls (any number of dice) **are not** integers but **are** Discrete. If we increase the number of dice and/or rolls, we can generate lots of probability values from the original set, but there will always be real numbers we cannot generate (gaps in the real number line).
 
+(continuous)= 
+### Continuous RVs
 
 **Continuous RVs** are measurements such as height or temperature that can theoretically take any value on the real number line. 
 
@@ -241,9 +244,9 @@ print(f" (unbiased std x : {unbiased_std_x})")
 
 ```
 
-## Test Statistics
+<!--## Test Statistics
 
-**Test statistics** are numbers that describe the compatibility of a sample with a hypothesis, or with another sample. Examples are the p value, Z score, Chi squared. We will discuss these at length later.
+**Test statistics** are numbers that describe the compatibility of a sample with a hypothesis, or with another sample. Examples are the p value, Z score, Chi squared. We will discuss these at length later.-->
 
 ## Random and Pseudorandom Numbers
 

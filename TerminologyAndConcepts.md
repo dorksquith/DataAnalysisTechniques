@@ -6,9 +6,9 @@ kernelspec:
 
 # Terminology & Concepts
 
-A brief tour of the important terms and concepts for this module, almost all of which we will revisit in detail later.
+A **brief tour** of the important terms and concepts for this module, almost all of which **we will revisit in detail later**.
 
-<!--Make sure you are familiar with these before embarking on the topics in this module.-->
+> Reminder: as noted in the [intro](#intro), press the "power button" ⏻ above this section on the right to start the jupyter server, then press the "play button" ▷  to execute all of the python snippets embedded in the topics below.
 
 ## Hypotheses, Models, and Theories
 
@@ -41,7 +41,7 @@ For example:
 When statisticians talk about Toy Models (often shortened to "Toys"), they are referring to a mathematical model that has been simplified. Not Delorians, sadly.
 :::
 
-A **Theory** is the description of a set of models, and the relationships between them. It is complete, and is a candidate explanation for the "Underlying Truth". The Underlying Truth is an abstract concept which cannot be known with certainty. We can test our models and theories, and those which we fail to prove wrong tend to grow in esteem. 
+A **Theory** is the description of a set of models, and the relationships between them. It is complete, and is a candidate explanation for the "Underlying Truth". The Underlying Truth is an abstract concept which cannot be known with certainty. We can test our models and theories, and those which we do not prove wrong tend to grow in esteem. 
 
 (discovery)=
 :::{important} 
@@ -65,7 +65,7 @@ The **Population** refers to the maximum number of data points we can possibly g
 
 A **Sample** is a subset of the population. If certain criteria are met, we can use the sample as a proxy for the population. For a sample to be **Representative** of the Population, it must be reasonably large and it must be unbiased. Lots more on this to come.
 
-> Even if we use the entire population at a given moment as our dataset, we must still recognise that our dataset is limited in size (ie it is not infinite). 
+> Even if we use the entire population at a given moment as our dataset, we must still recognise that our dataset is limited in size (ie it is not infinite). Lots of resources use the Population and the Truth interchangeably, though, because they have made the decision not to poke around in the Truth.
 
 
 ## Random Variables, Parameters, and Statistics
@@ -243,13 +243,13 @@ We won't be using the median and mode in this module, just including them for re
 
 
 (intro-variance)=
-### Variance $V[x]$ 
+### Variance $v_x$ 
 
-The sample **Variance** $V[x]$ is a measure of the spread of a dataset $x$ with respect to the mean.
+The sample **Variance** $v_x$ is a measure of the spread of a dataset $x$ with respect to the mean.
 
 $$
 \label{eq:variance}
-V[x]  = \frac{1}{N} \sum\limits_i^N  (x_i - \overline{x})^2
+v_x  = \frac{1}{N} \sum\limits_i^N  (x_i - \overline{x})^2
 $$
 
 Each term in the sum $$\label{eq:variancei}(x_i - \overline{x})^2$$ is the variance of the $i^{th}$ measurement, $x_i$, wrt to the mean. The sum is over the $N$ measurements.
@@ -258,7 +258,7 @@ Sometimes we will see the **Unbiased Variance**:
 
 $$
 \label{eq:varianceU}
-V[x]  = \frac{1}{N-1} \sum\limits_i^N  (x_i - \overline{x})^2
+v_x  = \frac{1}{N-1} \sum\limits_i^N  (x_i - \overline{x})^2
 $$
 
 It is better to use the unbiased form if you have a small dataset. I would probably use this form for $N<100$ as a rule of thumb. More on this [later](#UnbiasedVariance).
@@ -289,7 +289,7 @@ The **Standard Deviation** $\sigma_x$ is the square root of the variance.
 
 $$
 \label{eq:std}
-\sigma_x  = \sqrt{V[x]} = \sqrt{ \frac{1}{N-1} \sum\limits_i^N  (x_i - \overline{x})^2 }
+\sigma_x  = \sqrt{v_x} = \sqrt{ \frac{1}{N-1} \sum\limits_i^N  (x_i - \overline{x})^2 }
 $$
 
 ```{code-cell} python
@@ -521,5 +521,10 @@ plt.legend()
 plt.show()
 
 ```
+
+### Exercises
+
+
+If you want some extra practise on these concepts, the (free) OpenStax Text Book [Introductory Statistics](https://openstax.org/details/books/introductory-statistics-2e) has some [Chapter 1 Practice](https://openstax.org/books/introductory-statistics-2e/pages/1-practice).
 
 

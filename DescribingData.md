@@ -20,7 +20,7 @@ The **True Mean** (aka **Expectation**), $E[X]$, is a **parameter** of the true 
 
 ### Discrete Data
 
-For [Discrete data](#discrete), if we known the underlying probabilities we can calculate the Expectation in a similar way to [the sample mean](#eq:mean):
+For [Discrete data](#discrete), if we known the underlying probabilities we can calculate the **Expectation** in a similar way to [the sample mean](#eq:mean):
 
 ```{math}
 :label: eq:expect
@@ -28,12 +28,13 @@ E[X]  = \sum\limits_i^\infty  x_i p_i
 ```
 
 * The sum is infinite because in Truth, there are $\infty$ possible values for X.
-* The Probability of observing $x_i$ is $p_i$. Because Probabilities must sum (or integrate) to 1 [Kolmogorov's normalisation axiom](#eq:kolmogorov2), the normalisation factor $\dfrac{1}{N}$ is not needed. Via use of the probability $p_i$ we are normalising every term in the sum individually, and will get the same result.
+* The Probability of observing the value $x_i$ is $p_i$. 
+* Because Probabilities must sum (or integrate) to 1 [Kolmogorov's normalisation axiom](#eq:kolmogorov2), the normalisation factor $\dfrac{1}{N}$ used for [the sample mean](#eq:mean) is not needed. Via use of the probability $p_i$, we are normalising every term in the sum individually.
 
 
 ### Continuous Data
 
-If our data is Continuous rather than Discrete, then it does not make sense to "sum over all possible values", because continuous RVs have an Uncountable Infinity[^infinities] of possible values. Instead, we integrate:
+If our data is [Continuous](#continuous) rather than Discrete, then it does not make sense to "sum over all possible values", because continuous RVs have an Uncountable Infinity[^infinities] of possible values. Instead, we integrate:
 
 [^infinities]: See this nice blog by Joel Hamkins for an accessible intro to the difference between countable and [uncountable infinites](https://www.infinitelymore.xyz/p/uncountable-infinity)
 
@@ -45,6 +46,7 @@ E[X]  = \int\limits_{-\infty}^\infty  x_i\, f_X\, dx
 
 Note that in [](#eq:expectC) we have $f_X$: a **Probability Density Function (PDF)** instead of the individual probabilities $p_i$ used in [](#eq:expect). Lots more on PDFs later.
 
+The Sample Mean $\overline{x}$ and True Mean E[X] are compared in [](#fig:mean-expect-mp4) for a Continuous RV. Notice that the True Mean is fixed, as it is a parameter of the distribution, while the Sample Mean changes as we add more data.
 
 :::{figure} 
 :label: fig:mean-expect-mp4
@@ -71,8 +73,8 @@ E[X]  \equiv \mu
 
 Some very useful properties of Expectation:
 
-The expectation of a sum (difference) is the sum (difference) of the expectations. 
-$$\label{eq:expect_sum} E(X \pm Y) = E(X) \pm E(Y)$$
+The expectation of a sum is the sum of the expectations. 
+$$\label{eq:expect_sum} E(X + Y) = E(X) + E(Y)$$
 
 If we add a constant $b$ to a RV, we add the same constant to its expecation.
 $$\label{eq:expect_addc} E(X + b) = E(X) + b$$
@@ -81,21 +83,21 @@ If we multiply an RV by a constant $a$ , we multiply its expecation by the same 
 $$\label{eq:expect_multc} E(aX) = aE(X)$$
  
 
-For the special case of Independent RVs only, the expectation of the product is the product of the expectations.
+For the **special case of Independent RVs only**, the expectation of the product is the product of the expectations.
 
 $$\label{eq:expect_multind} E(XY) = E(X) E(Y) $$
 
-[](#eq:expect_multind) **is only true if X and Y are mutually independent**. See [](#eq:multrule).
+[](#eq:expect_multind) **is only true if X and Y are mutually independent**. <!--See [](#eq:multrule).-->
 
 
 (LLN)=
 ## The Law of Large Numbers (LLN)
 
-In [](#fig:mean-expect-mp4) we see that the Sample Mean $\overline{x}$ does not exactly correspond to the True Mean $E[X]$.
+In [](#fig:mean-expect-mp4) we saw that the Sample Mean $\overline{x}$ does not exactly correspond to the True Mean $E[X]$.
 
 The **Law of Large Numbers (LLN)**[^1] tells us that if we were to increase the size of the data sample to infinity (not possible in real life), the sample mean $\overline{x}$ would approach the true mean $\mu$ with high probability.
 
-[^1]: This is the Weak LLN. The Strong LLN is subtly different, explained quite nicely on [wikipedia](https://en.wikipedia.org/wiki/Law_of_large_numbers).
+[^1]: To be precise, this is the Weak LLN. The Strong LLN is subtly different, explained quite nicely on [wikipedia](https://en.wikipedia.org/wiki/Law_of_large_numbers).
 
 ```{math}
 :label: eq:lln
@@ -120,14 +122,16 @@ For $N=1k$ measurements, we observe $|\overline{x} - \mu |=0.0044$. For $N=10k$ 
 :::
 
 
-The mean measured in the smaller 1k sample is closer to the expectation $\mu$ than the mean of the 10k sample. This is a natural **Statistical Fluctuation**, and does not imply that the LLN is wrong.
+The mean measured in the smaller $N=1k$ sample is closer to the expectation $\mu$ than the mean of the $N=10k$ sample. This is a natural **Statistical Fluctuation**, and does not imply that the LLN is wrong.
 
 
 ## Variance and Standard Deviation
 
-The [sample **Standard Deviation**](#eq:std) is the square root of the [sample **Variance**](#eq:variance). You would be forgiven for wondering why we don't just pick one of these summary statistics and ditch the other for simplicity; we keep this redundancy because they are each crucial in their own worlds, as we shall see.
+The [sample **Standard Deviation**](#eq:std) is the square root of the [sample **Variance**](#eq:variance)[^whyboth]. 
 
-The problem with the sample variance is that we can't relate it directly to the measurement, because it has units of $x^2$ rather than $x$. As such, we cannot provide a visual description of the variance on axes with units of $x$. But we can draw the sample Standard Deviation $\sigma_x = \sqrt{V[x]}$.
+[^whyboth]: You would be forgiven for wondering why we don't just pick one of these summary statistics and ditch the other for simplicity; we keep this redundancy because they are each crucial in their own worlds, as we shall see.
+
+The problem with the sample variance is that we can't relate it directly to the measurement, because it has units of $x^2$ rather than $x$. As such, we cannot provide a visual description of the variance on axes with units of $x$. But we can draw the sample Standard Deviation $\sigma_x = \sqrt{v_x}$, as illustrated for a toy dataset in [](#fig:var-std-cartoon).
 
 
 :::{figure} 
@@ -135,7 +139,7 @@ The problem with the sample variance is that we can't relate it directly to the 
 :align: left
 ![](figures/variance-cartoon)
 
-Cartoon showing $N=5$ measurements of X, with the standard deviation $\sigma_x$ indicated on the plot.
+Cartoon showing $N=5$ measurements of X, with the standard deviation $\sigma_x$ of the dataset indicated on the plot.
 :::
 
 It is the sample Standard Deviation that we use to quantify the spread of our data points, giving us an intrinsic **Uncertainty** on each measurement. This is usually provided visually as error bars or bands.
@@ -157,9 +161,11 @@ Sample Mean to True Mean
 Expectation definition
 : Use [](#eq:expect) to write:  
   
-  $E[X^2]  = \sum\limits_i^\infty  x^2_i p_i$
+  $E[X^2]  = \sum\limits_i^\infty  x^2_i p_i \;\; \mathsf{\textcolor{blue}{with X\rightarrow X^2} \;\;} $
   
-  $E[(X-\mu)^2]  = \sum\limits_i^\infty  (x_i-\mu)^2 p_i$
+  $E[(X-\mu)^2]  = \sum\limits_i^\infty  (x_i-\mu)^2 p_i \;\; \mathsf{\textcolor{blue}{with X\rightarrow X-\mu} \;\;} $
+
+We can happily let $X\rightarrow X-\mu$ in the second step because if X is a RV, then $X-\mu$ is also a RV.
 
 The above steps allow us to write the true variance in terms of the expectation:
 
@@ -182,8 +188,8 @@ V[X] = E[X^2] - E^2[X]
 ```{math}
 \begin{aligned}
 V[X] & = E[\, X^2 + E^2[X] - 2X\,E[X] \,]\\
-	& = E[\, X^2\,] + E[\, E^2[X] \,]- E[\,2X\,E[X] \,]\;\; because\; E[A+B] = E[A] + E[B] \\
-	& = E[ X^2] + E^2[X] - 2E[X]  E[X]\;\; because\; E[E[A]] = E[A]\\
+	& = E[\, X^2\,] + E[\, E^2[X] \,]- E[\,2X\,E[X] \,]\;\; \mathsf{\textcolor{blue}{because}}\; E[A+B] = E[A] + E[B] \\
+	& = E[ X^2] + E^2[X] - 2E[X]  E[X]\;\; \mathsf{\textcolor{blue}{because}}\; E[E[A]] = E[A]\\
 	& = E[ X^2] + E^2[X]  - 2E^2[X]   \\	
 	& = E[ X^2] - E^2[X]   \\
 \end{aligned}
@@ -197,20 +203,20 @@ V[X] & = E[\, X^2 + E^2[X] - 2X\,E[X] \,]\\
 Some very useful properties of Variance:
 
 If we multiply an RV by a constant $a$ , we multiply its expecation by the same constant **squared**.
-$$\label{eq:var_multc} V(aX) = a^2 V(X)$$
+$$\label{eq:var_multc} V[aX] = a^2 V[X]$$
 
 
 The variance of a constant $b$ is zero.
 $$\label{eq:var_const} V[b] = 0 $$
   
 Adding a constant to an RV does not alter its variance.
-$$\label{eq:var_addc} V(X + b) = V[X]$$
+$$\label{eq:var_addc} V[X + b] = V[X]$$
  
-For the special case of Independent RVs only, the variance of a sum is the sum of the variances:
+For the **special case of Independent RVs only**, the variance of a sum is the sum of the variances:
 
-$$\label{eq:var_sumind} V(X + Y) = V(X) + V(Y)$$
+$$\label{eq:var_sumind} V[X + Y] = V[X] + V[Y]$$
 
-[](#eq:var_sumind) **is only true if X and Y are mutually independent.** Compare with [](eq:expect_multind).
+> [](#eq:var_sumind) **is only true if X and Y are mutually independent.** <!--Compare with [](eq:expect_multind).-->
 
 
 
@@ -240,27 +246,33 @@ Note that our ```data``` is a **Matrix** (a two-dimensional array) with 2 rows a
 
 :::{dropdown} Notation - not pretty but you should probably read.
 
-Common notation for multiple RVs is as follows:
+I use $N$ for the number of measurements, indexed by $i$.
 
-$Z$ is the number of Random Variables under consideration, indexed by $j$.
+I use $Z$ for the number of RVs, indexed by $j$.
 
+---
 
 The set of $Z$ **Random Variables** is denoted $X = \{X_{(1)}, X_{(2)}, ..., X_{(Z)}\}$
  
 
 Note that the subscripts indicating the $j^{th}$ RV, $X_{(j)}$, are in brackets. This is because we use the notation $x_i$ (no brackets) to indicate a measurement in a dataset.
 
+> $x_i$ is a number, while $x_{(j)}$ is a dataset (an array of numbers).
+
 For [our example](#intro-scatter): 
 * $Z=2$
 * $X = \{ X_{(1)}, X_{(2)} \} = \{ \mathsf{Height, Weight} \}$.
 
+---
 
 The set of $Z$ **datasets** is denoted $x = \{x_{(1)}, x_{(2)}, ..., x_{(Z)}\}$
 
 For [our example](#intro-scatter): 
 * $x = \{ \texttt{heights, weights} \}$, where $\texttt{heights}$ and $\texttt{weights}$ are arrays of measurements.
 
-The $j^{th}$ dataset of N **Measurements** is denoted $x_{(j)}= \{x_{j,1}, x_{j,2}, ..., x_{j,N} \}$
+---
+
+The $j^{th}$ dataset of $N$ **Measurements** is denoted $x_{(j)}= \{x_{j,1}, x_{j,2}, ..., x_{j,N} \}$
 
 
 For [our example](#intro-scatter):
@@ -272,7 +284,9 @@ For [our example](#intro-scatter):
 
 ### Covariance
 
-We use the [variance](#eq:varianceU) (or standard deviation) to quantify how much spread there is in a 1D dataset. For a 2D dataset, we cannot express this with a single summary statistic.
+We use the [variance](#eq:varianceU) (or standard deviation) to quantify how much spread there is in a 1D dataset (1 RV). For a 2D dataset (2 RVs), we cannot express the variance with a single summary statistic. There is variance in each of the datasets, and there is (potentially) also variance between them[^notifind].
+
+[^notifind]: If the RVs are independent, there is no variance between them. Their covariance is zero.
 
 If we have two RVs (eg weight and height) and they are **Independent**, we can calculate the two variances as usual. We can then pop these in a 2D array (a matrix):
 
@@ -302,7 +316,12 @@ If our RVs are **Dependent**, (if changing one of them affects the other, ie if 
 \end{bmatrix}
 ```
 
-The 2D arrays in [](#eq:covmat-indep) and [](#eq:covmat-dep) are **Covariance Matrices**. They are also sometimes called **Error Matrices**, because the (squared) Standard Deviations they hold are used as the Uncertainties or "Errors" on the measurements. 
+:::{warning}
+$\mathsf{cov}(x,y) = \sigma_{xy}$ is **not** $\sigma_x \times \sigma_y$. It is more complicated than that, sorry.
+:::
+
+
+The 2D arrays in [](#eq:covmat-indep) and [](#eq:covmat-dep) are **Covariance Matrices**. They are also sometimes called **Error Matrices**, because the (squared) Standard Deviations they hold in the diagonal elements are used as the Uncertainties or "Errors" on the measurements. 
 
 :::{tip}
 Covariance Matrices are always square (same number of rows and columns) and they are always symmetric (the pairs of off-diagonal terms are equal, so in our example case $cov(x,y) = cov(y,x)$).
@@ -340,13 +359,13 @@ Comparing this to our [mathematical definition](#eq:covmat-dep), we see that:
 * $\sigma_{xy} \equiv \mathsf{cov}(x,y) = -0.03624434$
 
 :::{important}
-Check the variances on x and y with those you found from your hand-written functions/ numpy's built in method for variance.  **You will find they do not match the values in the covariance matrix**.
+Check the variances on $x$ and $y$ with those you found from your hand-written functions/ numpy's built in method for variance.  **You will find they do not match the values in the covariance matrix**.
 
 The mismatch between the values returned by the ```numpy``` methods ```cov``` and ```var``` is because the values in ```np.cov``` are by default the Unbiased Variances, with normalisation $\dfrac{1}{N-1}$ , while the values returned by ```np.var``` are by default the Biased Variances, with normalisation $\dfrac{1}{N}$.
 
 These differences are very small with large datasets, but for our very small  datasets, the difference is substantial.
 
-We can calculate the Unbiased Variance using ```np.var(x, ddof=1)``` and that will give us the same result as the ```np.cov``` default.
+We can ask ```numpy``` for the Unbiased Variance using ```np.var(x, ddof=1)``` and that will give us the same result as the ```np.cov``` default.
 
 :::
 
@@ -435,7 +454,7 @@ print(f" cov(b,a): {covmat_10}")
 
 ```
 
-We can visualise the covariance terms with a [scatter plot of a versus b](#fig:mda-cov). The 3 shaded areas indicate the covariances of each of the three data points with respect to the mean of a (denoted $\langle a \rangle$, which is equivalent to $\overline{a}$) shown as a dotted red line and the mean of b, $\langle b \rangle$, shown as a dotted blue line.
+We can visualise the covariance terms with a [scatter plot of a versus b](#fig:mda-cov). The 3 shaded areas indicate the covariances of each of the three data points with respect to the mean of a shown as a dotted red line and the mean of b shown as a dotted blue line.
 
 
 :::{figure} 
@@ -448,10 +467,10 @@ We can visualise the covariance terms with a [scatter plot of a versus b](#fig:m
 
 ### Linear Correlations
 
-We can see from the above scatter plot that as a increases, b decreases. This could indicate that the variables a and b are somehow dependent on one another.
+We can see from [](#fig:mda-cov) that as a increases, b decreases. This could indicate that the variables a and b are somehow dependent on one another.
 
 
-The covariance term $\mathsf{cov}(a,b)\approx  -2.72$ is negative, encoding the negative relationship between a and b. But the magnitude of the covariance term, $|\mathsf{cov}(a,b)|\approx  2.72$ is not at all helpful - the size of this value only tells us about the range of one or both of the datasets rather than how they "vary together".
+The covariance term $\mathsf{cov}(a,b)\approx  -2.72$ is negative, encoding the negative relationship between $a$ and $b$. But the magnitude of the covariance term, $|\mathsf{cov}(a,b)|\approx  2.72$ is not at all helpful - the size of this value only tells us about the range of one or both of the datasets rather than how they "vary together".
 
 
 To make the magnitude of the covariance term more useful, we can define the **Linear Correlation Coefficient**:
@@ -461,7 +480,7 @@ To make the magnitude of the covariance term more useful, we can define the **Li
 \rho(a,b) = \dfrac{ \mathsf{cov}(a,b) }{ \sigma_a \sigma_b }
 ```
 
-For the datasets a and b defined in our snippet above, we have (from our covariance matrix, top left element $\Sigma_{00}$ ):
+For the datasets a and b defined in our snippet above, we have (from our covariance matrix, top left element):
 
 * $\sigma_a = \sqrt{1.223...} \approx 1.106...$ 
 * $\sigma_b = \sqrt{6.333...} \approx 2.517...$
@@ -486,10 +505,10 @@ The math notation for the **Linear Correlation Matrix** is:
 :label: eq:rhomat
 
 
-\mathbf{\Rho} = 
+\mathbf{\rho} = 
 
 \begin{bmatrix}
-\dfrac{\sigma^2_a}{\sigma_a\sigma_a} & \dfrac{\mathsf{cov}(a,b)}{\sigma_a\sigma_b} \\
+\dfrac{\sigma^2_a}{\sigma_a\sigma_a} & \dfrac{\mathsf{cov}(a,b)}{\sigma_a\sigma_b} \\[1ex]
 \dfrac{\mathsf{cov}(b,a)}{\sigma_b\sigma_a} &\dfrac{\sigma^2_b}{\sigma_b\sigma_b} \\
 \end{bmatrix}
 
@@ -497,7 +516,7 @@ The math notation for the **Linear Correlation Matrix** is:
 
 
 \begin{bmatrix}
-1 & \rho(a,b) \\
+1 & \rho(a,b) \\[1ex]
 \rho(b,a) & 1 \\
 \end{bmatrix}
 ```
@@ -515,7 +534,7 @@ The correlations can have any values between -1 and 1, with extremes indicating:
 * $\rho(i,j)=-1$ : Perfect Negative Linear Correlation between the two RVs.
 
 
-A non-zero $\rho(i,j)$ indicates some linear correlation between the two datasets, but **the reverse is not true**. The linear correlation can be zero between datasets that are obviously related, as illustrated in [](#fig:rho-wiki).
+A non-zero $\rho(i,j)$ indicates some linear correlation between the two datasets, but **the reverse is not true**. The linear correlation can be zero between datasets that are obviously related in some way, as illustrated in [](#fig:rho-wiki).
 
 :::{figure} 
 :label: fig:rho-wiki
@@ -526,12 +545,13 @@ By DenisBoigelot, CC0, from [wikipedia](https://commons.wikimedia.org/wiki/File:
 :::
 
 
-All of the x,y distributions on the bottom row have a zero linear correlation coefficient, despite being very obviously related. If x,y were independent, we would expect something more like the middle section of the top row. The bottom row of distributions have $\rho(x,y) =0$ because **the correlations between x and y are not linear**. Hopefully this makes it clear how limited the linear correlation coefficient is!
+All of the x,y distributions on the bottom row have a zero linear correlation coefficient, despite being very obviously related. If x,y were independent, we would expect a scatter plot to look something like the middle section of the top row. The bottom row of distributions have $\rho(x,y) =0$ because **the correlations between x and y are not linear**. Hopefully this makes it clear how limited the linear correlation coefficient is!
 
+> A small or zero linear correlation coefficient does not imply independence. This is the message alluded to in [](#fig:xkcd-correlation).
 
 :::{figure} 
 :label: fig:xkcd-correlation
-[](https://imgs.xkcd.com/comics/correlation.png)
+![](figures/correlation.png)
 
 Cartoon from [xkcd](https://xkcd.com/).
 :::

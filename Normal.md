@@ -21,7 +21,7 @@ Many RVs are "Normally Distributed", meaning they follow a Gaussian Probability 
 A selection of normal distributions (sources unclear at time of writing, TBD).
 :::
 
-The RVS plotted are blood pressures, baby birth weights, heights of English criminals in 1900, and the difference between the proton speeds measured with two different detectors. These are very different RVs, but when we plot their measured values, they all follow this same shape, with a symmetric distribution around a central value. Why?!
+The RVS plotted are blood pressures, baby birth weights, heights of English criminals in 1900, and the difference between the proton speeds measured with two different detectors. These are very (physically) different RVs, but when we plot their measured values, they all follow this same shape, with a symmetric distribution around a central value. Why?!
 
 The reason for the apparently unrelated RVs in [](#fig:norm-everywhere) having the same underlying distribution is that **they do have something fundamental in common**: they are all the result of many interrelated factors, which makes them "sums" of different independent variables. We will see that the distribution of a sum will always tend towards a Gaussian distribution (the [Central Limit Theorem](#CLT)).
 
@@ -30,7 +30,7 @@ The reason for the apparently unrelated RVs in [](#fig:norm-everywhere) having t
 
 The Gaussian (aka Normal) Probability Distribution Function (PDF) is given in [](#eq:gaus_pdf). It describes Continuous RVs (eg blood pressure, height, weight, proton speed differences).
 
-$$\label{eq:gaus_pdf} f_X (x; \mu,\sigma) = \dfrac{1}{\sqrt{ 2\pi\sigma^2} } \exp{ \left[ -\frac{1}{2} \frac{(x-\mu)^2}{\sigma^2}} \right]}$$
+$$\label{eq:gaus_pdf} f_X (x; \mu,\sigma) = \dfrac{1}{\sqrt{ 2\pi\sigma^2} } \exp{ \left[ -\frac{1}{2} \frac{(x-\mu)^2}{ \sigma^2}  \right]}$$
 
 A plot of the Gaussian for a choice of parameters is shown in [](#fig:gaussian).
 
@@ -121,12 +121,9 @@ A Gaussian PDF with shaded areas corresponding to $\mu\pm 1\sigma$, $\mu\pm 2\si
 :::
 
 
-The Z value tells us how likely our measurement is, because the nature of a Gaussian distribution is such that a given fraction of its area is within a given number of standard deviations from the mean.
+The Z value tells us how likely our measurement is because the nature of a Gaussian distribution is such that **a given fraction of its area is within a given number of standard deviations from the mean**. This is true for any choice of the parameters $\mu$, $\sigma$. 
 
-You may have heard of the [68-95-99.7 Rule](https://en.wikipedia.org/wiki/68%E2%80%9395%E2%80%9399.7_rule), which is designed to help people remember what fraction of a Gaussian PDF is within 1-2-3 standard deviations from the mean. We can see this correspondence for ourselves in [](#fig:nsigma), which also notes the **p values**. Notice that subtracting each percentage in the rule from 100% gives us the p values for 1-2-3 $\sigma$.
-
-The neat statistical properties of a Gaussian hold for any choice of the parameters $\mu$, $\sigma$. 
-
+You may have heard of the [68-95-99.7 Rule](https://en.wikipedia.org/wiki/68%E2%80%9395%E2%80%9399.7_rule), which is designed to help people remember what fraction of a Gaussian PDF is within 1-2-3 standard deviations from the mean. We can see this correspondence for ourselves in [](#fig:nsigma), which also notes the **p values**. Notice that subtracting each percentage in the rule from 100% gives us the **p values** for 1-2-3 $\sigma$.
 
 
 ### Probability and The Infinite Range 
@@ -193,7 +190,7 @@ def my_norm_log(mu,sigma):
 my_norm_log(1,2)
 ```
 
-On the log scale plot, we can see that the Gaussian PDF has non-zero probabilities all the way to $\pm 10 \sigma$. We can also see the the **log of the Gaussian PDF is a parabola** ($y \sim - x^2$).
+On the log scale plot, we can see that the Gaussian PDF has non-zero probabilities all the way to $\pm 10 \sigma$ (the chosen limits of our x-axis). If it were possible to make a plot with inifinte limits, we would see that the PDF goes on for ever. We can also see the the **log of the Gaussian PDF is a parabola** ($y \sim - x^2$).
 
 We can write down the most basic form (**Kernel**) of the Gaussian as [](#eq:gaus_kernel); at its heart, the Gaussian is just an exponential distribution of the square of our RV.
 
@@ -210,12 +207,12 @@ $$\label{eq:gaus_kernel_log} \ln{f_X(x)} \propto -x^2/2 $$
 \begin{align*}
 \ln{f_X(x;\mu,\sigma)} &= \ln{ \left[ \frac{1}{\sigma \sqrt{2\pi}} e^{-\frac{1}{2} \frac{(x-\mu)^2}{\sigma^2} } \right] }&\\
 
-&= \ln{\left[ \dfrac{1}{\sigma \sqrt{2\pi}} \right]} + \ln{\left[ e^{-\frac{1}{2} \frac{(x-\mu)^2}{\sigma^2} } \right]}&\blu{\;because\; \ln{ab} = \ln{a} + \ln{b}} \\
+&= \ln{\left[ \dfrac{1}{\sigma \sqrt{2\pi}} \right]} + \ln{\left[ e^{-\frac{1}{2} \frac{(x-\mu)^2}{\sigma^2} } \right]}&\textcolor{blue}{\mathsf{because}\; \ln{ab} = \ln{a} + \ln{b}} \\
 
-&= \ln{\left[ \dfrac{1}{\sigma \sqrt{2\pi}} \right]} -\frac{1}{2} \frac{(x-\mu)^2}{\sigma^2}  &\blu{\;because\; \ln{e^a} = a} \\
+&= \ln{\left[ \dfrac{1}{\sigma \sqrt{2\pi}} \right]} -\frac{1}{2} \frac{(x-\mu)^2}{\sigma^2}  &\textcolor{blue}{\mathsf{because}\;\; \ln{e^a} = a} \\
 
-&= -\ln{ \sigma \sqrt{2\pi}} -\frac{1}{2} \frac{(x-\mu)^2}{\sigma^2} &\blu{\;because\; \ln{\frac{1}{a}} = -\ln{a} }\\
-&= -\ln{ \sigma} -\ln{ \sqrt{2\pi} } - \frac{1}{2} \frac{(x-\mu)^2}{\sigma^2} &\blu{\;because\; -\ln{ab} = -\ln{a} - \ln{b}}  \\		
+&= -\ln{ \sigma \sqrt{2\pi}} -\frac{1}{2} \frac{(x-\mu)^2}{\sigma^2} &\textcolor{blue}{\mathsf{because}\;\; \ln{\frac{1}{a}} = -\ln{a} }\\
+&= -\ln{ \sigma} -\ln{ \sqrt{2\pi} } - \frac{1}{2} \frac{(x-\mu)^2}{\sigma^2} &\textcolor{blue}{\mathsf{because}\;\; -\ln{ab} = -\ln{a} - \ln{b}}  \\		
 \end{align*}
 ```
 :::
@@ -235,7 +232,7 @@ The integral of the Gaussian PDF has **no analytical solution**. We can always 
 (CLT)=
 ## The Central Limit Theorem (CLT)
 
-The CLT answers the question: Why are so many things Gaussian-distributed? 
+The **CLT** answers the question: Why are so many things Gaussian-distributed? 
 
 The distribution of a sum (or mean) of independent RVs will always converge to a normal distribution, in the limit of an infinite number of measurements.
 
@@ -243,13 +240,14 @@ My height is dependent on many factors. My parents' heights are the most obvious
 
 My height is the result of the sum of all of these effects. That is why the distribution of heights is Gaussian.
 
-[Here](#fig:clt1) is a series of histograms showing the mean and sum of the total scores from rolling 1,2,3,4 dice. We can see the distribution already starts to take a Gaussian shape with N=4. [Here](#fig:clt2) is the mean distribution for larger values of N, with a True Gaussian distribution drawn on the same axes (the red dashed line).
+[](#fig:clt1) is a series of histograms showing the mean and sum of the total scores from rolling 1,2,3,4 dice. We can see the distribution already starts to take a Gaussian shape with $N=4$. [](#fig:clt2) is the mean distribution for larger values of N, with a True Gaussian distribution drawn on the same axes (the red dashed line).
 
 :::{figure} 
 :label: fig:clt1
 :align: left
 ![](figures/CLT1.png)
 
+The mean (top, blue) and sum (bottom, red) scores from rolling 1,2,3,4 dice, from left to right. Notice that the distributions of the [mean](#eq:mean) and the sum are identical except for the normalisation $\dfrac{1}{N}$ in the mean.
 :::
 
 :::{figure} 
@@ -257,6 +255,7 @@ My height is the result of the sum of all of these effects. That is why the dist
 :align: left
 ![](figures/CLT2.png)
 
+The mean scores from rolling 100,1k, 10k, 100k dice, from left to right.
 :::
 
 
@@ -284,13 +283,13 @@ F(x) = P(X\leq x) = \displaystyle \int \limits_{-\infty}^{x} f_X(x|\theta)\, dx
 ```{math}
 :label: eq:cdf_disc
 
-F(k) = P(K\leq k) = \displaystyle \sum_{K\leq k} p(k|\theta)\, dk
+F(k) = P(K\leq k) = \displaystyle \sum_{K\leq k} p_K(k|\theta)\, dk
 
 ```
 
 We have already noted that there is no **analytical** solution to the integral of the Gaussian PDF. But we only need to solve the integral **numerically** to calculate probabilities this way. 
 
-The ```scipy.stats.norm``` function is the easiest way to do this; we used to use look-up tables, so many text books will advise you to do this. Life is easier now.
+The ```scipy.stats.norm``` function is the easiest way to do this; we used to use look-up tables, so many text books will advise you to do this. Life is easier now!
 
 
 ```{code-cell} python
@@ -315,7 +314,7 @@ Note that the PDF and CDF are arrays of y-values corresponding to the array of x
 
 **The PDF values are not probabilities**. They only have meaning relative to one another, giving us the shape of the distribution in case we want to plot it, for example.
 
-The CDF values are probabilities. They are cumulative. So if $x=0.1$, ```norm.cdf(x)``` is the probability of any value up to and including 0.1.
+**The CDF values are probabilities**. They are cumulative. So if $x=0.1$, ```norm.cdf(x)``` is the probability of any value up to and including 0.1.
 
 To find the probability of eg $0.15 < x <0.16$, we can subtract the probability from the lower end from that of the upper end:
 
@@ -418,13 +417,4 @@ print(f"std y: {df3.y.max()} ")
 
 ```
 
-## Learning Objectives Checklist
-
-- [ ] Explain why the normal distribution is so prevalent
-- [ ] Describe the terms present in the Gaussian PDF
-- [ ] Describe the location and scale parameters, and demonstrate the effect of changing them
-- [ ] State the Central Limit Theorem
-- [ ] Explain why the CDF, rather than PDF, must be used for calculating probabilities for continous RVs
-- [ ] Plot the Normal PDF and CDF 
-- [ ] State the formula for calculating the Z value, and calculate Z values
 

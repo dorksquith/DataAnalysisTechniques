@@ -20,7 +20,7 @@ probably been around much longer than eg written communication.
 
 ## Two Philosophies
 
-There are two ways of viewing probabilities: Frequentist and Bayesian.
+There are two ways of viewing probabilities: Frequentist and Bayesian. The default meaning of the word "Probability" in this module (and everywhere) is Frequentist. When people are talking about Bayesian Probabilities they specifically state this, using the term "Posterior Probability" to describe the Bayesian Probability interpretation. We will introduce Bayesian Inference towards the end of the module.
 
 **Frequentist**: everything is defined in terms of repeated experiments. The probability of something happening can only be defined in terms of how often it is observed to happen.
 
@@ -564,6 +564,9 @@ plt.show()
 :::
 ::::
 
+### Exercises
+
+If you want some extra practise on these concepts, the (free) OpenStax Text Book [Introductory Statistics](https://openstax.org/details/books/introductory-statistics-2e) has some [Chapter 3 Practice](https://openstax.org/books/introductory-statistics-2e/pages/3-practice).
 
 
 

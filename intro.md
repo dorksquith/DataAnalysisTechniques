@@ -19,9 +19,9 @@ This module explores how to use probability and statistics to analyse data and i
 
 ## Volume 1: Probability & Statistics
 
-The materials for the first volume are largely ready, with the topic pages available via the menu to the left of this page. 
+The materials for the first volume are largely ready, with the topic pages available via the menu to the ←left of this page. 
 
-On each page you will see a "power button" below the page heading on the right; press this to connect the jupyter server. Once connected, a "play button" will appear - press this to run the python snippets embedded in the corresponding page.
+On each page you will see a "power button" ⏻ below the page heading on the right ↗; press this to connect the jupyter server. Once connected, a "play button" ▷ will appear - press this to run the python snippets embedded in the corresponding page.
 
 I am in the process of converting and uploading exercises for all the topics. For Terminology & Concepts and Probability Essentials, there are some good exercises in the OpenStax book which I have linked from those pages.
 
@@ -146,7 +146,7 @@ The dropdowns below list the **Learning Objectives** for each topic.
 - [ ] Design a Z Test to compare the mean of a dataset with the null hypothesis, and calculate the test statistic
 - [ ] Describe the T Test and state when it is preferred over the Z Test
 - [ ] Design a "Student's" T Test to compare the means of two datasets, and calculate the test statistic
-- [ ] Design a F Test (AnoVa) to compare the variances of two datasets, and calculate the test statistic
+- [ ] Design a F Test (ANOVA) to compare the variances of two datasets, and calculate the test statistic
 :::
 
 
@@ -183,17 +183,19 @@ This volume forms the second part of the module, and the materials are ```wip```
 - Bernoulli: "the single coin toss"
 - Binomial: "repeated coin tosses"
 - Poisson: "number of emails per hour"
+
 [ ] Explain what is meant by a Bernoulli Trial
 [ ] Plot the Bernoulli PMF for some data
 [ ] Show that the Bernoulli PMF is a valid probability distribution
 [ ] Calculate Bernoulli probabilities using the PMF
-[ ] Show that the Expectation and Variance of $K\sim Bernoulli(p)$ are both equal to p 
+[ ] Show that the Expectation and Variance of $K\sim \mathsf{Bernoulli}(p)$ are both equal to p 
 [ ] Explain the relationship between the Bernoulli and Binomial distributions and parameters
 [ ] Calculate the Binomial Coefficient
-[ ] Calculate the Expectation and Variance for $K\simBinomial(n,p)$
+[ ] Calculate the Expectation and Variance for $K\sim \mathsf{Binomial}(n,p)$
 [ ] Estimate the fairness of a coin using the Binomial Likelihood
-[ ] Describe the properties of $k\simPoisson(\lambda)$
+[ ] Describe the properties of $k\sim \mathsf{Poisson}(\lambda)$
 [ ] Calculate and use the Poisson Likelihood
+
 :::
 
 
@@ -209,13 +211,14 @@ This volume forms the second part of the module, and the materials are ```wip```
 - Bayes theorem revisited: for continuous RVs
 - Uniform: "flat"
 - Exponential: "waiting time for a taxi"
-- Gamma: "waiting time for nth taxi"
+- Gamma: "waiting time for $n^{th}$ taxi"
 - Beta: "the chameleon"
+
 [ ] Show that the Uniform PDF is valid
-[ ] Calculate the Expectation for $X\sim Uniform(a,b)$
-[ ] Write down the PDF for $X\sim Expon(\lambda)$
-[ ] Compare $X\sim Expon(\lambda)$ with $K\sim Poisson(\lambda)$, explaining why one is continuous and the other discrete
-[ ] Explain the Memoryless property of Expon($\lambda$)
+[ ] Calculate the Expectation for $X\sim \mathsf{Uniform}(a,b)$
+[ ] Write down the PDF for $X\sim \mathsf{Expon}(\lambda)$
+[ ] Compare $X\sim \mathsf{Expon}(\lambda)$ with $K\sim Poisson(\lambda)$, explaining why one is continuous and the other discrete
+[ ] Explain the Memoryless property of $\mathsf{Expon}(\lambda)$
 [ ] Know when to use a Beta PDF
 [ ] Describe the Beta PDF parameters
 :::
@@ -236,6 +239,7 @@ This volume forms the second part of the module, and the materials are ```wip```
 -- Monte Carlo
 -- Fisher Information and Minimum Variance Bound
 -- Graphical Method
+
 [ ] Describe what is meant by the bias of an estimator
 [ ] Calculate the MSE
 [ ] Understand that sometimes, the best estimator for the job is the biased estimator

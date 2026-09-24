@@ -10,7 +10,7 @@ kernelspec:
 numbering: false
 
 ---
-
+(intro)=
 # Data Analysis Techniques 890F3 ![ML is stats](/figures/ml-is-stats.png)
 
 
@@ -22,7 +22,7 @@ This module explores how to use probability and statistics to analyse data and i
 The materials for the first volume are largely ready, with the topic pages available via the menu to the ←left of this page. 
 
 **Instructions**
-: On each page you will see a "power button" ⏻ on the right below the page heading. Press this to connect the jupyter server. Once connected, a "play button" ▷ will appear - press this to run the python snippets embedded in the corresponding page.
+: On each page you will see a "power button" ⏻ on the right below the page heading. Press this to connect the jupyter server. Once connected, a "play button" ▷ will appear - press this to run the python snippets embedded in the corresponding page. It won't have any effect on this page, because there is no python here.
 
 **Exercises**
 : I am in the process of converting and uploading exercises (math and python) for all the topics. For Terminology & Concepts and Probability Essentials, there are some good exercises in the OpenStax book which I have linked from those pages.
@@ -278,7 +278,7 @@ This volume forms the second part of the module, and the materials are ```wip```
 - Nonlinear Methods
 -->
 
-(los:MLM)=
+(los:LSQ)=
 :::{dropdown} Linear Regression
 - [ ] Understand what Residuals are
 - [ ] Calculate Pearson's Chi Squared Statistic
@@ -293,6 +293,7 @@ This volume forms the second part of the module, and the materials are ```wip```
 [//]: # ( scipy.stats: )
 [//]: # ( matplotlib.pyplot:)
 [//]: # ( openstax: )
+
 (los:ModelTests)=
 :::{dropdown} Model Tests
 - [ ] Understand how Chi Squared is used for a fit

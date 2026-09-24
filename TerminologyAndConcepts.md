@@ -209,7 +209,7 @@ In real life people collect many datasets of differing size and quality that are
 \overline{x}_w  = \frac{ \sum\limits_i x_{i} w_i }{ \sum\limits_i w_i } 
 ```
 
-In [](eq:weighted-mean), the weights $w_i$ might be known (for example: if you have three assignments with weights 10%, 10%, 80%, then the weights for those grades will be 0.1, 0.1, 0.8) or they might be calculated from eg the inverse of the [variance](#eq:variance) in your data, $w_i = \dfrac{1}{\sigma_i^2}$.
+In [](#eq:weighted-mean), the weights $w_i$ might be known (for example: if you have three assignments with weights 10%, 10%, 80%, then the weights for those grades will be 0.1, 0.1, 0.8) or they might be calculated from eg the inverse of the [variance](#eq:variance) in your data, $w_i = \dfrac{1}{\sigma_i^2}$.
 
 
 (median-mode)=
@@ -261,7 +261,7 @@ $$
 v_x  = \frac{1}{N-1} \sum\limits_i^N  (x_i - \overline{x})^2
 $$
 
-It is better to use the unbiased form if you have a small dataset. I would probably use this form for $N<100$ as a rule of thumb. More on this [later](#UnbiasedVariance).
+It is better to use the unbiased form if you have a small dataset. I would probably use this form for $N<100$ as a rule of thumb. More on this later.
 
 ```{code-cell} python
 import numpy as np 

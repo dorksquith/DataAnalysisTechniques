@@ -1,3 +1,14 @@
+---
+jupytext:
+  formats: md:myst
+  text_representation:
+    extension: .md
+    format_name: myst
+kernelspec:
+  name: python3
+  display_name: 'Python 3'
+---
+
 # Normal Tests (```wip```)
 
 ## Distribution of Means
@@ -62,7 +73,7 @@ We can [show](#eq:expect_mean) that the Expectation of (each of) the sample mean
 The Standard Deviation of our measurements (the SEM) will also not be the same as the True Standard Deviation , and we don't expect it to ever be, even if each employee asks a million people, because they are different things. The SEM is the measured variation of the means, which will depend on $N$ (how many people each of my employees ask for their data), whereas the True Standard Deviation is a fixed value, a parameter of the underlying distribution.
 
 
-We can show [](#eq:var_mean) that the Variance of the sample means $v_{\overline{x}} \equiv V[\overline{x}]$ is equal to the True Variance[X] divided by the number of measurements $N$, where we have used [](#eq:var_sum) and [](#eq:var_multc).
+We can show [](#eq:var_mean) that the Variance of the sample means $v_{\overline{x}} \equiv V[\overline{x}]$ is equal to the True Variance[X] divided by the number of measurements $N$, where we have used [](#eq:var_sumind) and [](#eq:var_multc).
 
 <!--The Variance on the measured means is $\mathsf{V[\,\overline{x}\,] = \sigma^2_{\overline{x}} = \mathsf{SEM}^2}$.
 
@@ -182,9 +193,9 @@ We have two problems:
 
 ### The Uncertainty on the Mean
 
-The solution to problem 1 is to use the [SEM](#eg:SEM), but we must assume we do not know the true standard deviation  $\sigma_{true}$ and instead use the measured sample standard deviation $\sigma_{x}$  as our best **Estimate** of the SEM[^estimators].
+The solution to problem 1 is to use the [SEM](#eq:SEM), but we must assume we do not know the true standard deviation  $\sigma_{true}$ and instead use the measured sample standard deviation $\sigma_{x}$  as our best **Estimate** of the SEM[^estimators].
 
-[^estimators]: we will cover estimation at length later [](#sec:Estimators).
+[^estimators]: we will cover estimation at length later.
 
  $\mathsf{SEM} =  \dfrac{\sigma_{true} }{\sqrt{N}}$: the Standard Error on the Mean requires knowledge of the true standard deviation.
 
@@ -304,7 +315,7 @@ $\mathsf{\widehat{SEM} = \hat{\sigma}_{\overline{x}} = \dfrac{\sigma_{x} }{\sqrt
 
 [^note1]: By using the data to **Estimate** the true variance, and therefore the SEM, this is not really a Z Test any more. It is now the same form as Students' T Test (next), but Student's T has a key difference as we shall see.
 
-[^note2]: Why did the denominator change from $\mathsf{\sqrt{N} \rightarrow \sqrt{N-1}}$? The short answer is that it is because we are using the sample variance to estimate the true variance, and this estimate is known to be Biased. I did a [proof of this](#fig:fig:lilyproof_varbias) (bottom of this page) last year when I first started teaching this module because I could not find one anywhere. It is long. If you can find a shorter way, please send it to me.
+[^note2]: Why did the denominator change from $\mathsf{\sqrt{N} \rightarrow \sqrt{N-1}}$? The short answer is that it is because we are using the sample variance to estimate the true variance, and this estimate is known to be Biased. I did a [proof of this](#fig:lilyproof_varbias) (bottom of this page) last year when I first started teaching this module because I could not find one anywhere. It is long. If you can find a shorter way, please send it to me.
 
 <!--
 $\mathsf{V[X] = \dfrac{N}{N-1}\; V[x]}$
@@ -355,7 +366,7 @@ The one-sample T Test is very similar to the Z Test, but is **particularly well 
 
 [^student]: William Gosset is the Student. He used a code name at his employers' (Guiness) request.
 
-The T distribution has one parameter: the number of degrees of freedom, with symbol [$\nu$](#eq:Tnu). The T PDF $\nu=1$ corresponds to a sample size of $N=2$, because we are measuring a single parameter, the mean. For reasonably sized datasets of $N \gapprox 30$, the T distribution and Norm are barely distinguishable.
+The T distribution has one parameter: the number of degrees of freedom, with symbol [$\nu$](#eq:Tnu). The T PDF $\nu=1$ corresponds to a sample size of $N=2$, because we are measuring a single parameter, the mean. For reasonably sized datasets of $N \gtrapprox 30$, the T distribution and Norm are barely distinguishable.
 
 ```{math}
 :label: eq:Tnu

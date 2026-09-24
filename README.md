@@ -1,5 +1,7 @@
 
 ```{code-cell}
+# The interactive jupyer book is here: https://dorksquith.github.io/DataAnalysisTechniques
+
 # Clone the repository
 git clone git@github.com:dorksquith/DataAnalysisTechniques.git
 cd DataAnalysisTechniques
@@ -16,9 +18,6 @@ source .venv/bin/activate
 
 # Install dependencies
 pip install -r requirements.txt
-
-# make a PDF of the current version of the DAT notes
-jupyter book build --pdf
 
 # run the jupyter book and open in browser
 jupyter book start --execute

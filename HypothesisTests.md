@@ -228,7 +228,6 @@ A Contingency Table allows us to summarise the efficiency and purity of a test s
 [^nonbin]: We are not limited to binary classification, just using the simplest form here.
 
 :::{table} Contingency Table Example in terms of sets **A** (the truth) and **a** (classification).
-:widths: auto
 :align: center
 
 |      | $a$   | $a'$  | 
@@ -251,7 +250,6 @@ A Contingency Table allows us to summarise the efficiency and purity of a test s
 Note that we are now able to fill out the whole table using the information above and basic logic. But just because the logic is "basic", doesn't mean that it is easy to get your head round making and using contingency tables. It takes practice.
 
 :::{table} Contingency Table summarising the performance of my classifier.
-:widths: auto
 :align: center
 
 |      | a   | a'  | Total |
@@ -339,7 +337,7 @@ TPR = \dfrac{N(a \cap A)}{N(A)} = P(a|A)
 The **False Positive Rate (FPR)** is [](#eq:fpr):
 
 ```{math}
-:label: eg:fpr
+:label: eq:fpr
 
 FPR = \dfrac{N(a \cap A')}{N(A')} = P(a|A')
 ```
@@ -467,7 +465,7 @@ This is a strange thing to say, if you think about it. We can never know if the 
 
 
 :::{figure} 
-:label: fig:pvalzval
+:label: fig:snpvalzval
 
 ![](figures/StandardNormPvalZval.png)
 
@@ -540,7 +538,7 @@ $$
 
 When the RV has a value of $z=+1$, we are $1\sigma$ to the right of the mean value $\mu=0$, and when the RV has a value of $z=-1$, we are $1\sigma$ to the left of the mean value $\mu=0$.
 
-```{code-cell}
+```{code-cell} python
 import numpy as np
 from scipy.stats import norm
 
@@ -575,7 +573,7 @@ InsideProbability(3.65)
 The (one-sided) P Value is the area under one tail of the distribution, with one limit being infinity and the other being the RV value that we measure. So, if the Z Value is the "inside probability", equal to the **CDF** and accessible with ```norm.cdf()``` the P Value can be thought of as the "outside probability", equal to the **Survival Function** and accessible with ```norm.sf()```.
 
 
-```{code-cell}
+```{code-cell} python
 def OutsideProbability(z):
 
 	# the factor 2 is needed for a two-sided distribution 
@@ -604,7 +602,7 @@ The "outside probability" for $|Z|> 1$ is  100% - 68.3% = 31.7%. This is our **
 If we know we want eg $\alpha=5\%$ for our significance level, we can find the corresponding critical region boundaries using the **Percent Point Function**,  ```z_crit = ppf(alpha)```. 
 
 
-```{code-cell}
+```{code-cell} python
 def CriticalValue(alpha):
 
 	# cumulative probability from -infty to upper bound: 

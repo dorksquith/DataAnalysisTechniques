@@ -333,7 +333,7 @@ prob_015_to_016 = prob_upto_016 - prob_upto_015
 
 A Gaussian distribution of more than one RV makes for some nice visual tools, and felt like a good opportunity to use the ```seaborn``` and ```pandas``` packages.
 
-The Multivariate Gaussian PDF is very similar to the [univariate version](eq:gaus_pdf), the main difference being that we have the [Covariance Matrix](#eq:covmat-dep) $\Sigma$ in place of the variance $\sigma^2$.
+The Multivariate Gaussian PDF is very similar to the [univariate version](#eq:gaus_pdf), the main difference being that we have the [Covariance Matrix](#eq:covmat-dep) $\Sigma$ in place of the variance $\sigma^2$.
 
 ```{math}
 :label: eq:gaus_multi

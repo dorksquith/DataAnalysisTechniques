@@ -151,7 +151,7 @@ The dropdowns below list the **Learning Objectives** for each topic.
 
 
 
-## Volume 2: Parameter Estimation & Fitting
+## Volume 2: Parameter Estimation & Fitting (```wip```)
 
 This volume forms the second part of the module, and the materials are ```wip``` (work in progress). I have put the Outline/ Learning Objectives here so you can get an idea of what will we cover.
 
@@ -314,6 +314,76 @@ This volume forms the second part of the module, and the materials are ```wip```
 - Metropolis Hastings
 - Hyperparamer Tuning
 :::
+
+
+## Resources
+
+
+:::{tip} Avoiding Overwhelm
+If you go through all the links in the dropdown below, you will find yourself in a situation of lots of open browser tabs and no more insight into data analysis techniques than you had before you looked at this page.
+
+Make yourself comfortable, and follow the suggested module structure in these notes. These resources are not going anywhere, and the notes will refer to them at the appropriate moments.
+
+:::
+
+### Bookmarks
+
+I recommend Bookmarking these excellent resources:
+-[Stat Proofs](https://statproofbook.github.io/): Hallulajah! Almost all the proofs you will ever need.
+-[Probability Playground](https://probabilityplayground.com/normal.html): Essential for visual learners, brilliant way to enhance understanding of PDFs.
+
+### Computing and Math Essentials
+
+[**Essential: Github Quickstart**](https://docs.github.com/en/get-started/git-basics/set-up-git)
+: If you don't already have a github, please set one up. Set up a repository for this module. You will not regret getting on top of this.
+
+[**Scientific Python**](https://lectures.scientific-python.org/)
+: Superb long-term reference. I expect it will help you in this module and beyond.
+
+:::{dropdown} Other useful computing references
+
+- [Python Book](https://www.acsu.buffalo.edu/~adamcunn/downloads/PythonBook.pdf)
+
+- [Jupyter](https://jupyter.org/)
+
+- [numpy](https://numpy.org/devdocs/user/absolute_beginners.html)
+
+- [scipy stats](https://docs.scipy.org/doc/scipy/tutorial/stats.html#)
+
+- [matplotlib](https://matplotlib.org/stable/users/explain/quick_start.html)
+
+- [seaborn](https://seaborn.pydata.org/tutorial/introduction.html)
+
+- [pandas](https://pandas.pydata.org/docs/user_guide/10min.html)
+:::
+
+
+- [**Math**](https://www.lboro.ac.uk/departments/mlsc/student-resources/helm-workbooks/): If your math is rusty, I recommend looking at the relevant workbooks here.
+
+:::{dropdown} The HELM workbooks I refer to in these notes
+
+ - [HELM 6](https://www.lboro.ac.uk/media/media/schoolanddepartments/mlsc/downloads/HELM%20Workbook%206%20Exponential%20and%20Logarithmic%20Functions.pdf): Exponential and Logarithmic Functions
+ - [HELM 7](https://www.lboro.ac.uk/media/media/schoolanddepartments/mlsc/downloads/HELM%20Workbook%207%20Matrices.pdf): Matrices
+ - [HELM 11](https://www.lboro.ac.uk/media/media/schoolanddepartments/mlsc/downloads/HELM%20Workbook%2011%20Differentiation.pdf): Differentiation
+ - [HELM 28](https://www.lboro.ac.uk/media/media/schoolanddepartments/mlsc/downloads/HELM%20Workbook%2028%20Differential%20Vector%20Calculus.pdf): Differential Vector Calculus
+ - [HELM 13](https://www.lboro.ac.uk/media/media/schoolanddepartments/mlsc/downloads/HELM%20Workbook%2013%20Integration.pdf): Integration
+ - [HELM 16](https://www.lboro.ac.uk/media/media/schoolanddepartments/mlsc/downloads/HELM%20Workbook%2016%20Sequences%20and%20Series.pdf): Sequences & Series (includes binomial and Taylor)
+ - [HELM 35](https://www.lboro.ac.uk/media/media/schoolanddepartments/mlsc/downloads/HELM%20Workbook%2035%20Sets%20and%20Probability.pdf): Sets and Probability (probability essentials)
+ - [HELM 36](https://www.lboro.ac.uk/media/media/schoolanddepartments/mlsc/downloads/HELM%20Workbook%2036%20Descriptive%20Statistics.pdf): Descriptive Statistics (sample mean and variance)
+- [HELM 37](https://www.lboro.ac.uk/media/media/schoolanddepartments/mlsc/downloads/HELM%20Workbook%2037%20Discrete%20Probability%20Distributions.pdf): Discrete Probability Distributions (Binomial and Poisson)
+- [HELM 38](https://www.lboro.ac.uk/media/media/schoolanddepartments/mlsc/downloads/HELM%20Workbook%2038%20Continuous%20Probability%20Distributions.pdf): Continuous Probability Distributions (Uniform and Expon)
+- [HELM 39](https://www.lboro.ac.uk/media/media/schoolanddepartments/mlsc/downloads/HELM%20Workbook%2039%20The%20Normal%20Distribution.pdf): The Normal Distribution (includes CLT)
+-[HELM 40](https://www.lboro.ac.uk/media/media/schoolanddepartments/mlsc/downloads/HELM%20Workbook%2040%20Sampling%20Distributions%20and%20Estimation.pdf): Sampling and Estimation (SEM, CUE, Point:mean, Interval:variance)
+- [HELM 41](https://www.lboro.ac.uk/media/media/schoolanddepartments/mlsc/downloads/HELM%20Workbook%2041%20Hypothesis%20Testing.pdf): Hypothesis Testing (includes Z and T)
+- [HELM 42](https://www.lboro.ac.uk/media/media/schoolanddepartments/mlsc/downloads/HELM%20Workbook%2042%20Goodness%20of%20Fit%20and%20Contingency%20Tables.pdf): Goodness of Fit (Chi Squared)
+- [HELM 43](https://www.lboro.ac.uk/media/media/schoolanddepartments/mlsc/downloads/HELM%20Workbook%2043%20Regression%20and%20Correlation.pdf): Regression and Correlation (Least Squares, Pearson correlation coefficient)
+- [HELM 44](https://www.lboro.ac.uk/media/media/schoolanddepartments/mlsc/downloads/HELM%20Workbook%2044%20Analysis%20of%20Variance.pdf): Analysis of Variance (Anova)
+
+:::
+
+- [Stats Course by Glen Cowan](https://www.pp.rhul.ac.uk/~cowan/stat_course.html): If this is not your first rodeo, this is a good lecture course to dip into for more challenging work. It is the one I followed as a PhD student, and is geared towards particle physicists. 
+- [Stats Course by Mark Thomson](https://www.hep.phy.cam.ac.uk/~thomson/lectures/lectures.html): If this is not your second rodeo, these is an excellent set of very condensed notes - best suited to experts who need to brush up. Also geared towards particle physicists.
+
 
 <!--## What issues might we face?
 

@@ -24,12 +24,12 @@ I have $n=80$ employees, and send each of them to a different town in the UK and
 
 If I did this exact same experiment again on a different day in 80 other towns, I would not get exactly the same distribution of means. Would the mean of my resulting distribution be fairly stable, or would it be likely to fluctuate significantly? If the variable is IID, then this depends only on the number of people asked (in each town) $N$.
 
-We quantify the uncertainty on the mean of the Gaussian using the **Standard Error on the Mean (SEM)**.
+We quantify the uncertainty on the mean of the Gaussian using the [**Standard Error on the Mean (SEM)**](#sem).
 
 
 ### Expectation $E[\overline{x}] = E[X]$
 
-The mean of our measurements (yes, it is a mean of means), $\overline{x}$, will not be the same as the True Mean , E[X], but they will be similar [](#LLN).
+The mean of our measurements (yes, it is a mean of means), $\overline{x}$, will not be the same as the True Mean , E[X], but they will be similar according to the [LLN](#LLN).
 
 We can [show](#eq:expect_mean) that the Expectation of (each of) the sample means E[$\overline{x}$] is equal to the True Mean E[X], where we have used [](#eq:expect_sum) for the second step.
 
@@ -57,12 +57,12 @@ We can [show](#eq:expect_mean) that the Expectation of (each of) the sample mean
 ```
 
 
-### Variance $V[\overline{x}] = \dfrac{1}{N}V[X]$
+### Variance $v_{\overline{x}} = \dfrac{1}{N}V[X]$
 
 The Standard Deviation of our measurements (the SEM) will also not be the same as the True Standard Deviation , and we don't expect it to ever be, even if each employee asks a million people, because they are different things. The SEM is the measured variation of the means, which will depend on $N$ (how many people each of my employees ask for their data), whereas the True Standard Deviation is a fixed value, a parameter of the underlying distribution.
 
 
-We can show [](#eq:var_mean) that the Variance of the sample means V[$\overline{x}$] is equal to the True Variance[X] divided by the number of measurements $N$, where we have used [](#eq:var_sum) and [](#eq:var_multc).
+We can show [](#eq:var_mean) that the Variance of the sample means $v_{\overline{x}} \equiv V[\overline{x}]$ is equal to the True Variance[X] divided by the number of measurements $N$, where we have used [](#eq:var_sum) and [](#eq:var_multc).
 
 <!--The Variance on the measured means is $\mathsf{V[\,\overline{x}\,] = \sigma^2_{\overline{x}} = \mathsf{SEM}^2}$.
 
@@ -96,12 +96,12 @@ The True Variance is $\mathsf{V[X] = \sigma^2_{true} }$.-->
 ```
 
 
-The [proof](#eq:var_mean) tells us that the variance on the measured means, $\mathsf{V[\,\overline{x}\,]}$, is **smaller than the True Variance, V[X] by a factor $N$**.
+The [proof](#eq:var_mean) tells us that the variance on the measured means, $v_{\overline{x}} \equiv V[\overline{x}]$, is **smaller than the True Variance, V[X] by a factor $N$**.
 
 ```{math}
 :label: eq:var_mean1
 
-V[X] = \dfrac{1}{N} V[X]
+v_{\overline{x}} = \dfrac{1}{N} V[X]
 
 ```
 
@@ -111,6 +111,7 @@ The True Variance is irreducible. It is a property of the underlying PDF that li
 
 The Variance on the  Means is a (linear) function of this True Mean, and also has a strong inverse dependence on the number of measurements we take. In a nutshell, **the more measurements we take, the smaller the uncertainty on our measurement becomes**.
 
+(sem)=
 ### Standard Error on the Mean $\mathsf{SEM}$
 
 The Standard Error on the Mean is the square root of the Variance on the sample means:
@@ -138,7 +139,7 @@ Let's consider the data displayed in [](#fig:sem1) below. This is simulated data
 :label: fig:sem1
 ![](figures/MDA-demo-N2-semFalse-seed1.png)
 
-My fake data for the hours slept each night in three cities, with N=2. The green star and shaded bar at the top shows the true distribution I used to generate the data. I used Norm( $\mu$ =7.5H , \sigma=1.2H$). The blue crosses show the data points, the circles show their means, and the shaded blue-grey bars show the $1\sigma$ ranges.
+My fake data for the hours slept each night in three cities, with $N=2$. The green star and shaded bar at the top shows the true distribution I used to generate the data. I used Norm( $\mu$ =7.5H , $\sigma$=1.2H). The blue crosses show the data points, the circles show their means, and the shaded blue-grey bars show the $1\sigma$ ranges.
 
 :::
 
@@ -228,14 +229,17 @@ If we have only a handful of measurements, and there is no way to collect more d
 
 **Option 1 - Don't do this**
 : I will simply quote my raw measurements, making it clear there are only N, and let the reader decide the uncertainty.
+
   Dangerous! Almost everyone has almost no understanding of statistics and uncertainty. Because it is both hard and boring :).
 
 **Option2 - The Frequentist Approach**
-: I cannot know my uncertainty from such a small sample, so I will not share the incomplete measurement of the mean. 
+: I cannot know my uncertainty from such a small sample, so I will not share the incomplete measurement of the mean.
+
   Sad but safe.
 
 **Option3 - The Bayesian approach**
 : Use "common sense": my own experience of sleeping tells me that there can be natural +/- 1.5 H fluctuations on the number of hours I sleep each night. I expect that this could be as high as +/- 3H  in some people. I will use $\mathsf{\widehat{\sigma} = \mathsf{3H}}$. 
+  
   Less sad and safe than the frequentists' "abstinence" approach, but reasonable in my opinion, given the very conservative (over-inflated, really) estimate. And it just feels wrong to not share my data at all, given that there is some limited information in it.
 
 
@@ -414,23 +418,16 @@ print(f"P value: {p_value}")
 
 ## The Student's T Test: two samples
 
+Incoming...
+
 ## The F Test (one-way ANOVA)
+
+Incoming...
 
 ## Two-sample F Test Example
 
+Incoming...
 
-
-## Learning Objectives Checklist
-
-- [ ] State what it means for data to be Independent and Identically Distributed (IID)
-- [ ] Define the Standard Error on the Mean (SEM)
-- [ ] State the two factors that go into the SEM estimate.
-- [ ] Calculate the SEM 
-- [ ] Understand the limitations introduced by small datasets
-- [ ] Design a Z Test to compare the mean of a dataset with the null hypothesis, and calculate the test statistic
-- [ ] Describe the T Test and state when it is preferred over the Z Test
-- [ ] Design a "Student's" T Test to compare the means of two datasets, and calculate the test statistic
-- [ ] Design a F Test (AnoVa) to compare the variances of two datasets, and calculate the test statistic
 
 
 :::{figure}
@@ -438,5 +435,5 @@ print(f"P value: {p_value}")
 
 ![](/figures/var-proof-long.png)
 
-Proof that the variance is a biased estimator for the true variance.
+Proof that the sample variance is a biased estimator for the true variance.
 :::

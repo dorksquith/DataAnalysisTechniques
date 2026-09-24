@@ -25,10 +25,10 @@ The **Null Hypothesis** $H_0$
 explanation for the data is the correct one. For the example above, the Null
 Hypothesis could be that the data is indeed $\sim$Expon($\lambda$)[^probs].
 
-[^probs]: The notation $\sim$ Expon($\lambda$) means "follows an exponential distribution". The parameter of the exponential distribution is $\lambda$. We will meet many distributions later and refer to them in this way: $\sim$ DistributionName(parameters) or $\sim$ DistributionName(parameter values).
+[^probs]: The notation $\sim$ Expon($\lambda$) means "follows an exponential distribution". The parameter of the exponential distribution is $\lambda$. We will meet many distributions later and refer to them in this way.
 
 The **Alternative Hypothesis** $H_1$
-: is an alternative to $H_0$. For the example above, the Alternative Hypothesis would be that the lumps and bumps are exciting resonances that will win your research group a Nobel prize and pay for a new espresso machine.
+: is an alternative to $H_0$. For the example above, the Alternative Hypothesis might be that the lumps and bumps are exciting resonances that will win your research group a Nobel prize and pay for a new espresso machine.
 
 ### Example: The Higgs
 
@@ -51,7 +51,7 @@ Higgs hunting, back in the day.
 ### Bias
 
 Anyone who has done [Harvard’s excellent
-Unconscious Bias tests](https://implicit.harvard.edu/implicit/takeatest.html) will know that humans are hopeless at being unbiased, and hopeless at being aware of our biases.
+Unconscious Bias tests](https://implicit.harvard.edu/implicit/takeatest.html) will know that all humans are hopeless at being unbiased, and hopeless at being aware of our biases.
 If we are going to do excellent
 science, and not just come up with whatever result
 means we get a new espresso machine, **we have to
@@ -95,7 +95,7 @@ A Robot showing their friends a simple critical region.
 
 The region $W$ can have any shape, making it suitable for tests involving multivariate data. The simplest possible definition of $W$ for univariate data would be to draw a vertical line (a ‘cut’) and define $W$ as being on one side of it, as illustrated by our robot friends in [](#fig:robot-critregion).
 
-A **Positive Result** means that we have found our data x in the critical region, $W$, and so we **reject the Null Hypothesis**.
+A **Positive Result** means that we have found our data x in the critical region, $W$, ($x \in W$) and so we **reject the Null Hypothesis**.
 
 > Reminder: One cannot prove a hypothesis. Hypotheses can only be rejected or not rejected.
 
@@ -104,7 +104,10 @@ A **Positive Result** means that we have found our data x in the critical region
 We stated above that $W$ is a region of the Sample Space in which the
 probability of finding the data, given the Null Hypothesis, is **very small**. What does very small mean?
 
-A popular choice in the wide world (but not in my world) is to set a tolerance level of $5\%$. We define our region $W$ such that there is a 5% or lower probability of finding the data in that region, given the null hypothesis $H_0$.
+A popular choice in the wide world[^notpp] is to set a tolerance level of $5\%$. We define our region $W$ such that there is a 5% or lower probability of finding the data in that region, given the null hypothesis $H_0$.
+
+[^notpp]: 5% is not a popular choice in particle physics. We are way too scared of being wrong.
+
 
 This tolerance level is called the **Significance Level, $\alpha$**, and it provides the upper limit on the conditional probablity in [](#eq:testW).
 
@@ -139,7 +142,7 @@ A cartoon showing the PDFs for the Null (top) and Alternative (bottom) hypothese
 
 In the simplified example of [](#fig:critregion), the critical region that provides us with a significance level of $\alpha=5\%$ exludes more than half of the distribution for the Alternative Hypothesis. In life, we may find that our critical region eliminates much larger fractions of $H_1$. We need to think carefully about how we define our critical regions to ensure we mazimize our **Sensitivity** to the data. 
 
-The **Sensitivity** of a test for a given $H_1$ is also called the **Power of the test**, and is determined by the proportion of $H_1$ not excluded by our choice of $W$ and $\alpha$: 
+The **Sensitivity** of a test for a given $H_1$ is also called the **Power of the test**, and is determined by the proportion of $H_1$ **not excluded** by our choice of $W$ and $\alpha$: 
 
 $$\label{eq:power} \mathsf{Power} = 1-\beta$$.
 
@@ -220,6 +223,8 @@ And as a conditional probability:
 
 A Contingency Table allows us to summarise the efficiency and purity of a test statistic in terms of the Truth: True/False and the Classification:Postive/Negative[^nonbin].
 
+> Reminder: The notation $A'$ indicates the [Complement](#complement) of A, meaning "not A".
+
 [^nonbin]: We are not limited to binary classification, just using the simplest form here.
 
 :::{table} Contingency Table Example in terms of sets **A** (the truth) and **a** (classification).
@@ -234,13 +239,14 @@ A Contingency Table allows us to summarise the efficiency and purity of a test s
 
 
 
-Example: I have 100 robots, 41 of whom were designed by my friend Alf.  I am attempting to predict which ones are Alf's design using their features. My classifier identifies 60 robots as being designed by Alf. Of these 60, 37 are in fact Alf's (my classifier was right), and 23 are not (my classifier was wrong). 
+**Example**
+: I have 100 robots, 41 of whom were designed by my friend Alf.  I am attempting to predict which ones are Alf's design using their features. My classifier identifies 60 robots as being designed by Alf. Of these 60, 37 are in fact Alf's (my classifier was right), and 23 are not (my classifier was wrong). 
 
-Summary:
-* $N(a\cap A) = 37$
-* $N(a\cap A') = 23$
-* $N(a'\cap A) = 4$ (inferred, 41-37)
-* $N(a'\cap A') = 36$ (inferred, 40-4)
+**Summary**
+: * $N(a\cap A) = 37$
+  * $N(a\cap A') = 23$
+  * $N(a'\cap A) = 4$ (inferred, 41-37)
+  * $N(a'\cap A') = 36$ (inferred, 40-4)
 
 Note that we are now able to fill out the whole table using the information above and basic logic. But just because the logic is "basic", doesn't mean that it is easy to get your head round making and using contingency tables. It takes practice.
 
@@ -278,7 +284,7 @@ I would conclude that this classifier has quite good efficiency, as it misses on
 
 
 
-### The Purity versus Efficiency play-off
+### The Purity versus Efficiency play-off: ROC curve
 
 Choosing a small value of $\alpha$ in the construction of our [test](#eq:testW) results in high **purity** for $H_0$, meaning you are very unlikely to find the data in $W$ if $H_0$ is true. 
 
@@ -306,7 +312,7 @@ $$-->
 : There may be motivation to make $\alpha$ very small in an effort to make the critical region "Ultra Pure". The alternative hypotheses (there is often more than one of these) must be considered carefully for this decision, as we don't usually want to define a region $W$ that has been cleansed not only of $H_0$, but also most of $H_1$.
 
 
-When we are designing a Test Statistic, which might be a ML Classifier for example, a useful plot to make is called a **ROC Curve**. This is a plot of the True Positive Rate (TPR) versus the False Positive Rate (FPR) for a given Alternative Hypothesis[^equiv]. An example ROC curve is shown in [](#fig:roc)
+When we are designing a Test Statistic, which might be a ML Classifier for example, a useful plot to make is called a **ROC Curve**. This is a plot of the **True Positive Rate (TPR)** versus the **False Positive Rate (FPR)** for a given Alternative Hypothesis[^equiv]. An example ROC curve is shown in [](#fig:roc)
 
 [^equiv]: one could also choose to make a ROC curve in terms of the True Negative Rate and False Negative Rate, if preferred.
 
@@ -314,7 +320,7 @@ When we are designing a Test Statistic, which might be a ML Classifier for examp
 :label: fig:roc
 ![](figures/ROC.png)
 
-A ROC curve summarising the performance of two different classifiers, NN and LR, in terms of their True Positive and False Positive Rates.
+A ROC curve summarising the performance of two different classifiers, NN and LR, in terms of their True Positive and False Positive Rates. AUC means "Area Under Curve", and is used as a metric for choosing one classifier over another, as AUC closer to 1 is "better".
 :::
 
 Let's label a positive classification as **a**, and a negative classification as **a'**.
@@ -337,6 +343,7 @@ The **False Positive Rate (FPR)** is [](#eq:fpr):
 
 FPR = \dfrac{N(a \cap A')}{N(A')} = P(a|A')
 ```
+
 <!--
 :::{figure} 
 :label: fig:robot-critregion
@@ -376,7 +383,7 @@ If we find our data excludes $H_0$ according to our [predefined statistical test
 It is very common in many fields of research to choose a **Significance Level** of $\alpha= 5\%$, but this would give me major heebie jeebies. The statistical test for rejecting $H_0$ has a **False Positive Rate** of up to 5%, which to me seems enormous. This is a one in twenty chance that I could make a claim that is wrong.
 :::
 
-If we find a Positive Result and are wrong, this is a **False Positive**, and is called a **Type 1 Error** :scream:.
+If we find a Positive Result and are wrong, this is a **False Positive**, and is called a **Type 1 Error** 😱.
 
 If we find our data does not exclude $H_0$ according to our [predefined statistical test](#eq:testW) (ie, if we find our data $x$ outside $W$, $x\notin W$), then this is a **Negative Result**: we have failed to reject $H_0$. This does not mean $H_0$ is correct; a hypothesis cannot be shown to be correct. It could be that we just got unlucky - the data ended up in some other critical region that we did not choose for our predefined statistical test.
 
@@ -412,7 +419,7 @@ $$P(\mathsf{Negative} | H_1) + P(\mathsf{Positive}| H_1) =1 $$
 
 The Conditional Probability of a False Negative is labeled as $P(\mathsf{neg}|H_1)=\beta$ in [](#fig:falsepos). 
 
-> The "power of a test" (efficiency for $H_1$) is $\mathsf{Power} = 1-$\beta$)
+> The "power of a test" (efficiency for $H_1$) is $\mathsf{Power} = 1-\beta$
 
 
 :::{important} 
@@ -432,7 +439,7 @@ The ways in which a test can play out are summarised in the so-called "Confusion
 
 ![](figures/confusion-matrix.mp4)
 
-My interpretation of the Confusion Matrix.
+My interpretation of the Confusion Matrix. You may have to click on it to make it play.
 :::
 
 
@@ -456,7 +463,7 @@ If we measure a test statistic that yields a P Value of 3%, we can say that our 
 
 This is a strange thing to say, if you think about it. We can never know if the null hypothesis is true or not, but we are quoting a result conditional on it being so.
 
-> I would personally not interpret a p value of 3% as suggestive that we should reject $H_0$. In particle physics, we only claim "discovery" if we measure a p value of < 0.00006%, and would not even raise an eyebrow for P Values above 1%. However, we are very spoiled in terms of how much data we have...
+> I would personally not interpret a p value of 3% as suggestive that we should reject $H_0$. In particle physics, we only claim "discovery" if we measure a p value of < 0.00006%, and would not even raise an eyebrow for p values above 1%. However, we are very spoiled in terms of how much data we have...
 
 
 :::{figure} 
@@ -464,7 +471,7 @@ This is a strange thing to say, if you think about it. We can never know if the 
 
 ![](figures/StandardNormPvalZval.png)
 
-We measure the test statistic in our data (physical universe). We compare this with the hypothetical distribution of $H_0$ (theoretical universe), and define the area intersected by our data and $H_0$ as the P Value.
+We measure the test statistic in our data (physical universe). We compare this with the hypothetical distribution of $H_0$ (theoretical universe), and define the area intersected by our data and $H_0$ as the p value.
 :::
 
 
@@ -487,7 +494,7 @@ The Normal PDF is often referred to with shorthand: 
 
 ![](figures/PZIntegral_2-1.png)
 
-The Standard Normal PDF shown as a blue dotted line. The pink vertical dashed lines indicate the range of the critical region $W$. The shaded areas under the curve on the left and right are each 2.5\% of the area under the entire PDF.
+The Standard Normal PDF shown as a blue dotted line. The pink vertical dashed lines indicate the range of the critical regions $W$, for which the probability of finding our data is very small. This is a two-sided distribution, so there are critical regions on each side, extending outwards to the left (right) of the left (right) dashed pink line. The shaded areas under the curve on the left and right are each 2.5\% of the area under the entire PDF.
 :::
 
 Because Norm describes the behaviour of a Continous RV, we must use the **Cumulative Distribution Function (CDF)** to calculate probabilities.
@@ -590,7 +597,7 @@ OutsideProbability(3.65)
 The "inside probability" for $|Z|\leq 1$ is 68.3%. This means that in 68.3% of an infinite number of repeated experiments, we expect to measure the RV **within** $1\sigma$ of the mean, if the null hypothesis is correct.
 
 
-The "outside probability" for $|Z|> 1$ is  100% - 68.3% = 31.7%. This is our P Value. This means that in 31.7% of an infinite number of repeated experiments, we expect to measure the RV **more than** $1\sigma$ from the mean, if the null hypothesis is correct.
+The "outside probability" for $|Z|> 1$ is  100% - 68.3% = 31.7%. This is our **p value**. This means that in 31.7% of an infinite number of repeated experiments, we expect to measure the RV **more than** $1\sigma$ from the mean, if the null hypothesis is correct.
 
 ### Find the Critical Region for a chosen significance level
 

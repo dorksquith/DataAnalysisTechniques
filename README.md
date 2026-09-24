@@ -1,0 +1,26 @@
+
+```{code-cell}
+# Clone the repository
+git clone git@github.com:dorksquith/DataAnalysisTechniques.git
+cd DataAnalysisTechniques
+
+# Pick up any recent changes since you cloned
+git pull
+
+
+# Create a virtual python environment - see https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/
+python3 -m venv .venv
+
+# activate the virtual python environment
+source .venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# make a PDF of the current version of the DAT notes
+jupyter book build --pdf
+
+# run the jupyter book and open in browser
+jupyter book start --execute
+```
+

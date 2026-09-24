@@ -1,0 +1,120 @@
+
+\newcommand\info{\mathcal{J}_{\theta}}
+\newcommand\loglike{\ln{ \mathcal{L}_{\theta}} }
+\newcommand\like{\mathcal{L}_{\theta} }
+
+\newcommand\thetahat{\hat{ \theta }  }
+
+\definecolor{grn}{RGB}{0,128,0} 
+\newcommand{\gbl}[1]{\textcolor{grn}{#1}}
+
+\definecolor{wh}{rgb}{0.95, 0.95, 0.96}
+\newcommand{\wht}[1]{\textcolor{wh}{#1}}
+
+%\newcommand{\inprob}{\overset{p}{\to}}
+
+\newcommand{\boo}[1]{\textbf{\textcolor{red}{#1}}}
+
+\newcommand{\covmat}{\mathbf{\textcolor{magenta}{\Sigma}} }
+
+
+\definecolor{purr}{RGB}{128,0,128} 
+\newcommand{\purp}[1]{\textcolor{purr}{#1}}
+
+\newcommand{\magt}[1]{\textbf{\textcolor{magenta}{#1}}}
+ \newcommand{\magtn}[1]{\textcolor{magenta}{#1}}
+ 
+%\definecolor{bbl}{RGB}{128,0,128} 
+\newcommand{\bbl}[1]{\textcolor{blue}{#1}}
+
+\newcommand{\rbl}[1]{\textcolor{red}{#1}}
+
+\definecolor{dblu}{RGB}{37,150,190} 
+\newcommand{\blu}[1]{\textcolor{dblu}{#1} }
+
+\definecolor{dor}{RGB}{255,40,0} 
+\newcommand{\dor}[1]{\textcolor{dor}{#1} }
+
+\definecolor{darkgreen}{RGB}{46,139,87} 
+\newcommand{\dgreen}[1]{\textbf{\textcolor{darkgreen}{#1}} }
+%\newcommand{\gbl}[1]{\textcolor{darkgreen}{#1}}
+
+\definecolor{lgray}{RGB}{222,222,222} 
+
+\definecolor{lyellow}{RGB}{255,255,224} 
+
+\newcommand{\E}[1]{\mathbf{E}_{#1}}
+%
+\newcommand{\rvX}[1]{X_{(#1)} } 
+
+\newcommand{\rvY}[1]{Y_{(#1)} }
+
+\newcommand{\rvx}[1]{x_{(#1)} } 
+
+\newcommand{\rvy}[1]{y_{(#1)} }
+
+
+
+\newcommand{\red}[1]{\textcolor{red}{#1} }
+
+\newcommand{\bluedots}{\blu{\ldots} }
+
+\newcommand{\dordots}{\dor{\ldots} }
+
+
+\newcommand{\where}{\dgreen{\;where\;} }
+
+
+\newcommand{\pand}{\dgreen{\;and\;} }
+\newcommand{\por}{\dgreen{\;or\;} }
+
+\newcommand{\sumN}{ \sum\limits_{\blu{i}}^{\blu{N}} }
+
+\newcommand{\sumZ}{ \sum\limits_{\dor{j}}^{\dor{Z}} }
+
+\newcommand{\Expec}[1]{ \mathbb{E}[#1] }
+
+
+\newcommand{\Xfj}[1]{ X_{ \dor{#1} } }
+
+\newcommand{\xfi}[1]{ x_{ \blu{#1} } }
+
+\newcommand{\Xij}[2]{ X_{\mage{#1},\blu{#2} }}
+
+\newcommand{\sumxi}{ \sumN \xfi{i} }
+
+\newcommand{\sumXj}{ \sumZ \Xfj{j} }
+
+\newcommand{\sumZa}[1]{ \sumZ {#1}_{ \dor{j} } }
+
+\newcommand{\sumZab}[2]{ \sumZ {#1}_{ \dor{j} }\, {#2}_{ \dor{j} } }
+
+\newcommand{\sumNab}[2]{ \sumN {#1}_{ \blu{i} }\, {#2}_{ \blu{i} } }
+
+\newcommand{\vecxi }{ [ \xfi{1} \xfi{2}, \bluedots, \xfi{N} ] }
+
+\newcommand{\vecXj }{ [ \Xfj{1} \Xfj{2}, \bluedots, \Xfj{Z} ] }
+
+\newcommand{\vecXij }{ [ \Xij{1}{1} \Xij{1}{2}, \bluedots, \Xij{1}{N_1} ],\, [ \Xij{2}{1} \Xij{2}{2}, \bluedots, \Xij{2}{N_2} ],\, \dordots,\,[ \Xij{Z}{1} \Xij{Z}{2}, \bluedots, \Xij{Z}{N_Z} ] }
+
+% definitions
+
+\newcommand{\overNblack}{ \dfrac{1}{N} }
+\newcommand{\overN}{ \dfrac{1}{ \blu{N} } }
+
+\newcommand{\defmean }{ \overline{x} = \overN \sumN \xfi{i} }
+
+\newcommand{\meanx }{ \overline{x} }
+\newcommand{\meansqx }{ \overline{x^2} }
+\newcommand{\sqmeanx }{ \overline{x}^2 }
+\newcommand{\devsq}{ (\xfi{i} - \meanx)^2 }
+
+%\newcommand{\var }[1]{ \mathcal{V}_{#1} }
+\newcommand{\defvar }{ \var{x} = \overN \sumN \devsq }
+\newcommand{\defvarshort }{ \var{x} = \meansqx - \sqmeanx }
+
+\newcommand{\defstd }{ s_x = \sqrt{ \var{x} }  }
+
+\newcommand{\defwmean }{ \overline{X} = \dfrac{ \sumZab{w}{X} }{ \sumZa{w} } }  
+
+\newcommand{\defw }{ w_{\dor{j}} = \dfrac{1}{ \var{\Xfj{j} } } }

@@ -510,6 +510,7 @@ plt.show()
 
 
 :::
+
 :::{tab-item} PDFs
 
 The probability of measuring a given value $x$ for a Continuous RV $X$ is described by a **Probability Density Function (PDF)** $f_X(x)$.
@@ -562,9 +563,11 @@ plt.show()
 
 ```
 :::
+
 ::::
 
-### Exercises
+
+### Exercises
 
 If you want some extra practise on these concepts, the (free) OpenStax Text Book [Introductory Statistics](https://openstax.org/details/books/introductory-statistics-2e) has some [Chapter 3 Practice](https://openstax.org/books/introductory-statistics-2e/pages/3-practice).
 

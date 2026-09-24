@@ -1,0 +1,87 @@
+\author[Lily ]{ Dr Lily Asquith (Lily, she/her)}
+
+\usetheme{Szeged}
+%\defbeamertemplateparent{enumerate items}{enumerate item,enumerate subitem,enumerate subsubitem,enumerate mini template}
+\definecolor{titcol}{RGB}{16,78,100} 
+\setbeamercolor{frametitle}{fg=titcol,bg=White}
+\useoutertheme{miniframes} 
+\useinnertheme{rectangles}
+
+\usepackage{pifont}
+\newcommand{\tick}{\textcolor{grn}{\ding{52} } }
+\newcommand{\nope}{\textcolor{red}{\ding{54} } }
+
+
+\usepackage{soul}
+\usepackage{cancel}
+
+\usepackage[most]{tcolorbox}
+\definecolor{LilyBlack}{rgb}{0.05,0.1,0.3} % UBC Blue (primary)
+\usecolortheme[named=LilyBlack]{structure}
+
+\usepackage{booktabs}
+\usepackage{tabularx}
+%\usepackage{tikz}
+%\def\checkmark{\tikz\fill[scale=0.4](0,.35) -- (.25,0) -- (1,.7) -- (.25,.15) -- cycle;}
+
+\usepackage{physics}
+
+\usepackage{xparse}
+
+\setbeamertemplate{footline}{%
+  \leavevmode%
+  \hbox{\begin{beamercolorbox}[wd=.5\paperwidth,ht=2.5ex,dp=1.125ex,leftskip=.3cm plus1fill,rightskip=.3cm]{author in head/foot}%
+    \usebeamerfont{author in head/foot}\insertshortauthor
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.5ex,dp=1.125ex,leftskip=.3cm,rightskip=.3cm plus1fil]{title in head/foot}%
+    \usebeamerfont{title in head/foot}\insertshorttitle\hfill\insertframenumber\,/\,\inserttotalframenumber
+  \end{beamercolorbox}}%
+  \vskip0pt%
+}
+
+\DeclareMathSizes{10}{10}{6}{4} % this one
+%\DeclareMathSizes{10.95}{10}{6}{4}   % For size 10 text
+
+\newcommand*\ColorBox[3][black]{%
+  \makebox[2em][c]{%
+    \setlength\fboxsep{-.5\fboxrule}%
+    \raisebox{\dimexpr-#3em+.5ex}{%
+      \fcolorbox{#1}{#2}{%
+        \rule{0pt}{\dimexpr#3em*2}%
+        \rule{\dimexpr#3em*2}{0pt}%
+      }%
+    }%
+  }%
+}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=blue,
+    pdftitle={Overleaf Example},
+    pdfpagemode=FullScreen,
+    }
+
+\urlstyle{same}
+
+% this part excludes specified frames from counters in navigation bar
+\makeatletter
+\let\beamer@writeslidentry@miniframeson=\beamer@writeslidentry
+\def\beamer@writeslidentry@miniframesoff{%
+  \expandafter\beamer@ifempty\expandafter{\beamer@framestartpage}{}% does not happen normally
+  {%else
+    % removed \addtocontents commands
+    \clearpage\beamer@notesactions%
+  }
+}
+\newcommand*{\miniframeson}{\let\beamer@writeslidentry=\beamer@writeslidentry@miniframeson}
+\newcommand*{\miniframesoff}{\let\beamer@writeslidentry=\beamer@writeslidentry@miniframesoff}
+\makeatother
+
+
+\makeatletter
+\newcommand\notsotiny{\@setfontsize\notsotiny{6.5}{7.5}}
+\makeatother
+

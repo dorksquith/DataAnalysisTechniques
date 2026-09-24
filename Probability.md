@@ -570,13 +570,3 @@ plt.show()
 
 
 
-## Learning Objectives Checklist
-
-- [ ] Summarise the Frequentist and Bayesian interpretations of probability
-- [ ] Understand and express relationships between sets ($\subset$, $\cap$, $\cup$, $A'$)
-- [ ] Correctly interpret Venn diagrams
-- [ ] Calculate the Union and Intersection of sets
-- [ ] Describe the meaning of Independent and Mutually Exclusive (Disjoint) sets
-- [ ] Use the formula for calculating the Conditional Probability
-- [ ] Describe the terms in Bayes' Theorem
-

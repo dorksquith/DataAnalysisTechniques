@@ -13,7 +13,7 @@ kernelspec:
 
 ## Mean and Expectation
 
-The **Sample Mean**, $\overline{x}$, of a RV is calculated as a normalised sum over a finite number of measurements [](#eq:mean). It is a **summary statistic** calculated from the data.
+The [**Sample Mean**](#eq:mean) of a RV is calculated as a normalised sum over a finite number of measurements. It is a **summary statistic** calculated from the data.
 
 
 The **True Mean** (aka **Expectation**), $E[X]$, is a **parameter** of the true underlying probability distribution of our RV. 
@@ -529,14 +529,13 @@ By DenisBoigelot, CC0, from [wikipedia](https://commons.wikimedia.org/wiki/File:
 All of the x,y distributions on the bottom row have a zero linear correlation coefficient, despite being very obviously related. If x,y were independent, we would expect something more like the middle section of the top row. The bottom row of distributions have $\rho(x,y) =0$ because **the correlations between x and y are not linear**. Hopefully this makes it clear how limited the linear correlation coefficient is!
 
 
-## Learning Objectives Checklist
+:::{figure} 
+:label: fig:xkcd-correlation
+[](https://imgs.xkcd.com/comics/correlation.png)
 
-- [ ] Explain what is meant by the Expectation and how it relates to the Mean
-- [ ] Describe in words the statement of the Law of Large Numbers (LLN)
-- [ ] Calculate the expectation for discrete and continuous probability distributions.
-- [ ] Express the True Variance in terms of the Expectation
-- [ ] Understand the meaning of the terms in the Covariance Matrix
-- [ ] Calculate covariance with numpy
-- [ ] Be aware of the different results returned by numpy's cov and var, and know how to harmonise
-- [ ] Calculate the linear correlations between two datasets with numpy
-- [ ] Understand that an absence of linear correlation does not imply independence 
+Cartoon from [xkcd](https://xkcd.com/).
+:::
+
+
+
+

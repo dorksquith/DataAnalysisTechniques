@@ -1,6 +1,72 @@
 # Exercises
 
-(ex-bayes-theorem)=
+(ex:mean-var-std)=
+## Mean, Variance, and Standard Deviation
+
+Here is a dataset:
+
+```x = [0.88472455, 0.96232018, 0.10713343, 0.41198233, 0.06543451,0.40068931, 0.54846767, 0.46301972, 0.4534936 , 0.2064886 ]```
+
+Write python functions to calculate the mean, variance, and standard deviation of this dataset.
+
+Compare your function outputs with ```numpy```'s built in methods for these calculations
+
+
+
+(ex:cov)=
+## Covariance
+
+Generate 3 datasets, x, y, z, using RVs drawn from the ```scipy.stats uniform``` distribution:
+
+```
+from scipy.stats import uniform
+import numpy as np
+u = uniform(0,1)
+x = u.rvs(size=10)
+y = u.rvs(size=10)
+z = y**2
+xyz = np.stack((x,y,z))
+
+1. What is the standard deviation $\sigma_x$?
+
+2. What are the covariance terms cov(x,y) and cov(x,z)?
+
+3. What is the variance of z?
+
+4. What are the linear correlation coefficients $\rho(x,y)$, $\rho(y,z)$, and $\rho(z,x)$?
+
+Write down in words what this tells us (and does not tell us) about the relationships between each of the three datasets.
+
+```
+
+(ex:prob1)=
+## Probability 1
+
+1. If there are 7 blue balls and 9 green balls in a bucket, what is the probability that a ball selected at random will be blue?
+
+2. If the first ball selected is a blue ball, and it is not returned to the bucket, what is the probability that the second ball selected will also be blue?
+
+3. In this experiment, are my data IID?
+
+
+
+(ex:prob2)=
+## Probability 2
+
+Here is a table of some data relating to a test for some illness.
+
+|      | Positive   | Negative  |
+| ---  | --- | --- | 
+| Sick   | 25  | 2   | 
+| Not Sick  | 37  | 219  | 
+
+
+1. According to these data, what is the conditional probability that you are sick, given that you test positive?
+
+2. What is the conditional probability that you will test positive, if you are sick?
+
+
+(ex:bayes1)=
 ## Bayes Theorem
 
 You are given the following information:
@@ -14,7 +80,7 @@ You are given the following information:
 
 
 
-(ex-pdf-normalisation)=
+(ex:pdf-normalisation)=
 ## PDF Normalisation
 
 A function of a Random Variable X is $f(X) = Ax^{2}$  in the range $x: [0,1]$.
@@ -28,7 +94,7 @@ b) Calculate the Expected Value E[X] using the normalised $f_X$
 c) Calculate the True Variance V[X]
 
 
-(ex-weighted-mean)=
+(ex:weighted-mean)=
 ## Weighted Mean
 
 My good friend Alfred has become obsessed with weighing packets of rolos (this happens to him from time to time - he will be fine).
@@ -45,7 +111,7 @@ a) Calculate the weighted mean of these two datasets
 b) Which of them holds more weight, and why?
 
 
-(ex-joint-pmf-and-likelihood)=
+(ex:joint-pmf-and-likelihood)=
 ## Discrete Joint PMF and Likelihood
 
 
@@ -61,7 +127,7 @@ d) Is it more likely that the coin is fair or unfair, given the data?
 
 
 
-(ex-uniform-pdf-and-cdf)=
+(ex:uniform-pdf-and-cdf)=
 ## Uniform PDF and CDF
 
 The Uniform PDF has flat probability in a region between two bounds $x: [a,b]$ and zero probability outside that range:

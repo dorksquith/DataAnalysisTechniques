@@ -398,7 +398,18 @@ The T PDF for different values of the parameter $\nu$ (Number of degrees of free
 ```
 
 
+To [convert this into a p value](#pfromz) we use python again, taking care to use the T distribution rather than the Normal distribution: 
 
+```{code-cell} python
+from scipy.stats import t # <= t is scipy stats name for the T distribution
+
+# for norm.sf we passed only Z, but for t we must also pass the parameter nu of the T PDF, which is 3-1=2 for this N=3 dataset.
+
+p_value = 2*t.sf( abs(0.538), df = 2 ) # <= df is scipy's name for the parameter nu
+
+print(f"P value: {p_value}")
+
+```
 
 
 ## The Student's T Test: two samples

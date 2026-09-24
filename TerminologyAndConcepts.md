@@ -97,6 +97,8 @@ A **Statistic** is a number that describes some characteristic of a sample, for 
 
 For example, the probability of dice rolls (any number of dice) **are not** integers but **are** Discrete. If we increase the number of dice and/or rolls, we can generate lots of probability values from the original set, but there will always be real numbers we cannot generate (gaps in the real number line).
 
+The probability of measuring a given value $x$ for a Discrete RV $X$ is described by a **Probability Mass Function (PMF)**.
+
 (continuous)= 
 ### Continuous RVs
 
@@ -178,6 +180,68 @@ print(f" mean x : {mean_x}, check: {mean_x_check }")
 
 > When we are working in the Theoretical Universe where Probability Distributions live, we often use the term **Expected Value** or **Expectation** rather than saying "True Mean". The Expected Value is a parameter, not a summary statistic, and is defined in terms of the Probabilities $p_i$ of the individual measurements rather than as a normalised sum over them: $E[X]  = \sum\limits_i^\infty  x_i p_i$. Lots more on this later.
 
+(binned-mean)=
+### The Binned Mean
+
+The Binned Mean is important in real life, as we tend to analyse data using histograms, which aggregate the frequencies over ranges of values.
+
+$$
+\label{eq:binned-mean}
+\overline{x}  = \frac{1}{N} \sum\limits_i^M  n_i c_i
+$$
+
+Here $n_i$ is the number of entries in bin $i$ , $c_i$ is the central value of that bin, and the sum is over the M bins rather than the N individual values. Note that we still normalise using the total number of measurements, N.
+
+:::{figure} /figures/PLOTDAT1-Histogram.png
+:label: fig:binned-mean
+
+A histogram of some data aggregated into 6 bins of width=1. The red markers indicate the central value and bin count for each bin: $c_i, n_i$.
+
+:::
+
+(weighted-mean)=
+### The Weighted Mean
+
+In real life people collect many datasets of differing size and quality that are in essence measuring the same RV. To combine these datasets we want to factor in their size and quality, rather than just throw all the measurements into a single uber dataset. To do this we use **Weights**.
+
+```{math}
+\label{eq:weighted-mean}
+\overline{x}_w  = \frac{ \sum\limits_i x_{i} w_i }{ \sum\limits_i w_i } 
+```
+
+In [](eq:weighted-mean), the weights $w_i$ might be known (for example: if you have three assignments with weights 10%, 10%, 80%, then the weights for those grades will be 0.1, 0.1, 0.8) or they might be calculated from eg the inverse of the [variance](#eq:variance) in your data, $w_i = \dfrac{1}{\sigma_i^2}$.
+
+
+(median-mode)=
+### The Median and Mode
+
+The **Median** of a dataset is the central value. It does not have a fancy mathematical definition, but can be useful.
+
+The **Mode** is the value that occurs with the greatest frequency.
+
+
+```{code-cell} python
+ 
+median_x = np.median(x)
+
+print(f" median x: { median_x })")
+
+# numpy doesn't have a mode method, but scipy.stats does
+
+from scipy.stats import mode
+
+mode_x = mode(x)
+
+print(f" mode x: { mode_x })")
+
+```
+
+ Notice that for our little dataset ```x = [5,10,12]``` all values occur with the same frequency of 1: in this case, ```scipy.stats mode``` will return the first value it finds with the winning frequency.
+
+
+We won't be using the median and mode in this module, just including them for reference.
+
+
 (intro-variance)=
 ### Variance $V[x]$ 
 
@@ -212,6 +276,7 @@ var_x_check = sum_sq_diffs / len(x)
 
 print(f" var x : {var_x}, check: {var_x_check }")
 
+# to get the unbiased variance with numpy we pass ddof=1, which means "delta degrees of freedom"=1
 unbiased_var_x = np.var(x,ddof=1)
 
 print(f" (unbiased variance: { unbiased_var_x})")
@@ -238,12 +303,50 @@ std_x_check = np.sqrt(var_x)
 
 print(f" std x : {std_x}, check: {std_x_check }")
 
+# to get the unbiased std with numpy we pass ddof=1, which means "delta degrees of freedom"=1
 unbiased_std_x = np.std(x,ddof=1)
 
 print(f" (unbiased std x : {unbiased_std_x})")
 
 ```
 
+(coeff-var)=
+### The Coefficient of Variation
+
+The Coefficient of Variation is a **Normalised**[^norm] form of the [Standard Deviation](#eq:std). We render it dimensionless by dividing it by the Sample [Mean](#eq:mean) and expressing as a percentage.
+
+
+$$
+\label{eq:cv}
+CV  = \dfrac{\sigma_x}{\overline{x}} \times 100\%
+$$
+
+
+```{code-cell} python
+
+coefficient_of_variation = np.std(x,ddof=1) / np.mean(x)
+
+print(f" (coefficient_of_variation : {coefficient_of_variation}%)")
+
+```
+
+We won't be using this in this module, just including it for reference.
+
+## Percentiles & Quartiles
+
+```{code-cell} python
+data = np.linspace(0, 1, 10)
+
+perc95 = np.percentile(data, 95)
+
+quant95 = np.quantile(data, 0.95)
+
+print(f" 95% percentile : {perc95}%)")
+print(f" 0.95 quantile : {quant95}%)")
+
+```
+
+We won't be using these in this module, just including for reference.
 <!--## Test Statistics
 
 **Test statistics** are numbers that describe the compatibility of a sample with a hypothesis, or with another sample. Examples are the p value, Z score, Chi squared. We will discuss these at length later.-->
@@ -418,15 +521,5 @@ plt.legend()
 plt.show()
 
 ```
-
-## Learning Objectives Checklist
-
-- [ ] Define hypothesis, model, theory
-- [ ] Understand the distinction between a population and a sample
-- [ ] Give examples of a random variable, a parameter, and a summary statistic
-- [ ] Describe the difference between Discrete and Continuous RVs, and give examples of each
-- [ ] Generate uniformly distributed and normally distributed pseudorandom numbers
-- [ ] Calculate the mean, variance, and standard deviation of a dataset
-- [ ] Make simple ```plot```,  ```hist``` and ```scatter``` in matplotlib
 
 

@@ -11,171 +11,20 @@ kernelspec:
 
 # Data Analysis Techniques ![ML is stats](/figures/ml-is-stats.png)
 
-<!--
-:::{warning}
-These notes are under development.
-:::
 
-+++ {"part": "abstract"}
-Notes for Data Analysis Techniques, module 890F3. If you are a student on this module, please read the canvas pages carefully for vital information including the course structure, assessment, and suggested reading. 
-+++
--->
-
-This module is currently organised in two volumes:
-
-## Volume 1: Probability & Statistics Essentials
-
-<!-- 
-	Relies on: N/A
-	Notes: Week2-RandomVars/Data.tex
-	 -->
-```{card} Terminology & Concepts
-Prerequisites
-: None
-
-Python 
-: ```numpy``` : ```sum,min,max,mean,var,std,random```
-  ```scipy.stats``` : ```uniform, norm``` 
-  ```matplotlib.pyplot``` : ```plot, hist, scatter```
-
-OpenStax Practice Problems
-: https://openstax.org/books/introductory-statistics-2e/pages/1-practice
-``` 
-
-<!-- 
-	Relies on: N/A
-	Notes: Week1-Probability/Probability.tex
-	 -->
-```{card} Probability Essentials
-Prerequisites
-: None
-
-Python Libraries
-: ```set, range, issubset, <=, |, &,```
-  ```scipy.stats``` methods: ```randint, norm``` 
-  ```matplotlib.pyplot``` methods: ```stem, plot```
-
-OpenStax Practice Problems
-: https://openstax.org/books/introductory-statistics-2e/pages/3-practice
-```
+This module explores how to use probability and statistics to analyse data and is currently organised in two volumes.
 
 
+## Volume 1
 
-```{card} Describing Data
-Prerequisites
-: None
-
-Python Libraries
-: ```numpy``` : ```random, stack, shape, cov, corrcoef```
-  ```scipy.stats``` methods: ```randint, norm``` 
-  ```matplotlib.pyplot``` methods: ```stem, plot```
-
-
-```
-
-
-
-```{card} The Normal Distribution
-Prerequisites
-: None
-
-Python Libraries
-: ```numpy``` : ```linspace, ```
-  ```scipy.stats``` : ```norm.pdf, norm.cdf, multivariate_normal,``` 
-  ```matplotlib.pyplot```: ```semilogy```
-  ```pandas```: ```DataFrame```
-  ```seaborn```: ```JointGrid.plot_joint, kdeplot, JointGrid.plot_marginals, histplot``` 
-
-```
-
-
-
-
-```{card} Hypothesis Tests
-
-Python Libraries
-: ```scipy.stats``` : ```norm.cdf, norm.sf, norm.ppf``` 
-
-```
-
-
-
-
-```{card} Normal Tests
-
-Python Libraries
-: ```scipy.stats``` : ```norm.cdf, norm.sf, norm.ppf``` 
-
-```
-
-
-
-
-```{card} Estimation Essentials
-- Point and Interval Estimation
-% - Percentiles and Quartiles
-- The Bootstrap
-%- Confidence Intervals
-- Consistency, Bias, and Minimum Variance
-- Method of Moments
-
-``` 
-
-## Volume 2: Parameter Estimation & Fitting
-
-```{card} Probability & Likelihood
-- Bayes theorem revisited
-
-```
-
-```{card} Special PDFs
-- Bernoulli
-- Binomial
-- Poisson
-- Uniform
-- Exponential
-- Beta
-```
-
-```{card} Maximum Likelihood Method
-
-```
-
-
-<!-- 
-	Relies on Log Like Normal, Poisson, refers to MLE, Cramers rule, Taylor expansion, Hessian
-	Notes: Week9-Fits-Tests/LeastSquares.tex
-	 -->
-```{card}  Linear Regression
-- Residuals
-- The method of Least Squares (LSQ)
-- Parameter uncertainties with LSQ
-- Python methods
-- Outliers
-- Nonlinear Methods
-```
-
-
-<!-- 
-	Relies on: Least Squares, normal tests, degrees of freedom, variance and expectation
-	Mentions: gamma function,
-	Notes Chi Squared: Week9-Fits-Tests/TestStatistics.tex
-	s18-s26 Chi Squared and the Standard Normal RV
-
-	 -->
-```{card} Model Tests
-- Chi Squared
-- Likelihood Ratio (LLR)
-- Akaike and Bayes Information Criteria (AIC and BIC)
-
-```
-
-
-
-## Syllabus & Learning Outcomes
-
-This module explores how to use probability and statistics to analyse data.
-
+[//]: # ( Terminology & Concepts)
+[//]: # ( Relies on: N/A)
+[//]: # ( Notes: Week2-RandomVars/Data.tex random numbers:Week7-Tools/Tools.tex  )
+[//]: # ( numpy: sum,min,max,mean,var,std,random )
+[//]: # ( scipy.stats: uniform, norm )
+[//]: # ( matplotlib.pyplot: plot, hist, scatter )
+[//]: # ( openstax: https://openstax.org/books/introductory-statistics-2e/pages/1-practice )
+(los:T&C)=
 :::{dropdown} Terminology & Concepts
 - [ ] Define hypothesis, model, theory
 - [ ] Understand the distinction between a population and a sample
@@ -186,21 +35,40 @@ This module explores how to use probability and statistics to analyse data.
 - [ ] Make simple ```plot```,  ```hist``` and ```scatter``` in matplotlib
 :::
 
+[//]: # ( Probability Essentials)
+[//]: # ( Relies on: N/A)
+[//]: # ( Notes: Week1-Probability/Probability.tex )
+[//]: # ( python: set, range, issubset)
+[//]: # ( scipy.stats: randint, norm )
+[//]: # ( matplotlib.pyplot: stem )
+[//]: # ( openstax: https://openstax.org/books/introductory-statistics-2e/pages/3-practice)
+(los:Prob)=
 :::{dropdown} Probability Essentials
 - [ ] Summarise the Frequentist and Bayesian interpretations of probability
 - [ ] Understand and express relationships between sets ($\subset$, $\cap$, $\cup$, $A'$)
 - [ ] Correctly interpret Venn diagrams
 - [ ] Calculate the Union and Intersection of sets
 - [ ] Describe the meaning of Independent and Mutually Exclusive (Disjoint) sets
-- [ ] Use the formula for calculating the Conditional Probability
+- [ ] Calculating the Conditional Probability from a Contingency Table
 - [ ] Describe the terms in Bayes' Theorem
 :::
 
+
+
+[//]: # ( Describing Data)
+[//]: # ( Relies on: )
+[//]: # ( Notes: https://canvas.sussex.ac.uk/courses/37537/pages/11-describing-data)
+[//]: # ( numpy: random, stack, shape, cov, corrcoef)
+[//]: # ( scipy.stats: randint, norm )
+[//]: # ( matplotlib.pyplot: stem )
+[//]: # ( openstax: 2.5 and 2.7 )
+
+(los:Data)=
 :::{dropdown} Describing Data
 - [ ] Explain what is meant by the Expectation and how it relates to the Mean
 - [ ] Describe in words the statement of the Law of Large Numbers (LLN)
-- [ ] Calculate the expectation for discrete and continuous probability distributions.
-- [ ] Describe the Law of Large Numbers (LLN)
+- [ ] Calculate the Expectation for discrete and continuous probability distributions.
+- [ ] State the Law of Large Numbers (LLN)
 - [ ] Express the True Variance in terms of the Expectation
 - [ ] Understand the terms in the Covariance Matrix
 - [ ] Calculate covariance with numpy
@@ -209,6 +77,16 @@ This module explores how to use probability and statistics to analyse data.
 - [ ] Understand that an absence of linear correlations does not imply independence 
 
 
+[//]: # ( The Normal Distribution)
+[//]: # ( Relies on: )
+[//]: # ( Notes: )
+[//]: # ( numpy: linspace)
+[//]: # ( scipy.stats: pdf, cdf, multivariate_normal)
+[//]: # ( matplotlib.pyplot: semilogy)
+[//]: # ( pandas: DataFrame)
+[//]: # ( seaborn: JointGrid.plot_joint, kdeplot, JointGrid.plot_marginals, histplot)
+[//]: # ( openstax: )
+(los:Norm)=
 :::{dropdown} The Normal Distribution
 - [ ] Explain why the normal distribution is so prevalent
 - [ ] Explain why the CDF, rather than PDF, must be used for calculating probabilities for continous RVs
@@ -220,6 +98,14 @@ This module explores how to use probability and statistics to analyse data.
 :::
 
 
+[//]: # ( Hypothesis Tests)
+[//]: # ( Relies on: )
+[//]: # ( Notes: )
+[//]: # ( numpy: )
+[//]: # ( scipy.stats: sf, ppf)
+[//]: # ( matplotlib.pyplot:)
+[//]: # ( openstax: )
+(los:Hypo)=
 :::{dropdown} Hypothesis Tests
 - [ ] Understand the impact of allowing bias to pollute science 
 - [ ] State the criteria for constructing a hypothesis test
@@ -229,10 +115,19 @@ This module explores how to use probability and statistics to analyse data.
 - [ ] Know what can and cannot be inferred from a p value
 - [ ] Calculate the p value for a given Test and dataset
 - [ ] Calculate p values from Z values and vice versa
-- [ ] Understand the meanings of the terms Confidence, Significance, Purity, and Efficiency. 
+- [ ] Understand the meanings of the terms Confidence Level, Significance, Purity, and Efficiency. 
+- [ ] Interpret a ROC curve
 :::
 
 
+[//]: # ( Normal Tests)
+[//]: # ( Relies on: )
+[//]: # ( Notes: )
+[//]: # ( numpy: )
+[//]: # ( scipy.stats: sf, ppf)
+[//]: # ( matplotlib.pyplot:)
+[//]: # ( openstax: )
+(los:NormTests)=
 :::{dropdown} Normal Tests
 - [ ] State what it means for data to be Independent and Identically Distributed (IID)
 - [ ] Define the Standard Error on the Mean (SEM)
@@ -245,13 +140,165 @@ This module explores how to use probability and statistics to analyse data.
 :::
 
 
-<!-- https://canvas.sussex.ac.uk/courses/37537/pages/11-describing-data -->
+## Volume 2: Parameter Estimation & Fitting
+
+[//]: # ( Estimation Essentials)
+[//]: # ( Relies on: )
+[//]: # ( Notes: bootstrap: Week11-MCMC/MCMC-Part1.tex, rest:Week7-Tools/Tools.tex )
+[//]: # ( numpy: )
+[//]: # ( scipy.stats: )
+[//]: # ( matplotlib.pyplot:)
+[//]: # ( openstax: )
+(los:Estimation)=
+:::{dropdown} Estimation Essentials
+- Point and Interval Estimation
+- The Bootstrap
+- Consistency, Bias, and Minimum Variance
+- Method of Moments
+:::
 
 
-:::{dropdown} Probability Distribution Functions
-- [] Explain what is meant by a Bernoulli Trial
-- [] Plot the Bernoulli PMF for some data
-- [] Calculate Bernoulli probabilities using the Probability Mass Function
+[//]: # ( Discrete Probabilities & Likelihoods)
+[//]: # ( Relies on: )
+[//]: # ( Notes: Bayes revisited Week10-Bayesian/BayesianStats.tex, Likelihood:Week7-Tools/Tools.tex pmfs: Week4-PDFs/SpecialPDFs.tex Week8-Estimators/MaxLike.tex )
+[//]: # ( numpy: )
+[//]: # ( scipy.stats: )
+[//]: # ( matplotlib.pyplot:)
+[//]: # ( openstax: )
+(los:PMFLikelihood)=
+:::{dropdown} Discrete Probabilities & Likelihoods
+- Bayes theorem revisited: for discrete RVs
+- Bernoulli: "the single coin toss"
+- Binomial: "repeated coin tosses"
+- Poisson: "number of emails per hour"
+
+- [ ] Explain what is meant by a Bernoulli Trial
+- [ ] Plot the Bernoulli PMF for some data
+- [ ] Show that the Bernoulli PMF is a valid probability distribution
+- [ ] Calculate Bernoulli probabilities using the PMF
+- [ ] Show that the Expectation and Variance of K~Bernoulli(p) are both equal to p 
+- [ ] Explain the relationship between the Bernoulli and Binomial distributions and parameters
+- [ ] Calculate the Binomial Coefficient
+- [ ] Calculate the Expectation and Variance for K~Binomial(n,p)
+- [ ] Estimate the fairness of a coin using the Binomial Likelihood
+- [ ] Describe the properties of k~Poisson(\lambda)
+- [ ] Calculate and use the Poisson Likelihood
+
+:::
+
+[//]: # ( Special Probability Distributions)
+[//]: # ( Relies on: )
+[//]: # ( Notes: Bayes revisited Week10-Bayesian/BayesianStats.tex, Likelihood:Week7-Tools/Tools.tex pmfs: Week4-PDFs/SpecialPDFs.tex )
+[//]: # ( numpy: )
+[//]: # ( scipy.stats: )
+[//]: # ( matplotlib.pyplot:)
+[//]: # ( openstax: )
+(los:PDFLikelihood)=
+:::{dropdown} Special Probability Distributions
+- Bayes theorem revisited: for continuous RVs
+- Uniform: "flat"
+- Exponential: "waiting time for a taxi"
+- Gamma: "waiting time for nth taxi"
+- Beta: "the chameleon"
+
+- [ ] Show that the uniform PDF is valid
+- [ ] Calculate the Expectation for X~Uniform(a,b)
+- [ ] Write down the PDF for X~Expon($\lambda$)
+- [ ] Compare X~Expon($\lambda$) with K~Poisson($\lambda$), explaining why one is continuous and the other discrete
+- [ ] Explain the Memoryless property of Expon($\lambda$)
+- [ ] Know when to use a Beta PDF
+- [ ] Describe the Beta PDF parameters
+:::
+
+
+[//]: # ( Maximum Likelihood Method)
+[//]: # ( Relies on: Log rules, partial derivatives, expectation algebra, Taylor series for graphical, bias, LLN, chain and product rules, LOTUS )
+[//]: # ( Notes: Week8-Estimators/MaxLike.tex )
+[//]: # ( numpy: )
+[//]: # ( scipy.stats: )
+[//]: # ( matplotlib.pyplot:)
+[//]: # ( openstax: )
+(los:MLM)=
+:::{dropdown} Maximum Likelihood Method
+- The MLE for Norm(mu,sigma)
+- Estimator Bias and Mean Squared Error
+- Parameter Uncertainties
+-- Monte Carlo
+-- Fisher Information and Minimum Variance Bound
+-- Graphical Method
+
+[ ] Describe what is meant by the bias of an estimator
+[ ] Calculate the MSE
+[ ] Understand that sometimes, the best estimator for the job is the biased estimator
+[ ] Understand what the Hessian (curvature) matrix represents
+:::
+
+
+[//]: # ( Linear Regression)
+[//]: # ( Relies on: Log Like Normal, Poisson, refers to MLE, Cramers rule, Taylor expansion, Hessian)
+[//]: # ( Notes: Week9-Fits-Tests/LeastSquares.tex)
+[//]: # ( numpy: )
+[//]: # ( scipy.stats: )
+[//]: # ( matplotlib.pyplot:)
+[//]: # ( openstax: )
+(los:MLM)=
+:::{dropdown} Linear Regression
+- Residuals and Pearson's Chi Squared
+- Chi Squared with binned data
+- The method of Least Squares (LSQ)
+- Parameter uncertainties with LSQ
+- Python methods
+- Outliers
+- Nonlinear Methods
+:::
+
+[//]: # ( Model Tests)
+[//]: # ( Relies on: Least Squares, normal tests, degrees of freedom, variance and expectation)
+[//]: # ( Notes: Week9-Fits-Tests/TestStatistics.tex s18-s26 Chi Squared and the Standard Normal RV)
+[//]: # ( numpy: )
+[//]: # ( scipy.stats: )
+[//]: # ( matplotlib.pyplot:)
+[//]: # ( openstax: )
+(los:ModelTests)=
+:::{dropdown} Model Tests
+- Chi Squared
+- Likelihood Ratio (LLR)
+- Akaike and Bayes Information Criteria (AIC and BIC)
+:::
+
+[//]: # ( Bayesian Inference)
+[//]: # ( Relies on: )
+[//]: # ( Notes: Week10-Bayesian/BayesianStats.tex)
+[//]: # ( numpy: )
+[//]: # ( scipy.stats: )
+[//]: # ( matplotlib.pyplot:)
+[//]: # ( openstax: )
+(los:Bayes)=
+:::{dropdown} Bayesian Inference
+- Bayes theorem revisited: evidence, prior, likelihood, posterior
+- Bernoulli Likelihood example: covid tests 
+- Constant Evidence
+- Prior Distribution
+- Conjugacy
+- Bernoulli-Beta
+- Maximum A Posteriori (MAP) Estimation
+- Credible Intervals
+- Poisson-Gamma
+- Predictive Posterior
+:::
+
+[//]: # ( Predictions)
+[//]: # ( Relies on: )
+[//]: # ( Notes: Week11-MCMC/MCMC-Part1.tex)
+[//]: # ( numpy: )
+[//]: # ( scipy.stats: )
+[//]: # ( matplotlib.pyplot:)
+[//]: # ( openstax: )
+(los:Predictions)=
+:::{dropdown} Predictions
+- Markov Chain Monte Carlo (MCMC)
+- Metropolis Hastings
+- Hyperparamer Tuning
 :::
 
 <!--## What issues might we face?

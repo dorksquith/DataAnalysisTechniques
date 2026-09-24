@@ -261,7 +261,7 @@ For this example, the purity is calculated in [](#purity-alf) and the efficiency
 ```{math}
 :label: purity-alf
 
-\mathsf{Purity} = P(A|a) = N( A\cap a) / N( a ) = 37/60 \approx 62\%
+\mathsf{Purity} = P(A|a) = \dfrac{ N( A\cap a) }{ N(a)} = \dfrac{37}{60} \approx 62\%
 
 ```
 
@@ -269,7 +269,7 @@ For this example, the purity is calculated in [](#purity-alf) and the efficiency
 ```{math}
 :label: efficiency-alf
 
-\mathsf{Efficiency} = P(a|A) = N( A\cap a) / N( A ) = 37/41  \approx 90\%
+\mathsf{Efficiency} = P(a|A) =\dfrac{ N( A\cap a) }{ N(A)} = \dfrac{37}{41}  \approx 90\%
 
 ```
 
@@ -459,6 +459,17 @@ This is a strange thing to say, if you think about it. We can never know if the 
 > I would personally not interpret a p value of 3% as suggestive that we should reject $H_0$. In particle physics, we only claim "discovery" if we measure a p value of < 0.00006%, and would not even raise an eyebrow for P Values above 1%. However, we are very spoiled in terms of how much data we have...
 
 
+:::{figure} 
+:label: fig:pvalzval
+
+![](figures/StandardNormPvalZval.png)
+
+We measure the test statistic in our data (physical universe). We compare this with the hypothetical distribution of $H_0$ (theoretical universe), and define the area intersected by our data and $H_0$ as the P Value.
+:::
+
+
+
+
 
 ## Worked Example: Standard Norm
 
@@ -631,14 +642,3 @@ What this indicates is that medical scientists are not publishing results that f
 
 Given that experiments can take years of work, one would strongly expect people to publish even if their work did not support some flashy alternative hypothesis, and get them a new espresso machine or similar. So, this jagged edge with enormous spikes at "just enough to support a flashy claim" p values is suggestive of dodgy practices, for example designing the test to support the alternative hypothesis :scream:. This is terrible science. The analysis of this data has hopefully led to much more stringent peer review of these kinds of results.
 
-## Learning Objectives Checklist
-
-- [ ] Understand the impact of allowing bias to pollute science 
-- [ ] State the criteria for constructing a hypothesis test
-- [ ] Explain what is meant by Critical Regions and Significance Levels
-- [ ] Explain the elements in a Confusion Matrix (True/False Positive/Negative)
-- [ ] Distinguish between Type 1 and Type 2 Errors
-- [ ] Know what can and cannot be inferred from a p value
-- [ ] Calculate the p value for a given Test and dataset
-- [ ] Calculate p values from Z values and vice versa
-- [ ] Understand the meanings of the terms Confidence, Significance, Purity, and Efficiency. 

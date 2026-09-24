@@ -319,18 +319,11 @@ This volume forms the second part of the module, and the materials are ```wip```
 ## Resources
 
 
-:::{tip} Avoiding Overwhelm
-If you go through all the links in the dropdown below, you will find yourself in a situation of lots of open browser tabs and no more insight into data analysis techniques than you had before you looked at this page.
-
-Make yourself comfortable, and follow the suggested module structure in these notes. These resources are not going anywhere, and the notes will refer to them at the appropriate moments.
-
-:::
-
 ### Bookmarks
 
 I recommend Bookmarking these excellent resources:
--[Stat Proofs](https://statproofbook.github.io/): Hallulajah! Almost all the proofs you will ever need.
--[Probability Playground](https://probabilityplayground.com/normal.html): Essential for visual learners, brilliant way to enhance understanding of PDFs.
+- [Stat Proofs](https://statproofbook.github.io/): Hallulajah! Almost all the proofs you will ever need.
+- [Probability Playground](https://probabilityplayground.com/normal.html): Essential for visual learners, brilliant way to enhance understanding of PDFs.
 
 ### Computing and Math Essentials
 
@@ -358,9 +351,18 @@ I recommend Bookmarking these excellent resources:
 :::
 
 
-- [**Math**](https://www.lboro.ac.uk/departments/mlsc/student-resources/helm-workbooks/): If your math is rusty, I recommend looking at the relevant workbooks here.
+- [Helping Engineers Learn Math (HELM)](https://www.lboro.ac.uk/departments/mlsc/student-resources/helm-workbooks/): If your math is rusty, I recommend looking at the relevant workbooks here.
 
-:::{dropdown} The HELM workbooks I refer to in these notes
+:::{tip} Avoiding Overwhelm
+If you go through all the links in the dropdown below, you will find yourself in a situation of lots of open browser tabs, an impending feeling of doom, and no more insight the math than you had before you looked at this page.
+
+Make yourself comfortable, and follow the suggested module structure in these notes. These resources are not going anywhere, and the notes will refer to them at the appropriate moments.
+
+I have tried my best to assume the smallest possible amount of math background for Volume 1.
+
+:::
+
+:::{dropdown} The HELM workbooks relevant to this module
 
  - [HELM 6](https://www.lboro.ac.uk/media/media/schoolanddepartments/mlsc/downloads/HELM%20Workbook%206%20Exponential%20and%20Logarithmic%20Functions.pdf): Exponential and Logarithmic Functions
  - [HELM 7](https://www.lboro.ac.uk/media/media/schoolanddepartments/mlsc/downloads/HELM%20Workbook%207%20Matrices.pdf): Matrices
@@ -381,9 +383,10 @@ I recommend Bookmarking these excellent resources:
 
 :::
 
-- [Stats Course by Glen Cowan](https://www.pp.rhul.ac.uk/~cowan/stat_course.html): If this is not your first rodeo, this is a good lecture course to dip into for more challenging work. It is the one I followed as a PhD student, and is geared towards particle physicists. 
+- [Stats Course by Glen Cowan](https://www.pp.rhul.ac.uk/~cowan/stat_course.html): If this is not your first rodeo[^rodeo], this is a good lecture course to dip into for more challenging work. It is the one I followed as a PhD student, and is geared towards particle physicists. 
 - [Stats Course by Mark Thomson](https://www.hep.phy.cam.ac.uk/~thomson/lectures/lectures.html): If this is not your second rodeo, these is an excellent set of very condensed notes - best suited to experts who need to brush up. Also geared towards particle physicists.
 
+[^rodeo]: I reckon it takes three times to learn the concepts in this module. The first time you learn that there are things you didn't know: "Conscious Incompetence". The second time, you learn how to apply them: "Conscious Competence". The third time, they become natural: "Unconscious Competence".
 
 <!--## What issues might we face?
 

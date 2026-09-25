@@ -297,15 +297,24 @@ print(f"P(A) +P(B) - P(AnB) = {P_A} + {P_B} - {P_AnB} = {P_A+P_B-P_AnB}")
 
 The **Non-Negativity Axiom**
 : The probability of any event A must be a real number greater than zero.
-  $$\label{eq:kolmogorov1} P(A) \geq 0 \;\; \forall A $$
+  ```{math}
+  :label: eq:kolmogorov1
+  P(A) \geq 0 \;\; \forall A
+  ```
 
 The **Normalisation Axiom** 
 : The probability of the entire sample space is one.
-  $$\label{eq:kolmogorov2} P(S) =1$$ 
+  ```{math}
+  :label: eq:kolmogorov2
+  P(S) =1 
+  ```
 
 The **Countable Additivity Axiom**
 : If A and B are **mutually exclusive**, the probability of their union is the sum of their individual probabilities.
-  $$\label{eq:kolmogorov3} P(A\cup B) =P(A)+P(B)$$ 
+  ```{math}
+  :label: eq:kolmogorov3
+  P(A\cup B) =P(A)+P(B)
+  ``` 
 
 (cond-prob)=
 ### Conditional Probability $P(A | B)$
@@ -467,13 +476,16 @@ The **Support** S of a PMF is the set of all values with a non-zero probability 
 
 A PMF must satisfy the [Kolmogorov Axioms](#kolmogorov), which we usually write down in a slightly different format when talking about PMFs:
 
-$$\label{eq:kolmogorov1pmf} p_K(k) > 0\;\;\; \forall\;\; k \in S $$
+```{math}
+:label: eq:kolmogorov1pmf
+ p_K(k) > 0\;\;\; \forall\;\; k \in S
+```
 
 $$\label{eq:kolmogorov2pmf} \sum\limits_{k\in S} p_K(k) =1 $$
 
 $$\label{eq:kolmogorov3pmf} P(k \in A) = \sum\limits_{k\in A} p_K(k) $$
 
-```{code-cell}
+```{code-cell} python
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -529,7 +541,7 @@ $$\label{eq:kolmogorov3pdf} P(x \in A) = \int\limits_{A} f_X(x) dx $$
 Notice that we are not labelling the y-axis as **Density** rather than Probability for the PDF. This is because the probability of measuring any single value for "X" is zero. This can seem a bit odd; it is a consequence of Continuous RVs having an uncountable infinity of possible values, so the only way such an RV can satisfy [Kolmogorov 2](#eq:kolmogorov2pdf) is to demand the probability of any exact value is zero.
 ```
 
-```{code-cell}
+```{code-cell} python
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -553,7 +565,7 @@ x = np.linspace(-5,5,100)
 pdf = dist.pdf(x) 
 
 # Plot the RV on the x-axis and the corresponding PDF values on the y-axis
-plt.plot(x, PDF)
+plt.plot(x, pdf)
 
 plt.xlabel("X")
 plt.ylabel("Density")

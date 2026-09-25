@@ -3,7 +3,7 @@
 # The interactive jupyer book is here: https://dorksquith.github.io/DataAnalysisTechniques
 
 # Clone the repository
-git clone git@github.com:dorksquith/DataAnalysisTechniques.git
+git clone https://github.com/dorksquith/DataAnalysisTechniques.git
 cd DataAnalysisTechniques
 
 # Pick up any recent changes since you cloned

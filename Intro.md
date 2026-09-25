@@ -19,10 +19,36 @@ This module explores how to use probability and statistics to analyse data and i
 
 ## Volume 1: Probability & Statistics
 
-The materials for the first volume are largely ready, with the topic pages available via the menu to the ←left of this page. 
+The materials for the first volume are largely ready, with the topic pages available via the menu to the ←left of this page. The contents of each page are on the menu to the right→. 
 
-**Instructions**
+**Read and Execute Online**
 : On each page you will see a "power button" ⏻ on the right below the page heading. Press this to connect the jupyter server. Once connected, a "play button" ▷ will appear - press this to run the python snippets embedded in the corresponding page. It won't have any effect on this page, because there is no python here.
+
+**Read and Execute Offline**
+: ```
+  # Clone the repository
+  git clone https://github.com/dorksquith/DataAnalysisTechniques.git
+  cd DataAnalysisTechniques
+  ```
+  ```
+  # Pick up any recent changes since you last cloned - there will be regular updates
+  git pull
+  ```
+  ```
+  # Create a virtual python environment - see https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/
+  python3 -m venv .venv
+  # activate the virtual python environment
+  source .venv/bin/activate
+  ```
+  ```
+  # Install dependencies
+  pip install -r requirements.txt
+  ```
+  ```
+  # run the jupyter book and open in browser by pasting http://localhost:3000 into eg chrome
+  jupyter book start --execute
+  ```
+
 
 **Exercises**
 : I am in the process of converting and uploading exercises (math and python) for all the topics. For Terminology & Concepts and Probability Essentials, there are some good exercises in the OpenStax book which I have linked from those pages.
@@ -205,7 +231,6 @@ This volume forms the second part of the module, and the materials are ```wip```
 - [ ] Estimate the fairness of a coin using the Binomial Likelihood
 - [ ] Describe the properties of $k\sim \mathsf{Poisson}(\lambda)$
 - [ ] Calculate and use the Poisson Likelihood
-
 :::
 
 
@@ -353,42 +378,32 @@ This volume forms the second part of the module, and the materials are ```wip```
 
 I recommend Bookmarking these excellent resources:
 
-[Stat Proofs](https://statproofbook.github.io/)
-: Hallulajah! Almost all the proofs you will ever need.
+* **[Stat Proofs](https://statproofbook.github.io)**: Hallulajah! Almost all the proofs you will ever need.
 
-[Probability Playground](https://probabilityplayground.com/normal.html)
-: A great resource for visual learners to enhance understanding of PDFs.
+* **[Probability Playground](https://probabilityplayground.com/normal.html)**: A great resource for visual learners to enhance understanding of PDFs.
 
 
-### Computing
+### Computing
 
-[**Essential: Github Quickstart**](https://docs.github.com/en/get-started/git-basics/set-up-git)
-: If you don't already have a github, please set one up. Set up a repository for this module. You will not regret getting on top of this.
+* **[Essential: Github Quickstart](https://docs.github.com/en/get-started/git-basics/set-up-git)**: If you don't already have a github, please set one up. Set up a repository for this module. You will not regret getting on top of this.
 
-[**Scientific Python**](https://lectures.scientific-python.org/)
-: Superb long-term reference. I expect it will help you in this module and beyond.
+* **[Scientific Python](https://lectures.scientific-python.org/)**: Superb long-term reference. I expect it will help you in this module and beyond.
+
 
 :::{dropdown} Other useful computing references
-
 - [Python Book](https://www.acsu.buffalo.edu/~adamcunn/downloads/PythonBook.pdf)
-
 - [Jupyter](https://jupyter.org/)
-
 - [numpy](https://numpy.org/devdocs/user/absolute_beginners.html)
-
 - [scipy stats](https://docs.scipy.org/doc/scipy/tutorial/stats.html#)
-
 - [matplotlib](https://matplotlib.org/stable/users/explain/quick_start.html)
-
 - [seaborn](https://seaborn.pydata.org/tutorial/introduction.html)
-
 - [pandas](https://pandas.pydata.org/docs/user_guide/10min.html)
 :::
 
 
 ### Math
 
-- [Helping Engineers Learn Math (HELM)](https://www.lboro.ac.uk/departments/mlsc/student-resources/helm-workbooks/): If your math is rusty, I recommend looking at the relevant workbooks here.
+* **[Helping Engineers Learn Math (HELM)](https://www.lboro.ac.uk/departments/mlsc/student-resources/helm-workbooks/)**: If your math is rusty, I recommend looking at the relevant workbooks here.
 
 <!--
 :::{tip} Avoiding Overwhelm
@@ -424,8 +439,8 @@ Make yourself comfortable, and follow the suggested module structure in these no
 :::
 -->
 
-- [Stats Course by Glen Cowan](https://www.pp.rhul.ac.uk/~cowan/stat_course.html): If this is not your first rodeo[^rodeo], this is a good lecture course to dip into for more challenging work. It is the one I followed as a PhD student, and is geared towards particle physicists. 
-- [Stats Course by Mark Thomson](https://www.hep.phy.cam.ac.uk/~thomson/lectures/lectures.html): If this is not your second rodeo, these is an excellent set of very condensed notes - best suited to experts who need to brush up. Also geared towards particle physicists.
+* **[Stats Course by Glen Cowan](https://www.pp.rhul.ac.uk/~cowan/stat_course.html)**: If this is not your first rodeo[^rodeo], this is a good lecture course to dip into for more challenging work. It is the one I followed as a PhD student, and is geared towards particle physicists. 
+* **[Stats Course by Mark Thomson](https://www.hep.phy.cam.ac.uk/~thomson/lectures/lectures.html)**: If this is not your second rodeo, these is an excellent set of very condensed notes - best suited to experts who need to brush up. Also geared towards particle physicists.
 
 [^rodeo]: I reckon it takes three times to learn the concepts in this module. The first time you learn that there are things you didn't know: "Conscious Incompetence". The second time, you learn how to apply them: "Conscious Competence". The third time, they become natural: "Unconscious Competence".
 

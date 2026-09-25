@@ -1,7 +1,0 @@
-# Computing Essentials
-
-
-
-
-
-

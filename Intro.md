@@ -41,7 +41,7 @@ The materials for the first volume are largely ready[^incomplete], with the topi
   # Pick up any recent changes since you last cloned - there will be regular updates 
   git pull
 
-  # Create and activat virtual python environment  
+  # Create and activate virtual python environment  
   python3 -m venv .venv
   source .venv/bin/activate
 
@@ -60,7 +60,7 @@ The materials for the first volume are largely ready[^incomplete], with the topi
 : I have tried to write this assuming the smallest possible amount of math background for Volume 1. If you have not had the privilege of meeting integrals before, see [HELM 13](https://www.lboro.ac.uk/media/media/schoolanddepartments/mlsc/downloads/HELM%20Workbook%2013%20Integration.pdf), for matrices, see [HELM 7](https://www.lboro.ac.uk/media/media/schoolanddepartments/mlsc/downloads/HELM%20Workbook%207%20Matrices.pdf), and for exponentials and natural logs, see [HELM 6](https://www.lboro.ac.uk/media/media/schoolanddepartments/mlsc/downloads/HELM%20Workbook%206%20Exponential%20and%20Logarithmic%20Functions.pdf)
 
 **Outlines & Learning Objectives**
-: The dropdowns below list the Learning Objectives for each topic.
+: The dropdowns below list the proposed Learning Objectives for each topic. Please do not hesitate to add your own - we are all on our own journeys.
 
 [//]: # ( Terminology & Concepts)
 [//]: # ( Relies on: N/A)
@@ -389,11 +389,11 @@ This volume forms the second part of the module, and all the topics are ```wip``
 
 I recommend Bookmarking these 3 excellent resources:
 
-* **[Good Research Code Handbook](https://goodresearch.dev/)**:  I 💜 this.
+* **[Good Research Code Handbook](https://goodresearch.dev/)**: A clear, concise, and friendly guide to setting up github, python environment with coding tips. I 💜 this.
 
-* **[Probability Playground](https://probabilityplayground.com/normal.html)**: A great resource for visual learners to enhance understanding of PDFs.
+* **[Probability Playground](https://probabilityplayground.com/normal.html)**: A great resource for visual learners to enhance understanding of PDFs. Also useful as a quick lookup when deciding which PDF is appropriate. I 💜 this.
 
-* **[Stat Proofs](https://statproofbook.github.io)**: Hallulajah! Almost all the proofs you will ever need.
+* **[Stat Proofs](https://statproofbook.github.io/I/PbT)**: Hallulajah! Almost all the proofs you will ever need. I 💜 this.
 
 
 ### Computing 
@@ -433,9 +433,9 @@ If you find that the [Good Research Code Handbook](https://goodresearch.dev/) is
 ### Math
 
 The vast majority of humans are in a state of **Unconscious Ignorance**[^unknownunknowns] when it comes to statistics and probability, and choosing to leave that very comfortable state is brave and noble in my opinion. And entirely achievable. In my experience as a student and educator **it takes at least three passes to really understand something new**; this is very likely to be the case for the more advance topics we will explore in Volume 2, but there are "gotchas" even in the Volume 1 topics.
-  * First Rodeo: we find out that there are things we don't understand: **Conscious Ignorance**. 
-  * Second Rodeo: we figure out what those things mean for us: **Conscious Competence**.
-  * Third Rodeo: we get an instinct for how to apply them: **Unconscious Competence**.
+  * 🌵 First Rodeo: we find out that there are things we don't understand: **Conscious Ignorance**. 
+  * 🌵🌵 Second Rodeo: we figure out what those things mean for us: **Conscious Competence**.
+  * 🌵🌵🌵 Third Rodeo: we get an instinct for how to apply them: **Unconscious Competence**.
 
 [^unknownunknowns]: Unconcious Ignorance: I don't know anything, and I am not aware that I don't know anything. See the [Rumsfeld Matrix](https://en.wikipedia.org/wiki/There_are_unknown_unknowns)
 

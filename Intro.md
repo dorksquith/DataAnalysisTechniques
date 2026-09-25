@@ -24,9 +24,11 @@ The materials for the first volume are largely ready[^incomplete], with the topi
 [^incomplete]: Incomplete sections are marked with 🚧 
 
 **Read and Execute Online**
-: The url for this jupyter book is [```https://dorksquith.github.io/DataAnalysisTechniques/```](https://dorksquith.github.io/DataAnalysisTechniques/)
+: [```https://dorksquith.github.io/DataAnalysisTechniques/```](https://dorksquith.github.io/DataAnalysisTechniques/)
 
-  On each page you will see a "power button" ⏻ on the right below the page heading. Press this to connect the jupyter server. Once connected (this is annoyingly slow - I am seeking a better solution), a "play button" ▷ will appear - press this to run the python snippets embedded in the corresponding page. It won't have any effect on this page, because there is no python here.
+  On each page you will see a "power button" ⏻ on the right below the page heading. Press this to connect the jupyter server. Once connected[^slow], a "play button" ▷ will appear - press this to run the python snippets embedded in the corresponding page. It won't have any effect on this page, because there is no python here.
+
+[^slow]: This is annoyingly slow - I am seeking a better solution
 
 **Read and Execute Offline**
 
@@ -183,10 +185,11 @@ The materials for the first volume are largely ready[^incomplete], with the topi
 :::
 
 
+---
 
 ## 🚧 Volume 2: Parameter Estimation & Fitting 
 
-This volume forms the second part of the module, and all the topics are ```wip``` (**work in progress**, marked with 🚧 ). I have put the Outline/ Learning Objectives here so you can get an idea of what will we cover. **These will be subject to change** as we get our ducks in a row.
+This volume forms the second part of the module, and all the topics are ```wip``` (**work in progress**, marked with 🚧 ). I have put the Outline/ Learning Objectives here so you can get an idea of what will we cover. **These may well be subject to minor changes** as we get our ducks in a row.
 
 <!--
 > My student feedback from 2025 was that the level and speed of the maths was 😱 for people without a maths degree. I agree. My current strategy is to keep the hard maths bits in this jupyter book, but not dwell on the proofs and derivations during our lecture time.
@@ -260,8 +263,11 @@ This volume forms the second part of the module, and all the topics are ```wip``
 - [ ] Write down the PDF for $X\sim \mathsf{Expon}(\lambda)$
 - [ ] Compare $X\sim \mathsf{Expon}(\lambda)$ with $K\sim Poisson(\lambda)$, explaining why one is continuous and the other discrete
 - [ ] Explain the Memoryless property of $\mathsf{Expon}(\lambda)$
-- [ ] Know when to use a Beta PDF
-- [ ] Describe the Beta PDF parameters
+- [ ] Recognise the kernel of the $\mathsf{Beta}(\alpha, \beta)$ PDF and describe what the parameters mean
+- [ ] Don't mix up ```scipy.stats.beta``` (the PDF) and ```scipy.special.beta``` (the function)
+- [ ] Recognise the kernel of the $\mathsf{Gamma}(\alpha)$ PDF and describe what the parameters mean
+- [ ] Don't mix up ```scipy.stats.gamma``` (the PDF) and ```scipy.special.gamma``` (the function) 
+
 :::
 
 

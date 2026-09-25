@@ -13,6 +13,11 @@ A **brief tour** of the important terms and concepts for this module, almost all
 Don't forget to press ⏻ then ▷ as per the [intro](#intro)
 :::
 
+* ```numpy``` methods: ```sum, min, max, mean, var, std, random```
+* ```scipy.stats``` methods: ```uniform, norm```
+* ```matplotlib.pyplot``` methods: ```plot, hist, scatter```
+
+
 ## Hypotheses, Models, and Theories
 
 A **Hypothesis** is an educated guess at the outcome of a specific event. 

@@ -10,7 +10,7 @@ kernelspec:
 numbering: false
 
 ---
-(intro)=
+(chapter:intro)=
 # Data Analysis Techniques 890F3 ![ML is stats](/figures/ml-is-stats.png)
 
 
@@ -19,45 +19,46 @@ This module explores how to use probability and statistics to analyse data and i
 
 ## Volume 1: Probability & Statistics
 
-The materials for the first volume are largely ready, with the topic pages available via the menu to the ←left of this page. The contents of each page are on the menu to the right→. 
+The materials for the first volume are largely ready[^incomplete], with the topic pages available via the menu to the ←left of this page. The contents of each page are on the menu to the right→. 
+
+[^incomplete]: Incomplete sections are marked with 🚧 
 
 **Read and Execute Online**
-: On each page you will see a "power button" ⏻ on the right below the page heading. Press this to connect the jupyter server. Once connected, a "play button" ▷ will appear - press this to run the python snippets embedded in the corresponding page. It won't have any effect on this page, because there is no python here.
+: The url for this jupyter book is [```https://dorksquith.github.io/DataAnalysisTechniques/```](https://dorksquith.github.io/DataAnalysisTechniques/)
+
+  On each page you will see a "power button" ⏻ on the right below the page heading. Press this to connect the jupyter server. Once connected (this is annoyingly slow - I am seeking a better solution), a "play button" ▷ will appear - press this to run the python snippets embedded in the corresponding page. It won't have any effect on this page, because there is no python here.
 
 **Read and Execute Offline**
-: ```
-  # Clone the repository
+
+: [Help!](#help).
+  ```bash
+  # Clone the repository and go to folder
   git clone https://github.com/dorksquith/DataAnalysisTechniques.git
   cd DataAnalysisTechniques
-  ```
-  ```
-  # Pick up any recent changes since you last cloned - there will be regular updates
+
+  # Pick up any recent changes since you last cloned - there will be regular updates 
   git pull
-  ```
-  ```
-  # Create a virtual python environment - see https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/
+
+  # Create and activat virtual python environment  
   python3 -m venv .venv
-  # activate the virtual python environment
   source .venv/bin/activate
-  ```
-  ```
-  # Install dependencies
+
+  # Install dependencies  
   pip install -r requirements.txt
-  ```
-  ```
-  # run the jupyter book and open in browser by pasting http://localhost:3000 into eg chrome
+
+  # run the jupyter book and open in browser by pasting http://localhost:3000 into eg chrome 
   jupyter book start --execute
   ```
 
 
 **Exercises**
-: I am in the process of converting and uploading exercises (math and python) for all the topics. For Terminology & Concepts and Probability Essentials, there are some good exercises in the OpenStax book which I have linked from those pages.
+: I am in the process of converting and uploading exercises (math and python) for all the topics. For [Terminology & Concepts](#chapter:tandc) and [Probability Essentials](#chapter:probess), there are some good exercises in the OpenStax text book which I have linked at the bottom of those pages.
 
 **Prerequisites**
-: I have tried to assume the smallest possible amount of math background for Volume 1. 
+: I have tried to write this assuming the smallest possible amount of math background for Volume 1. If you have not had the privilege of meeting integrals before, see [HELM 13](https://www.lboro.ac.uk/media/media/schoolanddepartments/mlsc/downloads/HELM%20Workbook%2013%20Integration.pdf), for matrices, see [HELM 7](https://www.lboro.ac.uk/media/media/schoolanddepartments/mlsc/downloads/HELM%20Workbook%207%20Matrices.pdf), and for exponentials and natural logs, see [HELM 6](https://www.lboro.ac.uk/media/media/schoolanddepartments/mlsc/downloads/HELM%20Workbook%206%20Exponential%20and%20Logarithmic%20Functions.pdf)
 
 **Outlines & Learning Objectives**
-: The dropdowns below list the **Learning Objectives** for each topic.
+: The dropdowns below list the Learning Objectives for each topic.
 
 [//]: # ( Terminology & Concepts)
 [//]: # ( Relies on: N/A)
@@ -183,9 +184,13 @@ The materials for the first volume are largely ready, with the topic pages avail
 
 
 
-## Volume 2: Parameter Estimation & Fitting (```wip```)
+## 🚧 Volume 2: Parameter Estimation & Fitting 
 
-This volume forms the second part of the module, and the materials are ```wip``` (work in progress). I have put the Outline/ Learning Objectives here so you can get an idea of what will we cover. These will be subject to change as we get our ducks in a row.
+This volume forms the second part of the module, and all the topics are ```wip``` (**work in progress**, marked with 🚧 ). I have put the Outline/ Learning Objectives here so you can get an idea of what will we cover. **These will be subject to change** as we get our ducks in a row.
+
+<!--
+> My student feedback from 2025 was that the level and speed of the maths was 😱 for people without a maths degree. I agree. My current strategy is to keep the hard maths bits in this jupyter book, but not dwell on the proofs and derivations during our lecture time.
+-->
 
 [//]: # ( Estimation Essentials)
 [//]: # ( Relies on: )
@@ -376,20 +381,38 @@ This volume forms the second part of the module, and the materials are ```wip```
 
 ### Bookmarks
 
-I recommend Bookmarking these excellent resources:
+I recommend Bookmarking these 3 excellent resources:
 
-* **[Stat Proofs](https://statproofbook.github.io)**: Hallulajah! Almost all the proofs you will ever need.
+* **[Good Research Code Handbook](https://goodresearch.dev/)**:  I 💜 this.
 
 * **[Probability Playground](https://probabilityplayground.com/normal.html)**: A great resource for visual learners to enhance understanding of PDFs.
 
+* **[Stat Proofs](https://statproofbook.github.io)**: Hallulajah! Almost all the proofs you will ever need.
 
-### Computing
+
+### Computing 
+
+(help)=
+:::{seealso} Help!
+
+If you are new to git, see [set-up-git](https://docs.github.com/en/get-started/git-basics/set-up-git). 
+  
+If you are new to using the command line, see [this useful reference](https://gist.github.com/bradtraversy/cc180de0edee05075a6139e42d5f28ce).
+  
+If you are new to pip / python, see [this guide](https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/).
+  
+Also, ask Lily and Tom in the week 1 workshop.
+:::
+
+<!--
+If you find that the [Good Research Code Handbook](https://goodresearch.dev/) is not everything you need (I have only skimmed it, but experienced elation when doing so[^except]) these links may be helpful:
 
 * **[Essential: Github Quickstart](https://docs.github.com/en/get-started/git-basics/set-up-git)**: If you don't already have a github, please set one up. Set up a repository for this module. You will not regret getting on top of this.
+-->
 
 * **[Scientific Python](https://lectures.scientific-python.org/)**: Superb long-term reference. I expect it will help you in this module and beyond.
 
-
+<!--
 :::{dropdown} Other useful computing references
 - [Python Book](https://www.acsu.buffalo.edu/~adamcunn/downloads/PythonBook.pdf)
 - [Jupyter](https://jupyter.org/)
@@ -399,11 +422,28 @@ I recommend Bookmarking these excellent resources:
 - [seaborn](https://seaborn.pydata.org/tutorial/introduction.html)
 - [pandas](https://pandas.pydata.org/docs/user_guide/10min.html)
 :::
+-->
+
+### Math
+
+The vast majority of humans are in a state of **Unconscious Ignorance**[^unknownunknowns] when it comes to statistics and probability, and choosing to leave that very comfortable state is brave and noble in my opinion. And entirely achievable. In my experience as a student and educator **it takes at least three passes to really understand something new**; this is very likely to be the case for the more advance topics we will explore in Volume 2, but there are "gotchas" even in the Volume 1 topics.
+  * First Rodeo: we find out that there are things we don't understand: **Conscious Ignorance**. 
+  * Second Rodeo: we figure out what those things mean for us: **Conscious Competence**.
+  * Third Rodeo: we get an instinct for how to apply them: **Unconscious Competence**.
+
+[^unknownunknowns]: Unconcious Ignorance: I don't know anything, and I am not aware that I don't know anything. See the [Rumsfeld Matrix](https://en.wikipedia.org/wiki/There_are_unknown_unknowns)
 
 
-### Math
+:::{tip} Avoiding Overwhelm
+If this is your first rodeo and you try to absorb everything at once, you might be tempted to embark on a frenzy of downloading/opening (or - god forbid - printing 😱) "all the things". If you do that you will find yourself in a situation of lots of open browser tabs, an impending feeling of doom, and no more insight than you had before you looked at this page.
+
+My advice is to make yourself comfortable, and follow the suggested module structure in these notes. These resources are not going anywhere, and the notes will refer to them at the appropriate moments.
+:::
 
 * **[Helping Engineers Learn Math (HELM)](https://www.lboro.ac.uk/departments/mlsc/student-resources/helm-workbooks/)**: If your math is rusty, I recommend looking at the relevant workbooks here.
+* **[Stats Course by Glen Cowan](https://www.pp.rhul.ac.uk/~cowan/stat_course.html)**: If this is not your first rodeo, this is a good lecture course to dip into for more challenging work. It is the one I followed as a PhD student, and is geared towards particle physicists. 
+* **[Stats Course by Mark Thomson](https://www.hep.phy.cam.ac.uk/~thomson/lectures/lectures.html)**: If this is not your second rodeo, these is an excellent set of very condensed notes - best suited to experts who need to brush up. Also geared towards particle physicists.
+
 
 <!--
 :::{tip} Avoiding Overwhelm
@@ -439,10 +479,6 @@ Make yourself comfortable, and follow the suggested module structure in these no
 :::
 -->
 
-* **[Stats Course by Glen Cowan](https://www.pp.rhul.ac.uk/~cowan/stat_course.html)**: If this is not your first rodeo[^rodeo], this is a good lecture course to dip into for more challenging work. It is the one I followed as a PhD student, and is geared towards particle physicists. 
-* **[Stats Course by Mark Thomson](https://www.hep.phy.cam.ac.uk/~thomson/lectures/lectures.html)**: If this is not your second rodeo, these is an excellent set of very condensed notes - best suited to experts who need to brush up. Also geared towards particle physicists.
-
-[^rodeo]: I reckon it takes three times to learn the concepts in this module. The first time you learn that there are things you didn't know: "Conscious Incompetence". The second time, you learn how to apply them: "Conscious Competence". The third time, they become natural: "Unconscious Competence".
 
 <!--## What issues might we face?
 

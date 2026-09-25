@@ -9,8 +9,12 @@ kernelspec:
   display_name: 'Python 3'
 ---
 
+(chapter:probess)=
 # Probability Essentials
 
+:::{tip}
+Don't forget to press ⏻ then ▷ as per the [intro](#intro)
+:::
 
 Probability is very important to human beings. We are subject to random
 events in nature that can completely change the course of our lives,

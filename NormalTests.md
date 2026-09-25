@@ -9,7 +9,7 @@ kernelspec:
   display_name: 'Python 3'
 ---
 
-# Normal Tests (```wip```)
+# 🚧 Normal Tests 
 
 ## Distribution of Means
 
@@ -427,15 +427,15 @@ print(f"P value: {p_value}")
 ```
 
 
-## The Student's T Test: two samples
+## 🚧 The Student's T Test: two samples
 
 Incoming...
 
-## The F Test (one-way ANOVA)
+## 🚧 The F Test (one-way ANOVA)
 
 Incoming...
 
-## Two-sample F Test Example
+## 🚧 Two-sample F Test Example
 
 Incoming...
 

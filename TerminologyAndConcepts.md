@@ -4,11 +4,14 @@ kernelspec:
   display_name: 'Python 3'
 ---
 
+(chapter:tandc)=
 # Terminology & Concepts
 
 A **brief tour** of the important terms and concepts for this module, almost all of which **we will revisit in detail later**.
 
-> Reminder: as noted in the [intro](#intro), press the "power button" ⏻ above this section on the right to start the jupyter server, then press the "play button" ▷  to execute all of the python snippets embedded in the topics below.
+:::{tip}
+Don't forget to press ⏻ then ▷ as per the [intro](#intro)
+:::
 
 ## Hypotheses, Models, and Theories
 

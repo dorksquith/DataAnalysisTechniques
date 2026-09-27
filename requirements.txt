@@ -8,3 +8,4 @@ ipykernel
 marimo
 seaborn
 pandas
+sympy

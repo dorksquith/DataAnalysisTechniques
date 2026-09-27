@@ -9,7 +9,8 @@ kernelspec:
   display_name: 'Python 3'
 ---
 
-# 🚧 Normal Tests 
+(chapter:normtest)=
+# Normal Tests
 
 ## Distribution of Means
 
@@ -283,6 +284,8 @@ The measurement (x) is replaced with the sample mean, $\overline{x}$,  and the 
 (ZTestExample)=
 ### Z Test Example: Hours slept in Stockport
 
+::::{dropdown} Show Z Test Example
+
 **Null Hypothesis:**
 : $H_0$: the mean number of hours slept by adult women is $\mathsf{\mu_0 = 7.33\,H}$.
 
@@ -297,7 +300,7 @@ The measurement (x) is replaced with the sample mean, $\overline{x}$,  and the 
 
 ```{card} [2] Look at Data:
 - Sample mean: $\overline{x} = \mathsf{7.40\,H}$
-- Sample variance: $V[x] = \mathsf{1.68\,H^2}$
+- Sample variance: $v_x = \mathsf{1.68\,H^2}$
 - Sample size: $N=100$
 ```
 
@@ -305,7 +308,7 @@ The measurement (x) is replaced with the sample mean, $\overline{x}$,  and the 
 - The formula for the denominator is $\mathsf{SEM} = \sigma_{\overline{x}}  = \dfrac{\sigma_{true} }{\sqrt{N}}$
 - We don't know $\sigma_{true}$ so we will **Estimate** it[^note1]. We know the variance of the sample, so we will use that, and remind ourselves these are Estimates by giving them little hats to wear:
 $\mathsf{\widehat{SEM} = \hat{\sigma}_{\overline{x}} = \dfrac{\sigma_{x} }{\sqrt{N-1}}   }$[^note2]
-- $V[x] = \mathsf{1.68\,H^2}$ so the square root of this gives us our numerator, the sample standard deviation.
+- $v_x = \mathsf{1.68\,H^2}$ so the square root of this gives us our numerator, the sample standard deviation.
 
 - $\mathsf{ \widehat{SEM} =\dfrac{\sigma_{x} }{\sqrt{N-1}}   =  \dfrac{\sqrt{1.68\,H^2}}{\sqrt{99}}    \approx 0.130\,H  }$
 -$\mathsf{Estimated\;z\; test\; statistic= \dfrac{ \overline{x}-\mu_{_0} }{\mathsf{SEM}} 
@@ -344,7 +347,7 @@ from scipy.stats import norm
 
 p_value = 2*norm.sf( abs(0.538) )
 
-print(f"P value: {p_value}")
+print(f"P value: {p_value:.2f} (2sf)")
 
 ```
 
@@ -356,9 +359,10 @@ This p value is (much) larger than our pre-decided significance level, $0.59 > 0
 :label: fig:pvalzval
 ![](figures/StandardNormPvalZval.png)
 
-The p value and Z value.
+For a Normal distribution, the p value and Z value are different ways of stating the same information.
 :::
 
+::::
 
 ## The Student's T Test
 
@@ -387,6 +391,8 @@ The T PDF for different values of the parameter $\nu$ (Number of degrees of free
 
 ### T Test Example: Hours slept in Brixton
 
+::::{dropdown} Show one-sample T Test Example
+
 **Null Hypothesis:**
 : $H_0$: the mean number of hours slept by adult women is $\mathsf{\mu_0 = 7.33\,H}$.
 
@@ -401,7 +407,7 @@ The T PDF for different values of the parameter $\nu$ (Number of degrees of free
 
 ```{card} [2] Look at Data
 - Sample mean: $\overline{x} = \mathsf{8.14\,H}$
-- Sample variance: $V[x] = \mathsf{0.31\,H^2}$
+- Sample variance: $v_x = \mathsf{0.31\,H^2}$
 - Sample size: $N=3$
 ```
 
@@ -422,23 +428,278 @@ from scipy.stats import t # <= t is scipy stats name for the T distribution
 
 p_value = 2*t.sf( abs(0.538), df = 2 ) # <= df is scipy's name for the parameter nu
 
-print(f"P value: {p_value}")
+print(f"P value: {p_value:.2f} (2sf)")
 
+```
+This p value is again (much) larger than our pre-decided significance level, 0.64 > 0.05, so  the result is Negative, we do not reject the null hypothesis.
+
+::::
+
+## The Student's T Test: two samples
+
+The two-sample T Test is for comparing two datasets, rather than one dataset and a hypothesis.
+
+```{card} T Test
+**Example usage**
+: Test if two samples $x$ and $y$ have the same mean.
+
+**Restrictions**
+: Data are $\mathsf{X\sim Norm(\mu,\sigma)}$
+  
+  The samples should have roughly equal variances, $0.5 < \dfrac{\sigma_x}{\sigma_y} < 2$.
+```
+
+```{math}
+:label: eq:T2test
+\mathsf{T_2\; test= \dfrac{ \overline{x}-\overline{y} }{\psi\,\sigma_{p}}}
+```
+
+The **Pooled Variance** $\sigma^2_p$ is constructed from the Unbiased Variances of the two datasets, $\sigma^2_{x}$ and $\sigma^2_{y}$, and the degrees of freedom in each, $\nu_x$  and $\nu_y$:
+
+```{math}
+:label: eq:pooledvar
+\mathsf{ \sigma^2_p = \dfrac{\nu_x \,\sigma^2_{x} + \nu_y \, \sigma^2_{y}}{\nu_x + \nu_y} }
+```
+
+The Multiplier $\psi$ ("psi") in the denominator of the [test statistic](#eq:T2test) is:
+
+```{math}
+:label: eq:psi
+\mathsf{\psi =\sqrt{ \dfrac{1}{N_x} + \dfrac{1}{N_y} }}
+```
+
+We can use this test statistic when sample sizes are equal or unequal, and have similar variances, as in our case. I will put a note at the bottom of this section about what to do if your datasets have very different variances[^welch].
+
+[^welch]: We will use a modified "Welch's T test" 
+
+[//]: # ( https://canvas.sussex.ac.uk/courses/37537/pages/13-normal-tests)
+
+
+
+### Two-sample T Test Example: Glasgow versus Brixton
+
+::::{dropdown} Show two-sample T Test Example
+
+**Null Hypothesis:**
+: $H_0$: the mean number of hours slept in Glasgow and Brixton are the same.
+
+
+```{card} [1] Design Test
+- Significance Level : $\alpha=0.05$
+- Alternate hypothesis, $H_1$: Glaswegians sleep less than Brixtonians : this means the test is one-sided.
+```
+
+```{card} [2] Look at Data. Brixton: $x$, Glasgow: $y$
+- Sample means: $\overline{x} = \mathsf{7.60\,H}$, $\overline{y} = \mathsf{7.44\,H}$
+- Sample variances: $v_x = \mathsf{1.19\,H^2}$, $v_y = \mathsf{0.91\,H^2}$,
+- Sample sizes: $N_x=10$, $N_y=10$
+```
+
+```{card} [3] Calculate the pooled variance, the multiplier, the test statistic, and the p value
+First, the pooled variance:
+```{math}
+:enumerated: false
+\mathsf{ \sigma^2_p = \dfrac{\nu_x \sigma^2_{ux} + \nu_y \sigma^2_{uy}}{\nu_x + \nu_y}
+= \dfrac{ 9\cdot 1.19\, H^2+ 9\cdot 0.91\, H^2 }{9+9} \approx 1.05\,H^2}
+```
+
+Next, the multiplier:
+```{math}
+:enumerated: false
+\mathsf{\psi = \sqrt{\dfrac{1}{10} + \dfrac{1}{10}}  \approx0.447 }
+```
+
+The test statistic:
+```{math}
+:enumerated: false
+\mathsf{T_2\; test\; statistic= \dfrac{ \overline{x}-\overline{y} }{p\,\sigma_{p}}
+ = \dfrac{7.60\, H - 7.44\, H }{ 0.447 \cdot \sqrt{ 1.05\, H^2} } \approx 0.349}
+```
+
+And finally the p value:
+
+```{code-cell} python
+from scipy.stats import t
+
+p_value = t.sf(0.349, df=9+9) # <= no factor 2 this time, because our test is one-sided
+
+print(f"P value: {p_value:.2f} (2sf)")
+```
+
+The large one-sided p value (0.37> 0.05) means we do not reject $H_0$: the mean values of the Glasgow and Brixton datasets are not significantly different from one another. 
+
+::::
+
+
+
+## The F Test (one-way ANOVA)
+
+Another way to compare groups is via ANalysis Of VAriance. The F test statistic is defined as the ratio:
+
+\mathsf{F\;test\;statistic =Variance\; Between\; groups \bigg/Variance\; Within\; groups}
+
+### The Variance Between groups
+
+We will compare two datasets (groups): $x$ and $y$. The combination of both datasets is $g$, such that both $x$ and $y$ are subsets of $g$.
+
+1. We calculate the squared difference in the mean of the subset $x$ and the mean of the set $g$:  $\mathsf{\Delta^2_{xg} = (\overline{x} - \overline{g})^2 }$
+
+2. Do the same for the other subset $y$: $\mathsf{\Delta^2_{yg} = (\overline{y} - \overline{g})^2 }$
+
+3. Add these terms together, "weighted" by their numbers of measurements: $\mathsf{N_x\Delta^2_{xg}  + N_y\Delta^2_{yg} }$
+
+4. Divide by the number of degrees of freedom between the subsets: $\mathsf{\nu_{between} = N_s-1}$ where $N_s$ is the number of subsets. In the case of two samples, $N_s =2$, so there is only one degree of freedom between the subsets and this step has no effect, but generally the number of subsets can be more than two.
+
+In this case we find $\mathsf{ V_{between} = \dfrac{\,N_x\Delta^2_{xg}  + N_y\Delta^2_{yg} \,}{\,N_s -1} }$
+
+The general formula is:
+```{math}
+:label: eq:varbetween
+\mathsf{
+V_{between} = 
+\dfrac{
+\sum_{j} N_j\, \Delta_{jg}^2
+}{
+N_s-1 
+}
+}
+```
+
+The number of degrees of freedom between the subsets in the group,$\mathsf{\nu_{between} = N_s -1}$, depends only on the number of subsets, not on the sample size(s).
+
+The **Variance Between** subsets of data is sometimes referred to as the **Explained Variance**.
+
+
+### The Variance Within groups
+
+The Variance Within is the weighted sum of the unbiased variances, divided by the sum of their numbers of degrees of freedom.
+
+1. Calculate the weighted sum of squared deviations for each subset:
+
+```{math}
+:label: eq:ws1
+\mathsf{ (N_x -1)v_x = \displaystyle{\sum\limits_i^{N_x} (x_i - \overline{x})^2} }
+```
+
+```{math}
+:label: eq:ws2
+\mathsf{ (N_y -1)v_y = \displaystyle{\sum\limits_i^{N_y} (y_i - \overline{y})^2} }
+```
+
+2. Divide by the number of degrees of freedom within the subsets: $\mathsf{\nu_{within} = N_x + N_y - N_s}$
+
+Note that this is the same as summing the number of degrees of freedom within each subset.
+
+In this case we find:
+
+$\mathsf{ V_{within} = \dfrac{ (N_x-1)v_x  + (N_y-1) v_y }{\,N_x + N_y -N_s } }$
+
+
+The general formula is:
+```{math}
+:label: eq:varwithin
+\mathsf{
+V_{within}=
+\dfrac{
+\sum_{j} (N_j -1) \,V[x_{(j)}]
+}{
+\sum_{j}  N_j - N_s
+}
+}
+```
+
+:::{tip}Notation
+ In the general form for $N_s$ subsets of size $N_j$, the subsets are represented by $\mathsf{x_{(j)} = x,y,...}$. It is common to use parentheses in the subscript $\mathsf{ x_{(j)} }$  for a variable, to distinguish it from \mathsf{ x_{i} } which is used for individual values of that variable. $\mathsf{x_{(j)} }$ would be an array of all the \mathsf{ x_{i} } values.
+:::
+
+
+The denominator $\mathsf{ \sum \limits_{j}  N_j - N_s}$  is the number of degrees of freedom within the subsets in the group, $\mathsf{ \nu_{within} }$. Note that this depends on both the number of subsets (2 in our example) and on the sample sizes.
+
+We now have the ingredients to calculate the **F statistic**:
+
+```{math}
+:label: eq:ftest
+\mathsf{ F = V_{between} \; / \; V_{within} }
+```
+
+### The F PDF
+
+The F PDF is shown in [](#fig:fpdf) for cases where we have between 2 and 10 subsets, such that the variance between, $\nu_b = N_s -1 $, ranges from 1 to 9.
+
+:::{figure}
+:label: fig:fpdf
+![](figures/F-dist-nu_w100.png)
+
+Notice that the F PDF is not symmetric, unlike the normal and T distributions. The number of degrees of freedom within the subsets is the same in each case, $\mathsf{ \nu_{within} = \sum \limits_{j}^{ N_{s}}  N_j - N_s =100}$. With one degree of freedom between the samples (as in the case of comparing two samples, as $\mathsf{\nu_{between} = N_s-1}$ ), the F test statistic grows exponentially for F statistic values approaching zero.
+
+:::
+
+
+### Two-sample F Test Example: Glasgow versus Brixton
+
+
+::::{dropdown} Show two-sample F Test Example
+
+**Null Hypothesis:**
+: $H_0$: the mean number of hours slept in Glasgow and Brixton are the same.
+
+
+```{card} [1] Design Test
+- Significance Level : $\alpha=0.05$
+- Alternate hypothesis, $H_1$: Glaswegians sleep less than Brixtonians : this means the test is one-sided.
+```
+
+```{card} [2] Look at Data. Brixton: $x$, Glasgow: $y$
+- Sample means: $\overline{x} = \mathsf{7.60\,H}$, $\overline{y} = \mathsf{7.44\,H}$
+- Sample variances: $v_x = \mathsf{1.19\,H^2}$, $v_y = \mathsf{0.91\,H^2}$,
+- Sample sizes: $N_x=10$, $N_y=10$
+- Set mean: $\overline{g} = \mathsf{7.52\,H}$[^thiscase]  
+- Set size: 10+10 = 20
 ```
 
 
-## 🚧 The Student's T Test: two samples
+````{card} [3] Let's calculate all our bits and bobs.
 
-Incoming...
+$\mathsf{ \Delta^2_{xg}       =   (\overline{x} - \overline{g})^2   = (7.52\,H - 7.60\,H)^2 \approx  0.0064\,H^2 }$
 
-## 🚧 The F Test (one-way ANOVA)
+$\mathsf{ \Delta^2_{yg}       =   (\overline{y} - \overline{g})^2  = (7.52\,H - 7.44\,H)^2 \approx  0.0064\,H^2 }$
 
-Incoming...
+$\mathsf{ 
+V_{between} = \dfrac{\,N_x\Delta^2_{xg}  + N_y\Delta^2_{yg} \,}{\,N_s -1}= \dfrac{(10 \cdot 0.0064 \, H^2+ 10 \cdot 0.0064\, H^2 ) }{ (2-1) }\approx 0.128\, H^2}$
 
-## 🚧 Two-sample F Test Example
+$\mathsf{ 
+V_{within} = \dfrac{(N_x-1) V_{x} + (N_y-1)  V_y}{N_x + N_y - N_s}
+= \dfrac{ 9\cdot 1.19\, H^2+ 9\cdot 0.91\, H^2 }{9+9-2} \approx 1.18\,H^2
+}$
 
-Incoming...
 
+We estimate the F statistic as:
+
+$\mathsf{F = \dfrac{ V_{between}} { V_{within} } \approx  \dfrac{ 0.128\,H^2} { 1.18\,H^2 }  \approx 0.108}$
+
+We extract the p value using the F pdf's survival function:
+
+```{code-cell} python
+
+from scipy.stats import f
+
+p_value = f.sf(abs(0.108), dfn=1, dfd=16) 
+print(f"P value: {p_value:.2f} (2sf)")
+
+```
+````
+
+Unsurprisingly, the null hypothesis is not rejected. 
+
+:::{tip} Eyeballing
+Note that we can eyeball the PDF plot above (the closest one to our situation is $\mathsf{\nu_b =1, \nu_w=100}$ ) to get a rough idea of whether we were going to be close to rejecting $H_0$. An F statistic of 0.108 leaves a big fat tail to the right which clearly has more than 5% of the distribution in it, so I would have guessed we were not in the ballpark for a positive result.
+:::
+
+::::
+
+[^thiscase]: In this special case, our samples are the same size, so we can just take the mean of the two means. In general we would have to combined the datasets or calculated the weighted mean.]
+
+## Notes
 
 
 :::{figure}
@@ -448,3 +709,5 @@ Incoming...
 
 Proof that the sample variance is a biased estimator for the true variance.
 :::
+
+

@@ -13,7 +13,7 @@ kernelspec:
 # Probability Essentials
 
 :::{tip}
-Don't forget to press ⏻ then ▷ as per the [intro](#intro)
+Don't forget to press ⏻ then ▷ as per the [intro](#chapter:intro)
 :::
 
 Probability is very important to human beings. We are subject to random
@@ -464,11 +464,12 @@ We can express probabilities as single numbers, for example the probability of g
 
 More helpfully, we can express probabilities in terms of the RV and some parameters. For example, when I roll a fair die with $n$ sides, the probability of getting a number $x$ is $p_x = \frac{1}{n}$. This is a **Probability Distribution**[^admit].
 
-[^admit] This is admittedly a very boring probability distribution, because it is flat (Uniform), with every value having the same probability. 
+[^admit]: This is admittedly a very boring probability distribution, because it is flat (Uniform), with every value having the same probability. 
 
 There are two kinds of Probability Distributions:
 1. Probability Mass Functions (PMFs), for discrete RVs
 2. Probability Density Functions (PDFs), for continuous RVs
+
 
 
 ::::{tab-set}
@@ -489,6 +490,7 @@ $$\label{eq:kolmogorov2pmf} \sum\limits_{k\in S} p_K(k) =1 $$
 
 $$\label{eq:kolmogorov3pmf} P(k \in A) = \sum\limits_{k\in A} p_K(k) $$
 
+(code:pmf-example)=
 ```{code-cell} python
 import matplotlib.pyplot as plt
 import numpy as np
@@ -542,9 +544,10 @@ $$\label{eq:kolmogorov2pdf} \int\limits_{S} f_X(x) dx =1 $$
 $$\label{eq:kolmogorov3pdf} P(x \in A) = \int\limits_{A} f_X(x) dx $$
 
 ```{important} Density
-Notice that we are not labelling the y-axis as **Density** rather than Probability for the PDF. This is because the probability of measuring any single value for "X" is zero. This can seem a bit odd; it is a consequence of Continuous RVs having an uncountable infinity of possible values, so the only way such an RV can satisfy [Kolmogorov 2](#eq:kolmogorov2pdf) is to demand the probability of any exact value is zero.
+Notice that we label the y-axis as **Density** rather than Probability for the PDF. This is because **the probability of measuring any single value for $X$ is zero**. This can seem a bit odd; it is a consequence of Continuous RVs having an uncountable infinity of possible values, so the only way such an RV can satisfy [Kolmogorov 2](#eq:kolmogorov2pdf) is to demand the probability of any exact value is zero.
 ```
 
+(code:pdf-example)=
 ```{code-cell} python
 import matplotlib.pyplot as plt
 import numpy as np
@@ -583,9 +586,108 @@ plt.show()
 ::::
 
 
+### From Function to PDF: the Normalisation Constant
+
+We will meet the Normal PDF in [](#chapter:norm), and explore several other special distributions provided by the ```scipy.stats``` library later, such as the Poisson PMF and Exponential PDF. The distributions provided by ```scipy.stats``` are incredibly convenient because they provide a host of built-in methods.
+
+Any function of a continuous RV can be turned into a PDF; the requirement that its integral must equal 1, as per [](#eq:kolmogorov2pdf) can be satisfied by multiplying the function by a **Normalisation Constant**.
+
+
+:::{figure}
+:label: fig:ftopdf
+![](figures/FtoPDF.png)
+
+A Probability Distribution must have sum (for a PMF) or integral (for a PDF) equal to 1 by definition.
+
+:::
+
+
+**Example**: $f(x) = x^3$ is a function.
+
+1. Write $f_X(x) = A x^3$, where $A$ is the (unknown) **Normalisation Constant**
+2. Define the **Support**[^support] of the function, eg $0 \leq x \leq 1$
+3. Demand the PDF is valid as per [](#eq:kolmogorov2pdf): $\int_0^1 A x^3 dx = 1 $
+4. Solve the integral: 
+```{math}
+:enumerated: false
+\int_0^1 A x^3 dx  = A \dfrac{x^4}{4}\bigg|_0^1 = \dfrac{A}{4} = 1\;\; \therefore\;\; A = 4
+
+```
+
+[^support]: the support is the range of values over which our PDF will be non-zero.
+
+We can now write our function as a **Valid PDF**: $$\label{eq:ourpdf} f_X(x) = 4 x^3,\;\; 0 \leq x \leq 1$$.
+
+### Integration with ```sympy```
+
+Let's sanity-check[^sanity] our conclusion that [](#eq:ourpdf) is a valid PDF using ```sympy```:
+
+[^sanity]: I have more confidence in my ability to solve a simple integral than I have in my ability do it with sympy, so this is really a "reverse sanity check"...
+
+```{code-cell} python
+import sympy
+sympy.init_printing()
+x = sympy.Symbol('x')
+
+def definite_integral_example(xlo,xhi):
+	
+	my_func = 4*x**3
+
+	definite_integral = sympy.integrate(my_func, (x,0,1) )
+
+	print(f"Integral {my_func}, {xlo}<x<{xhi} =  {definite_integral}" )
+
+definite_integral_example(0,1)
+
+```
+
+:::{seealso} 
+We can also ask ```sympy``` to find solutions to indefinite integrals of special functions, for example:
+```{code-cell} python
+my_other_func = sympy.exp(3*x)
+sympy.integrate( my_other_func, x )
+```
+See [sympy_in_10_minutes](https://github.com/sympy/sympy-notebooks/blob/master/beginner/sympy_in_10_minutes.ipynb) for a quick walk-through some of the most useful methods.
+:::
+
+
+### Making a user PDF with ```scipy.stats```
+
+If we want the convenience of a ```scipy.stats``` PDF but our function is not on the [list](https://docs.scipy.org/doc/scipy/reference/stats.html#probability-distributions) of those provided, we can make a subclass of eg the ```rv_continuous``` base class, as per the example below.
+
+```{code-cell} python
+from scipy.stats import rv_continuous
+
+class MyDist(rv_continuous):
+    def _pdf(self,x):
+    	# this must be a valid pdf, with integral =1
+        f = 4 * x**3 
+        return f
+
+# be sure to instantiate the distribution within its range of validity: 0,1 
+dist = MyDist(name = '4x^3', a=0, b=1)
+
+# get the support: the lower bound and upper bound of validity
+lb,ub = dist.support()
+print(f" MyDist support : {lb} < x < {ub}")
+
+# check the pdf is valid (we will cover cdf as probability later)
+cdf = dist.cdf(1)
+print(f" MyDist Total probability: {cdf}")
+
+# example of why using a scipy dist is useful - can ask its properties directly
+mean, variance = dist.stats()
+
+# this {mean:.3f} prints the mean formatted to 3 significant figures
+print(f" mean:  {mean:.3f}, variance: {variance:.3f}")
+
+
+```
+
+
 ### Exercises
 
-If you want some extra practise on these concepts, the (free) OpenStax Text Book [Introductory Statistics](https://openstax.org/details/books/introductory-statistics-2e) has some [Chapter 3 Practice](https://openstax.org/books/introductory-statistics-2e/pages/3-practice).
+If you want some extra practise on these essential probability concepts, the (free) OpenStax Text Book [Introductory Statistics](https://openstax.org/details/books/introductory-statistics-2e) has some [Chapter 3 Practice](https://openstax.org/books/introductory-statistics-2e/pages/3-practice).
 
 
 

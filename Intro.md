@@ -267,9 +267,25 @@ This volume forms the second part of the module, and all the topics are ```wip``
 - [ ] Don't mix up ```scipy.stats.beta``` (the PDF) and ```scipy.special.beta``` (the function)
 - [ ] Recognise the kernel of the $\mathsf{Gamma}(\alpha)$ PDF and describe what the parameters mean
 - [ ] Don't mix up ```scipy.stats.gamma``` (the PDF) and ```scipy.special.gamma``` (the function) 
-
 :::
 
+
+[//]: # ( ChangingVariables)
+[//]: # ( Relies on: CDF, inverse function, Jacobian of partial derivatives, determinant)
+[//]: # ( Notes: Week3-Funcs/Funcs.tex )
+[//]: # ( numpy: )
+[//]: # ( scipy.stats: )
+[//]: # ( matplotlib.pyplot:)
+[//]: # ( openstax: )
+
+(los:ChangingVariables)=
+:::{dropdown} Changing Variables
+- [ ] Give an example of when one might need to change variables in a PDF.
+- [ ] Describe what is meant by a monotonic function
+- [ ] Show that for monotonic RVs, $P(X \leq x) = P(Y \leq y)$
+- [ ] Show that for monotonic RVs, $f_Y(y) = \left|\dfrac{dx}{dy} \right| f_X(x)$
+- [ ] Transform a multivariate PDF using the Jacobian matrix of partial derivatives
+:::
 
 [//]: # ( Maximum Likelihood Method)
 [//]: # ( Relies on: Log rules, partial derivatives, expectation algebra, Taylor series for graphical, bias, LLN, chain and product rules, LOTUS )

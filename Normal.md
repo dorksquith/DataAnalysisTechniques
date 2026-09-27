@@ -9,6 +9,7 @@ kernelspec:
   display_name: 'Python 3'
 ---
 
+(chapter:norm)=
 # The Normal Distribution
 
 Many RVs are "Normally Distributed", meaning they follow a Gaussian Probability Distribution. Some examples are shown in are shown in [](#fig:norm-everywhere).
@@ -268,6 +269,7 @@ Because X is **Continuous**, there is no limit to the precision its values ($x_i
 
 We cannot calculate the probability for any exact value of the RV X, but we can calculate the probability that X lies in some range of values. We do this using the Cumulative Distribution Function (CDF).
 
+(sec:normcdf)=
 ### The Cumulative Distribution Function (CDF)
 
 
@@ -377,10 +379,9 @@ def MultiVariateGaus(mu,covmat):
 	g.ax_joint.set_xlabel(r'x',fontsize=16)
 	g.ax_joint.set_ylabel(r'y',fontsize=16)
 
-	# print the label (covariance matrix) on the plot
-	plt.legend()
-
 	plt.show()
+
+	print(f"Above plot shows Gaussian for mu = {mu}, cov = {covmat}")
 
 	return df
 

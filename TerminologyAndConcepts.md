@@ -10,7 +10,7 @@ kernelspec:
 A **brief tour** of the important terms and concepts for this module, almost all of which **we will revisit in detail later**.
 
 :::{tip}
-Don't forget to press ⏻ then ▷ as per the [intro](#intro)
+Don't forget to press ⏻ then ▷ as per the [intro](#chapter:intro)
 :::
 
 * ```numpy``` methods: ```sum, min, max, mean, var, std, random```

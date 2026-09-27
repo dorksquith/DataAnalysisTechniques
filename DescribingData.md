@@ -161,9 +161,9 @@ Sample Mean to True Mean
 Expectation definition
 : Use [](#eq:expect) to write:  
   
-  $E[X^2]  = \sum\limits_i^\infty  x^2_i p_i \;\; \mathsf{\textcolor{blue}{with X\rightarrow X^2} \;\;} $
+  $E[X^2]  = \sum\limits_i^\infty  x^2_i p_i \;\; \mathsf{\textcolor{blue}{with\; X\rightarrow X^2} \;\;} $
   
-  $E[(X-\mu)^2]  = \sum\limits_i^\infty  (x_i-\mu)^2 p_i \;\; \mathsf{\textcolor{blue}{with X\rightarrow X-\mu} \;\;} $
+  $E[(X-\mu)^2]  = \sum\limits_i^\infty  (x_i-\mu)^2 p_i \;\; \mathsf{\textcolor{blue}{with\; X\rightarrow X-\mu} \;\;} $
 
 We can happily let $X\rightarrow X-\mu$ in the second step because if X is a RV, then $X-\mu$ is also a RV.
 
@@ -317,14 +317,14 @@ If our RVs are **Dependent**, (if changing one of them affects the other, ie if 
 ```
 
 :::{warning}
-$\mathsf{cov}(x,y) = \sigma_{xy}$ is **not** $\sigma_x \times \sigma_y$. It is more complicated than that, sorry.
+$\mathsf{cov}(x,y) = \sigma_{xy}$ is **not** simply $\sigma_x \sigma_y$.
 :::
 
 
 The 2D arrays in [](#eq:covmat-indep) and [](#eq:covmat-dep) are **Covariance Matrices**. They are also sometimes called **Error Matrices**, because the (squared) Standard Deviations they hold in the diagonal elements are used as the Uncertainties or "Errors" on the measurements. 
 
 :::{tip}
-Covariance Matrices are always square (same number of rows and columns) and they are always symmetric (the pairs of off-diagonal terms are equal, so in our example case $cov(x,y) = cov(y,x)$).
+Covariance Matrices are always **square** (same number of rows and columns) and they are always **symmetric** (the pairs of off-diagonal terms are equal, so in our example case $\mathsf{cov}(x,y) = \mathsf{cov}(y,x)$.
 :::
 
 We can calculate covariances very easily using ```numpy```:
@@ -340,13 +340,13 @@ y = [1.45373536, 0.48405628, 1.54298594, 0.21109356, 1.38629819, 1.00615679, 1.6
 
 # put the two lists of fake data points in a 2D array
 
-xy=np.stack((x,y))
+xy=np.stack((x,y)) # <= dont forget nested parentheses for np.stack
 
 # let numpy calculate the covariance matrix
 
 cov_xy = np.cov(xy)
 
-print(f"Cov matrix: {cov_xy}")
+print(f"Cov matrix:\n {cov_xy}")
 
 ```
 
@@ -454,13 +454,14 @@ print(f" cov(b,a): {covmat_10}")
 
 ```
 
-We can visualise the covariance terms with a [scatter plot of a versus b](#fig:mda-cov). The 3 shaded areas indicate the covariances of each of the three data points with respect to the mean of a shown as a dotted red line and the mean of b shown as a dotted blue line.
-
+We can visualise the covariance terms with a [scatter plot of a versus b](#fig:mda-cov). 
 
 :::{figure} 
 :label: fig:mda-cov
 :align: left
 ![](figures/mda_cov.png)
+
+The three black points are a scatter plot of the dataset of two RVs, a and b. The 3 shaded areas indicate the covariances of each of the three data points with respect to the mean of a ($\overline{a}$) shown as a dotted red line and the mean of b ($\overline{b}$) shown as a dotted blue line.
 :::
 
 
@@ -496,8 +497,18 @@ We can access the Linear Correlation Coefficient $\rho(a,b)$ directly with ```nu
 
 rho_ab = np.corrcoef(ab)
 
-print(f"rho_ab: {rho_ab}")
+print(f"Linear Correlation Matrix:\n {rho_ab}")
+
+print(f"\nrho(a,b):\n {rho_ab[0][1]}")
+
+# scipy provides identical method as "pearsonr"
+from scipy.stats import pearsonr
+r_ab = pearsonr(a,b)[0]
+
+print(f"r_ab:\n {r_ab}")
 ```
+
+Notice that the diagonal terms in the Linear Correlation Matrix are 1, as they indicate each RV's linear correlation with itself, and the off-diagonal terms are identical, as per the Covariance Matrix, because  $\rho(a,b) \equiv \rho(b,a)$.
 
 The math notation for the **Linear Correlation Matrix** is:
 
@@ -525,7 +536,7 @@ The math notation for the **Linear Correlation Matrix** is:
 ### Limitations of the Linear Correlation Coefficient
 
 
-The [Linear Correlation Matrix](#eq:rhomat) is the normalised covariance matrix, with diagonal elements equal to 1, and off-diagonals symmetric and equal to the linear correlation coefficients $\rho(a,b)$.
+The [Linear Correlation Matrix](#eq:rhomat) is a normalised covariance matrix, with diagonal elements equal to 1, and off-diagonals symmetric and equal to the linear correlation coefficients $\rho(a,b)$.
 
 The correlations can have any values between -1 and 1, with extremes indicating:
 
@@ -546,6 +557,74 @@ By DenisBoigelot, CC0, from [wikipedia](https://commons.wikimedia.org/wiki/File:
 
 
 All of the x,y distributions on the bottom row have a zero linear correlation coefficient, despite being very obviously related. If x,y were independent, we would expect a scatter plot to look something like the middle section of the top row. The bottom row of distributions have $\rho(x,y) =0$ because **the correlations between x and y are not linear**. Hopefully this makes it clear how limited the linear correlation coefficient is!
+
+### Nonlinear Correlations
+
+Let's set up an example of two **Dependent** RVs, $X^2 + Y^2 = 1$ 
+
+```{code-cell} python
+from scipy.stats import uniform
+
+# get a default uniform distribution, and remind ourselves of the default support
+udist = uniform()
+lb,ub = udist.support()
+print(f"uniform, support={lb},{ub}")
+```
+
+We will let $X$ be a uniform (flat) distribution in $ 0 < x < 10$, and define the $Y=X^3$ distribution based on this:
+
+```{code-cell} python
+# uniform distribution for X
+Xdist = uniform(loc=0, scale=2)
+
+# draw 100 RVs from the distribution: these are our "measurements"
+x = Xdist.rvs(size=100)
+
+# define y-values as Y=X^3
+y = [ xi**3 for xi in x]
+
+# check the linear correlation with scipy's pearsonr
+r_xy = pearsonr(x,y)[0]
+
+# scatter plot, and add the linear correlation as text on the plot
+import matplotlib.pyplot as plt
+plt.scatter(x,y)
+
+# the r"" string allows us to put LaTeX equation on the plot
+func_label = r"$y=x^2$"
+
+# the f" :.3f" string allows us to pass in the Pearson r with 3 sig figs
+r_label = f"Pearson r = {r_xy:.3f}"
+plt.text(0.6, 7, func_label +", "+ r_label, ha='center', fontsize=16)
+plt.xlabel("x")
+plt.ylabel("y")
+plt.show()
+
+```
+
+We have confirmed that we are in a situation with total Dependence between the RVs, and note that the Linear Correlation is $<1$. We will now look at the **Spearman Rank Correlation** between the two RVs.
+
+
+```{code-cell} python
+from scipy.stats import spearmanr
+
+# check the spearman ranking correlation efficient with scipy's spearmanr
+spr_xy = spearmanr(x,y)[0]
+
+print(f" spearman r = {spr_xy:.3f}")
+```
+
+Spearman found 100% **Rank Correlation** between $X$ and $Y=X^2$. This squared relationship between $X$ and $Y$ is exactly what Spearman's r is built to look for, providing the relationship between RVs is **Monotonic**  [](#fig:mono).
+
+:::{figure}
+:label: fig:mono
+![](figures/monotone)
+
+A monotonic function is shown on the left, and a non-monotonic function on the right. Monotonic means that y increases or remains constant as x increases. [By Oleg Alexandrov](https://commons.wikimedia.org/w/index.php?curid=2267780)
+:::
+
+In the above example, we chose $ 0 < x < 10$, and over this range $y$ is monotonically increasing. If we need to examine a function over a range in which it is non-monotonic, we can divide the space up into monotonic regions.
+
 
 > A small or zero linear correlation coefficient does not imply independence. This is the message alluded to in [](#fig:xkcd-correlation).
 

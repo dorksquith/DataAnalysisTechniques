@@ -34,7 +34,9 @@ project:
       continue: true
   exports:
     - format: pdf
-  
+html:
+  analytics:
+    google_analytics_id: G-7EQND2BDLP
 site:
   template: book-theme  
   options:

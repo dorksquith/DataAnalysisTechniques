@@ -11,6 +11,13 @@ kernelspec:
 
 # Describing Data
 
+This topic is a journey towards calculating uncertainties and linear correlations in multidimensional datasets.
+
+* ```numpy``` methods: ```random, stack, cov, corrcoef, pearsonr```
+* ```scipy.stats``` methods: ```rvs, spearmanr```
+
+
+
 ## Mean and Expectation
 
 The [**Sample Mean**](#eq:mean) of a RV is calculated as a normalised sum over a finite number of measurements. It is a **summary statistic** calculated from the data.

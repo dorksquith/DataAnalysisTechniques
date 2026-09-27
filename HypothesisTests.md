@@ -11,6 +11,11 @@ kernelspec:
 
 # Hypothesis Tests
 
+The aim of this topic is to assist you in joining the tiny minority of people who understand what a p value is. On our way there we will elucidate a lot of jargon, some of it very useful.
+
+* ```scipy.stats``` methods: ```ppf, sf```
+
+
 ## Hypotheses
 
 A Hypothesis is an educated guess at the explanation for some occurrence. It must

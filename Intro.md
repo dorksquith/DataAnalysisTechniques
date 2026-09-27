@@ -434,6 +434,11 @@ If you find that the [Good Research Code Handbook](https://goodresearch.dev/) is
 
 * **[Scientific Python](https://lectures.scientific-python.org/)**: Superb long-term reference. I expect it will help you in this module and beyond.
 
+[//]: # ( https://realpython.com/numpy-scipy-pandas-correlation-python/#correlation)
+
+
+
+
 <!--
 :::{dropdown} Other useful computing references
 - [Python Book](https://www.acsu.buffalo.edu/~adamcunn/downloads/PythonBook.pdf)

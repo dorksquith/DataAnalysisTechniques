@@ -9,14 +9,15 @@ kernelspec:
 
 A **brief tour** of the important terms and concepts for this module, almost all of which **we will revisit in detail later**.
 
-:::{tip}
-Don't forget to press ⏻ then ▷ as per the [intro](#chapter:intro)
-:::
 
 * ```numpy``` methods: ```sum, min, max, mean, var, std, random```
 * ```scipy.stats``` methods: ```uniform, norm```
 * ```matplotlib.pyplot``` methods: ```plot, hist, scatter```
 
+
+:::{tip}
+Don't forget to press ⏻ then ▷ as per the [intro](#chapter:intro)
+:::
 
 ## Hypotheses, Models, and Theories
 

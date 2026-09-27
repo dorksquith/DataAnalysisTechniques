@@ -12,7 +12,16 @@ kernelspec:
 (chapter:norm)=
 # The Normal Distribution
 
-Many RVs are "Normally Distributed", meaning they follow a Gaussian Probability Distribution. Some examples are shown in are shown in [](#fig:norm-everywhere).
+Many RVs are "Normally Distributed", meaning they follow a Gaussian Probability Distribution. Why?
+
+
+* ```scipy.stats``` methods: ```pdf, cdf, multivariate_normal```
+* ```matplotlib.pyplot``` methods: ```semilogy```
+* ```pandas``` methods: ```DataFrame, iloc, mean, max, std```
+* ```seaborn``` methods: ```JointGrid.kdeplot, histplot```
+
+
+Some examples of normallu distributed RVs are shown in are shown in [](#fig:norm-everywhere).
 
 :::{figure} 
 :label: fig:norm-everywhere

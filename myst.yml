@@ -24,6 +24,7 @@ project:
     - file: Normal.md
     - file: HypothesisTests.md
     - file: NormalTests.md
+    #- file: MathQuickRef.md
     #- file: Exercises.md
 
   numbering:

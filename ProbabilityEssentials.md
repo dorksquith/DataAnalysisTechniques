@@ -12,15 +12,24 @@ kernelspec:
 (chapter:probess)=
 # Probability Essentials
 
-:::{tip}
-Don't forget to press ⏻ then ▷ as per the [intro](#chapter:intro)
-:::
-
 Probability is very important to human beings. We are subject to random
 events in nature that can completely change the course of our lives,
 leading to world domination or total annihilation.
 It is not surprising that games of chance are so popular, and have
 probably been around much longer than eg written communication.
+
+
+* ```python``` methods: ```set, range, issubset, |, &```
+* ```scipy.stats``` methods: ```randint, rv_continuous```
+* ```sympy``` methods: ```integrate```
+* ```matplotlib.pyplot``` methods: ```stem```
+
+
+
+:::{tip}
+Don't forget to press ⏻ then ▷ as per the [intro](#chapter:intro)
+:::
+
 
 ## Two Philosophies
 

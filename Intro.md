@@ -32,8 +32,15 @@ The materials for the first volume are largely ready[^incomplete], with the topi
 
 **Read and Execute Offline**
 
-: [Help!](#help).
-  ```bash
+For the commands below, you need 
+
+1. A **Terminal**: On **mac osx**, Terminal comes pre-installed. Find it using spotlight. On **windows**, see [here](https://learn.microsoft.com/en-us/windows/terminal/install)
+
+2. **Python**: On **mac osx**, you first need to [install Xcode command line tools](https://developer.apple.com/documentation/xcode/installing-the-command-line-tools). On **mac osx** or **windows**, download the latest python installer for your OS from [here](https://www.python.org/downloads/)
+
+3. **Git**: Follow the three steps for your OS [here](https://docs.github.com/en/get-started/git-basics/set-up-git#setting-up-git)
+
+```bash
   # Clone the repository and go to folder
   git clone https://github.com/dorksquith/DataAnalysisTechniques.git
   cd DataAnalysisTechniques
@@ -43,15 +50,20 @@ The materials for the first volume are largely ready[^incomplete], with the topi
 
   # Create and activate virtual python environment  
   python3 -m venv .venv
+
+  # on mac osx or unix
   source .venv/bin/activate
+  #on windows
+  .venv\Scripts\activate
 
   # Install dependencies  
   pip install -r requirements.txt
 
   # run the jupyter book and open in browser by pasting http://localhost:3000 into eg chrome 
   jupyter book start --execute
-  ```
+```
 
+[Help!](#help)
 
 **Exercises**
 : I am in the process of converting and uploading exercises (math and python) for all the topics. For [Terminology & Concepts](#chapter:tandc) and [Probability Essentials](#chapter:probess), there are some good exercises in the OpenStax text book which I have linked at the bottom of those pages.
@@ -469,7 +481,7 @@ My advice is to make yourself comfortable, and follow the suggested module struc
 
 * **[Helping Engineers Learn Math (HELM)](https://www.lboro.ac.uk/departments/mlsc/student-resources/helm-workbooks/)**: If your math is rusty, I recommend looking at the relevant workbooks here.
 * **[Stats Course by Glen Cowan](https://www.pp.rhul.ac.uk/~cowan/stat_course.html)**: If this is not your first rodeo, this is a good lecture course to dip into for more challenging work. It is the one I followed as a PhD student, and is geared towards particle physicists. 
-* **[Stats Course by Mark Thomson](https://www.hep.phy.cam.ac.uk/~thomson/lectures/lectures.html)**: If this is not your second rodeo, these is an excellent set of very condensed notes - best suited to experts who need to brush up. Also geared towards particle physicists.
+* **[Graduate Lectures on Statustics by Mark Thomson](https://www.hep.phy.cam.ac.uk/~thomson/lectures/lectures.html)**: If this is not your second rodeo, these is an excellent set of very condensed notes - best suited to experts who need to brush up. Also geared towards particle physicists.
 
 
 <!--

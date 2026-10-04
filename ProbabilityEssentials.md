@@ -184,7 +184,7 @@ AUB = A|B
 print (f"Union AUB ={AUB}")
 ```
 
-
+(intersection)=
 ### Intersection $A\cap B$
 
 The **Intersection** of two sets is written $A\cap B$; this means 'both A and B'. For [our sets](#our-sets), $A\cap B = \{2,4\}$
@@ -233,7 +233,7 @@ Two sets are **Independent** if they are defined without reference to one anothe
 
 Two sets are **Mutually Exclusive** if there is no overlap between them. Another word for this is **Disjoint**.
 
-
+(frequentist-probability)=
 ## Frequentist Probability
 
 
@@ -330,7 +330,7 @@ The **Countable Additivity Axiom**
   ``` 
 
 (cond-prob)=
-### Conditional Probability $P(A | B)$
+## Conditional Probability $P(A | B)$
 
 The **Conditional Probability** is most usefully written:
 
@@ -374,6 +374,7 @@ P_BgivenA = P_AnB / P_A
 print("P(B|A) = ", P_BgivenA )
 ```
 
+### Special Case: Independent Sets
 
 **If A and B are Independent**, the conditional probability is $$\label{eq:conpInd}P(A | B)  = P(A)$$. This is because independence means that B has no effect on A and vice versa.
 
@@ -381,6 +382,43 @@ print("P(B|A) = ", P_BgivenA )
 
 
 Conditional Probability looks harmless enough, but can have some counter-intuitive results illustrated very well in the **Monty Hall Problem**, which we will think about later.
+
+
+(contingency-tables)=
+### Contingency Tables
+
+A Contingency Table allows us to summarise the relationships between sets[^nonbin]. 
+
+> Reminder: The notation $A'$ indicates the [Complement](#complement) of A, meaning "not A".
+
+> Reminder: The notation $A\cap B$ indicates the [Intersection](#intersection), meaning "both A and B".
+
+[^nonbin]: We are not limited to two sets, just using the simplest form here.
+
+:::{table} Contingency Table Example in terms of sets **A** and **B**
+:align: center
+
+|      | $B$   | $B'$  | 
+| ---  | --- | --- | 
+| $A$    | $P(A\cap B)$  | $P(A\cap B')$  | 
+| $A'$   | $P(A'\cap B)$ | $P(A'\cap B')$ | 
+:::
+
+
+For [our sets](#our-sets):
+
+:::{table} Contingency Table Example in terms of sets **A** and **B**
+:align: center
+:label: tab:contingency1
+
+|            | $B$   | $B'$  | Marginal |
+| ---        | --- | --- | --- |
+| $A$        | 0.2  | 0.3  | 0.5 |
+| $A'$       | 0.2 | 0.3 | 0.5 |
+| Marginal   | 0.4  | 0.6 | 1 |
+:::
+
+The **Marginal Probability** of being in set B is 40%. We have "marginalised out" set A, meaning we don't care if our events fall in set A or not.
 
 
 
@@ -399,7 +437,7 @@ Example: I roll a dice twice. What is the probability I will get two sixes?
 
 $P(six \cap six) = P(six) P(six) = \dfrac{1}{6} \dfrac{1}{6}  = \dfrac{1}{36}$
 
-
+(total-prob)=
 ### Total Probability
 
 In the below tryptich of Venn diagrams, I have divided the Sample Space S into four quadrants, each of which is a set $B_i$. There are N=4 disjoint sets $B_i$ intersecting with A. 
@@ -426,6 +464,7 @@ This may seem a bit contrived, but we will see soon that it is useful.
 
 > The Total Probability P(A) is also referred to as the **Marginal Probability** of A. This is because we have "Marginalised Out" the probability of B, and are only considering A.
 
+(bayes-theorem)=
 ## Bayes' Theorem
 
 To write down Bayes' theorem we need only the **Conditional Probability** [](#eq:conp), and to observe that:
@@ -466,10 +505,133 @@ Bayes' Theorem gets interesting when we consider that it applies to **any sets $
 Using Bayes' theorem does not make one a Bayesian. It is used by Frequentists and Bayesians alike!
 :::
 
+(bayes-theorem-special)=
+### 🆕 Bayes' Theorem for Hypotheses and Measurements
 
+Our generic demonstration of Bayes' theorem for two sets of numbers was a bit disappointing. Bayes gets interesting when we consider, for example, a set of hypotheses and a set of measurements.
+
+**Example**:
+In one universe, inhabited by Zorgs, the **Yellow Zorgs** had better starting conditions than the red Zorgs, eg they had more fruit trees. The yellow Zorgs cherished their privilege and came to opress the red Zorgs at every chance they got in order to cling onto it in the face of other random events. In another universe, **Red Zorgs** had better starting conditions. These are the only possible universes.
+
+::::{tab-set}
+:::{tab-item} Hypotheses
+
+Y : Yellow Zorgs are dominant
+
+Y' : Red Zorgs are dominant
+
+Probability of intersection: $P(Y \cap Y') = 0$
+: The probability of both Yellow Zorgs being dominant and Red Zorgs being dominant is zero. The universes are disjoint: no overlap: mutually exclusive.
+
+Conditional probability:  $P(Y | Y') = 0$
+: The probability of Yellow Zorgs being dominant, given that Red Zorgs are dominant, is zero. [](#eq:conp)
+
+Probability of union: $P(Y \cup Y') = P(Y) + P(Y') = 1$
+: The probability of Yellow Zorgs being dominant, plus that of Red Zorgs being dominant, plus the intersection (zero) is 1. This must be the case, because these are the only two universes, and the total probability must be 1.
+
+The set of hypotheses is $H = Y + Y'$
+
+:::
+
+:::{tab-item} Measurements
+
+y : Yellow Zorgs are happiest
+
+y' : Red Zorgs are happiest
+
+Probability of intersection: $P(y \cap y') = 0$
+: The probability of both Yellow Zorgs being happiest and Red Zorgs being happiest is zero. The outcomes are disjoint: no overlap: mutually exclusive.
+
+Conditional probability:  $P(y | y') = 0$
+: The probability of Yellow Zorgs being happiest, given that Red Zorgs are happiest, is zero. [](#eq:conp)
+
+Probability of union: $P(y \cup y') = P(y) + P(y') = 1$
+: The probability of Yellow Zorgs being happiest, plus that of Red Zorgs being happiest, plus the intersection (zero) is 1. This must be the case, because these are the only two outcomes, and the total probability must be 1.
+
+The set of measurements (or outcomes) is $D = y + y'$
+
+:::
+::::
+
+The data are as follows:
+* In universe Y where Yellow Zorgs are dominant, 100% of Yellow Zorgs are happiest.
+* In universe Y' where Red Zorgs are dominant, 90% of Red Zorgs are happiest.
+
+Note: these data are percentages **with respect to the given universe**; in other words the assumption is that the total probabbility of being in universe Y is 1, and that the total probability of being universe Y' is 1. This makes them **Conditional Probabilities**.
+
+<!--
+:::{table} Tabulated Conditional Probabilities for Zorgs
+:align: center
+:label: tab:zorgs1
+
+|            | $B$   | $B'$  | 
+| ---        | --- | --- | 
+| $A$        | $P(y|Y)=1$  | $P(y'|Y) = 0$  | 0.5 |
+| $A'$       | $P(y|Y')=0.1$ | $P(y'|Y') = 0.9$ |
+:::
+-->
+
+:::{table} Tabulated Conditional Probabilities for Zorgs
+:align: center
+:label: tab:zorgs1
+
+|            | $y$   | $y'$  | 
+| ---        | --- | --- | 
+| $Y$        | $P(y\|Y)=1$  | $P(y'\|Y)=0$  |
+| $Y'$       | $P(y\|Y')=0.1$ | $P(y'\|Y')=0.9$ |
+:::
+
+Note that []{#tab:zorgs1} has the **Conditional Probabilities**, while a regular contingency table such as [](#tab:contingency1) has **Joint Probabilities**.
+
+The difference between these is the **Total Probability**, as per [](#eq:conp).
+
+
+To build a contingency table of valid Probabilities, we must ensure the totals [](#total-prob) are 1.
+
+```{math}
+\begin{aligned}
+P(y) & = P(y \cap Y) + P(y \cap Y') \\
+     & = P(y|Y) P(Y) + P(y|Y') P(Y') \\ 
+    & = 1 \\
+\end{aligned}
+```
+
+To do this, we need to know P(Y) and P(Y') : the Total Probability of being in one universe or the other. In Bayesian terms, these are our **Prior Probabilities**. 
+
+**Some additional data:**
+: In 25% of universes, Yellow Zorgs are dominant.
+
+Now we can build a "proper" contingency table, because [](#eq:conp) gives us the relationship:
+
+```{math}
+P(A \cap B) = P(A|B) P(B)
+```
+
+
+:::{table} Tabulated Joint Probabilities for Zorgs
+:align: center
+:label: tab:zorgs2
+
+|      | y           | y'    | Marginal |
+| ---  | ---         | ---   | --- |
+| Y  |  P(y$\cap$Y) = (1)(0.25) = 0.25 | P(y'$\cap$Y) = (0)(0.25)=0  |  0.25 |
+| Y' |  P(y$\cap$Y')= (0.1)(0.75) = 0.075 | P(y'$\cap$Y') = (0.9)(0.75)=0.675 | 0.75 |
+| Marginal | 0.325 | 0.675 | 1|
+:::
+
+
+
+The **Total Probability** of the data: $P(y)$
+
+The **Likelihood** of the data, given a specific hypothesis: $P(y|Y)$.
+
+The **Prior Probability** of a specific specific hypothesis: $P(Y)$.
+
+
+(probability-distributions)=
 ## Probability Distributions
 
-We can express probabilities as single numbers, for example the probability of getting six when I roll a die is $p_6 = \frac{1}{6}$, if the die is fair and has six sides. 
+We can express probabilities as single numbers, for example the probability of getting six when I roll a die is $p_6 = \frac{1}{6}$, conditional on the die being fair and having six sides. 
 
 More helpfully, we can express probabilities in terms of the RV and some parameters. For example, when I roll a fair die with $n$ sides, the probability of getting a number $x$ is $p_x = \frac{1}{n}$. This is a **Probability Distribution**[^admit].
 
@@ -481,8 +643,8 @@ There are two kinds of Probability Distributions:
 
 
 
-::::{tab-set}
-:::{tab-item} PMFs
+:::::{tab-set}
+::::{tab-item} PMFs
 
 The score from rolling a die (or any number of dice) is a Discrete RV. The probability of measuring a given value $k$ for a Discrete RV $K$ is described by a **Probability Mass Function (PMF)** $p_K(k)$.
 
@@ -494,6 +656,10 @@ A PMF must satisfy the [Kolmogorov Axioms](#kolmogorov), which we usually write 
 :label: eq:kolmogorov1pmf
  p_K(k) > 0\;\;\; \forall\;\; k \in S
 ```
+:::{tip}
+The symbol $\forall$ means "for all".
+The symbol $\in$ means "in".
+:::
 
 $$\label{eq:kolmogorov2pmf} \sum\limits_{k\in S} p_K(k) =1 $$
 
@@ -536,9 +702,9 @@ plt.show()
 ```
 
 
-:::
+::::
 
-:::{tab-item} PDFs
+::::{tab-item} PDFs
 
 The probability of measuring a given value $x$ for a Continuous RV $X$ is described by a **Probability Density Function (PDF)** $f_X(x)$.
 
@@ -552,9 +718,7 @@ $$\label{eq:kolmogorov2pdf} \int\limits_{S} f_X(x) dx =1 $$
 
 $$\label{eq:kolmogorov3pdf} P(x \in A) = \int\limits_{A} f_X(x) dx $$
 
-```{important} Density
-Notice that we label the y-axis as **Density** rather than Probability for the PDF. This is because **the probability of measuring any single value for $X$ is zero**. This can seem a bit odd; it is a consequence of Continuous RVs having an uncountable infinity of possible values, so the only way such an RV can satisfy [Kolmogorov 2](#eq:kolmogorov2pdf) is to demand the probability of any exact value is zero.
-```
+
 
 (code:pdf-example)=
 ```{code-cell} python
@@ -590,11 +754,15 @@ plt.ylim(0)
 plt.show()
 
 ```
-:::
 
+```{important} Density
+Notice that we label the y-axis as **Density** rather than Probability for the PDF. This is because **the probability of measuring any single value for $X$ is zero**. This can seem a bit odd; it is a consequence of Continuous RVs having an uncountable infinity of possible values, so the only way such an RV can satisfy [Kolmogorov 2](#eq:kolmogorov2pdf) is to demand the probability of any exact value is zero.
+```
 ::::
 
+:::::
 
+(normalise-func)=
 ### From Function to PDF: the Normalisation Constant
 
 We will meet the Normal PDF in [](#chapter:norm), and explore several other special distributions provided by the ```scipy.stats``` library later, such as the Poisson PMF and Exponential PDF. The distributions provided by ```scipy.stats``` are incredibly convenient because they provide a host of built-in methods.
@@ -627,6 +795,7 @@ A Probability Distribution must have sum (for a PMF) or integral (for a PDF) equ
 
 We can now write our function as a **Valid PDF**: $$\label{eq:ourpdf} f_X(x) = 4 x^3,\;\; 0 \leq x \leq 1$$.
 
+(sympy-integration)=
 ### Integration with ```sympy```
 
 Let's sanity-check[^sanity] our conclusion that [](#eq:ourpdf) is a valid PDF using ```sympy```:
@@ -660,6 +829,7 @@ See [sympy_in_10_minutes](https://github.com/sympy/sympy-notebooks/blob/master/b
 :::
 
 
+(user-pdf)=
 ### Making a user PDF with ```scipy.stats```
 
 If we want the convenience of a ```scipy.stats``` PDF but our function is not on the [list](https://docs.scipy.org/doc/scipy/reference/stats.html#probability-distributions) of those provided, we can make a subclass of eg the ```rv_continuous``` base class, as per the example below.

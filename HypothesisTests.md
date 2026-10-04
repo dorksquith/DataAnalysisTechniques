@@ -223,7 +223,7 @@ And as a conditional probability:
 ```
 [](#eq:efficiency3): the Efficiency is the probability of the classification is **a**, given that the truth is **A**.
 
-
+(contingency-tables-again)=
 ### Contingency Tables
 
 A Contingency Table allows us to summarise the efficiency and purity of a test statistic in terms of the Truth: True/False and the Classification:Postive/Negative[^nonbin].

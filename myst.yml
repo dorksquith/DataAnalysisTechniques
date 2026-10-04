@@ -26,7 +26,8 @@ project:
     - file: NormalTests.md
     #- file: MathQuickRef.md
     #- file: Exercises.md
-
+    - file: UnixCheatsheet.md
+    
   numbering:
     title: true
     headings: true

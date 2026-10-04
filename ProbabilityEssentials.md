@@ -581,7 +581,7 @@ Note: these data are percentages **with respect to the given universe**; in othe
 | $Y'$       | $P(y\|Y')=0.1$ | $P(y'\|Y')=0.9$ |
 :::
 
-Note that []{#tab:zorgs1} has the **Conditional Probabilities**, while a regular contingency table such as [](#tab:contingency1) has **Joint Probabilities**.
+Note that [](#tab:zorgs1) has the **Conditional Probabilities**, while a regular contingency table such as [](#tab:contingency1) has **Joint Probabilities**.
 
 The difference between these is the **Total Probability**, as per [](#eq:conp).
 

@@ -24,9 +24,10 @@ project:
     - file: Normal.md
     - file: HypothesisTests.md
     - file: NormalTests.md
-    - file: CW1.md
-    #- file: MarkdownCheatSheet.md
-    #- file: LatexCheatSheet.md
+    #- file: CW1.md
+    - file: UnixCheatsheet.md
+    - file: MarkdownCheatSheet.md
+    - file: LatexCheatSheet.md
     
   numbering:
     title: true

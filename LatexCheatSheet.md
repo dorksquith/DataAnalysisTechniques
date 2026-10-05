@@ -13,7 +13,8 @@ numbering:
   equation: true
 ---
 
-# LaTeX Cheat Sheet
+(latex-cheatsheet)=
+# Appendix C: LaTeX Cheatsheet
 
 This is a very small selection intended for quick reference. See the [comprehensive list](https://tug.ctan.org/info/symbols/comprehensive/symbols-a4.pdf).
 

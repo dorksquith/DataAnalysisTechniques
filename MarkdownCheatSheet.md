@@ -14,7 +14,7 @@ numbering:
 ---
 
 (md-cheatsheet)=
-# Markdown Cheat Sheet
+# Appendix B: Markdown Cheatsheet
 
 ## Text
 
@@ -31,6 +31,8 @@ You can make text **bold** or *italic* or `monospace`.
 ::::
 
 ## Math
+
+See the [LaTeX Cheat Sheet](latex-cheatsheet) for quick ref on typesetting math in LaTeX.
 
 ::::{tab-set}
 :::{tab} Output

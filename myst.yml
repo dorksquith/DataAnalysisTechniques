@@ -24,10 +24,11 @@ project:
     - file: Normal.md
     - file: HypothesisTests.md
     - file: NormalTests.md
-    #- file: CW1.md
-    - file: UnixCheatsheet.md
-    - file: MarkdownCheatSheet.md
-    - file: LatexCheatSheet.md
+     - file: CheatSheets.md
+      children:
+      - file: UnixCheatsheet.md
+      - file: MarkdownCheatSheet.md
+      - file: LatexCheatSheet.md
     
   numbering:
     title: true

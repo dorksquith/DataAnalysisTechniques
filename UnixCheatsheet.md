@@ -10,7 +10,7 @@ authors:
 ---
 
 (chapter:unixcs)=
-# Appendix A: Unix Cheatsheet
+# Unix Cheatsheet
 
 Some basic commands to get you started with a Unix based operating system.
 

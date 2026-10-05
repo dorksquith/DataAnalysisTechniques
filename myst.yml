@@ -24,7 +24,7 @@ project:
     - file: Normal.md
     - file: HypothesisTests.md
     - file: NormalTests.md
-     - file: CheatSheets.md
+    - file: CheatSheets.md
       children:
       - file: UnixCheatsheet.md
       - file: MarkdownCheatSheet.md

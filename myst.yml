@@ -29,6 +29,7 @@ project:
       - file: UnixCheatsheet.md
       - file: MarkdownCheatSheet.md
       - file: LatexCheatSheet.md
+    - file: Workshop2.md
     
   numbering:
     title: true

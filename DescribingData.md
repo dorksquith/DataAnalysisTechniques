@@ -104,7 +104,7 @@ In [](#fig:mean-expect-mp4) we saw that the Sample Mean $\overline{x}$ does not 
 
 The **Law of Large Numbers (LLN)**[^1] tells us that if we were to increase the size of the data sample to infinity (not possible in real life), the sample mean $\overline{x}$ would approach the true mean $\mu$ with high probability.
 
-[^1]: To be precise, this is the Weak LLN. The Strong LLN is subtly different, explained quite nicely on [wikipedia](https://en.wikipedia.org/wiki/Law_of_large_numbers).
+[^1]: To be precise, this is the Weak LLN. The Strong LLN is subtly different, explained quite nicely on [wikipedia](https://en.wikipedia.org/wiki/Law_of_large_numbers) and [youtube](https://www.youtube.com/watch?v=ycuPP72_DVU).
 
 ```{math}
 :label: eq:lln
@@ -526,7 +526,7 @@ The math notation for the **Linear Correlation Matrix** is:
 \mathbf{\rho} = 
 
 \begin{bmatrix}
-\dfrac{\sigma^2_a}{\sigma_a\sigma_a} & \dfrac{\mathsf{cov}(a,b)}{\sigma_a\sigma_b} \\[1ex]
+\dfrac{\sigma^2_a}{\sigma_a\sigma_a} & \dfrac{\mathsf{cov}(a,b)}{\sigma_a\sigma_b} \\ \\
 \dfrac{\mathsf{cov}(b,a)}{\sigma_b\sigma_a} &\dfrac{\sigma^2_b}{\sigma_b\sigma_b} \\
 \end{bmatrix}
 
@@ -642,6 +642,172 @@ In the above example, we chose $ 0 < x < 10$, and over this range $y$ is monoton
 Cartoon from [xkcd](https://xkcd.com/).
 :::
 
+## 🆕 Exercises
+
+---
+
+### E[X] for $f_X(x) = 4x^3$ 
+
+---
+A continuous RV $X$ has PDF 
+
+```{math}
+f_X(x) = 
+\begin{cases}
+     0\; & x < 0\\[1ex] 
+   4x^3\; & 0 \leq x \leq 1 \\[2ex]
+     0\; & x > 1\\[1ex] 
+\end{cases}
+```
+
+---
+
+Find the expectation, $E[X] = \int\limits_0^1 x\;f_X\;dx$.
+
+---
+
+Option A
+: do the math (integrate).
+
+::::{dropdown} Show "do the math" solution 
+
+```{math}
+\begin{aligned}
+E[X] & = \int \limits_0^1 x\;f_X\; dx  = \int \limits_0^1 4 x^4\; dx \\ 
+     & = \dfrac{4}{5} x^5\bigg|_0^1  =  \dfrac{4}{5} \left(1-0\right) =  \dfrac{4}{5}     
+\end{aligned}
+```
+::::
+
+Option B
+: let `sympy` do it.
+
+::::{dropdown} Show `sympy` solution 
+
+```{code-cell} python
+import sympy
+sympy.init_printing()
+x = sympy.Symbol('x')
+
+def ExpX(xlo,xhi):
+  
+  f = 4 * x**3
+
+  i = sympy.integrate( f * x, (x,xlo,xhi) )
+
+  print(f"Integral {f}, {xlo}<x<{xhi} =  {i}" )
+
+ExpX(0,1)
+```
+::::
+
+---
+
+### E[X] for $f_X(x;\lambda) = \lambda e^{-\lambda x}$  
+
+---
+A continuous RV $X$ has PDF 
+
+```{math}
+f_X(x) = 
+\begin{cases}
+     0\; & x < 0\\[1ex] 
+  \lambda e^{-\lambda x}\; & 0 \leq x \leq \infty \\[2ex]
+\end{cases}
+```
+
+for $\lambda >0$.
+
+---
+
+Show that $E[X] = \dfrac{1}{\lambda}$.
+
+---
+Option A
+: do the math (use integration by parts $\int u dv = uv - \int v du $).
+
+::::{dropdown} Show "do the math" solution 
+```{math}
+:label: eq:eofx
+\begin{aligned}
+E[X] & = \int \limits_0^{\infty} x\;f_X\; dx \\  
+     & = \int \limits_0^{\infty} x\;\lambda e^{-\lambda x}\; dx \\ 
+\end{aligned}
+```
+
+Integration by parts: $\int u dv = uv - \int v du $. Choose $u,v,du,dv$ such that a) the integral on the LHS is [](#eq:eofx), and
+b) the integral on the RHS is not a product (if it is, iterate!).
+
+:::{table} 
+:align: center
+
+| piece | choice |
+|---|---|
+| $u$   | $x$  |
+| $du$  | $dx$ |
+| $dv$  | $\lambda e^{-\lambda x}\; dx$  |
+| $v$   | $- e^{-\lambda x}$ |
+:::
+
+The LHS integral:
+```{math}
+\begin{aligned}
+\int u dv &= \int x \lambda e^{-\lambda x}\; dx \\
+&= E[X]
+\end{aligned}
+```
 
 
+Do the RHS integral:
 
+```{math}
+\begin{aligned}
+uv - \int v du & = - x e^{-\lambda x} - \int - e^{-\lambda x} dx \\
+               
+        & = - x e^{-\lambda x} + \int e^{-\lambda x} dx \\
+
+        & = - x e^{-\lambda x} - \dfrac{1}{\lambda}  e^{-\lambda x}\\
+
+        & = - \left( x + \dfrac{1}{\lambda} \right) e^{-\lambda x} \\  
+\end{aligned}
+```
+Limits are $0\leq x \leq \infty$:
+
+```{math}
+\begin{aligned}
+& = - \left( \infty + \dfrac{1}{\lambda} \right) e^{-\lambda \infty} - -  \left( 0 + \dfrac{1}{\lambda} \right) e^{-\lambda 0}\\  
+
+& = \left(0\right) +  \left(\dfrac{1}{\lambda} \right)\\
+
+& = \dfrac{1}{\lambda}\\
+\end{aligned}
+```
+::::
+
+
+Option B
+: let ```sympy``` do it.
+
+
+::::{dropdown} Show ```sympy``` solution 
+
+```{code-cell}python
+import sympy
+sympy.init_printing()
+lam = sympy.Symbol('lam', positive=True)
+x = sympy.Symbol('x')
+
+def ExpX(xlo,xhi):
+  
+  f = lam * sympy.exp(-x*lam)
+
+  i = sympy.integrate(f*x, (x,xlo,xhi) )
+
+  print(f"Integral {f}, {xlo}<x<{xhi} =  {i}" )
+
+ExpX(0,np.inf)
+
+```
+::::
+
+---

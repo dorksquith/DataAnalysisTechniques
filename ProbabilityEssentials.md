@@ -863,6 +863,49 @@ print(f" mean:  {mean:.3f}, variance: {variance:.3f}")
 
 ```
 
+(add-notes)=
+## 🆕 Harmonising Different Notations
+
+Define event A: the continuous RV $X$ has a value $X\leq x$.
+
+**The Probability of event A** is then:
+
+```{math}
+\begin{aligned}
+P(A) &= P(X\leq x) \\
+     &= \int \limits_{-\infty}^{x} f_{X}(x)\, dx & \leftarrow f_X(x) \mathsf{\; is\; the\; PDF} \\ 
+     &= F_{X}(x)& \leftarrow F_X(x) \mathsf{\; is\; the\; CDF\; at\;}X=x \\ 
+\end{aligned}
+```
+---
+
+Define event B: the continuous RV $Y$ has a value $Y \leq y$.
+
+**The Joint Probability of events A and B** is then: 
+
+```{math}
+\begin{aligned}
+P(A \cap B) &= P(A | B ) \, P(B) \\ 
+            &= \int \limits_{x_0}^{x} \int \limits_{y_0}^{y} f_{XY}(x,y)\, dx\, dy & \leftarrow f_{XY}(x,y) \mathsf{\; is\; the\;joint\; PDF} \\  
+            &= F_{XY}(x,y) &\leftarrow F_{XY}(x,y) \mathsf{\; is\; the\;joint\; CDF} \\
+\end{aligned}
+```           
+
+---
+
+**The Marginal Probability of event A** is then:
+
+```{math}
+\begin{aligned}
+P(A \cap B) &= P(A | B ) \, P(B) \\ 
+            &= \int \limits_{x_0}^{x} \int \limits_{y_0}^{\infty} f_{XY}(x,y)\, dx\, dy & \leftarrow f_{XY}(x,\infty) \mathsf{\; is\; the\;joint\; PDF} \\  
+            &= F_{XY}(x,\infty) &\leftarrow F_{XY}(x,\infty) \mathsf{\; is\; the\;marginal\; CDF\; for\; X} \\
+\end{aligned}
+
+``` 
+
+
+
 
 ### Exercises
 

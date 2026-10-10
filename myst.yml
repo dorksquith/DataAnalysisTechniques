@@ -11,7 +11,9 @@ project:
 
   description: Module 890F3, University of Sussex
 
-  authors: Lily Asquith
+  authors:
+    - name: Lily Asquith
+    - name: Tom Stevenson
 
   github: https://github.com/dorksquith/DataAnalysisTechniques
 
@@ -30,6 +32,7 @@ project:
       - file: MarkdownCheatSheet.md
       - file: LatexCheatSheet.md
     - file: Workshop2.md
+    - file: Workshop3.md
     
   numbering:
     title: true

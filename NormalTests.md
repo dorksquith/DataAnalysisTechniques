@@ -129,6 +129,8 @@ The True Variance is irreducible. It is a property of the underlying PDF that li
 
 The Variance on the  Means is a (linear) function of this True Mean, and also has a strong inverse dependence on the number of measurements we take. In a nutshell, **the more measurements we take, the smaller the uncertainty on our measurement becomes**.
 
+---
+
 (sem)=
 ### Standard Error on the Mean $\mathsf{SEM}$
 
@@ -147,6 +149,7 @@ The difference between $\sigma_x$ and $\sigma_{\overline{x}}$ is of crucial impo
 * $\sigma_{\overline{x}}$ is not a summary statistic; it is a theoretical statistic, and it tells us how precise our mean measurement will be for a given number of measurements, N , and a true underlying variability, $\sigma_{true}$.
 ```
 
+---
 
 ## Worked Example: A Tale of Three Cities
 
@@ -195,7 +198,7 @@ We have two problems:
 
 2. How to we express the uncertainty on the mean when we have a tiny number of measurements?
 
-
+---
 
 ### The Uncertainty on the Mean
 
@@ -234,6 +237,7 @@ Fake data, N=30, with the shaded blue bar now giving a sensible estimate of the 
 Fake data, N=100, with the shaded blue bar now giving a sensible estimate of the uncertainty.
 :::
 
+---
 
 (sosmall)=
 ### Small Datasets
@@ -258,6 +262,8 @@ If we have only a handful of measurements, and there is no way to collect more d
 : Use "common sense": my own experience of sleeping tells me that there can be natural +/- 1.5 H fluctuations on the number of hours I sleep each night. I expect that this could be as high as +/- 3H  in some people. I will use $\mathsf{\widehat{\sigma} = \mathsf{3H}}$. 
   
   Less sad and safe than the frequentists' "abstinence" approach, but reasonable in my opinion, given the very conservative (over-inflated, really) estimate. And it just feels wrong to not share my data at all, given that there is some limited information in it.
+
+---
 
 (data:threecities)=
 ## Three Cities Data
@@ -348,8 +354,7 @@ print(f" true_mu = {true_mu}, true_sigma={true_sigma}")
 
 ```
 
- 
-
+---
 
 ## The Z Test: compare data mean with hypothesis mean
 
@@ -358,6 +363,7 @@ print(f" true_mu = {true_mu}, true_sigma={true_sigma}")
 
 **Restrictions**
 : Data are $\mathsf{X\sim Norm(\mu,\sigma)}$
+
   True Variance $\sigma^2$ is known[^wot].
 
 
@@ -374,7 +380,10 @@ The Z Test defines this statistic slightly differently, because we no longer wan
 
 ```
 
-<!--The measurement (x) is replaced with the sample mean, $\overline{x}$,  and the reference ($\overline{x}$) is replaced with the True Mean of the Null Hypothesis $\mu_0$ with which we are comparing our data. It would not make sense to use the sample standard deviation in the denominator, because we are comparing means rather than values, so the correct thing to use in the denominator is the SEM.-->
+We use the SEM instead of the standard deviation in the denominator, because we are comparing means.
+
+
+---
 
 (ZTestExample)=
 ### Z Test Example: Hours slept in Stockport
@@ -491,6 +500,8 @@ else:
 
 ```
 
+::::
+
 > It may be helpful to keep a reference such as [](#fig:pvalzval) to hand to help with getting an understanding of how Z values and p values are related. It is very simple to convert one to another, but even better to have an instinct such as knowing a Z value of 0.5 puts us right in the peak of the normal distribution.
 
 :::{figure} 
@@ -500,7 +511,7 @@ else:
 For a Normal distribution, the p value and Z value are different ways of stating the same information.
 :::
 
-::::
+---
 
 ## The Student's T Test
 
@@ -516,13 +527,13 @@ The one-sample T Test is very similar to the Z Test, but is **particularly well 
   
 Notice that unlike the Z Test, the T test is not restricted by the need to know the True Variance. 
 
-In the (much more realistic) scenario where we don't know $\sigma_{true}$, we **Estimate** the [SEM](#eq:SEM) rather than calculating it[^note2]:
+In the (much more realistic) scenario where we don't know $\sigma_{true}$, we **Estimate** the [SEM](#eq:SEM) rather than calculating it[^note2].
 
 ```{math}
 :label: eq:est-sem
 \mathsf{ \widehat{SEM}} =\dfrac{\sigma_{x} }{\sqrt{N-1}}
 ```
-
+[^note2]: The use of $\sqrt{N-1}$ in the denominator, rather than $\sqrt{N}$, ensures the estimate is unbiased. This is particularly important when have a small dataset. More on this later.   
 
 The T distribution has one parameter: the number of degrees of freedom, with symbol [$\nu$](#eq:Tnu). 
 
@@ -532,7 +543,7 @@ The T distribution has one parameter: the number of degrees of freedom, with sym
 ```
 
 
-The T PDF $\nu=1$ corresponds to a sample size of $N=2$, because we are measuring a single parameter, the mean, $N_{pars}=1$. For reasonably sized datasets of $N \gtrapprox 30$, the T distribution and Norm are barely distinguishable.
+The T PDF $\nu=1$ corresponds to a sample size of $N=2$, because we are measuring a single parameter, the mean, $N_{pars}=1$. For reasonably sized datasets of $N \gtrapprox 30$, the T distribution and Norm are barely distinguishable on a linear scale.
 
 
 
@@ -543,7 +554,7 @@ The T PDF $\nu=1$ corresponds to a sample size of $N=2$, because we are measurin
 The T PDF for different values of the parameter $\nu$ (Number of degrees of freedom) on a linear scale (left) and on a log scale (right). The standard normal distribution Norm(0,1) is also shown as a red dashed line.
 :::
 
-
+---
 
 ### T Test Example: Hours slept in Brixton
 
@@ -626,6 +637,8 @@ else:
 ```
 
 ::::
+
+---
 
 ## The Student's T Test: two samples
 
@@ -924,6 +937,7 @@ Note that we can eyeball the PDF plot above (the closest one to our situation is
 
 ## Notes
 
+We will look at Estimator Bias in Part 2 of this module. If you can't wait until then to know why the unbiased variance has a factor $N-1$ in the denominator, here is my rather long proof from last year. The students and I were unable to find this proof in the text books, which we found frustrating; this might be because it is so long and boring, nobody has been bothered to typeset it.
 
 :::{figure}
 :label: fig:lilyproof_varbias

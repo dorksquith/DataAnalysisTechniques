@@ -190,6 +190,16 @@ Or, with [a bit of algebra](#a-bit-of-algebra), in the equally useful form:
 V[X] = E[X^2] - E^2[X]
 ```
 
+The True Standard Deviation $\sigma_X$ [](#eq:truesigma) is a measure of variability in the true distribution. For measured data, $\sigma_x$ tells us the statistical uncertainty within our dataset. For the true distribution, there is no uncertainty, only variability.
+
+
+```{math}
+:label: eq:truesigma
+
+\sigma_X = \sqrt{ V[X] } 
+```
+
+
 :::{dropdown} Proof that [](#eq:truevar) and [](#eq:truevar2) are equivalent
 :label: a-bit-of-algebra
 ```{math}
@@ -642,9 +652,141 @@ In the above example, we chose $ 0 < x < 10$, and over this range $y$ is monoton
 Cartoon from [xkcd](https://xkcd.com/).
 :::
 
-## 🆕 Exercises
+---
+
+(dd-varfunc)=
+## 🆕 Propagation of Uncertainties
+
+### LOTUS
+
+A function $g(x)$ of a RV is itself a RV, and we can calculate its expected value by using $x\rightarrow g$ in [](#eq:expectC):
+
+```{math}
+:label: eq:expectF
+E[ g ] = \int g\, f_X\, dx 
+```
+
+This is sometimes known as LOTUS: Law Of The Unconscious Statistician.
+
+The variance of the function can then be calculated by the definition [](eq:truevar2) of variance in terms of expectation: 
+
+```{math}
+:label: eq:varF
+V[ g ] = E[ (g - E[g])^2 ] = E[g^2] - E^2[g]
+```
+
+or by using [Variance Algebra](#VarianceAlgebra) for the function in question.
+
+
+### $g(x) = aX + b$
+
+A linear function of one RV is $g = aX + b$, where $a$ and $b$ are constants.
+
+The Expectation of the function can be found using [Expectation Algebra](#ExpectationAlgebra):
+
+```{math}
+E[g(x)] = E[ aX + b] =  E[ aX] + E[ b ]  = a E[X] + b
+``` 
+
+The Variance of the function can be found similarly:
+
+```{math}
+V[ g(x) ] = V[ aX + b] =  a^2 V[X] 
+```
+
+The Standard Deviation is therefore:
+
+```{math}
+\sigma_g =  a \sigma_X 
+```
+
+
+### $g(x,y) = aX + bY$
+
+A linear function of two RVs is $g = aX + bY$, where $a$ and $b$ are constants.
+
+The Expectation of the function can, again, be found using [Expectation Algebra](#ExpectationAlgebra):
+
+```{math}
+E[ g(x,y) ] = E[ aX + bY ] =  E[ aX] + E[ bY ]  = a E[X] + b E[Y] 
+``` 
+
+For the Variance we have, using [](#eq:varF):
+
+```{math}
+\begin{aligned}
+V[ g(x,y) ] & = E[ (g - E[g])^2 ] \\
+            & = E[ ( a (X-E[X]) + b(Y-E[Y]) )^2 ] \\
+            & = a^2 V[X] + b^2 V[Y] + 2ab\, cov(X,Y) \\
+\end{aligned}
+```
+
+Or, **if X and Y are independent**, 
+
+```{math}
+V[ g(x,y) ]  = a^2 V[X] + b^2 V[Y] 
+```
+
+The Standard Deviation for independent X,Y is therefore:
+
+```{math}
+\sigma_g =  \sqrt{ a^2 V[X] + b^2 V[Y] }
+```
+
+Which is often written as the "sum in quadrature":
+
+```{math}
+\sigma_g =  \sqrt{ a^2 \sigma^2_x + b^2 \sigma^2_y }
+```
+
+### $g = \sum\limits_j^Z \alpha_j X_{(j)}$
+
+A linear function of $Z$ RVs is $g = \sum\limits_j^Z \alpha_j X_{(j)}$, where $\alpha_j$ are constants.
+
+The Expectation:
+
+```{math}
+E[ g ] = E[ \sum\limits_j^Z \alpha_j X_{(j)} ] = \sum\limits_j^Z \alpha_j E[ X_{(j)}]
+``` 
+
+The Variance:
+
+```{math}
+
+V[ g ]  = \sum\limits_i^Z \sum\limits_j^Z \alpha_i \alpha_j\, cov( X_{(i)}, X_{(j)}) 
+
+```
+
+Alternatively, we can use the Taylor Expansion of the function's derivatives to write the variance as:
+
+```{math}
+\begin{aligned}
+V[ g ]  & = \sum\limits_i^Z \sum\limits_j^Z \dfrac{\partial g}{\partial x_{(i)} }  \dfrac{\partial g}{\partial x_{(j)} } cov( X_{(i)}, X_{(j)}) \\
+        & = J\, \Sigma\, J^{T}
+\end{aligned}
+```
+
+where J is the **Jacobian Matrix** of partial derivatibes, $J^{T}$ is its transpose, and $\Sigma$ is the **Covariance Matrix**.
+
+
+### $h(X) = \prod\limits_k^M g_k(X)$
+
+A **nonlinear** function can be written as a product of $M$ linear functions, $f_k$.
+
+The variance of such a function can be written as before:
+
+```{math}
+V[h]   = J\, \Sigma\, J^{T}
+```
+
+However, rather than having a single value (as in the case of a linear function), $V[h]$ is a $M\times M$ matrix of variances, because the Jacobian has shape $M\times Z$.
 
 ---
+
+(dd-exercises)=
+## 🆕 Exercises
+
+
 
 ### E[X] for $f_X(x) = 4x^3$ 
 

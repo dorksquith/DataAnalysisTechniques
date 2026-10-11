@@ -43,6 +43,7 @@ SEM = \dfrac{\sigma}{\sqrt{N}}
 
 We will cover the Standard Error on the Mean (SEM) this in [6. Normal Tests](https://dorksquith.github.io/DataAnalysisTechniques/normaltests/) but for now you can use [](#eq:sem1) without understanding it.
 
+---
 
 ## Example Solution
 

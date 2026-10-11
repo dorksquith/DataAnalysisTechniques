@@ -33,6 +33,8 @@ project:
       - file: LatexCheatSheet.md
     - file: Workshop2.md
     - file: Workshop3.md
+    - file: Workshop4.md
+    
     
   numbering:
     title: true

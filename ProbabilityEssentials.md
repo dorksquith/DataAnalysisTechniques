@@ -863,7 +863,7 @@ print(f" mean:  {mean:.3f}, variance: {variance:.3f}")
 
 ```
 
-(add-notes)=
+(harmonising)=
 ## 🆕 Harmonising Different Notations
 
 Define event A: the continuous RV $X$ has a value $X\leq x$.

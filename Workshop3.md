@@ -21,9 +21,9 @@ numbering:
 Measurements of two RVs are as follows: 
 
 ```
-X1 = [18_841, 20_449, 20_987, 21_854, 22_778, 24_075, 25_253, 26_155, 27_227, 27_092,]
+X1 = [18_841, 20_449, 20_987, 21_854, 22_778, 24_075, 25_253, 26_155, 27_227, 27_092]
 
-X2 = [11, 16.3333, 23.75, 29.8333, 34.3333, 42.25, 47.5, 53.25, 57.0833, 58.1667,]
+X2 = [11, 16.3333, 23.75, 29.8333, 34.3333, 42.25, 47.5, 53.25, 57.0833, 58.1667]
 ```
 
 * a) Calculate the mean, variance, and standard deviation of each RV
@@ -32,6 +32,7 @@ X2 = [11, 16.3333, 23.75, 29.8333, 34.3333, 42.25, 47.5, 53.25, 57.0833, 58.1667
 
 * c) What do the results indicate to you?
 
+---
 
 ## Task 2: Linear Correlations
 
@@ -45,8 +46,9 @@ c) Find the covariance cov(E,v) and correlation coefficient $\rho(E,v)$
 
 d) What do the results indicate to you?
 
+---
 
-## Task 3: Optional Math Task (if this is not your first rodeo)
+## Task 3: Optional Math Task 
 
 A function of three RVs is $f(x,y,z) = 2x + 3y + 4z = \alpha_1 x_{(1)} + \alpha_2 x_{(2)} + \alpha_3 x_{(3)}$.
 
@@ -63,7 +65,7 @@ $V[f]  = \sum\limits_{i=1}^{3} \sum\limits_{j=1}^{3} \dfrac{\partial f}{\partial
 
 a) Show that these methods give the same answer for this function.
 
-
+---
 
 ## Example Solutions
 

@@ -353,6 +353,7 @@ f_X(x;\mu,\Sigma) =\dfrac{ 1}{ |\Sigma|^{1/2}  (2\pi)^{Z/2} } \exp\left[-\frac{1
 
 ```
 
+(seaborn-gaus2)=
 ```{code-cell} python
 import numpy as np
 from scipy.stats import multivariate_normal

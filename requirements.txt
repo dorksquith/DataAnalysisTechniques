@@ -10,3 +10,5 @@ seaborn
 pandas
 sympy
 jax
+statsmodels
+scikit-learn

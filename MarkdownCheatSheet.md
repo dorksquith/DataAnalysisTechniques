@@ -32,7 +32,7 @@ You can make text **bold** or *italic* or `monospace`.
 
 ## Math
 
-See the [LaTeX Cheat Sheet](latex-cheatsheet) for quick ref on typesetting math in LaTeX.
+See the [LaTeX Cheat Sheet](#latex-cheatsheet) for quick ref on typesetting math in LaTeX.
 
 ::::{tab-set}
 :::{tab} Output
@@ -109,7 +109,7 @@ P(x | \theta) & = \int \limits_a^b \exp{-4x} + \ln{3\theta}\, dx \\
 
 ::::{tab-set}
 :::{tab} Output
-An example of a simple table is given in [](tab:table).
+An example of a simple table is given in [](#tab:table).
 
 ```{table} Title of my table
 :label: tab:table

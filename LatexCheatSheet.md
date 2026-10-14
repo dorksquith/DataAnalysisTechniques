@@ -18,7 +18,7 @@ numbering:
 
 This is a very small selection intended for quick reference. See the [comprehensive list](https://tug.ctan.org/info/symbols/comprehensive/symbols-a4.pdf).
 
-See the [Markdown Cheat Sheet](md-cheatsheet) for putting LaTeX in markdown math blocks rather than the inline examples here. 
+See the [Markdown Cheat Sheet](#md-cheatsheet) for putting LaTeX in markdown math blocks rather than the inline examples here. 
 
 
 ## Integrals, Derivatives, Sums

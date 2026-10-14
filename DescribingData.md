@@ -668,7 +668,7 @@ E[ g ] = \int g\, f_X\, dx
 
 This is sometimes known as LOTUS: Law Of The Unconscious Statistician.
 
-The variance of the function can then be calculated by the definition [](eq:truevar2) of variance in terms of expectation: 
+The variance of the function can then be calculated by the definition [](#eq:truevar2) of variance in terms of expectation: 
 
 ```{math}
 :label: eq:varF

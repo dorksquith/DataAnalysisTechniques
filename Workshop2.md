@@ -47,7 +47,7 @@ We will cover the Standard Error on the Mean (SEM) this in [6. Normal Tests](htt
 
 ## Example Solution
 
-```{code-cell}
+```{code-cell} python
 import numpy as np
 
 # The two datasets as numpy arrays

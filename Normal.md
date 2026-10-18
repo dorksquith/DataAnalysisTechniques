@@ -40,14 +40,14 @@ The reason for the apparently unrelated RVs in [](#fig:norm-everywhere) having t
 
 The Gaussian (aka Normal) Probability Distribution Function (PDF) is given in [](#eq:gaus_pdf). It describes Continuous RVs (eg blood pressure, height, weight, proton speed differences).
 
-$$\label{eq:gaus_pdf} f_X (x; \mu,\sigma) = \dfrac{1}{\sqrt{ 2\pi\sigma^2} } \exp{ \left[ -\frac{1}{2} \frac{(x-\mu)^2}{ \sigma^2}  \right]}$$
+$$\label{eq:gaus_pdf} f_X (x; \mu,\sigma) = \dfrac{1}{\sqrt{ 2\pi\sigma^2} } \exp{ \left[ -\frac{1}{2} \frac{(x-\mu)^2}{ \sigma^2}  \right]}\; ; \;\;\; -\infty < x < \infty$$
 
 A plot of the Gaussian for a choice of parameters is shown in [](#fig:gaussian).
 
 :::{figure} 
 :label: fig:gaussian
 :align: left
-![](figures/PLOTDAT-MeanSigmaFWHM-1.png)
+![](figures/PLOTDAT-MeanSigmaFWHM.png)
 
 A Gaussian PDF with the mean $\mu$ indicated by the red dashed vertical line.
 :::

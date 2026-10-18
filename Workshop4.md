@@ -13,6 +13,7 @@ numbering:
   equation: true
 ---
 
+(workshop-4)=
 # Workshop 4: Z values, P values, Oh my!
 
 ## Task 1: True or False

@@ -12,6 +12,8 @@ numbering:
   headings: false
   equation: true
 ---
+
+(workshop-2)=
 # Workshop 2: Summary Statistics
 
 

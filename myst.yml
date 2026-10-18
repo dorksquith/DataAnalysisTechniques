@@ -31,9 +31,11 @@ project:
       - file: UnixCheatsheet.md
       - file: MarkdownCheatSheet.md
       - file: LatexCheatSheet.md
-    - file: Workshop2.md
-    - file: Workshop3.md
-    - file: Workshop4.md
+    - file: Workshops.md
+      children:
+      - file: Workshop2.md
+      - file: Workshop3.md
+      - file: Workshop4.md
     
     
   numbering:

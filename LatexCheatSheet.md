@@ -14,7 +14,7 @@ numbering:
 ---
 
 (latex-cheatsheet)=
-# Appendix C: LaTeX Cheatsheet
+# LaTeX Cheatsheet
 
 This is a very small selection intended for quick reference. See the [comprehensive list](https://tug.ctan.org/info/symbols/comprehensive/symbols-a4.pdf).
 

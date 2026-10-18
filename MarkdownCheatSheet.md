@@ -14,7 +14,7 @@ numbering:
 ---
 
 (md-cheatsheet)=
-# Appendix B: Markdown Cheatsheet
+# Markdown Cheatsheet
 
 ## Text
 

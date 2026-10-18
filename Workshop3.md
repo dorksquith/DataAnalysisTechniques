@@ -13,6 +13,7 @@ numbering:
   equation: true
 ---
 
+(workshop-3)=
 # Workshop 3: Covariance & Correlations
 
 

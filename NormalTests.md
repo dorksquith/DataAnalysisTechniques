@@ -15,8 +15,8 @@ kernelspec:
 Normal Tests compare the mean or variance with a dataset with that of a hypothesis (Z,T) or another dataset (T2, F). We will explore this using a "Three Cities" dataset I faked. 
 
 * ```numpy``` methods: ```random.seed, random.choice```
-* ```scipy.stats``` methods: ```t,f```
-
+* ```scipy.stats``` distributions: ```t,f```
+* `scipy.stats` [Hypothesis Tests and Related Functions](https://docs.scipy.org/doc/scipy/reference/stats.html#hypothesis-tests-and-related-functions): `ttest_1samp`, `ttest_ind`, `f_oneway`
 
 ## Distribution of Means
 
@@ -199,7 +199,7 @@ We have two problems:
 2. How to we express the uncertainty on the mean when we have a tiny number of measurements?
 
 ---
-
+(sec-sem)=
 ### The Uncertainty on the Mean
 
 The solution to problem 1 is to use the [SEM](#eq:SEM), but we must assume we do not know the true standard deviation  $\sigma_{true}$ and instead use the measured sample standard deviation $\sigma_{x}$  as our best **Estimate** of the SEM[^estimators].
@@ -632,8 +632,6 @@ if(p_value > alpha):
 	print(f" => Test Negative, we do not reject the null hypothesis")
 else:
 	print(f" => Test Positive, we reject the null hypothesis!")
-
-
 ```
 
 ::::
@@ -689,10 +687,6 @@ We can use this test statistic when sample sizes are equal or unequal, and have 
 : $H_0$: the mean number of hours slept in Glasgow and Brixton are the same.
 
 
-
-
-
-
 ````{card} [1] Design Test
 - Significance Level : $\alpha=0.05$
 - Alternate hypothesis, $H_1$:  Glaswegians sleep less than Brixtonians : this means the test is one-sided.
@@ -704,13 +698,10 @@ nsided = 1
 
 ````
 
-```{card} [2] Look at Data. Brixton: $x$, Glasgow: $y$
+````{card} [2] Look at Data. Brixton: $x$, Glasgow: $y$
 - Sample means: $\overline{x} = \mathsf{7.60\,H}$, $\overline{y} = \mathsf{7.44\,H}$
 - Sample variances: $v_x = \mathsf{1.19\,H^2}$, $v_y = \mathsf{0.91\,H^2}$,
 - Sample sizes: $N_x=10$, $N_y=10$
-```
-
-````{card} [2] Look at Data:
 
 ```{code-cell} python
 alpha = 0.05
@@ -795,8 +786,7 @@ else:
 	print(f" => Test Positive, we reject the null hypothesis!")
 
 ```
-
-::::
+````
 
 
 
@@ -934,6 +924,81 @@ Note that we can eyeball the PDF plot above (the closest one to our situation is
 ::::
 
 [^thiscase]: In this special case, our samples are the same size, so we can just take the mean of the two means. In general we would have to combined the datasets or calculated the weighted mean.]
+
+## Summary of some useful `scipy.stats` methods
+
+The `scipy` team have a vast number of helpful methods for performing normal tests - and all sorts of other tests - in their [docs on hypothesis tests](https://docs.scipy.org/doc/scipy/reference/stats.html#hypothesis-tests-and-related-functions).
+
+For example, for the [one sample T Test](#the-students-t-test) we thought about in these notes, we can use the `ttest_1samp` method demonstrated below. 
+
+```{code-cell}python
+
+# ====================
+# Generate some data 
+# ====================
+
+def GenData(N):
+  
+  # We will make some fake data that is normally distributed with a true mean of 42 and true variance of 17 (arbitrary choice of parameters)
+
+  from scipy.stats import norm
+  import numpy as np
+
+  mu  = 42
+  var = 17
+  dist =  norm( loc=mu, scale=np.sqrt(var) )
+
+  # pull N random values from the distribution: these are our fake data measurements
+  
+  data = dist.rvs(size=N)
+
+  # a second fake dataset,with slightly different parameters, on one line
+  
+  data2 = norm.rvs(loc=mu*1.05, scale=np.sqrt(var*0.98), size=N)
+
+  return data, data2
+
+
+# Call the function to get our datasets. We will ask for 50 fake measurements
+
+data, data2 = GenData(50)
+
+```
+
+:::{warning}
+Always plot your data before doing any tests. I am skipping that step here because it is a demo.
+:::
+
+```{code-cell} python
+
+# ====================
+# T Test (one sample) 
+# Null Hypothesis: data is consistent with mu=40 to 95% confidence level
+# 95% CL means we have chosen a significance level alpha=5%
+# ====================
+
+def OneSampleTtest(data, mu0, alpha):
+
+  from scipy.stats import ttest_1samp
+
+  T1, pval_T1 = ttest_1samp (data, popmean=mu0)
+
+  print(f" T Test statistic = {T1}, p-value={pval_T1}")
+
+  if(pval_T1 < alpha):
+    print(f" Null Hypothesis excluded: Positive Result!")
+  else:
+    print(f" Null Hypothesis not excluded: Negative Result.")
+
+# Call the function on one of our datasets
+
+mu0 = 40 # Null hypothesis: the mean of the data is consistent with 40
+alpha = 0.05 # 5% significance level = 95% confidence level
+
+OneSampleTtest(data, mu0, alpha)
+
+```
+
 
 ## Notes
 

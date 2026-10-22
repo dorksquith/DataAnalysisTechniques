@@ -652,7 +652,7 @@ What this indicates is that medical scientists are not publishing results that f
 
 Given that experiments can take years of work, one would strongly expect people to publish even if their work did not support some flashy alternative hypothesis, and get them a new espresso machine or similar. So, this jagged edge with enormous spikes at "just enough to support a flashy claim" p values is suggestive of dodgy practices, for example designing the test to support the alternative hypothesis :scream:. This is terrible science. The analysis of this data has hopefully led to much more stringent peer review of these kinds of results.
 
-### Summary of some useful scipy.stats methods
+### Summary of some useful `scipy.stats` methods
 
 ```{code-cell} python
 

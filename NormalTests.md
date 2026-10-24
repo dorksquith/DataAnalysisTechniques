@@ -513,6 +513,7 @@ For a Normal distribution, the p value and Z value are different ways of stating
 
 ---
 
+(sec:t-test)=
 ## The Student's T Test
 
 The one-sample T Test is very similar to the Z Test, but is **particularly well suited to small datasets**. This is because instead of using the Normal distribution, it uses the Student's T[^student] distribution, which is like the Normal distribution but with fatter tails [](#fig:tpdf).
@@ -929,7 +930,7 @@ Note that we can eyeball the PDF plot above (the closest one to our situation is
 
 The `scipy` team have a vast number of helpful methods for performing normal tests - and all sorts of other tests - in their [docs on hypothesis tests](https://docs.scipy.org/doc/scipy/reference/stats.html#hypothesis-tests-and-related-functions).
 
-For example, for the [one sample T Test](#the-students-t-test) we thought about in these notes, we can use the `ttest_1samp` method demonstrated below. 
+For example, for the [one sample T Test](#sec:t-test) we thought about in these notes, we can use the `ttest_1samp` method demonstrated below. 
 
 ```{code-cell}python
 

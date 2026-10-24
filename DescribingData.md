@@ -151,7 +151,7 @@ Cartoon showing $N=5$ measurements of X, with the standard deviation $\sigma_x$ 
 
 It is the sample Standard Deviation that we use to quantify the spread of our data points, giving us an intrinsic **Uncertainty** on each measurement. This is usually provided visually as error bars or bands.
 
-
+(sec:truvar)=
 ### True Variance and Standard Deviation
 
 The most basic definition of the [sample variance](#eq:variance) is with respect to the sample mean. Analogous to the [true mean](#eq:expect), if we know the underlying probabilities we can write down the true variance as:

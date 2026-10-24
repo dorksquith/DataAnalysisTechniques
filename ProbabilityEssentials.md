@@ -421,7 +421,7 @@ For [our sets](#our-sets):
 The **Marginal Probability** of being in set B is 40%. We have "marginalised out" set A, meaning we don't care if our events fall in set A or not.
 
 
-
+(sec:multrule)=
 ### The Multiplication Rule
 
 Rearranging [the conditional probability](#eq:conp): $P(A\cap B) = P(A | B) P(B)$ and noting that for **Independent** A and B, $P(A | B)=P(A)$, we get the very useful **Multiplication Rule**:

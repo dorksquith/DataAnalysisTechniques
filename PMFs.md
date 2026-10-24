@@ -9,12 +9,8 @@ kernelspec:
   display_name: 'Python 3'
 ---
 
-<!--SpecialPDFs.tex-->
-<!--& Likelihoods-->
-
 (chapter:PMFs)=
-# Discrete Probabilities 
-<!--& Likelihoods-->
+# Discrete Probabilities & Likelihoods
 
 If a discrete RV $K$ follows a special distribution, we can immediately use it to calculate the probabilities eg,$P(K=k)$ for $K\sim$ Poisson($\lambda$). BUT we need to know the form and the parameter(s) of the special distribution to do this. If the parameters are not known, we have to Estimate them using data. 
 
@@ -22,6 +18,7 @@ We will use this topic to:
 * Figure out which PMF is useful for what
 * Identify the **Kernels** of some special PMFs
 * Practice calculating Probabilities, Expectation, Variance.
+* Note the usefulness of **Likelihoods**.
 
 (sec:bern)=
 ## Bernoulli
@@ -61,8 +58,8 @@ I acknowledge this seems a bit contrived, as the first term is always going to b
 The **Kernel** of the Bernoulli PMF is given in [](#eq:bern_kernel); this is the part of the PMF that depends on the RV, which in this case is the whole PMF.
 
 ```{math}
-:label: eq:binom_kernel
-(1-p)^{(1-k)}
+:label: eq:bern_kernel
+(1-p)^{(1-k)}\, p^k
 ```
 
 
@@ -203,6 +200,39 @@ def ExploreBernoulli(p):
 ExploreBernoulli(0.45)
 
 ```
+
+### Likelihoods
+
+Just as we can calculate the Probability of the data, given a parameter value, we can also calculate the Likelihood of a parameter value, given the data.
+
+Suppose we run a blood test on $N$ people and record the binary outcome $k_i \in \{0,1\}$ for each person ($1$ = positive, $0$ = negative). We want to estimate the true prevalence $p$ — the probability that a randomly selected person tests positive.
+
+Each measurement is an IID Bernoulli$(p)$ trial, so the **Likelihood** of the full dataset as a function of $p$ is:
+
+```{math}
+:label: eq:bern_like
+\mathcal{L}(p;\mathbf{k}) = \prod_{i=1}^{N} p^{k_i}(1-p)^{1-k_i}
+```
+
+Taking the **Log-Likelihood** (a sum is much easier to differentiate than a product):
+
+```{math}
+:label: eq:bern_loglike
+\ln\mathcal{L}(p;\mathbf{k}) = n_1\ln p + n_0\ln(1-p)
+```
+
+where $n_1 = \sum_{i=1}^N k_i$ is the number of positive results and $n_0 = N - n_1$ is the number of negative results.
+
+Setting $d\ln\mathcal{L}/dp = 0$ gives the **MLE**:
+
+```{math}
+:label: eq:bern_mle
+\hat{p} = \frac{n_1}{N}
+```
+
+The MLE for the Bernoulli probability is simply the observed fraction of successes — which is reassuringly obvious.
+
+
 
 (sec:binom)=
 ## The Binomial Distribution
@@ -369,6 +399,7 @@ Example
 The Binomial PMF has
 : $\label{eq:binom_expect}E[K] = np$
 
+
   $\label{eq:binom_var}V[K] = np(1-p)$
 
 The **Expectation** of the Binomial $K$ can be inferred from [](#eq:bern_expect), because Binomial $K$ is the sum of $n$ Bernoulli trials, and the expectation of a sum of RVs is the sum of their expectations [](#expectationalgebra).
@@ -426,6 +457,32 @@ def ExploreBinom(n,p):
 ExploreBinom(5,0.5)
 ```
 
+### Likelihoods
+
+Is my coin fair?
+
+Suppose we toss a coin $n=10$ times and observe $k=6$ heads. The **Likelihood** of the parameter $p$ given this result is:
+
+```{math}
+:label: eq:binom_like
+\mathcal{L}(p; k, n) = \binom{n}{k} p^k (1-p)^{n-k}
+```
+
+Since the binomial coefficient $\binom{n}{k}$ does not depend on $p$, it plays no role in determining which $p$ maximises the likelihood. The **Log-Likelihood** is:
+
+```{math}
+:label: eq:binom_loglike
+\ln\mathcal{L}(p; k, n) = \text{const} + k\ln p + (n-k)\ln(1-p)
+```
+
+Setting $d\ln\mathcal{L}/dp = 0$ gives the **MLE**:
+
+```{math}
+:label: eq:binom_mle
+\hat{p} = \frac{k}{n}
+```
+
+For $k=6$ heads from $n=10$ tosses: $\hat{p} = 0.6$. The MLE suggests the coin is slightly biased toward heads. Whether this departure from $p=0.5$ is significant given only 10 tosses is a question for Hypothesis Testing.
 
 
 ## The Poisson Distribution
@@ -548,7 +605,7 @@ E[K] &= \sum\limits_{k_i=0}^{\infty} k_i\,  e^{-\lambda}\, \dfrac{ \lambda^{k_i}
 
      &= e^{-\lambda}\, \sum\limits_{k_i=0}^{\infty} \, \dfrac{ k_i}{k_i!}\,\lambda^{k_i}\;\;\\
 
-     &= e^{-\lambda}\, \sum\limits_{k_i=0}^{\infty} \, \dfrac{ 1}{(k_i-1)!}\,\lambda^{k_i}\\
+     &= e^{-\lambda}\, \sum\limits_{k_i=1}^{\infty} \, \dfrac{ 1}{(k_i-1)!}\,\lambda^{k_i}\\\textcolor{blue}{\;\text{the}\; k_i=0 \;\text{term vanishes; reindex from}\; k_i=1}
 
      &= e^{-\lambda}\, \sum\limits_{k_i=0}^{\infty} \, \dfrac{ 1}{(k_i-1)!}\,\lambda^{k_i-1}\,\lambda\\
 
@@ -601,6 +658,36 @@ def ExplorePoisson(mu):
 ExplorePoisson(5.4)
 ```
 
+### Likelihoods
+
+Poisson distributions model **Rates** (counts in given time periods) — this is something we do a lot of in my field.
+
+Alf measures his donut sales over $N=7$ days and records $\mathbf{k} = (15, 18, 20, 14, 19, 17, 16)$. What is the MLE estimate of his true average daily rate $\lambda$?
+
+Each day's count is an IID Poisson$(\lambda)$ trial, so the **Likelihood** of the full dataset is:
+
+```{math}
+:label: eq:poisson_like
+\mathcal{L}(\lambda;\mathbf{k}) = \prod_{i=1}^{N} e^{-\lambda}\,\dfrac{\lambda^{k_i}}{k_i!}
+```
+
+The **Log-Likelihood** is:
+
+```{math}
+:label: eq:poisson_loglike
+\ln\mathcal{L}(\lambda;\mathbf{k}) = -N\lambda + \ln(\lambda)\sum_{i=1}^{N} k_i - \sum_{i=1}^{N} \ln(k_i!)
+```
+
+The last term does not depend on $\lambda$, so it plays no role in finding the MLE. Setting $d\ln\mathcal{L}/d\lambda = 0$:
+
+```{math}
+:label: eq:poisson_mle
+\hat{\lambda} = \frac{1}{N}\sum_{i=1}^{N} k_i = \bar{k}
+```
+
+The MLE for the Poisson rate is simply the sample mean. For Alf's data: $\hat{\lambda} = (15+18+20+14+19+17+16)/7 = 17.0$ donuts per day.
+
+
 
 ## Poisson versus Binomial
 
@@ -637,6 +724,8 @@ $Binom(n, \lambda/n) \rightarrow Poisson(\lambda)\;\; as \;\;n\rightarrow \infty
 Alf concludes that it is safer to use $K\sim Poisson(\lambda)$ as his
 model for donut sales.
 ![image](figures/Poissonbinom30.png)![image](figures/Poissonbinom1k.png)
+
+
 
 ## Summary of Kernels
 

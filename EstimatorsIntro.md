@@ -572,7 +572,7 @@ In summary, we calculate the **Negative Log Likelihood (NLL)** because it is num
 :::
 
 
-The Likelihood, Log Likelihood, and Negative Log Likelihood for some data are shown in [](#fig:likeLogNeg). The maxima of the Likelihood and Log Likelihood distributions and the minimum of the Negative Log Likelihood are found at the most likely parameter value parameter value. This value is the **Maximum Likelihood Estimate** for the parameter: $\hat{theta}_{MLE}$
+The Likelihood, Log Likelihood, and Negative Log Likelihood for some data are shown in [](#fig:likeLogNeg). The maxima of the Likelihood and Log Likelihood distributions and the minimum of the Negative Log Likelihood are found at the most likely parameter value parameter value. This value is the **Maximum Likelihood Estimate** for the parameter: $\hat{\theta}_{MLE}$
 
 
 There is a turning point in the distributions at the maximum, which means the derivative is zero at this point. This is how we calculate the MLE, by setting the derivative of the Likelihood to zero and solving for the parameter.

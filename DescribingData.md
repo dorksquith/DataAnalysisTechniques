@@ -654,7 +654,7 @@ Cartoon from [xkcd](https://xkcd.com/).
 
 ---
 
-(dd-varfunc)=
+(sec:dd-varfunc)=
 ## 🆕 Propagation of Uncertainties
 
 ### LOTUS

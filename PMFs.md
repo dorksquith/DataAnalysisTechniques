@@ -20,6 +20,9 @@ We will use this topic to:
 * Practice calculating Probabilities, Expectation, Variance.
 * Note the usefulness of **Likelihoods**.
 
+I strongly recommend the [Probability Playground](https://probabilityplayground.com/bernoulli) to help become familiar with special distributions. It has all of the distributions we will be thinking about, plus more!
+
+
 ---
 
 (sec:bern)=

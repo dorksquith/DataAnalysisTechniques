@@ -33,7 +33,7 @@ A selection of normal distributions (sources unclear at time of writing, TBD).
 
 The RVS plotted are blood pressures, baby birth weights, heights of English criminals in 1900, and the difference between the proton speeds measured with two different detectors. These are very (physically) different RVs, but when we plot their measured values, they all follow this same shape, with a symmetric distribution around a central value. Why?!
 
-The reason for the apparently unrelated RVs in [](#fig:norm-everywhere) having the same underlying distribution is that **they do have something fundamental in common**: they are all the result of many interrelated factors, which makes them "sums" of different independent variables. We will see that the distribution of a sum will always tend towards a Gaussian distribution (the [Central Limit Theorem](#CLT)).
+The reason for the apparently unrelated RVs in [](#fig:norm-everywhere) having the same underlying distribution is that **they do have something fundamental in common**: they are all the result of many interrelated factors, which makes them "sums" of different independent variables. We will see that the distribution of a sum will always tend towards a Gaussian distribution (the [Central Limit Theorem](#sec:CLT)).
 
 
 ## The Gaussian PDF
@@ -239,7 +239,7 @@ $$\int\limits_{-\infty}^{\infty} e^{-x^2/2} dx$$
 The integral of the Gaussian PDF has **no analytical solution**. We can always calculate a numerical solution though, so its okay!
 
 
-(CLT)=
+(sec:CLT)=
 ## The Central Limit Theorem (CLT)
 
 The **CLT** answers the question: Why are so many things Gaussian-distributed? 

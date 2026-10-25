@@ -26,10 +26,9 @@ project:
     - file: Normal.md
     - file: HypothesisTests.md
     - file: NormalTests.md
-    #- file: EstimatorsIntro.md
-    #- file: PMFs.md
-    #- file: Bootstrap.md
-    #- file: PDFs.md
+    - file: EstimatorsIntro.md
+    - file: PMFs.md
+    - file: PDFs.md
     #- file: GeneralisedPDFs.md    
     #- file: MaxLike.md
     #- file: LeastSquares.md

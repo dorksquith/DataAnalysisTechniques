@@ -106,7 +106,7 @@ The True Variance is $\mathsf{V[X] = \sigma^2_{true} }$.-->
 \\
   & \mathsf{= \dfrac{1}{N} V[X] }
 & \;\; \mathsf{\textcolor{blue}{because\;} \;\;} 
-& \mathsf{V[X] = \dfrac{1}{N}\,V[x_i]}
+& \mathsf{V[x_i] = V[X]\;\forall\;x_i\;(\text{iid})}
 \\
 
 \end{align*}
@@ -532,9 +532,9 @@ In the (much more realistic) scenario where we don't know $\sigma_{true}$, we **
 
 ```{math}
 :label: eq:est-sem
-\mathsf{ \widehat{SEM}} =\dfrac{\sigma_{x} }{\sqrt{N-1}}
+\mathsf{ \widehat{SEM}} =\dfrac{\sigma_{x} }{\sqrt{N}}
 ```
-[^note2]: The use of $\sqrt{N-1}$ in the denominator, rather than $\sqrt{N}$, ensures the estimate is unbiased. This is particularly important when have a small dataset. More on this later.   
+[^note2]: Here $\sigma_x$ is the sample standard deviation computed with $N-1$ in the denominator (ddof=1 in numpy), which is the unbiased estimator of the true standard deviation. Dividing by $\sqrt{N}$ gives the estimated SEM. This is the convention used by \texttt{scipy.stats.ttest\_1samp}.   
 
 The T distribution has one parameter: the number of degrees of freedom, with symbol [$\nu$](#eq:Tnu). 
 
@@ -603,11 +603,11 @@ $T = \dfrac{ \overline{x}-\mu_{_0} }{\mathsf{ \widehat{SEM}}}$
 
 The denominator is calculated as:
 
-$\mathsf{ \widehat{SEM}} = \widehat{\sigma_{\overline{x}}}  = \dfrac{ \sigma_{x} }{ \sqrt{N-1} } $
+$\mathsf{ \widehat{SEM}} = \widehat{\sigma_{\overline{x}}}  = \dfrac{ \sigma_{x} }{ \sqrt{N} } $
 
 
 ```{code-cell} python
-est_sem = sigma / np.sqrt(N-1)
+est_sem = sigma / np.sqrt(N)
 
 Tstat = (mean - true_mu) / est_sem 
 
@@ -754,7 +754,7 @@ Next, the multiplier:
 ```
 
 ```{code-cell} python
-psi = np.sqrt( 1/nuG + 1/nuB)
+psi = np.sqrt( 1/NG + 1/NB)
 
 print(f" Multiplier = {psi}")
 ```

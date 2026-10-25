@@ -9,6 +9,7 @@ kernelspec:
   display_name: 'Python 3'
 ---
 
+(chapter:hypothesis_tests)=
 # Hypothesis Tests
 
 The aim of this topic is to assist you in joining the tiny minority of people who understand what a p value is. On our way there we will elucidate a lot of jargon, some of it very useful.
@@ -81,7 +82,7 @@ A beautiful espresso machine.
 :::
 
 
-
+(sec:crit-sig)=
 ### Critical Region and Significance Level
 
 A Critical Region $W$ is a region of the Sample Space $S$ in which the probability of finding the data, given the Null Hypothesis, is very small[^verysmall].

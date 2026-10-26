@@ -16,7 +16,7 @@ numbering:
 (workshop-5)=
 # Workshop 5: Normal Tests
 
-This workshop uses the Three Cities dataset introduced in [Normal Tests](#chapter:normtest). Run the `three_cities_data` function from that notebook before starting the tasks here.
+This workshop uses the Three Cities dataset introduced in [Normal Tests](#chapter:normtest). Run the `three_cities_data` function from that notebook, reproduced [here](#gen-3cities) for convenience.
 
 ---
 
@@ -40,9 +40,86 @@ This workshop uses the Three Cities dataset introduced in [Normal Tests](#chapte
 
 ---
 
+::::{dropdown} Show Code for generating 3 Cities Datasets
+
+(gen-3cities)=
+```{code-cell}python
+import numpy as np
+np.random.default_rng()
+from scipy.stats import norm
+
+def three_cities_data( reproducible=True ):
+
+    if reproducible:
+        np.random.seed(42)
+
+    #--------------------------------------------------------------------------------------------#
+    # Parameters for Normal distribution in theoretical universe with infinite data points
+    #--------------------------------------------------------------------------------------------#
+    
+    mu    = 7.33
+    sigma = 1.21
+ 
+    dist = norm(loc=mu, scale=sigma)
+
+    # Number of fake people asked
+    sample_sizes = [2, 3, 10, 30, 100, 3_000]
+
+    iterations = range( len(sample_sizes) )
+
+    # Difference between subsequent sample sizes eg 3-2=1, 10-3=7
+    size_inc     = [ j-i for i, j in zip( sample_sizes[:-1], sample_sizes[1:] ) ]
+    
+    # want first number to be 2 for our N=2 sample
+    size_inc.insert(0, 2)
+
+    #-----------------------#
+    # Fake data for Brixton
+    #-----------------------#
+    B_data1 = dist.rvs(size = max(10_000, max(sample_sizes) ) )  
+    B_data = []
+
+    #-----------------------#
+    # Fake data for Stockport
+    #-----------------------#
+    S_data1 = dist.rvs(size = max(10_000, max(sample_sizes) ) ) 
+    S_data = []
+
+    #-----------------------#
+    # Fake data for Glasgow
+    #-----------------------# 
+    G_data1 = dist.rvs(size = max(10_000, max(sample_sizes) ) )
+    G_data = []
+
+    #-----------------------#
+    # Loop over sample sizes
+    #-----------------------#   
+    for i in iterations:
+       
+        N = sample_sizes[i]
+        Nplus = size_inc[i]
+
+        # randomly draw N **additional** fake measurements
+
+        for j in range(Nplus):
+        
+            B_data.append(np.random.choice(B_data1,  replace=False) )
+            S_data.append(np.random.choice(S_data1,  replace=False) )
+            G_data.append(np.random.choice(G_data1,  replace=False) )
+
+    return mu, sigma, B_data, S_data, G_data
+
+reproducible = True
+
+true_mu, true_sigma, B_data, S_data, G_data = three_cities_data(reproducible)
+```
+
+::::
+
+
 ## Task 2: One-sample T Test
 
-Using the Three Cities dataset, take a sample of $N=30$ measurements from Glasgow.
+Using the Three Cities dataset (see the bottom of this worksheet), take a sample of $N=30$ measurements from Glasgow.
 
 a) State a sensible Null Hypothesis and choose an appropriate significance level and alternative hypothesis.
 
@@ -70,7 +147,7 @@ d) Verify your result using `scipy.stats.ttest_ind`.
 
 ---
 
-## Optional Extension Task (if this is not your first rodeo)
+## Task 4: F-Test
 
 a) Using `scipy.stats.f_oneway`, perform an F test comparing all three cities (Brixton, Stockport, and Glasgow) simultaneously, using $N=30$ for each. Report the F statistic and p value.
 

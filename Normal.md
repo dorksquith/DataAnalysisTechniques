@@ -21,7 +21,7 @@ Many RVs are "Normally Distributed", meaning they follow a Gaussian Probability 
 * ```seaborn``` methods: ```JointGrid.kdeplot, histplot```
 
 
-Some examples of normallu distributed RVs are shown in are shown in [](#fig:norm-everywhere).
+Some examples of normally distributed RVs are shown in [](#fig:norm-everywhere).
 
 :::{figure} 
 :label: fig:norm-everywhere
@@ -111,7 +111,7 @@ Now we can write:
 
 $$\label{eq:standard-norm-z} f_X(x) = \dfrac{1}{ \sqrt{2\pi\sigma^2}} \exp{\left[-\dfrac{z^2}{2}\right]}$$
 
-Notice that this form looks is identical to the [Standard Normal PDF](#eq:standard-norm), but for a factor of $\dfrac{1}{\sigma}$.
+Notice that this form is identical to the [Standard Normal PDF](#eq:standard-norm), but for a factor of $\dfrac{1}{\sigma}$.
 
 The new variable [](#eq:z) is known as the Standard Normal variable, the pull, the Z score, the Z statistic, the Z value. Many different names for the same guy. I will call it the **Z value** because it is very closely related to the **p value**, as we shall see shortly.
 
@@ -200,7 +200,7 @@ def my_norm_log(mu,sigma):
 my_norm_log(1,2)
 ```
 
-On the log scale plot, we can see that the Gaussian PDF has non-zero probabilities all the way to $\pm 10 \sigma$ (the chosen limits of our x-axis). If it were possible to make a plot with inifinte limits, we would see that the PDF goes on for ever. We can also see the the **log of the Gaussian PDF is a parabola** ($y \sim - x^2$).
+On the log scale plot, we can see that the Gaussian PDF has non-zero probabilities all the way to $\pm 10 \sigma$ (the chosen limits of our x-axis). If it were possible to make a plot with infinite limits, we would see that the PDF goes on for ever. We can also see the the **log of the Gaussian PDF is a parabola** ($y \sim - x^2$).
 
 We can write down the most basic form (**Kernel**) of the Gaussian as [](#eq:gaus_kernel); at its heart, the Gaussian is just an exponential distribution of the square of our RV.
 
@@ -230,13 +230,9 @@ $$\label{eq:gaus_kernel_log} \ln{f_X(x)} \propto -x^2/2 $$
 
 Beautifully, [we can show](https://www.youtube.com/watch?v=fWOGfzC3IeY) that:
 
- $$\int\limits_{-\infty}^{\infty} e^{-x^2} dx = \sqrt{\pi}$$
+ $$\int\limits_{-\infty}^{\infty} e^{-x^2/2} dx = \sqrt{2\pi}$$
 
-However, we cannot write down an analytical solution to the integral of our kernel:
-
-$$\int\limits_{-\infty}^{\infty} e^{-x^2/2} dx$$
-
-The integral of the Gaussian PDF has **no analytical solution**. We can always calculate a numerical solution though, so its okay!
+However, the Normal CDF has no closed form in elementary functions. We can always calculate a numerical solution though, so its okay!
 
 
 (sec:CLT)=
@@ -270,7 +266,7 @@ The mean scores from rolling 100,1k, 10k, 100k dice, from left to right.
 
 
 
-## Probablities for a Continuous RV
+## Probabilities for a Continuous RV
 
 A PDF $f_X(x|\theta)$ is a **Probability Density Function**. It has integral 1, and describes the distribution of probabilities for a **Continuous** Random Variable. I have used the symbol $\theta$ to represent the parameters of the PDF.  In the case of a normal distribution, the parameters are $\theta = \mu, \sigma$ as we know.
 
@@ -294,7 +290,7 @@ F(x) = P(X\leq x) = \displaystyle \int \limits_{-\infty}^{x} f_X(x|\theta)\, dx
 ```{math}
 :label: eq:cdf_disc
 
-F(k) = P(K\leq k) = \displaystyle \sum_{K\leq k} p_K(k|\theta)\, dk
+F(k) = P(K\leq k) = \displaystyle \sum_{K\leq k} p_K(k|\theta)
 
 ```
 
@@ -332,8 +328,8 @@ To find the probability of eg $0.15 < x <0.16$, we can subtract the probability 
 ```{code-cell} python
 mu,sigma = 0,1
 
-prob_upto_015 = norm.cdf(mu, sigma, 0.15)
-prob_upto_016 = norm.cdf(mu, sigma, 0.16)
+prob_upto_015 = norm.cdf(0.15, mu, sigma )
+prob_upto_016 = norm.cdf(0.16, mu, sigma )
 
 prob_015_to_016 = prob_upto_016 - prob_upto_015
 ```
@@ -344,7 +340,7 @@ prob_015_to_016 = prob_upto_016 - prob_upto_015
 
 A Gaussian distribution of more than one RV makes for some nice visual tools, and felt like a good opportunity to use the ```seaborn``` and ```pandas``` packages.
 
-The Multivariate Gaussian PDF is very similar to the [univariate version](#eq:gaus_pdf), the main difference being that we have the [Covariance Matrix](#eq:covmat-dep) $\Sigma$ in place of the variance $\sigma^2$.
+The Multivariate Gaussian PDF is very similar to the [univariate version](#eq:gaus_pdf), the main difference being that we have the [Covariance Matrix](#eq:covmat-dep) $\Sigma$ in place of the variance $\sigma^2$. $Z$ is the number of RVs.
 
 ```{math}
 :label: eq:gaus_multi
@@ -352,6 +348,8 @@ The Multivariate Gaussian PDF is very similar to the [univariate version](#eq:ga
 f_X(x;\mu,\Sigma) =\dfrac{ 1}{ |\Sigma|^{1/2}  (2\pi)^{Z/2} } \exp\left[-\frac{1}{2} (x-\mu)^\mathsf{T} \Sigma^{-1} (x-\mu) \right]
 
 ```
+
+
 
 (seaborn-gaus2)=
 ```{code-cell} python
@@ -415,7 +413,7 @@ cov3 = [[10,5],[5,5]]
 df3 = MultiVariateGaus(mu,cov3)
 
 # print the first five (x,y) vals from the DataFrame
-print(f"{df3.iloc[:5, :5]} ")
+print(f"{df3.iloc[:5]} ")
 
 # print the sample mean for x 
 print(f"mean x: {df3.x.mean()} ")
@@ -424,7 +422,7 @@ print(f"mean x: {df3.x.mean()} ")
 print(f"std y: {df3.y.std()} ")
 
 # print the maximum value of y 
-print(f"std y: {df3.y.max()} ")
+print(f"max y: {df3.y.max()} ")
 
 ```
 

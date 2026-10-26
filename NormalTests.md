@@ -210,6 +210,8 @@ The solution to problem 1 is to use the [SEM](#eq:SEM), but we must assume we do
 
  $\mathsf{\widehat{SEM}} =  \dfrac{\sigma_{x} }{\sqrt{N}}$: the **Estimated** Standard Error on the Mean is denoted with a hat symbol $\widehat{}$ .
 
+Here $\sigma_x$ must be computed with $N-1$ in the denominator (``ddof=1`` in numpy). Using $N$ instead (``ddof=0``) systematically underestimates the true variance — see [](#fig:lilyproof_varbias) for a proof — which would make $\widehat{\mathsf{SEM}}$ too small. Correcting for this bias by using $N-1$ gives an unbiased estimate of the true variance, and therefore a reliable estimate of the SEM.
+
 
 I have replaced the standard deviation with the $\mathsf{\widehat{SEM}}$ for the blue shaded barsin the  plots for [N=3](#fig:sem5), [N=30](#fig:sem6), and [N=100](#fig:sem7).[^estsem]
 
@@ -528,13 +530,14 @@ The one-sample T Test is very similar to the Z Test, but is **particularly well 
   
 Notice that unlike the Z Test, the T test is not restricted by the need to know the True Variance. 
 
-In the (much more realistic) scenario where we don't know $\sigma_{true}$, we **Estimate** the [SEM](#eq:SEM) rather than calculating it[^note2].
+In the (much more realistic) scenario where we don't know $\sigma_{true}$, we **Estimate** the [SEM](#eq:SEM) rather than calculating it.
 
 ```{math}
 :label: eq:est-sem
 \mathsf{ \widehat{SEM}} =\dfrac{\sigma_{x} }{\sqrt{N}}
 ```
-[^note2]: Here $\sigma_x$ is the sample standard deviation computed with $N-1$ in the denominator (ddof=1 in numpy), which is the unbiased estimator of the true standard deviation. Dividing by $\sqrt{N}$ gives the estimated SEM. This is the convention used by \texttt{scipy.stats.ttest\_1samp}.   
+
+Here $\sigma_x$ is the sample standard deviation computed with $N-1$ in the denominator (``ddof=1`` in numpy). This matters: using $N$ in the denominator (``ddof=0``) systematically underestimates the true variance — see [](#fig:lilyproof_varbias) for a proof — which would make our $\widehat{\mathsf{SEM}}$ too small. Correcting for this bias by using $N-1$ gives an unbiased estimate of the true variance, and therefore a reliable estimate of the SEM. This is the convention used by ``scipy.stats.ttest_1samp``.
 
 The T distribution has one parameter: the number of degrees of freedom, with symbol [$\nu$](#eq:Tnu). 
 
@@ -789,6 +792,9 @@ else:
 ```
 ````
 
+% end of two-sample T test example
+::::
+
 
 
 ## The F Test (one-way ANOVA)
@@ -801,6 +807,8 @@ Another way to compare groups is via ANalysis Of VAriance. The F test statistic 
 \mathsf{F\;test\;statistic =Variance\; Between\; groups \bigg/Variance\; Within\; groups}
 
 ```
+
+The F Test has the same Example Usage and Restrictions as the T Test, as it is a "generalised" T Test for comparing more than two samples. For two samples, the F Test and T Test are identical, with the F test statistic being the square of the two-sample T test statistic $\mathsf{T_2}$.
 
 ### The Variance Between groups
 

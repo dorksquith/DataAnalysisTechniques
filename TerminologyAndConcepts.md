@@ -54,7 +54,7 @@ A **Theory** is the description of a set of models, and the relationships betwee
 
 (discovery)=
 :::{important} 
-It is not possible to prove that a hypotheses or theory is correct. We can only endeavour to prove them wrong. 
+It is not possible to prove that a hypothesis or theory is correct. We can only endeavour to prove them wrong. 
 :::
 
 A theory that passes all the tests accessible by our imaginations and technological capability may well be wrong - we just haven't asked the right questions or gathered enough data to see it.
@@ -88,7 +88,7 @@ An example of a **Variable** is height. We can think of "height" as a label for 
 An attempt at a visual explanation of the Underlying Truth distribution.
 :::
 
-We call variables such as height **Random Variables (RVs)** because they are in a sense randomly selected instances of height from that infinite-data distribution. The "random" refers to our understanding that the heights of everyone alive today are no more special or representative of the truth than the heights of everyone alive 100 years ago.
+We call variables such as height **Random Variables (RVs)** because their value is the outcome of a random process: measuring the height of a randomly chosen individual. The “random” refers to the act of sampling — we do not know in advance which person we will select, and therefore do not know in advance what value we will observe. Each measurement is one realisation drawn from the underlying probability distribution of heights across the whole population.
 
 A **Parameter** is a number that describes some characteristic of the Underlying Truth distribution. We often use the symbol $\theta$ to represent a parameter or a set of parameters. 
 
@@ -104,7 +104,7 @@ A **Statistic** is a number that describes some characteristic of a sample, for 
 
 > Discrete RVs don’t have to be integers, but they do have to be countable.
 
-For example, the probability of dice rolls (any number of dice) **are not** integers but **are** Discrete. If we increase the number of dice and/or rolls, we can generate lots of probability values from the original set, but there will always be real numbers we cannot generate (gaps in the real number line).
+For example, the outcomes (e.g. the sum of two dice: 2, 3, … 12) are discrete integers, and however many dice you add, there will always be real numbers that cannot appear.
 
 The probability of measuring a given value $x$ for a Discrete RV $X$ is described by a **Probability Mass Function (PMF)**.
 
@@ -187,7 +187,9 @@ mean_x_check = sum_x / len(x)
 print(f" mean x : {mean_x}, check: {mean_x_check }")
 ```
 
-> When we are working in the Theoretical Universe where Probability Distributions live, we often use the term **Expected Value** or **Expectation** rather than saying "True Mean". The Expected Value is a parameter, not a summary statistic, and is defined in terms of the Probabilities $p_i$ of the individual measurements rather than as a normalised sum over them: $E[X]  = \sum\limits_i^\infty  x_i p_i$. Lots more on this later.
+> When we are working in the Theoretical Universe where Probability Distributions live, we often use the term **Expected Value** or **Expectation** rather than saying "True Mean". The Expected Value is a parameter, not a summary statistic, and is defined in terms of the Probabilities $p_i$ of the individual measurements rather than as a normalised sum over them: $E[K]  = \sum\limits_i^\infty  k_i p_i$[^disc]. Lots more on this later.
+
+[^disc]: $E[K]  = \sum\limits_i^{\infty}  k_i p_i$ is for a Discrete RV, $K$. The expectation for a Continuous RV, $X$, is $E[X]  = \int\limits_{x\in S}  x\, f_X(x)\, dx$.
 
 (binned-mean)=
 ### The Binned Mean
@@ -270,7 +272,7 @@ $$
 v_x  = \frac{1}{N-1} \sum\limits_i^N  (x_i - \overline{x})^2
 $$
 
-It is better to use the unbiased form if you have a small dataset. I would probably use this form for $N<100$ as a rule of thumb. More on this later.
+It is better to use the unbiased form if you have a small dataset. The rule of thumb is to use the unbiased form for $N<30$, although many people choose to use it for any $N$. 
 
 ```{code-cell} python
 import numpy as np 
@@ -298,7 +300,7 @@ The **Standard Deviation** $\sigma_x$ is the square root of the variance.
 
 $$
 \label{eq:std}
-\sigma_x  = \sqrt{v_x} = \sqrt{ \frac{1}{N-1} \sum\limits_i^N  (x_i - \overline{x})^2 }
+\sigma_x  = \sqrt{v_x} = \sqrt{ \frac{1}{N} \sum\limits_i^N  (x_i - \overline{x})^2 }
 $$
 
 ```{code-cell} python
@@ -335,7 +337,7 @@ $$
 
 coefficient_of_variation = np.std(x,ddof=1) / np.mean(x)
 
-print(f" (coefficient_of_variation : {coefficient_of_variation}%)")
+print(f" (coefficient_of_variation : {coefficient_of_variation})")
 
 ```
 
@@ -482,7 +484,7 @@ ax.hist(heights,
 	    )
 
 ax.set_title("Example of a histogram")
-ax.set_xlabel("Height (m)")
+ax.set_xlabel("Height (cm)")
 ax.set_ylabel("Count/ bin")
 plt.legend()
 plt.show()
@@ -524,7 +526,7 @@ ax.scatter(heights[500:1000], weights[500:1000],
 	    label='Sample 2')
 
 ax.set_title("Two scatter plots on same axes")
-ax.set_xlabel("Height (m)")
+ax.set_xlabel("Height (cm)")
 ax.set_ylabel("Weight (kg)")
 plt.legend()
 plt.show()

@@ -47,8 +47,7 @@ If our data is [Continuous](#continuous) rather than Discrete, then it does not 
 
 ```{math}
 :label: eq:expectC
-
-E[X]  = \int\limits_{-\infty}^\infty  x_i\, f_X\, dx
+E[X] = \int\limits_{-\infty}^\infty x\, f_X(x)\, dx
 ```
 
 Note that in [](#eq:expectC) we have $f_X$: a **Probability Density Function (PDF)** instead of the individual probabilities $p_i$ used in [](#eq:expect). Lots more on PDFs later.
@@ -83,10 +82,10 @@ Some very useful properties of Expectation:
 The expectation of a sum is the sum of the expectations. 
 $$\label{eq:expect_sum} E(X + Y) = E(X) + E(Y)$$
 
-If we add a constant $b$ to a RV, we add the same constant to its expecation.
+If we add a constant $b$ to a RV, we add the same constant to its expectation.
 $$\label{eq:expect_addc} E(X + b) = E(X) + b$$
  
-If we multiply an RV by a constant $a$ , we multiply its expecation by the same constant.
+If we multiply an RV by a constant $a$ , we multiply its expectation by the same constant.
 $$\label{eq:expect_multc} E(aX) = aE(X)$$
  
 
@@ -151,6 +150,7 @@ Cartoon showing $N=5$ measurements of X, with the standard deviation $\sigma_x$ 
 
 It is the sample Standard Deviation that we use to quantify the spread of our data points, giving us an intrinsic **Uncertainty** on each measurement. This is usually provided visually as error bars or bands.
 
+<!--
 (sec:truvar)=
 ### True Variance and Standard Deviation
 
@@ -190,6 +190,37 @@ Or, with [a bit of algebra](#a-bit-of-algebra), in the equally useful form:
 V[X] = E[X^2] - E^2[X]
 ```
 
+-->
+(sec:truvar)=
+### True Variance and Standard Deviation
+
+Analogous to the [true mean](#eq:expect), the **True Variance** is defined with respect to the underlying probabilities rather than a finite sample. Instead of measuring deviations from the *sample* mean $\overline{x}$, we measure deviations from the *true* mean $\mu$:
+
+```{math}
+:label: eq:truevar
+
+V[X] = E[(X-\mu)^2]
+```
+
+We can expand this using the definition of expectation [](#eq:expect) with $X \rightarrow (X-\mu)$:
+
+```{math}
+:label: eq:truevar1
+
+V[X] = \sum\limits_i^{\infty}  (x_i - \mu)^2\, p_i
+```
+
+Compare this with the [sample variance](#eq:variance): both measure squared deviations from a central value, but the sample variance uses the *sample mean* $\overline{x}$ and normalises by $\tfrac{1}{N}$, while the true variance uses the *true mean* $\mu$ and normalises through the probabilities $p_i$.
+
+Or, with [a bit of algebra](#a-bit-of-algebra), the true variance can be written in the equally useful form:
+
+```{math}
+:label: eq:truevar2
+
+V[X] = E[X^2] - E^2[X]
+```
+
+
 The True Standard Deviation $\sigma_X$ [](#eq:truesigma) is a measure of variability in the true distribution. For measured data, $\sigma_x$ tells us the statistical uncertainty within our dataset. For the true distribution, there is no uncertainty, only variability.
 
 
@@ -214,12 +245,13 @@ V[X] & = E[\, X^2 + E^2[X] - 2X\,E[X] \,]\\
 
 :::
 
+
 (VarianceAlgebra)=
 ### Variance Algebra
 
 Some very useful properties of Variance:
 
-If we multiply an RV by a constant $a$ , we multiply its expecation by the same constant **squared**.
+If we multiply an RV by a constant $a$ , we multiply its expectation by the same constant **squared**.
 $$\label{eq:var_multc} V[aX] = a^2 V[X]$$
 
 
@@ -420,19 +452,19 @@ mean_b = np.mean(b)
 # calculate the deviation of each point in a from the mean of a:
 
 # individual steps for clarity:
-# da_0 = mean_a - a[0] # 1.17
-# da_1 = mean_a - a[1] # -0.13
-# da_2 = mean_a - a[2] # -1.03
+# da_0 = a[0] - mean_a  # 1.17
+# da_1 = a[1] - mean_a  # -0.13
+# da_2 = a[2] - mean_a  # -1.03
 
 # one-liner, giving us da = [da_0 , da_1, da_2]
-da =  [mean_a - ai for ai in a]
+da =  [ai - mean_a  for ai in a]
 
 # same thing for b:
 
-# db_0 = mean_b - b[0] # -2.33
-# db_1 = mean_b - b[1] # -0.33
-# db_2 = mean_b - b[2] # 2.67
-db =  [mean_b - bi for bi in b]
+# db_0 = b[0] - mean_b # -2.33
+# db_1 = b[1] - mean_b # -0.33
+# db_2 = b[2] - mean_b # 2.67
+db =  [bi - mean_b for bi in b]
 
 # multiply together point-by-point:
 # cov_0 = da_0 * db_0 # -2.72
@@ -505,7 +537,7 @@ For the datasets a and b defined in our snippet above, we have (from our covaria
 * $\rho(a,b) \approx \dfrac{-2.717...}{(1.106... )(2.517...)} \approx -0.976$
 
 :::{important}
-I have put ellipses (...) on the rounded numbers above to indicate that I am absolutely not rounding those numbers at any point before reaching the end of the calculation. Doing that would introduce horrible and unecessary inaccuracies. 
+I have put ellipses (...) on the rounded numbers above to indicate that I am absolutely not rounding those numbers at any point before reaching the end of the calculation. Doing that would introduce horrible and unnecessary inaccuracies. 
 :::
 
 We can access the Linear Correlation Coefficient $\rho(a,b)$ directly with ```numpy```:
@@ -577,7 +609,7 @@ All of the x,y distributions on the bottom row have a zero linear correlation co
 
 ### Nonlinear Correlations
 
-Let's set up an example of two **Dependent** RVs, $X^2 + Y^2 = 1$ 
+Let's set up an example of two **Dependent** RVs, $Y=X^3$ 
 
 ```{code-cell} python
 from scipy.stats import uniform
@@ -588,7 +620,7 @@ lb,ub = udist.support()
 print(f"uniform, support={lb},{ub}")
 ```
 
-We will let $X$ be a uniform (flat) distribution in $ 0 < x < 10$, and define the $Y=X^3$ distribution based on this:
+We will let $X$ be a uniform (flat) distribution in $ 0 < x < 2$, and define the $Y=X^3$ distribution based on this:
 
 ```{code-cell} python
 # uniform distribution for X
@@ -608,7 +640,7 @@ import matplotlib.pyplot as plt
 plt.scatter(x,y)
 
 # the r"" string allows us to put LaTeX equation on the plot
-func_label = r"$y=x^2$"
+func_label = r"$y=x^3$"
 
 # the f" :.3f" string allows us to pass in the Pearson r with 3 sig figs
 r_label = f"Pearson r = {r_xy:.3f}"
@@ -631,7 +663,7 @@ spr_xy = spearmanr(x,y)[0]
 print(f" spearman r = {spr_xy:.3f}")
 ```
 
-Spearman found 100% **Rank Correlation** between $X$ and $Y=X^2$. This squared relationship between $X$ and $Y$ is exactly what Spearman's r is built to look for, providing the relationship between RVs is **Monotonic**  [](#fig:mono).
+Spearman found 100% **Rank Correlation** between $X$ and $Y=X^3$. This squared relationship between $X$ and $Y$ is exactly what Spearman's r is built to look for, providing the relationship between RVs is **Monotonic**  [](#fig:mono).
 
 :::{figure}
 :label: fig:mono
@@ -640,7 +672,7 @@ Spearman found 100% **Rank Correlation** between $X$ and $Y=X^2$. This squared r
 A monotonic function is shown on the left, and a non-monotonic function on the right. Monotonic means that y increases or remains constant as x increases. [By Oleg Alexandrov](https://commons.wikimedia.org/w/index.php?curid=2267780)
 :::
 
-In the above example, we chose $ 0 < x < 10$, and over this range $y$ is monotonically increasing. If we need to examine a function over a range in which it is non-monotonic, we can divide the space up into monotonic regions.
+In the above example, we chose $ 0 < x < 2$, and over this range $y$ is monotonically increasing. If we need to examine a function over a range in which it is non-monotonic, we can divide the space up into monotonic regions.
 
 
 > A small or zero linear correlation coefficient does not imply independence. This is the message alluded to in [](#fig:xkcd-correlation).
@@ -766,12 +798,12 @@ V[ g ]  & = \sum\limits_i^Z \sum\limits_j^Z \dfrac{\partial g}{\partial x_{(i)} 
 \end{aligned}
 ```
 
-where J is the **Jacobian Matrix** of partial derivatibes, $J^{T}$ is its transpose, and $\Sigma$ is the **Covariance Matrix**.
+where J is the **Jacobian Matrix** of partial derivatives, $J^{T}$ is its transpose, and $\Sigma$ is the **Covariance Matrix**.
 
 
 ### $h(X) = \prod\limits_k^M g_k(X)$
 
-A **nonlinear** function can be written as a product of $M$ linear functions, $f_k$.
+For a **nonlinear function**, the uncertainty can be propagated by linearising via a first-order Taylor expansion.
 
 The variance of such a function can be written as before:
 
@@ -934,6 +966,7 @@ Option B
 ::::{dropdown} Show ```sympy``` solution 
 
 ```{code-cell}python
+import numpy as np
 import sympy
 sympy.init_printing()
 lam = sympy.Symbol('lam', positive=True)

@@ -37,9 +37,9 @@ There are two ways of viewing probabilities: Frequentist and Bayesian. The defau
 
 **Frequentist**: everything is defined in terms of repeated experiments. The probability of something happening can only be defined in terms of how often it is observed to happen.
 
-**Bayesian**: the probability of something happening is as per the frequentist definition, but we must "weight" this using our relevant prior knowledge.
+**Bayesian**: probability is a degree of belief — a measure of how strongly we expect something to happen given available evidence. Unlike the frequentist, a Bayesian can assign a probability to a one-off event. Prior knowledge is incorporated formally via Bayes' theorem, which updates beliefs in light of new data.
 
-Let's anthropomorphise these interpretations by introducting a Frequentist, Fernanda, and a Bayesian, Betty, imagined by Gemini in [](#fig:fernanda-and-betty).
+Let's anthropomorphise these interpretations by introducing a Frequentist, Fernanda, and a Bayesian, Betty, imagined by Gemini in [](#fig:fernanda-and-betty).
 
 :::{figure} /figures/FernandaAndBetty.jpeg
 :label: fig:fernanda-and-betty
@@ -54,7 +54,7 @@ Fernanda and Betty have each misplaced their keys. They will each adopt a differ
 
 **Fernanda**: my keys are in an unknown location in my home. There is no "probability of them being by the sink", because they are either in a place or not. The only way to locate them is to look in every location methodically.
 
-**Betty**: my keys are in an unknown location in my home. On the last ten occasions I lost them, they were by the sink three times, so there are most likely to be by the sink and I will start my search there.
+**Betty**: my keys are in an unknown location in my home. On the last ten occasions I lost them, they were by the sink three times, so they are most likely to be by the sink and I will start my search there.
 
 
 ### Is my coin fair?
@@ -67,7 +67,7 @@ Fernanda and Betty have each misplaced their keys. They will each adopt a differ
 
 **Fernanda**: I will do the test a million times, and count how many times it is correct[^tests].
 
-[^tests]: The question of the pregnancy test is an interesting one, because we have to define exactly what we are asking in order to define the denominator. The probability of a positive test being wrong is not the same as the probability of a wrong test if we are postive...
+[^tests]: The question of the pregnancy test is an interesting one, because we have to define exactly what we are asking in order to define the denominator. The probability of a positive test being wrong is not the same as the probability of a wrong test if we are positive...
 
 **Betty**: I will collect data similarly to Fernanda, but will also consider what we know about the person taking the test, for example: do they have a uterus?
 
@@ -225,7 +225,11 @@ The **Complement of the Intersection** is $(A\cap B)'$ and means 'Not in both A 
 
 ### Independence and Mutual Exclusivity
 
-Two sets are **Independent** if they are defined without reference to one another (changing one does not impact the other). We could construct **dependent** sets like this for example:
+Two events A and B are **Independent** if the occurrence of one does not affect the probability of the other. Formally, A and B are independent if and only if:
+
+$$P(A \cap B) = P(A) \, P(B)$$
+
+For sets (as opposed to events), independence means the sets are defined without reference to one another. We could construct **dependent** sets like this for example:
 * $K = {\mathbb{N}}$
 * $J = {K^2}$
 
@@ -309,7 +313,7 @@ print(f"P(A) +P(B) - P(AnB) = {P_A} + {P_B} - {P_AnB} = {P_A+P_B-P_AnB}")
 > [Andrey Kolmogorov](https://en.wikipedia.org/wiki/Andrey_Kolmogorov) was a Russian mathematician. You may have heard of the 'KS test', which is used to eg check for overtraining by comparing ML classifier outputs for test and train samples. This is named for Kolomogorov and Nikolai Smirnov. See also 'KANs' - Kolmogorov Arnold Networks [arXiv:2404.19756](https://arxiv.org/abs/2404.19756).
 
 The **Non-Negativity Axiom**
-: The probability of any event A must be a real number greater than zero.
+: The probability of any event A must be a real number greater than or equal to zero.
   ```{math}
   :label: eq:kolmogorov1
   P(A) \geq 0 \;\; \forall A
@@ -451,7 +455,7 @@ $$\label{eq:totp1} P(A) = \sum \limits_{i=1}^4 P(A\cap B_i)$$
 :::{figure} 
 :label: fig:venn_tot
 :align: left
-![](https://github.com/dorksquith/DataAnalysisTechniques/blob/main/figures/AandB1.png)
+![](figures/AandB1.png)
 
 
 :::
@@ -557,7 +561,7 @@ The data are as follows:
 * In universe Y where Yellow Zorgs are dominant, 100% of Yellow Zorgs are happiest.
 * In universe Y' where Red Zorgs are dominant, 90% of Red Zorgs are happiest.
 
-Note: these data are percentages **with respect to the given universe**; in other words the assumption is that the total probabbility of being in universe Y is 1, and that the total probability of being universe Y' is 1. This makes them **Conditional Probabilities**.
+Note: these data are percentages **with respect to the given universe**; in other words the assumption is that the total probability of being in universe Y is 1, and that the total probability of being universe Y' is 1. This makes them **Conditional Probabilities**.
 
 <!--
 :::{table} Tabulated Conditional Probabilities for Zorgs
@@ -586,13 +590,13 @@ Note that [](#tab:zorgs1) has the **Conditional Probabilities**, while a regular
 The difference between these is the **Total Probability**, as per [](#eq:conp).
 
 
-To build a contingency table of valid Probabilities, we must ensure the totals [](#total-prob) are 1.
+To build a contingency table of valid Probabilities, we need to calculate the Total Probability [](#total-prob) using our prior probabilities P(Y) and P(Y’).
 
 ```{math}
 \begin{aligned}
 P(y) & = P(y \cap Y) + P(y \cap Y') \\
      & = P(y|Y) P(Y) + P(y|Y') P(Y') \\ 
-    & = 1 \\
+     & = (1)(0.25) + (0.1)(0.75) = 0.325 \\
 \end{aligned}
 ```
 
@@ -811,7 +815,7 @@ def definite_integral_example(xlo,xhi):
 	
 	my_func = 4*x**3
 
-	definite_integral = sympy.integrate(my_func, (x,0,1) )
+	definite_integral = sympy.integrate(my_func, (x,xlo,xhi) )
 
 	print(f"Integral {my_func}, {xlo}<x<{xhi} =  {definite_integral}" )
 
@@ -897,9 +901,8 @@ P(A \cap B) &= P(A | B ) \, P(B) \\
 
 ```{math}
 \begin{aligned}
-P(A \cap B) &= P(A | B ) \, P(B) \\ 
-            &= \int \limits_{x_0}^{x} \int \limits_{y_0}^{\infty} f_{XY}(x,y)\, dx\, dy & \leftarrow f_{XY}(x,\infty) \mathsf{\; is\; the\;joint\; PDF} \\  
-            &= F_{XY}(x,\infty) &\leftarrow F_{XY}(x,\infty) \mathsf{\; is\; the\;marginal\; CDF\; for\; X} \\
+P(A) &= \int \limits_{x_0}^{x} \int \limits_{-\infty}^{\infty} f_{XY}(x,y)\, dy\, dx & \leftarrow \mathsf{integrating\; out\; }Y \\  
+     &= F_{X}(x) &\leftarrow F_{X}(x) \mathsf{\; is\; the\;marginal\; CDF\; for\; X} \\
 \end{aligned}
 
 ``` 

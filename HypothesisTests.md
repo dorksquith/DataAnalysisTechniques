@@ -39,7 +39,7 @@ The **Alternative Hypothesis** $H_1$
 ### Example: The Higgs
 
 After waiting forever for the LHC to get going after some unfortunate stalls due to
-bad soldering and a ferret, we started to see ‘Higgs-like’ signs in 2011. The plot in [](#fig:higgs) shows the Null Hypothesis (no Higgs) as a red dashed line and the Alternative Hypothesis (Higgs) as a solid red line. In this case, we were not able to disprove the Alternative Hypothesis, and we have still not been able to disprove it. When a particle physicist talks about Discovery (the D-word) we mean that we have not yet managed to exclude the alternative hypothesis.
+bad soldering and a ferret, we started to see ‘Higgs-like’ signs in 2011. The plot in [](#fig:higgs) shows the Null Hypothesis (no Higgs) as a red dashed line and the Alternative Hypothesis (Higgs) as a solid red line. In this case, we were not able to disprove the Alternative Hypothesis, and we have still not been able to disprove it. When a particle physicist talks about Discovery (the D-word) we mean that we have rejected the Null Hypothesis at $5\sigma$ significance, which is so strong that we are confident enough to claim discovery of the new particle.
 
 
 
@@ -87,7 +87,7 @@ A beautiful espresso machine.
 
 A Critical Region $W$ is a region of the Sample Space $S$ in which the probability of finding the data, given the Null Hypothesis, is very small[^verysmall].
 
-[^verysmall]: "very small" is a qualititive term, which will be defined quantatively as part of our test.
+[^verysmall]: "very small" is a qualitative term, which will be defined quantitatively as part of our test.
 
 :::{figure} 
 :label: fig:robot-critregion
@@ -115,7 +115,7 @@ A popular choice in the wide world[^notpp] is to set a tolerance level of $5\%$.
 [^notpp]: 5% is not a popular choice in particle physics. We are way too scared of being wrong.
 
 
-This tolerance level is called the **Significance Level, $\alpha$**, and it provides the upper limit on the conditional probablity in [](#eq:testW).
+This tolerance level is called the **Significance Level, $\alpha$**, and it provides the upper limit on the conditional probability in [](#eq:testW).
 
 
 $$\label{eq:testW} P(x \in W | H_0) \leq \alpha $$
@@ -133,7 +133,7 @@ Once we when we have decided on $W$ and $\alpha$, we can look at (‘unblind’)
 **Choosing a Critical Region is challenging**
 
 
-In reality, it is impossible to find a $W$ that is not consistent with both $H_0$ and $H_1$. There will always be overlap between them, as I have attemped to illustrate in [](#fig:critregion). 
+In reality, it is impossible to find a $W$ that is not consistent with both $H_0$ and $H_1$. There will always be overlap between them, as I have attempted to illustrate in [](#fig:critregion). 
 
 
 :::{figure} 
@@ -146,7 +146,7 @@ In reality, it is impossible to find a $W$ that is not consistent with both $H_0
 A cartoon showing the PDFs for the Null (top) and Alternative (bottom) hypotheses.
 :::
 
-In the simplified example of [](#fig:critregion), the critical region that provides us with a significance level of $\alpha=5\%$ exludes more than half of the distribution for the Alternative Hypothesis. In life, we may find that our critical region eliminates much larger fractions of $H_1$. We need to think carefully about how we define our critical regions to ensure we mazimize our **Sensitivity** to the data. 
+In the simplified example of [](#fig:critregion), the critical region that provides us with a significance level of $\alpha=5\%$ exludes more than half of the distribution for the Alternative Hypothesis. In life, we may find that our critical region eliminates much larger fractions of $H_1$. We need to think carefully about how we define our critical regions to ensure we maximize our **Sensitivity** to the data. 
 
 The **Sensitivity** of a test for a given $H_1$ is also called the **Power of the test**, and is determined by the proportion of $H_1$ **not excluded** by our choice of $W$ and $\alpha$: 
 
@@ -406,7 +406,7 @@ Because **we can never know the truth**, a positive result is either exciting or
 
 ![](figures/CriticalRegion-Wrongness_5.png)
 
-The probabilities of a False Positive (Type 1 Error) and False Negative (Type 2 Error) are set by our choice of $\alpha$ and W in the test design. The two plots shown here live in differrent hypothetical universe, only one (or neither) of which can be correct.
+The probabilities of a False Positive (Type 1 Error) and False Negative (Type 2 Error) are set by our choice of $\alpha$ and W in the test design. The two plots shown here live in different hypothetical universes, only one (or neither) of which can be correct.
 :::
 
 
@@ -536,7 +536,7 @@ To calculate the probability within a range, we must subtract the CDF to the low
 
 
 
-The simplest way to denomstrate this is with a Standard Normal ($\mu=0, \sigma=1$) distribution, for which the RV is:
+The simplest way to demonstrate this is with a Standard Normal ($\mu=0, \sigma=1$) distribution, for which the RV is:
 
 $$
 Z = \dfrac{X-\mu}{\sigma} = X
@@ -576,8 +576,7 @@ InsideProbability(3.65)
 (pfromz)=
 ### Find the p value from the Z value
 
-The (one-sided) P Value is the area under one tail of the distribution, with one limit being infinity and the other being the RV value that we measure. So, if the Z Value is the "inside probability", equal to the **CDF** and accessible with ```norm.cdf()``` the P Value can be thought of as the "outside probability", equal to the **Survival Function** and accessible with ```norm.sf()```.
-
+The (one-sided) P Value is the area under one tail of the distribution, with one limit being infinity and the other being the RV value that we measure. The inside probability corresponding to a Z value is given by the CDF, accessible with `norm.cdf()`, while the p value (outside probability) is given by the survival function, accessible with `norm.sf()`.
 
 ```{code-cell} python
 def OutsideProbability(z):

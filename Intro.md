@@ -16,6 +16,34 @@ numbering: false
 
 This module explores how to use probability and statistics to analyse data and is currently organised in two volumes.
 
+(coursework)=
+::::{dropdown} Quick Start (Coursework) Instructions
+
+If you have setup python, pip on your computer and are in a folder containing the myst.yml, requirements.txt, and eg Report.md files (for example if you are in one of the template coursework folders I have provided), you can run these steps:
+
+```
+# 1. Create virtual python environment
+
+python3 -m venv .venv
+
+# 2. Activate virtual python environment
+
+# on mac osx or unix
+source .venv/bin/activate
+
+# on windows
+.venv\Scripts\activate
+
+# 3. Install dependencies  
+
+pip install -r requirements.txt
+
+# 4. Execute the jupyter book
+
+jupyter book start --execute
+
+```
+::::
 
 ## Volume 1: Probability & Statistics
 

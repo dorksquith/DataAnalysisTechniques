@@ -12,6 +12,12 @@ kernelspec:
 (chapter:PMFs)=
 # Discrete Probabilities & Likelihoods
 
+* `scipy.stats` distributions: `bernoulli, binom, poisson `
+* `math` methods: `factorial`
+* `scipy.special` methods: `binom`
+
+
+
 If a discrete RV $K$ follows a special distribution, we can immediately use it to calculate the probabilities, e.g. $P(K=k)$ for $K\sim$ Poisson($\lambda$). **BUT** we need to know the form and the parameter(s) of the special distribution to do this. If the parameters are not known, we have to Estimate them using data. 
 
 We will use this topic to:
@@ -444,6 +450,30 @@ print(f"bnc(n=20,k=9)= {ByHandBNC(20,9)}")
 
 # n=30 tosses, k=15 heads
 print(f"bnc(n=30,k=15)= {ByHandBNC(30,15)}")
+```
+
+Unsurprisingly, `scipy` has a method for calculating the binomial coefficients, shown below. I do not recommend reinventing the wheel  with eg the `ByHandBNC` function above - I include this for transparency only, as the built-in `scipy` methods tend to be very general and therefore not easy to understand in simple terms. The `scipy.special.binom` method for calculating the binomial coefficient is far superior to my toy version above[^nonintfact].
+
+[^nonintfact]: For $K\sim$ Binomial($n,p$), $n$ and $k$ will always be integers, so the by-hand method is fine. We can calculate the binomial coefficient for any number using the `scipy.special.binom` method via use of Gamma and Beta functions, introduced briefly in [](#sec:chi2-pdf-gamma)
+
+:::{warning}
+There are two `binom` methods in `scipy`. The distribution (PMF) is accessed via `scipy.stats.binom`. The Binomial Coefficient is accessed via `scipy.special.binom`.
+:::
+
+
+
+```{code-cell} python
+
+# I do not want this special.binom function floating around, given that is also the name of the stats.binom distribution, so I will import it with a name I have chosen: ScipyBNC
+
+from scipy.special import binom as ScipyBNC
+
+
+# n=20 tosses, k=9 heads
+print(f"bnc(n=20,k=9)= {ScipyBNC(20,9)}")
+
+# n=30 tosses, k=15 heads
+print(f"bnc(n=30,k=15)= {ScipyBNC(30,15)}")
 ```
 
 

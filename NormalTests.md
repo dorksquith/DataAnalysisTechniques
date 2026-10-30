@@ -537,6 +537,13 @@ In the (much more realistic) scenario where we don't know $\sigma_{true}$, we **
 \mathsf{ \widehat{SEM}} =\dfrac{\sigma_{x} }{\sqrt{N}}
 ```
 
+```{math}
+:label: eq:tstat
+
+\mathsf{T\; Test\; Statistic = \dfrac{ \overline{x}-\mu_{_0} }{ \widehat{SEM}} }
+
+```
+
 Here $\sigma_x$ is the sample standard deviation computed with $N-1$ in the denominator (``ddof=1`` in numpy). This matters: using $N$ in the denominator (``ddof=0``) systematically underestimates the true variance — see [](#fig:lilyproof_varbias) for a proof — which would make our $\widehat{\mathsf{SEM}}$ too small. Correcting for this bias by using $N-1$ gives an unbiased estimate of the true variance, and therefore a reliable estimate of the SEM. This is the convention used by ``scipy.stats.ttest_1samp``.
 
 The T distribution has one parameter: the number of degrees of freedom, with symbol [$\nu$](#eq:Tnu). 
@@ -658,7 +665,7 @@ The two-sample T Test is for comparing two datasets, rather than one dataset and
 
 ```{math}
 :label: eq:T2test
-\mathsf{T_2\; test= \dfrac{ \overline{x}-\overline{y} }{\psi\,\sigma_{p}}}
+\mathsf{T_2\; Test\; Statistic= \dfrac{ \overline{x}-\overline{y} }{\psi\,\sigma_{p}}}
 ```
 
 The **Pooled Variance** $\sigma^2_p$ is constructed from the Unbiased Variances of the two datasets, $\sigma^2_{x}$ and $\sigma^2_{y}$, and the degrees of freedom in each, $\nu_x$  and $\nu_y$:
@@ -888,9 +895,12 @@ The denominator $\mathsf{ \sum \limits_{j}  N_j - N_s}$  is the number of degre
 We now have the ingredients to calculate the **F statistic**:
 
 ```{math}
-:label: eq:ftest
-\mathsf{ F = V_{between} \; / \; V_{within} }
+:label: eq:fstat
+
+\mathsf{F\; Test\; Statistic = V_{between} \; / \; V_{within} }
+
 ```
+
 
 ### The F PDF
 

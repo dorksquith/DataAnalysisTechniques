@@ -1,0 +1,193 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="780" height="842" viewBox="0 0 780 842">
+<rect width="780" height="842" rx="12" fill="#F8F9FB"/>
+
+<!-- Title -->
+<text x="390" y="36" font-size="22" font-weight="bold" fill="#1A1A2E"
+      text-anchor="middle" font-family="sans-serif">Probability Distributions — Reference Poster</text>
+<text x="390" y="56" font-size="12" fill="#5A5A7A"
+      text-anchor="middle" font-family="sans-serif">Module 890F3 · University of Sussex · Data Analysis Techniques</text>
+
+<!-- Tiles -->
+<rect x="22" y="70" width="175" height="175" rx="8" ry="8" fill="#EEF2FB" stroke="#D8DDE6" stroke-width="1"/>
+<clipPath id="cp-0-0"><rect x="22" y="70" width="175" height="90" rx="8" ry="8"/></clipPath>
+<rect x="22" y="70" width="175" height="90" fill="#3367CC" clip-path="url(#cp-0-0)"/>
+<rect x="22" y="152" width="175" height="8" fill="#3367CC"/>
+<line x1="90" y1="104" x2="60" y2="137" stroke="white" stroke-width="1.8"/>
+<line x1="90" y1="104" x2="120" y2="137" stroke="white" stroke-width="1.8"/>
+<circle cx="90" cy="98" r="6" fill="white" opacity="0.9"/>
+<circle cx="60" cy="143" r="6" fill="none" stroke="white" stroke-width="2"/>
+<circle cx="120" cy="143" r="6" fill="white" opacity="0.9"/>
+<text x="109" y="150" font-size="12" fill="white" font-weight="bold" text-anchor="middle" font-family="sans-serif">Bernoulli</text>
+<text x="109" y="175" font-size="9" fill="#2A2A3E" text-anchor="middle" font-family="sans-serif">Single binary trial</text>
+<text x="109" y="235" font-size="8.5" fill="#3367CC" font-weight="bold" text-anchor="middle" font-family="sans-serif">p ∈ (0,1)</text>
+
+<rect x="209" y="70" width="175" height="175" rx="8" ry="8" fill="#EEF2FB" stroke="#D8DDE6" stroke-width="1"/>
+<clipPath id="cp-1-0"><rect x="209" y="70" width="175" height="90" rx="8" ry="8"/></clipPath>
+<rect x="209" y="70" width="175" height="90" fill="#3367CC" clip-path="url(#cp-1-0)"/>
+<rect x="209" y="152" width="175" height="8" fill="#3367CC"/>
+<circle cx="225" cy="93" r="6" fill="white" opacity="0.85"/>
+<circle cx="245" cy="93" r="6" fill="white" opacity="0.85"/>
+<circle cx="265" cy="93" r="6" fill="white" opacity="0.85"/>
+<circle cx="285" cy="93" r="6" fill="white" opacity="0.85"/>
+<circle cx="305" cy="93" r="6" fill="white" opacity="0.85"/>
+<circle cx="225" cy="111" r="6" fill="white" opacity="0.85"/>
+<circle cx="245" cy="111" r="6" fill="white" opacity="0.85"/>
+<circle cx="265" cy="111" r="6" fill="none" stroke="white" stroke-width="1.8" opacity="0.7"/>
+<circle cx="285" cy="111" r="6" fill="none" stroke="white" stroke-width="1.8" opacity="0.7"/>
+<circle cx="305" cy="111" r="6" fill="none" stroke="white" stroke-width="1.8" opacity="0.7"/>
+<text x="296" y="150" font-size="12" fill="white" font-weight="bold" text-anchor="middle" font-family="sans-serif">Binomial</text>
+<text x="296" y="175" font-size="9" fill="#2A2A3E" text-anchor="middle" font-family="sans-serif">Count successes in N trials</text>
+<text x="296" y="235" font-size="8.5" fill="#3367CC" font-weight="bold" text-anchor="middle" font-family="sans-serif">N, p</text>
+
+<rect x="396" y="70" width="175" height="175" rx="8" ry="8" fill="#EEF2FB" stroke="#D8DDE6" stroke-width="1"/>
+<clipPath id="cp-2-0"><rect x="396" y="70" width="175" height="90" rx="8" ry="8"/></clipPath>
+<rect x="396" y="70" width="175" height="90" fill="#3367CC" clip-path="url(#cp-2-0)"/>
+<rect x="396" y="152" width="175" height="8" fill="#3367CC"/>
+<rect x="424" y="143" width="16" height="10" fill="none" stroke="white" stroke-width="1.5" opacity="0.85"/>
+<rect x="440" y="133" width="16" height="10" fill="none" stroke="white" stroke-width="1.5" opacity="0.85"/>
+<rect x="456" y="123" width="16" height="10" fill="none" stroke="white" stroke-width="1.5" opacity="0.85"/>
+<rect x="472" y="113" width="16" height="10" fill="none" stroke="white" stroke-width="1.5" opacity="0.85"/>
+<rect x="488" y="103" width="16" height="10" fill="white" stroke="white" stroke-width="2" opacity="0.85"/>
+<text x="464" y="160" font-size="9" fill="white" text-anchor="middle">r-th ✓</text>
+<text x="483" y="150" font-size="11" fill="white" font-weight="bold" text-anchor="middle" font-family="sans-serif">Negative Binomial</text>
+<text x="483" y="175" font-size="9" fill="#2A2A3E" text-anchor="middle" font-family="sans-serif">Trials until r-th success</text>
+<text x="483" y="235" font-size="8.5" fill="#3367CC" font-weight="bold" text-anchor="middle" font-family="sans-serif">r, p</text>
+
+<rect x="583" y="70" width="175" height="175" rx="8" ry="8" fill="#EEF2FB" stroke="#D8DDE6" stroke-width="1"/>
+<clipPath id="cp-3-0"><rect x="583" y="70" width="175" height="90" rx="8" ry="8"/></clipPath>
+<rect x="583" y="70" width="175" height="90" fill="#3367CC" clip-path="url(#cp-3-0)"/>
+<rect x="583" y="152" width="175" height="8" fill="#3367CC"/>
+<path d="M 651,123 L 686.0,123.0 A 35,35 0 0,1 628.5,149.8 Z" fill="white" opacity="0.9" stroke="none"/>
+<path d="M 651,123 L 628.5,149.8 A 35,35 0 0,1 624.2,100.5 Z" fill="white" opacity="0.65" stroke="none"/>
+<path d="M 651,123 L 624.2,100.5 A 35,35 0 0,1 686.0,123.0 Z" fill="white" opacity="0.4" stroke="none"/>
+<circle cx="651" cy="123" r="35" fill="none" stroke="white" stroke-width="1.5"/>
+<text x="670" y="150" font-size="12" fill="white" font-weight="bold" text-anchor="middle" font-family="sans-serif">Multinomial</text>
+<text x="670" y="175" font-size="9" fill="#2A2A3E" text-anchor="middle" font-family="sans-serif">N trials, k categories</text>
+<text x="670" y="235" font-size="8.5" fill="#3367CC" font-weight="bold" text-anchor="middle" font-family="sans-serif">N, p₁…pₖ</text>
+
+<rect x="22" y="257" width="175" height="175" rx="8" ry="8" fill="#EEF2FB" stroke="#D8DDE6" stroke-width="1"/>
+<clipPath id="cp-0-1"><rect x="22" y="257" width="175" height="90" rx="8" ry="8"/></clipPath>
+<rect x="22" y="257" width="175" height="90" fill="#3367CC" clip-path="url(#cp-0-1)"/>
+<rect x="22" y="339" width="175" height="8" fill="#3367CC"/>
+<line x1="38" y1="310" x2="142" y2="310" stroke="white" stroke-width="2"/>
+<polygon points="142,310 137,307 137,313" fill="white"/>
+<line x1="50" y1="298" x2="50" y2="313" stroke="white" stroke-width="1.8"/>
+<circle cx="50" cy="295" r="3" fill="white" opacity="0.85"/>
+<line x1="68" y1="298" x2="68" y2="313" stroke="white" stroke-width="1.8"/>
+<circle cx="68" cy="295" r="3" fill="white" opacity="0.85"/>
+<line x1="78" y1="298" x2="78" y2="313" stroke="white" stroke-width="1.8"/>
+<circle cx="78" cy="295" r="3" fill="white" opacity="0.85"/>
+<line x1="98" y1="298" x2="98" y2="313" stroke="white" stroke-width="1.8"/>
+<circle cx="98" cy="295" r="3" fill="white" opacity="0.85"/>
+<line x1="112" y1="298" x2="112" y2="313" stroke="white" stroke-width="1.8"/>
+<circle cx="112" cy="295" r="3" fill="white" opacity="0.85"/>
+<line x1="128" y1="298" x2="128" y2="313" stroke="white" stroke-width="1.8"/>
+<circle cx="128" cy="295" r="3" fill="white" opacity="0.85"/>
+<text x="109" y="337" font-size="12" fill="white" font-weight="bold" text-anchor="middle" font-family="sans-serif">Poisson</text>
+<text x="109" y="362" font-size="9" fill="#2A2A3E" text-anchor="middle" font-family="sans-serif">Rare events in fixed interval</text>
+<text x="109" y="422" font-size="8.5" fill="#3367CC" font-weight="bold" text-anchor="middle" font-family="sans-serif">λ &gt; 0</text>
+
+<rect x="209" y="257" width="175" height="175" rx="8" ry="8" fill="#FDF3EE" stroke="#D8DDE6" stroke-width="1"/>
+<clipPath id="cp-1-1"><rect x="209" y="257" width="175" height="90" rx="8" ry="8"/></clipPath>
+<rect x="209" y="257" width="175" height="90" fill="#C05720" clip-path="url(#cp-1-1)"/>
+<rect x="209" y="339" width="175" height="8" fill="#C05720"/>
+<line x1="227" y1="337" x2="329" y2="337" stroke="white" stroke-width="1.8"/>
+<line x1="231" y1="279" x2="231" y2="337" stroke="white" stroke-width="1.2" stroke-dasharray="3,2" opacity="0.7"/>
+<line x1="323" y1="279" x2="323" y2="337" stroke="white" stroke-width="1.2" stroke-dasharray="3,2" opacity="0.7"/>
+<rect x="231" y="283" width="92" height="48" fill="white" opacity="0.2" rx="1"/>
+<line x1="231" y1="283" x2="323" y2="283" stroke="white" stroke-width="2.2"/>
+<text x="296" y="337" font-size="12" fill="white" font-weight="bold" text-anchor="middle" font-family="sans-serif">Uniform</text>
+<text x="296" y="362" font-size="9" fill="#2A2A3E" text-anchor="middle" font-family="sans-serif">Equal probability on [a,b]</text>
+<text x="296" y="422" font-size="8.5" fill="#C05720" font-weight="bold" text-anchor="middle" font-family="sans-serif">a &lt; b</text>
+
+<rect x="396" y="257" width="175" height="175" rx="8" ry="8" fill="#FDF3EE" stroke="#D8DDE6" stroke-width="1"/>
+<clipPath id="cp-2-1"><rect x="396" y="257" width="175" height="90" rx="8" ry="8"/></clipPath>
+<rect x="396" y="257" width="175" height="90" fill="#C05720" clip-path="url(#cp-2-1)"/>
+<rect x="396" y="339" width="175" height="8" fill="#C05720"/>
+<line x1="415" y1="340" x2="518" y2="340" stroke="white" stroke-width="1.8"/>
+<line x1="418" y1="276" x2="418" y2="343" stroke="white" stroke-width="1.8"/>
+<path d="M 418,340 L 418,280 C 433,285 463,332 514,340 Z" fill="white" opacity="0.15"/>
+<path d="M 418,280 C 433,285 463,332 514,340" fill="none" stroke="white" stroke-width="2.2"/>
+<text x="483" y="337" font-size="12" fill="white" font-weight="bold" text-anchor="middle" font-family="sans-serif">Exponential</text>
+<text x="483" y="362" font-size="9" fill="#2A2A3E" text-anchor="middle" font-family="sans-serif">Waiting time (Poisson events)</text>
+<text x="483" y="422" font-size="8.5" fill="#C05720" font-weight="bold" text-anchor="middle" font-family="sans-serif">λ &gt; 0</text>
+
+<rect x="583" y="257" width="175" height="175" rx="8" ry="8" fill="#FDF3EE" stroke="#D8DDE6" stroke-width="1"/>
+<clipPath id="cp-3-1"><rect x="583" y="257" width="175" height="90" rx="8" ry="8"/></clipPath>
+<rect x="583" y="257" width="175" height="90" fill="#C05720" clip-path="url(#cp-3-1)"/>
+<rect x="583" y="339" width="175" height="8" fill="#C05720"/>
+<line x1="598" y1="340" x2="704" y2="340" stroke="white" stroke-width="1.8"/>
+<path d="M 601,340 C 621,340 611,285 651,280 C 691,285 681,340 701,340 Z" fill="white" opacity="0.15"/>
+<line x1="651" y1="277" x2="651" y2="340" stroke="white" stroke-width="1.2" stroke-dasharray="3,2" opacity="0.8"/>
+<path d="M 601,340 C 621,340 611,285 651,280 C 691,285 681,340 701,340" fill="none" stroke="white" stroke-width="2.2"/>
+<text x="670" y="337" font-size="12" fill="white" font-weight="bold" text-anchor="middle" font-family="sans-serif">Normal</text>
+<text x="670" y="362" font-size="9" fill="#2A2A3E" text-anchor="middle" font-family="sans-serif">Symmetric variation; CLT</text>
+<text x="670" y="422" font-size="8.5" fill="#C05720" font-weight="bold" text-anchor="middle" font-family="sans-serif">μ, σ &gt; 0</text>
+
+<rect x="22" y="444" width="175" height="175" rx="8" ry="8" fill="#FDF3EE" stroke="#D8DDE6" stroke-width="1"/>
+<clipPath id="cp-0-2"><rect x="22" y="444" width="175" height="90" rx="8" ry="8"/></clipPath>
+<rect x="22" y="444" width="175" height="90" fill="#C05720" clip-path="url(#cp-0-2)"/>
+<rect x="22" y="526" width="175" height="8" fill="#C05720"/>
+<line x1="41" y1="527" x2="143" y2="527" stroke="white" stroke-width="1.8"/>
+<line x1="44" y1="463" x2="44" y2="530" stroke="white" stroke-width="1.8"/>
+<path d="M 44,527 C 46,519 54,473 68,467 C 86,473 124,523 140,527 Z" fill="white" opacity="0.15"/>
+<path d="M 44,527 C 46,519 54,473 68,467 C 86,473 124,523 140,527" fill="none" stroke="white" stroke-width="2.2"/>
+<text x="109" y="524" font-size="12" fill="white" font-weight="bold" text-anchor="middle" font-family="sans-serif">Chi-squared</text>
+<text x="109" y="549" font-size="9" fill="#2A2A3E" text-anchor="middle" font-family="sans-serif">Sum of squared normals</text>
+<text x="109" y="609" font-size="8.5" fill="#C05720" font-weight="bold" text-anchor="middle" font-family="sans-serif">ν &gt; 0 (df)</text>
+
+<rect x="209" y="444" width="175" height="175" rx="8" ry="8" fill="#FDF3EE" stroke="#D8DDE6" stroke-width="1"/>
+<clipPath id="cp-1-2"><rect x="209" y="444" width="175" height="90" rx="8" ry="8"/></clipPath>
+<rect x="209" y="444" width="175" height="90" fill="#C05720" clip-path="url(#cp-1-2)"/>
+<rect x="209" y="526" width="175" height="8" fill="#C05720"/>
+<line x1="228" y1="527" x2="330" y2="527" stroke="white" stroke-width="1.8"/>
+<line x1="231" y1="463" x2="231" y2="530" stroke="white" stroke-width="1.8"/>
+<path d="M 231,527 C 239,523 237,471 272,467 C 307,471 317,523 327,527 Z" fill="white" opacity="0.15"/>
+<path d="M 231,527 C 239,523 237,471 272,467 C 307,471 317,523 327,527" fill="none" stroke="white" stroke-width="2.2"/>
+<text x="296" y="524" font-size="12" fill="white" font-weight="bold" text-anchor="middle" font-family="sans-serif">Gamma</text>
+<text x="296" y="549" font-size="9" fill="#2A2A3E" text-anchor="middle" font-family="sans-serif">Sum of Exponential r.v.s</text>
+<text x="296" y="609" font-size="8.5" fill="#C05720" font-weight="bold" text-anchor="middle" font-family="sans-serif">α, β &gt; 0</text>
+
+<rect x="396" y="444" width="175" height="175" rx="8" ry="8" fill="#FDF3EE" stroke="#D8DDE6" stroke-width="1"/>
+<clipPath id="cp-2-2"><rect x="396" y="444" width="175" height="90" rx="8" ry="8"/></clipPath>
+<rect x="396" y="444" width="175" height="90" fill="#C05720" clip-path="url(#cp-2-2)"/>
+<rect x="396" y="526" width="175" height="8" fill="#C05720"/>
+<line x1="415" y1="527" x2="517" y2="527" stroke="white" stroke-width="1.8"/>
+<line x1="418" y1="527" x2="418" y2="523" stroke="white" stroke-width="1.8"/>
+<line x1="514" y1="527" x2="514" y2="523" stroke="white" stroke-width="1.8"/>
+<path d="M 418,527 C 433,522 436,476 466,472 C 496,476 499,522 514,527 Z" fill="white" opacity="0.15"/>
+<path d="M 418,527 C 433,522 436,476 466,472 C 496,476 499,522 514,527" fill="none" stroke="white" stroke-width="2.2"/>
+<text x="418" y="541" font-size="8" fill="white" opacity="0.8">0</text>
+<text x="510" y="541" font-size="8" fill="white" opacity="0.8">1</text>
+<text x="483" y="524" font-size="12" fill="white" font-weight="bold" text-anchor="middle" font-family="sans-serif">Beta</text>
+<text x="483" y="549" font-size="9" fill="#2A2A3E" text-anchor="middle" font-family="sans-serif">Probabilities on [0,1]</text>
+<text x="483" y="609" font-size="8.5" fill="#C05720" font-weight="bold" text-anchor="middle" font-family="sans-serif">α, β &gt; 0</text>
+
+<rect x="583" y="444" width="175" height="175" rx="8" ry="8" fill="#FDF3EE" stroke="#D8DDE6" stroke-width="1"/>
+<clipPath id="cp-3-2"><rect x="583" y="444" width="175" height="90" rx="8" ry="8"/></clipPath>
+<rect x="583" y="444" width="175" height="90" fill="#C05720" clip-path="url(#cp-3-2)"/>
+<rect x="583" y="526" width="175" height="8" fill="#C05720"/>
+<line x1="601" y1="527" x2="704" y2="527" stroke="white" stroke-width="1.8"/>
+<line x1="621" y1="463" x2="621" y2="530" stroke="white" stroke-width="1.2" stroke-dasharray="3,2" opacity="0.7"/>
+<path d="M 621,527 L 621,467 C 625,472 641,512 656,522 C 671,527 691,527 701,527 Z" fill="white" opacity="0.15"/>
+<path d="M 621,467 C 625,472 641,512 656,522 C 671,527 691,527 701,527" fill="none" stroke="white" stroke-width="2.2"/>
+<text x="621" y="541" font-size="8" fill="white" opacity="0.8">xₘ</text>
+<text x="670" y="524" font-size="12" fill="white" font-weight="bold" text-anchor="middle" font-family="sans-serif">Pareto</text>
+<text x="670" y="549" font-size="9" fill="#2A2A3E" text-anchor="middle" font-family="sans-serif">Power-law tails</text>
+<text x="670" y="609" font-size="8.5" fill="#C05720" font-weight="bold" text-anchor="middle" font-family="sans-serif">xₘ, α &gt; 0</text>
+
+<rect x="22" y="631" width="175" height="175" rx="8" ry="8" fill="#FDF3EE" stroke="#D8DDE6" stroke-width="1"/>
+<clipPath id="cp-0-3"><rect x="22" y="631" width="175" height="90" rx="8" ry="8"/></clipPath>
+<rect x="22" y="631" width="175" height="90" fill="#C05720" clip-path="url(#cp-0-3)"/>
+<rect x="22" y="713" width="175" height="8" fill="#C05720"/>
+<polygon points="90.0,665.0 128.1,731.0 51.9,731.0" fill="white" opacity="0.15" stroke="white" stroke-width="1.8"/>
+<circle cx="90.0" cy="661.0" r="3" fill="white" opacity="0.8"/>
+<circle cx="94.0" cy="667.0" r="3" fill="white" opacity="0.8"/>
+<circle cx="86.0" cy="667.0" r="3" fill="white" opacity="0.8"/>
+<text x="109" y="711" font-size="12" fill="white" font-weight="bold" text-anchor="middle" font-family="sans-serif">Dirichlet</text>
+<text x="109" y="736" font-size="9" fill="#2A2A3E" text-anchor="middle" font-family="sans-serif">Distribution over simplex</text>
+<text x="109" y="796" font-size="8.5" fill="#C05720" font-weight="bold" text-anchor="middle" font-family="sans-serif">α₁…αₖ &gt; 0</text>
+
+<!-- Legend -->
+<rect x="22" y="816" width="14" height="14" rx="2" fill="#3367CC"/><text x="40" y="827" font-size="10" fill="#5A5A7A" font-family="sans-serif">Discrete</text><rect x="112" y="816" width="14" height="14" rx="2" fill="#C05720"/><text x="130" y="827" font-size="10" fill="#5A5A7A" font-family="sans-serif">Continuous</text>
+</svg>

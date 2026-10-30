@@ -514,6 +514,7 @@ The parameter is $\nu$: a positive integer giving the number of independent squa
 
 ---
 
+(sec:chi2-pdf-gamma)=
 ### PDF & Kernel
 
 <!--f(x;\nu) = \dfrac{x^{\nu/2-1}\, e^{-x/2}}{2^{\nu/2}\,\Gamma(\nu/2)} \;\;;\;\; x \geq 0-->

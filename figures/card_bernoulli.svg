@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="185" viewBox="0 0 760 185">
+  <rect width="760" height="185" rx="10" ry="10" fill="#F9FAFB" stroke="#D8DDE6" stroke-width="1.5"/>
+  <clipPath id="lp"><rect width="185" height="185" rx="10" ry="10"/></clipPath>
+  <rect width="185" height="185" fill="#3367CC" clip-path="url(#lp)"/>
+  <rect x="175" width="10" height="185" fill="#3367CC"/>
+  <line x1="185" y1="0" x2="185" y2="185" stroke="#D8DDE6" stroke-width="1.5"/>
+  <text x="92" y="175" font-size="9" fill="white" font-weight="bold" text-anchor="middle" font-family="sans-serif">DISCRETE</text>
+  <line x1="92" y1="47" x2="50" y2="88" stroke="white" stroke-width="2"/>
+  <line x1="92" y1="47" x2="134" y2="88" stroke="white" stroke-width="2"/>
+  <circle cx="92" cy="40" r="7" fill="white" opacity="0.9"/>
+  <circle cx="50" cy="95" r="7" fill="none" stroke="white" stroke-width="2"/>
+  <circle cx="134" cy="95" r="7" fill="white" opacity="0.9"/>
+  <text x="46" y="115" font-size="10" fill="white" font-weight="normal" text-anchor="middle" font-family="sans-serif">k=0</text>
+  <text x="46" y="127" font-size="9" fill="white" font-weight="normal" text-anchor="middle" font-family="sans-serif" font-style="italic">1-p</text>
+  <text x="138" y="115" font-size="10" fill="white" font-weight="normal" text-anchor="middle" font-family="sans-serif">k=1</text>
+  <text x="138" y="127" font-size="9" fill="white" font-weight="normal" text-anchor="middle" font-family="sans-serif" font-style="italic">p</text>
+  <text x="92" y="155" font-size="14" fill="white" font-weight="bold" text-anchor="middle" font-family="sans-serif">Bernoulli</text>
+  <text x="199" y="20" font-size="9" fill="#3367CC" font-weight="bold" text-anchor="start" font-family="sans-serif">USE WHEN</text>
+  <text x="199" y="36" font-size="11" fill="#1A1A2E" font-weight="normal" text-anchor="start" font-family="sans-serif">A single trial with exactly two outcomes (success/failure).</text>
+  <line x1="199" y1="62" x2="746" y2="62" stroke="#D8DDE6" stroke-width="1"/>
+  <text x="199" y="76" font-size="9" fill="#4A4A6A" font-weight="bold" text-anchor="start" font-family="sans-serif">PMF</text>
+  <text x="247" y="76" font-size="10.5" fill="#1A1A2E" font-family="Courier New,monospace">P(K=k) = p^k (1-p)^(1-k)</text>
+  <line x1="199" y1="95" x2="746" y2="95" stroke="#D8DDE6" stroke-width="1"/>
+  <text x="199" y="109" font-size="9" fill="#4A4A6A" font-weight="bold" text-anchor="start" font-family="sans-serif">Params:</text>
+  <text x="249" y="109" font-size="10" fill="#1A1A2E" font-weight="normal" text-anchor="start" font-family="sans-serif">p ∈ (0,1)</text>
+  <text x="482" y="109" font-size="9" fill="#4A4A6A" font-weight="bold" text-anchor="start" font-family="sans-serif">Support:</text>
+  <text x="534" y="109" font-size="10" fill="#1A1A2E" font-weight="normal" text-anchor="start" font-family="sans-serif">k ∈ {0, 1}</text>
+  <text x="199" y="125" font-size="10" fill="#1A1A2E" font-weight="normal" text-anchor="start" font-family="sans-serif">E[K] = p     Var[K] = p(1-p)</text>
+  <rect x="656" y="8" width="90" height="18" rx="4" fill="#3367CC" opacity="0.12"/>
+  <text x="701" y="21" font-size="9" fill="#3367CC" font-weight="bold" text-anchor="middle" font-family="sans-serif">DISCRETE</text>
+</svg>

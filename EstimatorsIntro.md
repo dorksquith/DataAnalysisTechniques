@@ -11,6 +11,13 @@ kernelspec:
 
 (chapter:EstimatorsIntro)=
 # Estimators Intro
+
+
+* `numpy` methods: `random.default_rng`
+* `scipy.stats` methods: `bootstrap`
+
+
+
 <!--Week7-Tools/Tools.tex-->
 <!--Week8-Tools/MaxLike.tex-->
 <!--Week9-Fits-Tests/LeastSquares.tex-->

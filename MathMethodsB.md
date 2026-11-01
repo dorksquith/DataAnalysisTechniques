@@ -194,18 +194,18 @@ For a multivariate RV $\mathbf{X} = (X_1, X_2, \ldots, X_Z)$ transformed to $\ma
 
 ```{math}
 :label: eq:transform_jacobian
-f_{\mathbf{Y}}(\mathbf{y}) = \dfrac{1}{|J|}\, f_{\mathbf{X}}(\mathbf{x})
+f_{\mathbf{Y}}(\mathbf{y}) = \dfrac{1}{|\mathbf{J}|}\, f_{\mathbf{X}}(\mathbf{x})
 ```
 
-where $J$ is the **determinant** of the $Z\times Z$ matrix of partial derivatives:
+where $\mathbf{J}$ is the $Z\times Z$ **matrix** of partial derivatives and $|\mathbf{J}|$ denotes its determinant:
 
 ```{math}
 :label: eq:jacobian
-J = \begin{vmatrix}
+\mathbf{J} = \begin{pmatrix}
 \dfrac{\partial y_1}{\partial x_1} & \cdots & \dfrac{\partial y_1}{\partial x_Z} \\
 \vdots & \ddots & \vdots \\
 \dfrac{\partial y_Z}{\partial x_1} & \cdots & \dfrac{\partial y_Z}{\partial x_Z}
-\end{vmatrix}
+\end{pmatrix}
 ```
 
 **Example: Cartesian to Polar.** Points $(x,y)$ are uniformly distributed in a plane. Transform to polar coordinates $(r,\theta)$ via $r = \sqrt{x^2+y^2}$, $\theta = \arctan(y/x)$.
@@ -214,7 +214,7 @@ The partial derivatives give:
 $$\dfrac{\partial r}{\partial x} = \dfrac{x}{r}, \quad \dfrac{\partial r}{\partial y} = \dfrac{y}{r}, \quad \dfrac{\partial \theta}{\partial x} = -\dfrac{y}{r^2}, \quad \dfrac{\partial \theta}{\partial y} = \dfrac{x}{r^2}$$
 
 The Jacobian determinant is:
-$$J = \dfrac{x}{r}\cdot\dfrac{x}{r^2} - \dfrac{y}{r}\cdot\!\left(-\dfrac{y}{r^2}\right) = \dfrac{x^2+y^2}{r^3} = \dfrac{1}{r}$$
+$$|\mathbf{J}| = \dfrac{x}{r}\cdot\dfrac{x}{r^2} - \dfrac{y}{r}\cdot\!\left(-\dfrac{y}{r^2}\right) = \dfrac{x^2+y^2}{r^3} = \dfrac{1}{r}$$
 
 So $f(r,\theta) = r\, g(x,y)$: if $(x,y)$ are uniform (constant $g$), then $f(r,\theta) \propto r$, meaning the density in polar coordinates increases linearly with $r$. This makes geometric sense — concentric rings of equal width have area $\propto r$.
 
@@ -746,7 +746,7 @@ This is the **Delta method** (sometimes called **error propagation**). It is exa
 
 
 :::{seealso}
-The Delta Method generalises to multivariate functions via the Jacobian: $V[h] = J\,\Sigma\,J^T$. This general form is covered in [Describing Data](#sec:dd-varfunc).
+The Delta Method generalises to multivariate functions via the Jacobian: $V[h] = \mathbf{J}\,\Sigma\,\mathbf{J}^T$. This general form is covered in [Describing Data](#sec:dd-varfunc).
 :::
 
 

@@ -12,13 +12,16 @@ kernelspec:
 (chapter:PMFs)=
 # Discrete Probabilities & Likelihoods
 
+I strongly recommend the [Probability Playground](https://probabilityplayground.com/bernoulli) to help become familiar with special distributions. It has all of the distributions we will be thinking about, plus more!
+
+
 * `scipy.stats` distributions: `bernoulli, binom, poisson `
 * `math` methods: `factorial`
 * `scipy.special` methods: `binom`
 
 
 
-If a discrete RV $K$ follows a special distribution, we can immediately use it to calculate the probabilities, e.g. $P(K=k)$ for $K\sim$ Poisson($\lambda$). **BUT** we need to know the form and the parameter(s) of the special distribution to do this. If the parameters are not known, we have to Estimate them using data. 
+If a discrete RV $K$ follows a special distribution, we can immediately use it to calculate the probabilities. **But, we need to know the form and the parameter(s) of the special distribution to do this**. If the parameters are not known, we have to **Estimate** them using data. We can do this by calculating the Likelihoods for a range of parameter values and choosing the Maximum Likelihood Estimate (MLE).
 
 We will use this topic to:
 * Figure out which PMF is useful for what
@@ -26,10 +29,22 @@ We will use this topic to:
 * Practice calculating Probabilities, Expectation, Variance.
 * Note the usefulness of **Likelihoods**.
 
-I strongly recommend the [Probability Playground](https://probabilityplayground.com/bernoulli) to help become familiar with special distributions. It has all of the distributions we will be thinking about, plus more!
-
-
 ---
+
+(sec:which_pmf)=
+## Which PMF?
+
+**Discrete RVs** model counts or categories. The most commonly used discrete distributions are: Bernoulli, Binomial, Negative Binomial, Multinomial, and Poisson
+
+
+| Situation | Distribution |
+|-----------|-------------|
+| Single binary trial (yes/no) | [Bernoulli](#sec:bern) |
+| Count successes in N trials | [Binomial](#sec:binom) |
+| Trials needed until r successes | Negative Binomial |
+| N trials across k categories | Multinomial |
+| Events per unit time/space | [Poisson](#sec:poisson) |
+
 
 (sec:bern)=
 ## Bernoulli 
@@ -57,17 +72,21 @@ The **Support** of $K$ is $0 \leq k \leq 1$: all the values $k$ with non-zero pr
 
 For the two possible outcomes, we let $k=1$ represent success and $k=0$ represent failure.
 
-The first term $(1-p)^{(1-k)}$
-: Probability of failure ($1-p$) to the power zero ($1-k$)
+The first term, $(1-p)^{(1-k)}$
+:  $k=0$: Probability of failure ($1-p$) to the power one ($1-0$) = $1-p$
+   
+   $k=1$: Probability of failure ($1-p$) to the power zero ($1-k$) = 1
 
-The second term $p^k$
-: Probability of success ($p$) to the power one ($k$)
+The second term, $p^k$
+: $k=1$: Probability of success ($p$) to the power one ($k$) = $p$
+  
+  $k=0$: Probability of success ($p^0=1$) to the power zero ($0$) = 1
 
 :::{note}
-I acknowledge this seems a bit contrived, as the first term is always going to be equal to one, given that any number to the power zero is equal to one. But keeping it explicit in this way will help us with the next PMF, Binomial.
+I acknowledge the PMF seems a bit contrived, as one of the two terms is always going to be equal to one, given that any number to the power zero is equal to one. But keeping it explicit in this way will help us with the next PMF, Binomial.
 :::
 
-The **Kernel** of the Bernoulli PMF is given in [](#eq:bern_kernel); this is the part of the PMF that depends on the RV, which in this case is the whole PMF.
+The **Kernel** of the Bernoulli PMF is given in [](#eq:bern_kernel); this is the part of the PMF that depends on the RV, $k$, which in this case is the whole PMF.
 
 ```{math}
 :label: eq:bern_kernel
@@ -118,7 +137,7 @@ For a PMF to be valid, it must satistify [Kolmogorov's normalisation axiom](#eq:
 Is $\sum\limits_{k_i \in S} p_K(k_i) =1$ ?
 
 Normalisation check
-: $\sum\limits_{k_i \in S} p_K(k_i) = p + (1-p) = 1$:
+: $\sum\limits_{k_i \in S} p_K(k_i) = \left[ (1-p)^{(1-0)}\, p^0 \right] + \left[ (1-p)^{(1-1)}\, p^1 \right] =  (1-p) + p = 1$:
   the Bernoulli PMF is valid.
 
 ---
@@ -227,28 +246,28 @@ Each measurement is an IID Bernoulli$(p)$ trial, so the **Likelihood** of the fu
 
 ```{math}
 :label: eq:bern_like
-\mathcal{L}(p;k) = \prod_{i=1}^{N} p^{k_i}(1-p)^{1-k_i}
+\mathcal{L}_{p}(p;k) = \prod_{i=1}^{N} p^{k_i}(1-p)^{1-k_i}
 ```
 
 First we take the Log, to get rid of that pesky product [](#eq:logrule_product):
 
 ```{math}
 :label: eq:bern_loglike
-\ln\mathcal{L}(p;k) = \sum_{i=1}^{N} \ln{ \left( p^{k_i}(1-p)^{1-k_i} \right)}
+\ln\mathcal{L}_{p}(p;k) = \sum_{i=1}^{N} \ln{ \left( p^{k_i}(1-p)^{1-k_i} \right)}
 ```
 
 Then we use [](#eq:logrule_product) again to separate the terms:
 
 ```{math}
 :label: eq:bern_loglike2
-\ln\mathcal{L}(p;k) = \sum_{i=1}^{N} \left( \ln{ p^{k_i}} + \ln{ (1-p)^{1-k_i}} \right)
+\ln\mathcal{L}_{p}(p;k) = \sum_{i=1}^{N} \left( \ln{ p^{k_i}} + \ln{ (1-p)^{1-k_i}} \right)
 ```
 
 Then we use [](#eq:logrule_power):
 
 ```{math}
 :label: eq:bern_loglike3
-\ln\mathcal{L}(p;k) =
+\ln\mathcal{L}_{p}(p;k) =
 \sum_{i=1}^{N}
 \left( 
   k_i\, \ln{p} + 
@@ -256,14 +275,14 @@ Then we use [](#eq:logrule_power):
    \right)
 ```
 
-Finally tidy up with $n_1 = \sum_{i=1}^N k_i$ is the number of positive results and $n_0 = N - n_1$ is the number of negative results.
+Finally tidy up with $n_1 = \sum\limits_{i=1}^N k_i$ for the number of positive results and $n_0 = N - n_1$ for the number of negative results.
 
 ```{math}
 :label: eq:bern_loglike4
-\ln\mathcal{L}(p;\mathbf{k}) = n_1\ln p + n_0\ln(1-p)
+\ln\mathcal{L}_{p}(p;k) = n_1\ln p + n_0\ln(1-p)
 ```
 
-To find the most likely parameter value, $\hat{p}_{MLE}$ we find the value of $p$ for which the derivative of the Log Likelihood is zero.
+To find the most likely parameter value, $\hat{p}_{_{\mathsf{MLE}}}$ we find the value of $p$ for which the derivative of the Log Likelihood is zero.
 
 To do this we need to know how to differentiate. Here are some key results:
 
@@ -399,6 +418,7 @@ Binomial PMF is valid.
 
 ---
 
+(sec:binom-coeff)=
 ### Binomial Coefficient
 
 The Binomial Coefficient $\binom{n}{k}$ is a count of the number of ways to get $k$ successful outcomes from $n$ trials.

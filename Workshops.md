@@ -24,3 +24,5 @@ Workshop 4 [Z values, P values, Oh my!](#workshop-4)
 
 Workshop 5 [Normal Tests](#workshop-5)
 
+Workshop 6 [Likelihoods & Bootstrapping](#workshop-6)
+

@@ -12,6 +12,32 @@ kernelspec:
 (chapter:PDFs)=
 # Continuous Probabilities & Likelihoods
 
+I strongly recommend the [Probability Playground](https://probabilityplayground.com/standarduniform) to help become familiar with special distributions. It has all of the distributions we will be thinking about, plus more!
+
+
+* `scipy.stats` distributions: `uniform, expon, chi2 `
+
+
+---
+
+(sec:which_pdf)=
+## Which PDF?
+
+**Continuous RVs** model measurements, waiting times, proportions. The most commonly used continuous distributions are: Uniform, Exponential, Normal, Chi-squared, Gamma, Beta, Pareto, Dirichlet.
+
+
+| Situation | Distribution |
+|-----------|-------------|
+| Equally likely values on [a, b] | [Uniform](#sec:uniform) |
+| Waiting time between events | [Exponential](#sec:expon) |
+| Symmetric, bell-shaped variation | [Normal](#sec:normdist) |
+| Sum of squared standard normals | [Chi-squared](#sec:chi2dist) |
+| Flexible positive-valued data | Gamma |
+| Values constrained to [0, 1] | Beta |
+| Heavy-tailed (power-law) data | Pareto |
+| Proportions summing to 1 | Dirichlet |
+
+
 (sec:uniform)=
 ## The Uniform Distribution
 
@@ -32,9 +58,6 @@ The Uniform PDF is:
 f_X(x) = \dfrac{1}{b-a} \;\; ; \;\;  a\leq x \leq b
 ```
 
-The **Support** of $X$ is $a \leq x \leq b$.
-
-
 A plot of the Uniform PDF for chosen parameter values $a=-2,b=2$ is shown in [](#fig:uniformPDF) along with the Cumulative Distribution Function (CDF).
 
 
@@ -49,7 +72,7 @@ The Uniform PDF is shown in blue with reference to the left-hand $y$-axis, and t
 
 For a PDF to be valid, it must satistify [Kolmogorov's normalisation axiom](#eq:kolmogorov2).
 
-Is $\int\limits_{x_i \in S}\, f_X(x_i)\, dx =1$ ?
+Is $\int\limits_{S}\, f_X(x)\, dx =1$ ?
 
 Normalisation check
 : $\int\limits_{x=a}^b\, \dfrac{1}{b-a}\, dx = \dfrac{b-a}{b-a} = 1$: the Uniform PDF is valid (by definition).
@@ -60,18 +83,18 @@ Normalisation check
 
 The Cumulative Probability (CDF) for a continuous RV is the integral over the range of the lower bound of the support to the value at which we want to know the CDF.
 
-The integral is over the PDFs calculated at each possible value, $x_i$.
+The integral is over the PDF, from the lower bound of the support (or $-\infty$, equivalently) to the value we seek to calculate, $x_1$ :
 
 ```{math}
 :label: eq:continuous_cdf
-F_X(x) = P(X\leq x) = \int\limits_{-\infty}^{x}\, f_X(x) \, dx
+F_X(x_1) = P(X\leq x_1) = \int\limits_{x=-\infty}^{x_1}\, f_X(x) \, dx
 ```
 
 The Uniform CDF is:
 
 ```{math}
 :label: eq:uniform_cdf
-F_X(x) = P(X\leq x) = \int\limits_{a}^{x}\, \dfrac{1}{b-a} \, dx = \dfrac{x-a}{b-a}
+F_X(x_1) = P(X\leq x_1) = \int\limits_{x=a}^{x_1}\, \dfrac{1}{b-a} \, dx = \dfrac{x_1-a}{b-a}
 ```
 
 ---
@@ -172,7 +195,13 @@ A Continuous RV with an Exponential probability distribution is:
 
 $X\sim$ Expon($\lambda$)
 
-The parameter is $\lambda$, which is a rate parameter (similar to [Poisson $\lambda$](#sec:poisson) ). Note though that for Poisson $\lambda$, the RV $K$ is the **count in a given time interval** (a rate, discrete), whereas for Expon($\lambda$), the RV $X$ is a **time for a given count** (1/rate, continuous).
+The parameter is $\lambda$, which is a rate parameter (similar to [Poisson($\lambda$)](#sec:poisson) ). 
+
+$X\sim$ Expon($\lambda$)
+: the RV $X$ is a **time for a given count** (1/rate, continuous)
+
+$K\sim$ Poisson($\lambda$)
+: the RV $K$ is the **count in a given time interval** (a rate, discrete)
 
 ---
 
@@ -184,8 +213,6 @@ The Exponential PDF is:
 :label: eq:expon_pdf
 f_X(x) = \lambda e^{-\lambda x} \;\; ; \;\;  0\leq x \leq \infty
 ```
-
-The **Support** of $X$ is $0 \leq x \leq \infty$.
 
 The **Kernel** of the Exponential PDF is given in [](#eq:expon_kernel).
 
@@ -256,9 +283,7 @@ The Exponential PDF has
 
   $$\label{eq:expon_var}V[X] = \dfrac{1}{\lambda^2}$$
 
-The **Expectation** is an integral product of two terms in $x$, so we have to do it piecewise (integration by parts). This is an excellent exercise, try it if you have time. 
-
-I used: $u = x, u'= 1, v = −e^{-\lambda x}, v' = \lambda e^{-\lambda x}$.
+The **Expectation** is an integral product of two terms in $x$, so we have to do it piecewise ([integration by parts](#sec:mma-int-by-parts)). This is an excellent exercise, try it if you have time ($u = x,\; du= dx\;, v = −e^{-\lambda x},\; dv = \lambda e^{-\lambda x}\,dx$).
 
 The **Variance** is also calculated using integration by parts - I found I needed two rounds of by-parts integration for the variance.
 
@@ -321,13 +346,13 @@ The Log Likelihood is:
 The Derivative of the Log Likelihood is:
 
 ```{math}
-\dfrac{d}{d\lambda}\ln\mathcal{L} = \dfrac{N}{\lambda} - N\overline{x} = 0
+\dfrac{d}{d\lambda}\ln\mathcal{L} = \dfrac{N}{\lambda} - N\overline{x}
 ```
 
 We find the MLE by setting $\dfrac{d}{d\lambda}\ln\mathcal{L}=0$ and solving for $\lambda$:
 
 ```{math}
-\hat{\lambda} = \dfrac{1}{\bar{x}}
+\hat{\lambda}_{\mathsf{MLE}} = \dfrac{1}{\bar{x}}
 ```
 
 The MLE of the rate $\lambda$ is the reciprocal of the sample mean waiting time — exactly what we would expect from $E[X]=1/\lambda$.
@@ -335,7 +360,7 @@ The MLE of the rate $\lambda$ is the reciprocal of the sample mean waiting time 
 Example
 : A hitch-hiker records the following waiting times (in hours): $1.2, 0.5, 0.8, 1.6, 0.4$. The MLE of the rate is:
 
-  $\hat{\lambda} = \dfrac{5}{1.2+0.5+0.8+1.6+0.4} = \dfrac{5}{4.5} \approx 1.11 \text{ per hour}$
+  $\hat{\lambda}_{\mathsf{MLE}} = \dfrac{5}{1.2+0.5+0.8+1.6+0.4} = \dfrac{5}{4.5} \approx 1.11 \text{ per hour}$
 
 
 ---
@@ -356,16 +381,14 @@ The Normal PDF is:
 
 ```{math}
 :label: eq:norm_pdf
-f_X(x) = \dfrac{1}{\sigma\sqrt{2\pi}}\exp\!\left(-\dfrac{(x-\mu)^2}{2\sigma^2}\right) \;\;;\;\; -\infty \leq x \leq \infty
+f_X(x) = \dfrac{1}{\sigma\sqrt{2\pi}}\exp\!\left[-\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2\right] \;\;;\;\; -\infty \leq x \leq \infty
 ```
-
-The **Support** of $X$ is $-\infty \leq x \leq \infty$.
 
 The **Kernel** of the Normal PDF is:
 
 ```{math}
 :label: eq:norm_kernel
-e^{-\frac{1}{2}(\frac{(x-\mu)}{\sigma})^2}
+e^{-\frac{1}{2}(\frac{x-\mu}{\sigma})^2}
 ```
 
 
@@ -379,7 +402,7 @@ A plot of the Normal PDF for chosen parameter values $\mu=0, \sigma=1$ is shown 
 The Normal PDF is shown in blue with reference to the left-hand $y$-axis, and the CDF is shown in red with reference to the right-hand $y$-axis. The parameter values are $\mu=0$ (the mean) and $\sigma=1$. The CDF is the Cumulative probability, which must total 1 as an integral over all possible outcomes.
 :::
 
-The normalisation integral requires the [**Gaussian integral trick**](#sec:gaus-int-trick) given at the bottom of this chapter for those with an interest.
+The normalisation integral requires the **Gaussian integral trick** given in [Math Methods B](#sec:gaus-int-trick) for those with an interest.
 
 
 Normalisation check
@@ -389,14 +412,14 @@ Normalisation check
 
 ### Probabilities
 
-The Normal CDF has no closed form in elementary functions. It is expressed in terms of the **error function**, $erf$:
+The Normal CDF has no closed form in elementary functions. It is expressed in terms of the **error function**, $\mathrm{erf}$:
 
 ```{math}
 :label: eq:norm_cdf
 F_X(x) = P(X \leq x) = \dfrac{1}{2}\left[1 + \mathrm{erf}\!\left(\dfrac{x-\mu}{\sigma\sqrt{2}}\right)\right]
 ```
 
-where $\mathrm{erf}(u) = \dfrac{2}{\sqrt{\pi}}\int\limits_0^u e^{-t^2}\,dt$.
+where $\mathrm{erf}(y) = \dfrac{2}{\sqrt{\pi}}\int\limits_0^y e^{-t^2}\,dt$.
 
 In practice we use `scipy.stats.norm.cdf()` to calculate Normal probilities. The probability within $n$ standard deviations of the mean follows the **68–95–99.7 rule**:
 
@@ -456,7 +479,7 @@ ExploreNormal(0, 1)
 
 ### Likelihoods
 
-Suppose we observe $N$ measurements $\mathbf{x} = (x_1, x_2, \ldots, x_N)$ drawn independently from Normal($\mu, \sigma$).
+Suppose we observe $N$ measurements $\mathbf{x} = (x_1, x_2, \ldots, x_N)$ drawn independently from Norm($\mu, \sigma$).
 
 The Likelihood is the joint PDF evaluated at the observed data:
 
@@ -490,6 +513,9 @@ Setting the **Partial Derivatives** $\dfrac{ \partial}{\partial\mu}\ln\mathcal{L
 \hat{\mu} = \overline{x}, \qquad \hat{\sigma}^2 = \dfrac{1}{N}\sum_{i=1}^{N}(x_i - \overline{x})^2
 ```
 
+$\textcolor{red}{\mathsf{TODO}}$: give full working $\hat{\mu}_{\mathsf{MLE}}$ and $\hat{\sigma}_{\mathsf{MLE}}$ 
+
+
 Note that $\hat{\sigma}^2$ is the **biased** sample variance (divides by $N$, not $N-1$). See [](#chapter:EstimatorsIntro) for the distinction between the MLE and the unbiased estimator.
 
 ---
@@ -497,18 +523,32 @@ Note that $\hat{\sigma}^2$ is the **biased** sample variance (divides by $N$, no
 <!--TestStatistics.pdf slides 20-26 -->
 
 (sec:chi2dist)=
-## The $\chi^2$ Distribution
+## The Chi Squared ($\chi^2$) Distribution
 
-The $\chi^2$ distribution arises naturally when working with sums of squared Normal RVs. The Standard Normal RV is $z = \dfrac{x-\mu}{\sigma}$ (see [](#chapter:norm)). The $\chi^2$ RV is the sum of $\nu$ such squared Standard Normal RVs:
+The Chi Squared ($\chi^2$) distribution arises naturally when working with sums of squared Normal RVs. Recall the Standard Normal RV is $Z = \dfrac{X-\mu}{\sigma}$ (see [](#chapter:norm)). It most often arises as a **derived distribution** rather than as a primary sampling model. Two key examples of $\chi^2$ RVs in this module are:
+
+The variance of the unbiased sample variance estimate 
+: $\dfrac{(N-1)\sigma_x^2}{\sigma^2} \sim \chi^2(N-1)$ [](#eq:vest_unbiased)
+
+The Pearson goodness-of-fit statistic
+: $\displaystyle\sum_i \dfrac{(O_i - E_i)^2}{E_i} \;\dot{\sim}\; \chi^2(\nu)$
+
+  Where $O_i$ and $E_i$ are observed and expected counts, respectively. We will look at this soon.
+
+
+:::{note}
+I will use $Q$ to indicate the Chi Squared RV, because the usual choice of $X$ looks very much like the symbol for "Chi" $\chi$, which is confusing.
+:::
+
+The $\chi^2$ RV, $Q$, is the sum of $\nu$ such squared Standard Normal RVs:
 
 ```{math}
 :label: eq:chi2
-\chi^2_{\nu} = \sum\limits_{i=1}^{\nu} z_i^2
+q = \sum\limits_{i=1}^{\nu} z_i^2
 ```
 
-where $\nu$ is the **Number of Degrees of Freedom**. Since it is a sum of squares, $\chi^2_\nu \geq 0$ always.
+where $\nu$ is the **Number of Degrees of Freedom**. Since it is a sum of squares, $Q \sim \chi^2(\nu) \geq 0$ always.
 
-$X \sim \chi^2(\nu)$
 
 The parameter is $\nu$: a positive integer giving the number of independent squared Standard Normal RVs in the sum.
 
@@ -523,37 +563,19 @@ The $\chi^2$ PDF is:
 
 ```{math}
 :label: eq:chi2_pdf
-f_X(x;\nu) = \dfrac{2^{-\nu/2} }{\Gamma(\nu/2) } x^{(\nu/2) - 1}\, e^{-x/2}\; ; \;\;\; 0\leq x < \infty
+f_Q(q;\nu) = \dfrac{2^{-\nu/2} }{\Gamma(\nu/2) } q^{(\nu/2) - 1}\, e^{-q/2}\; ; \;\;\; 0\leq q < \infty
 
 ```
 
-The $\Gamma(\nu/2)$ in the denominator is the **Gamma Function**: $\Gamma(s) = \int\limits_0^{\infty} x^{s-1} e^{-x}\, dx$. It is a generalisation of the Factorial function to non-integer arguments.
+The $\Gamma(\nu/2)$ in the denominator is the **Gamma Function** - see [Math Methods B](#sec:gamma-function).
 
-Some nice properties of the Gamma function include:
-
-* $\Gamma(1/2)  = \sqrt{\pi}$,
-* $\Gamma(n ) = (n-1)!$ where $n$ is a positive integer,
-* $\Gamma(s+1)  = s\Gamma(s)$
-
-Notice that:
-
-$\nu=1\; \rightarrow \;  \Gamma(1/2) = \sqrt{\pi} $
-
-$\nu=2\; \rightarrow \;  \Gamma(2/2) = 0! = 1$
-
-$\nu=3\; \rightarrow \;  \Gamma(3/2) = \Gamma(1/2 + 1)  =\frac{1}{2} \sqrt{\pi}$ 
-
-<!--$\nu=4\; \rightarrow \;  \Gamma(4/2) = \bbl{1! = 1}$-->
-<!--$\nu=5\; \rightarrow \;  \Gamma(5/2) = \gbl{\Gamma(3/2 + 1)  =3\sqrt{\pi}/4}$-->
-and so on.
-
-The **Support** of $X$ is $0 \leq x \leq \infty$.
+The **Support** of $Q$ is $0 \leq q \leq \infty$.
 
 The **Kernel** of the $\chi^2$ PDF is:
 
 ```{math}
 :label: eq:chi2_kernel
-x^{(\nu/2)-1}\,e^{-x/2}
+q^{(\nu/2)-1}\,e^{-q/2}
 ```
 
 A plot of the $\chi^2$ PDF and CDF for a parameter value of $\nu=1$ is shown in [](#fig:chi2PDF).
@@ -566,7 +588,7 @@ A plot of the $\chi^2$ PDF and CDF for a parameter value of $\nu=1$ is shown in 
 The $\chi^2$ PDF for $\nu=1$. 
 :::
 
-When we increase the number of degrees of freedom $\nu$ (the number of standard normal RVs in the sum) the $\chi^2$ PDF completely changes shape, because $\chi^2$ is the sum of the squared residuals.
+When we increase the number of degrees of freedom $\nu$ (the number of standard normal RVs in the sum) the $\chi^2$ PDF completely changes shape, because $Q \sim \chi^2(\nu)$ is the sum over $\nu$ squared-residuals.
 
 :::{figure}
 :label: fig:chi2PDF2
@@ -577,7 +599,7 @@ The $\chi^2$ PDF for several values of the degrees of freedom $\nu$. For small $
 :::
 
 
-Dividing RV by its Expected Value, $E[X] = \nu$, standardises it. As we increase $\nu$, the **Reduced** (standardised) $X/\nu$ RV distribution approaches Norm($\mu= 1, \sigma= \sqrt{2/\nu}$). The Reduced $\chi^2$ PDFs for a range of different parameter values $\nu=10,20,50,100,300$ are shown in [](#fig:chi2redPDF)
+Dividing RV by its Expectation, $E[Q] = \nu$, standardises it. As we increase $\nu$, the **Reduced** (standardised) $Q/\nu$ RV distribution approaches Norm($\mu= 1, \sigma= \sqrt{2/\nu}$). The Reduced $\chi^2$ PDFs for a range of different parameter values are shown in [](#fig:chi2redPDF)
 
 
 :::{figure}
@@ -585,10 +607,10 @@ Dividing RV by its Expected Value, $E[X] = \nu$, standardises it. As we increase
 
 ![image](figures/Chi2red-nus-10to300.png)
 
-The "reduced" $\chi^2$ PDF for the standardised RV $X/\nu$ for several values of the degrees of freedom $\nu$. For small $\nu$ the distribution is strongly right-skewed[^skew]. As $\nu$ increases the distribution becomes more symmetric, approaching a Normal distribution as per the [CLT](#sec:CLT) — since it is a sum of $\nu$ independent terms.
+The $\chi^2$ PDF for the "reduced" standardised RV $Q/\nu$ for several values of the degrees of freedom $\nu$. For small $\nu$ the distribution is strongly right-skewed[^skew]. As $\nu$ increases the distribution becomes more symmetric, approaching a Normal distribution as per the [CLT](#sec:CLT) — since it is a sum of $\nu$ independent terms.
 :::
 
-[^skew]: A right-skewed distribution has its peak to the left of the expectation, with the mean lying to the right of the peak. So a right-skewed distribution is one with a long tail to the right of the peak.
+[^skew]: A right-skewed distribution has its expectation (mean) to the right of the peak (median), so a right-skewed distribution is one with a long tail to the right of the peak.
 ---
 
 ### Probabilities
@@ -597,32 +619,28 @@ The $\chi^2$ CDF has no simple closed form[^rigf] and is evaluated numerically, 
 
 
 [^rigf]: It is related to the **regularised incomplete gamma function**
-$F(x;\nu) = P(\chi^2_\nu \leq x) = \dfrac{\gamma(\nu/2,\, x/2)}{\Gamma(\nu/2)}$, where $\gamma(s,t) = \int_0^t u^{s-1}e^{-u}\,du$ is the lower incomplete gamma function. 
+$F_Q(q;\nu) = P(Q \leq q) = \dfrac{\gamma(\nu/2,\, q/2)}{\Gamma(\nu/2)}$, where $\gamma(s,t) = \int_0^t u^{s-1}e^{-u}\,du$ is the lower incomplete gamma function. 
 
 
 
-<!--The $\chi^2$ distribution is frequently used to find **critical values**: for a significance level $\alpha$, the critical value $\chi^2_{\nu,\alpha}$ satisfies $P(\chi^2_\nu > \chi^2_{\nu,\alpha}) = \alpha$.-->
+The $\chi^2$ distribution is frequently used to find **critical values**: for a significance level $\alpha$, the critical value $q_{\alpha}$ satisfies $P(Q > q_{\alpha}) = \alpha$.
 
 ---
 
 ### Expectation & Variance
 
-The $\chi^2(\nu)$ distribution has:
-: $$E[X] = \nu$$
+The $Q\sim\chi^2(\nu)$ distribution has:
+: $$E[Q] = \nu$$
 
-  $$V[X] = 2\nu$$
+  $$V[Q] = 2\nu$$
 
-The Reduced $\chi^2(\nu)/\nu$ distribution has:
-: $$E[X/\nu] = 1$$
+The Reduced $Q/\nu$ distribution has:
+: $$E[Q/\nu] = 1$$
 
-  $$V[X/\nu] = \frac{2}{\nu}$$
+  $$V[Q/\nu] = \frac{2}{\nu}$$
 
+Please see [Math Methods B: Chi Squared Expectation](#sec:mmb_chisq_expect) if you are interested in the proofs for these.
 
-<!--These follow directly from the definition [](#eq:chi2). Each squared Standard Normal term $z_i^2$ satisfies $E[z_i^2]=1$ and $V[z_i^2]=2$ (since $E[z^4]=3$ for the Standard Normal, so $V[z^2]=E[z^4]-E^2[z^2]=3-1=2$). Since the $z_i$ are independent:
-
-$E[\chi^2_\nu] = \displaystyle\sum_{i=1}^\nu E[z_i^2] = \nu$
-
-$V[\chi^2_\nu] = \displaystyle\sum_{i=1}^\nu V[z_i^2] = 2\nu$-->
 
 ---
 
@@ -639,16 +657,16 @@ def ExploreChi2(nu):
 
   # access the support
   lb, ub = chisq.support()
-  print(f"Support is {lb} <= x <= {ub}")
+  print(f"Support is {lb} <= q <= {ub}")
 
   # extract the true mean and variance
-  mean, var = chisq.stats(moments='mv')
-  print(f"Expectation = {mean}, Variance = {var}")
+  mean, var, skew, kurtosis = chisq.stats(moments='mvsk')
+  print(f"Expectation = {mean}, Variance = {var}, Skewness = {skew:.2f}, Kurtosis = {kurtosis}")
 
   # critical value at 5% significance level (upper tail)
   alpha = 0.05
   crit = chisq.ppf(1 - alpha)
-  print(f"Critical value at alpha={alpha}: chi2 > {crit:.3f}")
+  print(f"Critical value at alpha={alpha}: Q > {crit:.3f}")
 
   # reduced chi2 
   red_chisq = chi2(df=nu, scale=1/nu)
@@ -656,11 +674,12 @@ def ExploreChi2(nu):
 
   # access the support
   lb, ub = red_chisq.support()
-  print(f"Support is {lb} <= x <= {ub}")
+  print(f"Support is {lb} <= q/nu <= {ub}")
 
   # extract the true mean and variance
-  mean, var = red_chisq.stats(moments='mv')
-  print(f"Expectation = {mean}, Variance = {var}")
+  mean, var, skew, kurtosis = red_chisq.stats(moments='mvsk')
+  print(f"Expectation = {mean}, Variance = {var}, Skewness = {skew:.2f}, Kurtosis = {kurtosis}")
+
 
 
 ExploreChi2(5)
@@ -706,14 +725,19 @@ The MLE of $\nu$ has no closed form and must be found numerically.
 | Uniform($a,b$) | $1$ | $\frac{b+a}{2}$ | $\frac{(b-a)^2}{12}$ | $[a,b]$ | $a,b$ | `uniform(loc=a,scale=b-a)` |
 | Expon($\lambda$) | $e^{-\lambda x}$ | $\frac{1}{\lambda}$ | $\frac{1}{\lambda^2}$ | $[0,\infty)$ | $\lambda$ | `expon(scale=1/λ)` |
 | Normal($\mu,\sigma$) | $e^{-x^2/2\sigma^2}$ | $\mu$ | $\sigma^2$ | $(-\infty,\infty)$ | $\mu,\sigma$ | `norm(loc=μ,scale=σ)` |
-| $\chi^2(k)$ | $x^{(\nu/2)-1}e^{-x/2}$ | $\nu$ | $2\nu$ | $[0,\infty)$ | $\nu$ | `chi2(df=nu)` |
+| $\chi^2(\nu)$ | $q^{(\nu/2)-1}e^{-q/2}$ | $\nu$ | $2\nu$ | $[0,\infty)$ | $\nu$ | `chi2(df=nu)` |
 
 
 ```
 
-(sec:transforms)=
+(sec:transforms-dupe)=
 ## Transforms: Changing Variables
 
+:::{seealso}
+I have moved this content - 1D Monotonic Transform, the Gaussian integral trick, and the multivariate Jacobian — to [Math Methods B](#sec:transforms).
+:::
+
+<!--
 In real life we often cannot measure the RV we want directly. We measure $X$ and want the PDF for $Y = f(X)$. We saw in [](#sec:dd-varfunc) that we can access the uncertainties on a function using Expectation Algebra or using Taylor Series expansion.
 
 ---
@@ -830,7 +854,7 @@ Example: Cartesian to Polar
   $J = \dfrac{x}{r}\cdot\dfrac{x}{r^2} - \dfrac{y}{r}\cdot\left(-\dfrac{y}{r^2}\right) = \dfrac{x^2+y^2}{r^3} = \dfrac{1}{r}$
 
   So $f(r,\theta) = r\, g(x,y)$: if $(x,y)$ are uniform (constant $g$), then $f(r,\theta) \propto r$, meaning the density in polar coordinates increases linearly with $r$. This makes geometric sense — concentric rings of equal width have area $\propto r$.
-
+-->
 ---
 
 

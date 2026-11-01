@@ -99,6 +99,13 @@ For the commands below, you need
 **Prerequisites**
 : I have tried to write this assuming the smallest possible amount of math background for Volume 1. If you have not had the privilege of meeting integrals before, see [HELM 13](https://www.lboro.ac.uk/media/media/schoolanddepartments/mlsc/downloads/HELM%20Workbook%2013%20Integration.pdf), for matrices, see [HELM 7](https://www.lboro.ac.uk/media/media/schoolanddepartments/mlsc/downloads/HELM%20Workbook%207%20Matrices.pdf), and for exponentials and natural logs, see [HELM 6](https://www.lboro.ac.uk/media/media/schoolanddepartments/mlsc/downloads/HELM%20Workbook%206%20Exponential%20and%20Logarithmic%20Functions.pdf)
 
+:::{note} Scope: Continuous and Numerical Data
+Volume 1 focuses on continuous and numerical data — the setting where probability distributions, means, variances, and correlations apply directly. **Categorical data** (nominal labels, ordinal ratings, text fields) requires encoding and preprocessing before most of these techniques can be applied. If your data includes categorical variables, the following are good starting points:
+- [Scikit-learn preprocessing guide](https://scikit-learn.org/stable/modules/preprocessing.html): encoding strategies including one-hot encoding and ordinal encoding
+- Géron, *Hands-On Machine Learning* (O'Reilly), Ch. 2: a practical walkthrough of the full data pipeline including categorical handling
+- [fastai tabular tutorial](https://docs.fast.ai/tutorial.tabular.html): a modern deep-learning perspective on mixed categorical/numerical (tabular) data
+:::
+
 **Outlines & Learning Objectives**
 : The dropdowns below list the proposed Learning Objectives for each topic. Please do not hesitate to add your own - we are all on our own journeys.
 
@@ -245,9 +252,10 @@ This volume forms the second part of the module, and all the topics are ```wip``
 (los:Estimation)=
 :::{dropdown} Estimation Essentials
 - [ ] Describe Point and Interval Estimation with examples
+- [ ] Define Consistency, Bias, and Minimum Variance and explain their importance for estimators
+- [ ] Understand why the Likelihood is the product of probabilities (densities) for a discrete (continuous) RV
 - [ ] Explain the Bootstrap Method
 - [ ] Implement the Bootstrap Method to esimate uncertainties
-- [ ] Define Consistency, Bias, and Minimum Variance and explain their importance for estimators
 <!--[ ] Maybe,  Method of Moments-->
 :::
 
@@ -507,6 +515,7 @@ If this is your first rodeo and you try to absorb everything at once, you might 
 My advice is to make yourself comfortable, and follow the suggested module structure in these notes. These resources are not going anywhere, and the notes will refer to them at the appropriate moments.
 :::
 
+* **[Math Methods A](#chapter:math-methods-a)** and **[Math Methods B](#chapter:math-methods-b)**: Dedicated appendices in these notes collecting the longer derivations referenced from the main chapters. Math Methods A covers functions, logarithms, differentiation, and integration. Math Methods B covers the Gamma function, variable transforms, proofs of variance estimator bias and MSE, the Delta Method, and the Cramér–Rao bound.
 * **[Helping Engineers Learn Math (HELM)](https://www.lboro.ac.uk/departments/mlsc/student-resources/helm-workbooks/)**: If your math is rusty, I recommend looking at the relevant workbooks here.
 * **[Stats Course by Glen Cowan](https://www.pp.rhul.ac.uk/~cowan/stat_course.html)**: If this is not your first rodeo, this is a good lecture course to dip into for more challenging work. It is the one I followed as a PhD student, and is geared towards particle physicists. 
 * **[Graduate Lectures on Statistics by Mark Thomson](https://www.hep.phy.cam.ac.uk/~thomson/lectures/lectures.html)**: If this is not your second rodeo, these is an excellent set of very condensed notes - best suited to experts who need to brush up. Also geared towards particle physicists.

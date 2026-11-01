@@ -689,6 +689,10 @@ Cartoon from [xkcd](https://xkcd.com/).
 (sec:dd-varfunc)=
 ## 🆕 Propagation of Uncertainties
 
+$\textcolor{red}{\mathsf{TODO}}$: update this section with full notes from last year's lectures.
+
+
+
 ### LOTUS
 
 A function $g(x)$ of a RV is itself a RV, and we can calculate its expected value by using $x\rightarrow g$ in [](#eq:expectC):
@@ -749,7 +753,7 @@ For the Variance we have, using [](#eq:varF):
 \begin{aligned}
 V[ g(x,y) ] & = E[ (g - E[g])^2 ] \\
             & = E[ ( a (X-E[X]) + b(Y-E[Y]) )^2 ] \\
-            & = a^2 V[X] + b^2 V[Y] + 2ab\, cov(X,Y) \\
+            & = a^2 V[X] + b^2 V[Y] + 2ab\, \mathsf{cov}(X,Y) \\
 \end{aligned}
 ```
 
@@ -785,7 +789,7 @@ The Variance:
 
 ```{math}
 
-V[ g ]  = \sum\limits_i^Z \sum\limits_j^Z \alpha_i \alpha_j\, cov( X_{(i)}, X_{(j)}) 
+V[ g ]  = \sum\limits_i^Z \sum\limits_j^Z \alpha_i \alpha_j\, \mathsf{cov}( X_{(i)}, X_{(j)}) 
 
 ```
 
@@ -793,7 +797,7 @@ Alternatively, we can use the Taylor Expansion of the function's derivatives to 
 
 ```{math}
 \begin{aligned}
-V[ g ]  & = \sum\limits_i^Z \sum\limits_j^Z \dfrac{\partial g}{\partial x_{(i)} }  \dfrac{\partial g}{\partial x_{(j)} } cov( X_{(i)}, X_{(j)}) \\
+V[ g ]  & = \sum\limits_i^Z \sum\limits_j^Z \dfrac{\partial g}{\partial x_{(i)} }  \dfrac{\partial g}{\partial x_{(j)} } \mathsf{cov}( X_{(i)}, X_{(j)}) \\
         & = J\, \Sigma\, J^{T}
 \end{aligned}
 ```
@@ -801,9 +805,9 @@ V[ g ]  & = \sum\limits_i^Z \sum\limits_j^Z \dfrac{\partial g}{\partial x_{(i)} 
 where J is the **Jacobian Matrix** of partial derivatives, $J^{T}$ is its transpose, and $\Sigma$ is the **Covariance Matrix**.
 
 
-### $h(X) = \prod\limits_k^M g_k(X)$
+### $h(X) = \prod\limits_k^M g_k(X)$ — the Delta Method
 
-For a **nonlinear function**, the uncertainty can be propagated by linearising via a first-order Taylor expansion.
+For a **nonlinear function**, the uncertainty can be propagated by linearising via a first-order Taylor expansion. This is known as the **Delta Method**.
 
 The variance of such a function can be written as before:
 
@@ -812,6 +816,10 @@ V[h]   = J\, \Sigma\, J^{T}
 ```
 
 However, rather than having a single value (as in the case of a linear function), $V[h]$ is a $M\times M$ matrix of variances, because the Jacobian has shape $M\times Z$.
+
+:::{seealso}
+The scalar (1D) case of the Delta Method — including a full derivation and an application to the Standard Error of the Standard Deviation — is worked out in [Math Methods B](#sec:mmb_delta-method).
+:::
 
 ---
 

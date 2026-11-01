@@ -13,7 +13,7 @@ kernelspec:
 # Estimators Intro
 
 
-* `numpy` methods: `random.default_rng`
+* `numpy` methods: `random.default_rng, argmin, allclose`
 * `scipy.stats` methods: `bootstrap`
 
 
@@ -98,10 +98,10 @@ Let's calculate the expectation of the sample mean:
 
 \begin{aligned}
 
-E\left[\, \overline{x}\, \right]  & = E\left[ \dfrac{1}{N} \sum\limits_i^N x_i \right] \textcolor{blue}{\; because\; \overline{x}  = \frac{1}{N} \sum \limits_i^N x_i}\\ 
+E\left[\, \overline{x}\, \right]  & = E\left[ \dfrac{1}{N} \sum\limits_i^N x_i \right] \textcolor{blue}{\mathsf{\; because\; \overline{x}  = \frac{1}{N} \sum \limits_i^N x_i}}\\ 
  
-  & = \dfrac{1}{N} \sum\limits_i^N E\left[ x_i \right] \textcolor{blue}{\;because\; E[sum] = sum(E)} \\
- & = \dfrac{1}{N} \sum\limits_i^N E[X] \textcolor{blue}{\;because\; x_i\;are\; iid\; so\; E[x_i] = E[X]\; for\; all\; x_i}\\
+  & = \dfrac{1}{N} \sum\limits_i^N E\left[ x_i \right] \textcolor{blue}{\mathsf{\;because\; E[sum] = sum(E)}} \\
+ & = \dfrac{1}{N} \sum\limits_i^N E[X] \textcolor{blue}{\mathsf{\;because\; x_i\;are\; iid\; so\; E[x_i] = E[X]\; for\; all\; x_i}}\\
   & = \dfrac{1}{N} N E[X]= E[X] \\                                                
 \end{aligned}
 ```
@@ -111,34 +111,62 @@ We have shown that $E\left[\, \overline{x}\, \right] = E[X]$, which with the not
 Variance Check
 : Is the sample mean the minimum variance estimate for the true mean? Proving that an estimator is the minimum variance of all possible estimators is beyond the scope of this module, but we will look briefly at the variance of $\overline{x}$ because it gives us the [SEM](#eq:sem), and I will state without proof that $\overline{x}$ is the Minimum Variance Unbiased Estimator [MVUE](https://en.wikipedia.org/wiki/Rao%E2%80%93Blackwell_theorem) for $\mu$. 
 
-Let's calculate the variance of the sample mean:
+Let's calculate the variance of the sample mean[^notevn]:
 
 ```{math}
 :label: eq:varmean
 
 \begin{aligned}
-V\left[\, \overline{x}\, \right]  & = V\left[ \dfrac{1}{N} \sum\limits_i^N x_i \right] \textcolor{blue}{\; because\; \overline{x}  = \frac{1}{N} \sum \limits_i^N x_i}\\ 
- &= \sum\limits_i^N  V\left[ \dfrac{1}{N}  x_i \right] \textcolor{blue}{\;because\; V[sum] = sum(V)\; for\; iid\; x_i}\\
-  & = \dfrac{1}{N^2}  \sum\limits_i^N V\left[ x_i \right] \textcolor{blue}{\;because\;V\left[ax\right] = a^2 V\left[x\right] }\\
-  & = \dfrac{1}{N^2} N V[X]  \textcolor{blue}{\;because\; x_i\; \text{are iid, so}\; V[x_i]=V[X]\; \text{for all}\; i}\\
+V\left[\, \overline{x}\, \right]  & = V\left[ \dfrac{1}{N} \sum\limits_i^N x_i \right] \textcolor{blue}{\; \mathsf{ because\; \overline{x}  = \frac{1}{N} \sum \limits_i^N x_i}}\\ 
+ &= \sum\limits_i^N  V\left[ \dfrac{1}{N}  x_i \right] \textcolor{blue}{\mathsf{\;because\; V[sum] = sum(V)\; for\; IID\; x_i}}\\
+  & = \dfrac{1}{N^2}  \sum\limits_i^N V\left[ x_i \right] \textcolor{blue}{\mathsf{\;because\;V\left[ax\right] = a^2 V\left[x\right] }}\\
+  & = \dfrac{1}{N^2} N V[X]  \textcolor{blue}{\mathsf{\;because\; x_i\; \text{are iid, so}\; V[x_i]=V[X]\; \text{for all}\; i}}\\
   & = \dfrac{1}{N} V[X] \\                                               
 \end{aligned}
 ```
 
-The variance of the sample means is $\dfrac{1}{N}$ times the true variance, $V[X]$. This gives us the standard deviation of the sample means, referred to as the SEM, because $\sigma_x = \sqrt{V[X]}$.
+[^notevn]: Equivalent choices of notation for the variance on the mean: $v_{\overline{x}} \equiv V[\overline{x}]$
+
+
+The variance of the sample means is $\dfrac{1}{N}$ times the true variance, $V[X]$. This gives us the standard deviation of the sample means, referred to as the SEM, because $\sigma = \sqrt{V}$.
+
+Equivalent Notation
+: $V[\overline{x}] \equiv v_{\overline{x}} \equiv \sigma^2_{\overline{x}} \equiv \mathsf{SEM}^2\;\;\leftarrow\;\;$ Variance on the mean 
+
+  $V[X] \equiv \sigma^2_{\mathsf{true}} \equiv \sigma^2\;\;\leftarrow\;\;$ True variance
+
+
+We have shown that
+: $V[ \overline{x} ] = \dfrac{1}{N} V[X]$ 
+
+  $\sigma^2_{\overline{x}} = \dfrac{1}{N} \sigma^2_{\mathsf{true}}\;\;\leftarrow\;\;$ Equivalent Notation
+
+Therefore the SEM is
+: $\mathsf{SEM} = \sigma_{\overline{x}} = \dfrac{\sigma_{\mathsf{true}}}{\sqrt{N}}$
+
+The Estimated SEM is
+: $\widehat{\mathsf{SEM} } = \hat{\sigma}_{\overline{x}} = \dfrac{\sigma_{x}}{\sqrt{N}}$
 
 
 ````{card}
-For a single RV, we can Estimate the mean and its uncertainty directly from the data:
+For a single RV, we can **Estimate** the mean and its uncertainty directly from the data.
+
+Using $\hat{\mu} = \overline{x}$ and $\hat{\sigma}_{\mu} = \sigma_{\overline{x}} $:
 
 ```{math}
 :label: eq:mean-est-uncert
-\begin{aligned}
-\hat{\mu} \pm \hat{\sigma_{\mu}} & = \overline{x} \pm \sigma_{\overline{x}} \\ \\
-                                 & = \overline{x} \pm \mathsf{SEM} \\ \\
-                                 & = \overline{x} \pm \dfrac{ \sigma_{x} }{ \sqrt{N} } \\                                
-\end{aligned}
+
+\hat{\mu} \pm \hat{\sigma}_{\mu}  = \overline{x} \pm \mathsf{SEM} = \overline{x} \pm \dfrac{ \sigma_{\mathsf{true}} }{ \sqrt{N} }
 ```
+
+Additionally using $\hat{\sigma}_{\mathsf{true}} = \sigma_{x}$:
+
+```{math}
+:label: eq:mean-est-uncert-est
+
+\hat{\mu} \pm \hat{\sigma}_{\mu} = \overline{x} \pm \widehat{\mathsf{SEM}} = \overline{x} \pm \dfrac{ \sigma_{x} }{ \sqrt{N} }
+```
+
 
 ````
 
@@ -156,7 +184,7 @@ The Sample Variance $v_x$ is an Estimator for the True Variance $V[x]$.
 
 To check the Consistency, Bias, and Variance of the Estimator, we need to write down $\hat{V}[X] = v_x$ in terms of the True Variance, $V[X]$.
 
-This is a long proof, my version of which is [here](#fig:lilyproof_varbias).  The conclusion is:
+A proof using a clean algebraic identity is given in [Math Methods B](#sec:var-bias-proof). The conclusion is:
 
 ```{math}
 :label: eq:vartruesamp
@@ -203,14 +231,14 @@ Variance Check
 (sec:normal-sev)=
 ### The SEV for Normal data
 
-In the **special case** that the data are Normally Distributed, the variance on the (unbiased) variance estimator $\hat{\theta} = v_x$ is[^noproof]:
+In the **special case** that the data are Normally Distributed, the variance on the (unbiased) variance estimator $\hat{\theta} = v_x$ is:
 
 ```{math}
 :label: eq:vest_unbiased
 V[\hat{\theta}] =  \dfrac{2\theta^2}{N-1} 
 ```
 
-[^noproof]: We will look at the proof of [](#eq:sev) once we have thought about the "chi squared", $\chi^2$, because it is a significantly more simple process if we use $\chi^2$.
+The proof of [](#eq:vest_unbiased) is given in [Math Methods B](#sec:sev-proof), using the result that $(N-1)v_{x,u}/\sigma^2 \sim \chi^2(N-1)$.
 
 The SEV is the square root of the variance:
 
@@ -259,28 +287,11 @@ and the SEV is:
 \mathsf{SEV} = \sqrt{ \left( \kappa - \dfrac{N-3}{N-1} \right) \dfrac{\theta^2}{N} }
 ```
 
-where $\kappa$ is the **Kurtosis**, described briefly below in terms of **Central Moments**. 
+where $\kappa$ is the **Kurtosis**, described briefly in [MathMethodsB:Central Moments](#sec:mmb-central-moments). 
+
+For those with a mathematical bent, there is a somewhat accessible proof of [](#eq:sev-gen) on mathematics stack exchange [here](https://math.stackexchange.com/questions/72975/variance-of-sample-variance).
 
 
-Recall that we can write the Variance in terms of the Expectation, [](#eq:truevar). The Variance is the "second central moment", where the central moments $\mu_n$ are as follows:
-
-$\mu_0 = E[(X-\mu)^0] = 1$
-: The zeroth central moment is 1, because any number to the power zero is 1, and the expectation of a number is just the number.
-
-$ \mu_1 = E[(X-\mu)^1] = 0$
-: The first central moment is 0, because $E[(X-\mu)] = E[X] - E[\mu] =  \mu - \mu$, where we used  E(sum) = sum(E) [](#eq:expect_sum).
-
-$\mu_2 = E[(X-\mu)^2] = \sigma^2$
-: The second central moment is the **Variance**, as shown in [](#sec:truvar). This quantifies the **spread** of the distribution
-
-$\mu_3 = E[(X-\mu)^3] = \sigma^3 \gamma_1 $
-: The third central moment defines the **Skewness**, $\gamma_1$. This quantifies the **symmetry** of the distribution.
-
-$\mu_4 = E[(X-\mu)^4] = \sigma^4 k $
-: The fourth central moment defines the **Kurtosis**, $k$. This quantifies the relative **curvature** of the distribution. Positive kurtosis: fatter tails.
-
-
-There is a somewhat accessible proof of [](#eq:sev-gen) on mathematics stack exchange [here](https://math.stackexchange.com/questions/72975/variance-of-sample-variance).
 
 
 
@@ -306,30 +317,10 @@ We noted in [](#eq:vartruesamp) that the [sample variance](#eq:variance) is a bi
 
 Recall the bias of an estimator for some true parameter $\theta$ is [](#eq:est_bias): the difference between the Expectation of the estimate $\hat{\theta}$ and the true value of the parameter, $\theta$.
 
-The MSE [](#eq:mse) considers the bias and variance of the estimator together. It is defined as the expectation of the square of the difference between the estimate and the true value, $E[(\hat{\theta} - \theta)^2]$. I have provided a proof of [](#eq:mse) in the dropdown below for those with a hankering for math-induced dopamine.
+The MSE [](#eq:mse) considers the bias and variance of the estimator together. It is defined as the expectation of the square of the difference between the estimate and the true value, $E[(\hat{\theta} - \theta)^2]$. A proof is provided in [Math Methods B](#sec:mse-proof) for those with a hankering for math-induced dopamine.
 
 
-:::{dropdown} Proof of [](#eq:mse)
-
-```{math}
-:label: eq:mse_proof
-\begin{aligned}
-
-E\left[ (\hat{\theta} -\theta)^2 \right] &= E\left[ ( \hat{\theta} -\mu + \mu - \theta )^2 \right]\;\;\;\textcolor{blue}{Add\;and\;subtract\;\mu = E[\hat{\theta}]}\\
-& = E\left[ ( \hat{\theta} - \mu)^2 \right] + E\left[ (\mu -  \theta )^2 \right] + 2E\left[ ( \hat{\theta} -\mu )  (\mu-  \theta )\right] \;\;\;\textcolor{blue}{E(sum) = sum(E)}\\
-& = V[\hat{\theta} ] + E\left[ \mu^2 +  \theta^2 \cancel{- 2\mu\theta}  + 2 \hat{\theta}\mu  - 2\hat{\theta}\theta -2\mu^2 + \cancel{2\mu\theta}  \right] \\
-& = V[\hat{\theta} ] + E\left[ \theta^2 \right]- E\left[\mu^2 \right]\ + 2E \left[\hat{\theta}\mu\right] - 2E \left[ \hat{\theta}\theta \right]\;\;\;\textcolor{blue}{E(sum) = sum(E)}\\
-& = V[\hat{\theta} ] + E\left[ \theta^2 \right]- \mu^2  + 2\mu^2 - 2\mu E \left[\theta \right]\;\;\;\textcolor{blue}{E[E[\hat\theta]] =E[\mu] = \mu }\\
-& = V[\hat{\theta} ] + \theta^2 + \mu^2 - 2\mu \theta \;\;\;\textcolor{blue}{E[\theta] = \theta}\\
-& = V[\hat{\theta} ] + (\theta- \mu)^2 \\
-& = V[\hat{\theta} ] + b^2 \\
-%& = V[\hat{\theta} ] + E\left[ \theta^2 \right]- E\left[\mu^2 \right]\ + 2E \left[\hat{\theta}\mu\right] - 2E \left[ \hat{\theta}\theta) \right]\\
-%& = V[\hat{\theta} ] + E\left[( \mu - \theta)^2 \right]\\
-%& = V[\hat{\theta} ] + b^2 \right]
-
-\end{aligned}
-```
-:::
+The proof is given in [Math Methods B](#sec:mse-proof).
 
 Let's calculate the MSE using the two different estimators (biased and unbiased) for the variance.
 
@@ -356,23 +347,25 @@ Unbiased Sample Variance [](#eq:varianceU)
 (sec:binned-data)=
 ## What to do when Data are Binned?
 
-Sometimes we do not have access to individual measurements. Instead, the data arrive already summarised in a **histogram**: we know the number of measurements $N_j$ falling in each bin, centred on bin centre $x_j$, for bins $j = 1, 2, \ldots, B$.
+Sometimes we do not have access to individual measurements. Instead, the data arrive already summarised in a **histogram**: we know the number of measurements $n_j$ falling in each bin, centred on bin centre $c_j$, for bins $j = 1, 2, \ldots, M$.
 
-The total number of measurements is $N = \sum_{j=1}^{B} N_j$.
+The total number of measurements is $N = \sum\limits_{j=1}^{M} n_j$.
 
-We can still estimate the mean and variance by treating each count $N_j$ as $N_j$ measurements all equal to $x_j$:
+We can still estimate the mean and variance by treating each count $n_j$ as $n_j$ measurements all equal to $c_j$ (see [](#eq:binned-mean)):
 
 ```{math}
 :label: eq:binned-mean-est
-\hat{\mu} = \overline{x} = \dfrac{\displaystyle\sum_{j=1}^{B} N_j\, x_j}{N}
+\overline{x} = \dfrac{1}{N} \sum_{j=1}^{M} n_j\, c_j
 ```
+
+The (unbiased) binned sample variance is:
 
 ```{math}
 :label: eq:binned-var-est
-\hat{V}[X] = v_x = \dfrac{1}{N-1}\sum_{j=1}^{B} N_j\, (x_j - \overline{x})^2
+v_x = \dfrac{1}{N-1}\sum\limits_{j=1}^{M} n_j\, (c_j - \overline{x})^2
 ```
 
-The Estimated SEM is unchanged: $\widehat{\mathsf{SEM}} = \sqrt{ \dfrac{\hat{V}[X]}{N} }$.
+The Estimated SEM is unchanged: $\widehat{\mathsf{SEM}} = \sqrt{ \dfrac{v_x}{N} }$.
 
 
 :::{note}
@@ -562,7 +555,9 @@ This is a much more manageable number, and **we have lost no information** in ta
 
 The most useful base for the logarithm is $e$: Euler's number, which is called the **Natural Logarithm** and has its own symbol, $\ln$. Because the base is $e$, the power rule gives us: $\ln(e^a) = a$, which is very useful.
 
-The default assumed by `numpy` is that when we ask for `log(a)` we want the Natural Log $\ln{a}$. If we want a log with base 10, we must use `log10(a)`.
+:::{tip}
+The default assumed by `numpy` is that when we ask for `log(a)` we want the **Natural Logarithm**, $\ln{a}$. If we want a log with base 10, we must use `log10(a)`.
+:::
 
 Notice that the log of any number in the range (0,1) is **Negative**, so the Log Likelihood is destined to always be a negative number. This is fine of course, negative numbers being perfectly valid, but the tradition in statistics is to **Minimise** functions rather than **Maximise** them, so we more often quote the Negative Log Likelihood, which has a postive value and has a minimum at the most likely parameter value.
 
@@ -579,7 +574,7 @@ In summary, we calculate the **Negative Log Likelihood (NLL)** because it is num
 :::
 
 
-The Likelihood, Log Likelihood, and Negative Log Likelihood for some data are shown in [](#fig:likeLogNeg). The maxima of the Likelihood and Log Likelihood distributions and the minimum of the Negative Log Likelihood are found at the most likely parameter value parameter value. This value is the **Maximum Likelihood Estimate** for the parameter: $\hat{\theta}_{MLE}$
+The Likelihood, Log Likelihood, and Negative Log Likelihood for some data are shown in [](#fig:likeLogNeg). The maxima of the Likelihood and Log Likelihood distributions and the minimum of the Negative Log Likelihood are found at the most likely parameter value parameter value. This value is the **Maximum Likelihood Estimate** for the parameter: $\hat{\theta}_{_{\mathsf{MLE}}}$
 
 
 There is a turning point in the distributions at the maximum, which means the derivative is zero at this point. This is how we calculate the MLE, by setting the derivative of the Likelihood to zero and solving for the parameter.
@@ -591,6 +586,129 @@ There is a turning point in the distributions at the maximum, which means the de
 The maxima of the Likelihood and Log Likelihood distributions and the minimum of the NLL are found at the most likely parameter value parameter value. This value is the Maximum Likelihood Estimate for the parameter.
 :::
 
+````{card}
+We can calculate the MLE "by hand" by taking the derivative of the (Log) Likelihood with respect to the parameter we are estimating, setting it to zero, and solving for the parameter. We will practice doing this in [](#chapter:PMFs) and [](#chapter:PDFs).
+
+```{math}
+\dfrac{d}{d\theta} \mathcal{L}_{\theta} = 0\;\; \mathsf{at}\;\; \theta=\hat{\theta}_{_{\mathsf{MLE}}}
+
+```
+
+````
+
+
+(sec:nllpython)=
+### Python Example
+
+The code below reproduces plots like [](#fig:likeLogNeg) for Gaussian data: $X\sim$ Norm($\mu, \sigma$). In this example we hold $\sigma$ constant and calculate the Likelihoods:
+
+$L_{\mu}(\mu; x) = \prod \limits_i^N f_X(x_i)$ 
+
+ with many different trial values for $\mu$. The product is over the $N$ data measurements $x_i$.
+
+ The Log Likelihoods are:
+
+$\ln L_{\mu}(\mu; x) = \ln \prod \limits_i^N f_X(x_i) = \sum\limits_i^N \ln f_X(x_i)$ 
+
+
+
+The trial value with the Maximum Likelihood (Minimum NLL) is the Maximum Likelihood Estimate (MLE) for $\mu$. We can specify that this is the MLE with the notation $\hat{\mu}_{_{\mathsf{MLE}}}$, but very often you will just see the shorthand $\hat{\mu}$.
+
+
+In this example, we use `mu_mle = mu_trial[np.argmin(nll_vals)]`. The `argmin` function returns the index of the smallest value in `nll_vals` -- see [numpy.argmin](https://numpy.org/doc/2.5/reference/generated/numpy.argmin.html).
+
+
+For smooth likelihood functions, using `argmin` is equivalent to taking the derivative of the NLL with respect to $\theta$, setting it to zero, and solving for $\theta$. This gives the Maximum Likelihood Estimate $\hat{\theta}_{_{\mathsf{MLE}}}$.
+
+
+```{math}
+\argmin_{\theta}{( - \ln \mathcal{L}_{\theta} )} = \hat{\theta}_{_{\mathsf{MLE}}}
+```
+
+
+```{code-cell} python
+
+def like_loglike_nll(mu_true, sigma, N, reproducible=True):
+
+  import numpy as np
+  import matplotlib.pyplot as plt
+  from scipy.stats import norm
+
+  # Range of trial mu values for the x-axis
+  mu_trial = np.linspace(mu_true-sigma, mu_true+sigma, 100)
+
+  # Generate fake data from a Gaussian (fixed seed for reproducibility) 
+  if(reproducible):
+    data = norm.rvs(loc=mu_true, scale=sigma, size=N, random_state=42)
+  else:
+    data = norm.rvs(loc=mu_true, scale=sigma, size=N)
+
+  # --- Likelihood functions ---
+
+  # Likelihood: product of the PDF evaluated at each data point.
+  # For large N, np.prod() of many small PDF values underflows to 0.
+  # This is why we use the log likelihood instead.
+  def likelihood(data, mu):
+      return np.prod(norm.pdf(data, mu, sigma))
+
+  # Log likelihood: sum of log PDF values — avoids numerical underflow.
+  # Equivalent to np.log(np.prod(...)), but numerically stable.
+  def log_likelihood(data, mu):
+      return np.sum(np.log(norm.pdf(data, mu, sigma)))
+
+  # Evaluate over all trial mu values
+  L_vals   = [likelihood(data, mu) for mu in mu_trial]
+  lnL_vals = [log_likelihood(data, mu) for mu in mu_trial]
+  nll_vals = [-lnL for lnL in lnL_vals]   # negative log likelihood
+
+  # MLE: the trial mu that minimises the NLL (maximises the likelihood)
+  mu_mle = mu_trial[np.argmin(nll_vals)]
+
+  print(f"MLE estimate : mu = {mu_mle:.2f}  (true value: mu = {mu_true})")
+
+  # --- Plotting ---
+  plots = [
+      (L_vals,   r'$\mathcal{L}(\mu)$',       "Likelihood"),
+      (lnL_vals, r'$\ln\,\mathcal{L}(\mu)$',  "Log likelihood"),
+      (nll_vals, r'$-\ln\,\mathcal{L}(\mu)$', "Negative log likelihood"),
+  ]
+
+  mle_label = r'$\hat{\mu}$' + f' = {mu_mle:.2f}'
+
+  fig, axes = plt.subplots(1, 3, figsize=(14, 4))
+  for ax, (values, curve_label, ylabel) in zip(axes, plots):
+      ax.plot(mu_trial, values, 'r--', label=curve_label)
+      ax.axvline(mu_mle, color='black', linestyle=':', linewidth=1, label=mle_label)
+      ax.set_xlabel(r'Trial value of $\mu$', fontsize=14)
+      ax.set_ylabel(ylabel, fontsize=14)
+      ax.legend(loc='best', fontsize=12)
+  plt.tight_layout()
+  plt.show()
+
+# call the function
+
+# --- Parameters ---
+mu_true = 5    # true mean
+sigma   = 1    # true standard deviation (held fixed throughout)
+N       = 100  # number of data points
+
+like_loglike_nll(mu_true, sigma, N)
+
+```
+<!--
+Exercises:
+1. Show yourself that `np.argmin(nll_vals)` returns the same trial parameter index as `np.argmax(lnL_vals)`
+2. What happens if you increase or decrease the number of measurements, $N$?
+-->
+
+:::{warning}
+
+Simply quoting the MLE, e.g. $\hat{\mu}_{_{\mathsf{MLE}}} = 4.89$, without an uncertainty is not helpful!
+
+Consider the exercise above; you could estimate the MLE using $N=10$ or using $N=1000$, and would (very likely!) get different estimates, with different uncertainties.
+
+We must always give the uncertainty on our estimates, e.g. $\hat{\mu}_{_{\mathsf{MLE}}} = 4.89 \pm 1.10$. We will look at one nice way of estimating the MLE uncertainty in [](#sec:Resampling).
+:::
 
 (sec:interval-est)=
 ## Interval Estimation
@@ -600,7 +718,7 @@ A **Confidence Interval** is an estimated range of values such that we expect CL
 A **Credible Interval** is, in my opinion, a much more intuitive interval. It represents the most probable range of outcomes for a given single experiment. The Credible Interval is a Bayesian construct. It uses Prior Knowledge to allow us to estimate the range of probable outcomes for a single experiments.
 
 :::{note}
-People such as myself (particle physicists or similarly dorky types) might get home from work to find the oven on, and declare "I am 3 sigma confident that I did not leave the oven on". Because Confidence Levels are frequentist, this should be interpreted as "In 741 days, with conditions identical to today, where I came home to find the oven on, only 1 of these occasions would be my fault." Of course this is not actually what I mean when I say that. I mean I am 99.73% sure I did not leave the oven on this morning. So I should really say "I did not leave the oven on- 3 sigma credible interval". 
+People such as myself (particle physicists or similarly dorky types) might get home from work to find the oven on, and declare "I am 3 sigma confident that I did not leave the oven on". Because **Confidence Levels are frequentist**, this should be interpreted as "In 741 days, with conditions identical to today, where I came home to find the oven on, only 1 of these occasions would be my fault." Of course this is not actually what I mean when I say that. I mean I am 99.73% sure I did not leave the oven on **this morning**. So I should really say "I did not leave the oven on- 3 sigma credible interval" (the Bayesian interval). 
 :::
 
 We have seen [](#sec:crit-sig) that the size of the confidence interval is set using a predefined significance level $\alpha$, for example $\alpha=5\%$ gives us a 95% CL, and the confidence interval represents the central 95% of a normal distribution centered on the estimated mean $\hat{\mu} = \overline{x}$. The 95% CL can also be expressed as $\pm 1.96\sigma$, which means the same thing. Note that the Confidence Interval is predefined - it does not rely on the measured p value and Z value from the data.
@@ -620,41 +738,54 @@ The Bootstrap Method is a **Nonparametric Resampling** method - random values ar
 An example of using the Bootstrap method is as follows (assume a starting dataset size of $N_d =100$, and an ideal dataset size of $N_r = 10,000$):
 
 1. Randomly select a value from the data. 
-2. Do this 100 times, allowing yourself to select the same measurement more than once.
+2. Do this 100 times, allowing yourself to select the same measurement more than once[^imp].
 3. Calculate the statistic of interest from the 100 measurements you randomly selected. 
 4. Repeat the above three steps 9999 times.
 
-The point of this process is not to recalculate the statistic - you have already calculated that from the original dataset. The point is to estimate the statistical uncertainty on that measured value. The larger dataset allows for a smaller estimator variance.
+[^imp]: It is crucial that selected measurement are not removed from the dataset once they have been selected. If we removed them we would simply end up with the 100 data points we had in the original dataset!
+
+The point of this process is not to recalculate the statistic - you have already calculated that from the original dataset. The point is to estimate the statistical uncertainty on that measured value. The larger dataset allows for a smaller Estimator Variance: a **more precise estimate of the statistical uncertainty**.
 
 ### Bootstrap Example: step-by-step
 
-Let's generate some data using a seed such that every time we execute this function we get the same result.
+Let's generate some data using a seed such that every time we execute this function we get the same result [Seeding breaks randomness!](#sec:seeding-breaks-randomness).
+
 
 ```{code-cell} python
-import numpy as np
 
-# make a local instance of numpy's default (PCG64) pseudorandom number generator and set the seed - we only ever do this to get reproducible results for testing and for demonstrations.
+def generate_data(mu=6.0, sigma=3.77, N=100, seed=None):
 
-#rng = np.random.default_rng(seed=42)
-rng = np.random.default_rng(111)
+  if(seed):
+    print(f"\nYou have set a seed: {seed}, so will get the same dataset(s) every time you run this function")
 
-# generate some fake data, normally distributed using arbitrary parameter choices
+  # make a local instance of numpy's default pseudorandom number generator
+  import numpy as np
+  rng = np.random.default_rng(seed)
 
-from scipy.stats import norm
+  # generate some fake data, normally distributed using arbitrary parameter choices
+  from scipy.stats import norm
+  data = norm.rvs(loc=mu, scale=sigma, size=N, random_state=rng)
 
-norm_mean = 6.0
-norm_sigma = 3.77
-ndata = norm.rvs(loc=norm_mean, scale=norm_sigma, size=100, random_state=rng)
+  return data
 
-print(f"Generated Norm data with mu={norm_mean}, sigma={norm_sigma}")
+# call the function
+
+data = generate_data(seed=42)
 
 ```
 
-Now we have a fake dataset of 100 measurements, let's bootstrap!
+Now we have a fake dataset of 100 measurements, we can find $\overline{x}$ and $\sigma_x$ of the dataset using the usual `numpy` methods, but what is the **uncertainty** on $\sigma_x$? We could calculate this using the appropriate [SEV](#eq:sev-gen) formula, but we can't use that approach if we don't know anything about the data's true underlying distribution, or if it doesn't have a simple true underlying distribution.
+
+**Let's bootstrap!**
+
 
 ```{code-cell} python
 
-def LongBootstrap(data):
+
+def LongBootstrap(data, seed=None):
+  
+  import numpy as np
+  rng = np.random.default_rng(seed)
 
   # Our statistic of interest is the standard deviation
   print( f"sample sigma: {np.std(data):.3f}")
@@ -666,77 +797,114 @@ def LongBootstrap(data):
   for i in range(9999):
 
     # Draw 100 random measurements from our dataset 
-
-    # Important! values can be drawn more than once because we have replace=True. If we don't use replace=True, we will just get the original dataset back.
-
+    # Important! values can be drawn more than once because we have replace=True. 
+    # If we don't use replace=True, we will just get the original dataset back!
+    
     rdata = rng.choice(data,replace=True, size=100)
 
-    # Get the standard deviation of this set of 100 measurements
-
+    # Get the standard deviation of _this set_ of 100 measurements
     rsigma = np.std(rdata)
 
     # Put the standard deviation in the container
-
     sigmas.append(rsigma)
 
     # now to the next of the 9999 iterations in the loop
 
-  # end of loop, print the statistic with its uncertainty
+  # end of loop, print the estimated statistic with its uncertainty
+  print( f"by-hand bootstrap estimate for sigma: {np.mean(sigmas):.3f} +/- {np.std(sigmas):.3f} ")
 
-  print( f"bootstrap estimate for sigma: {np.mean(sigmas):.3f} +/- {np.std(sigmas):.3f} ")
+  lower_bound = np.mean(sigmas)-np.std(sigmas)
+  upper_bound = np.mean(sigmas)+np.std(sigmas)
+  print( f"Confidence Interval: ({lower_bound:.3f}, {upper_bound:.3f}) ")
 
   return sigmas
 
 
 # call the bootstrap function on the fake data we generated above
 
-byhand_sigmas = LongBootstrap(ndata)
+byhand_sigmas = LongBootstrap(data,seed=111)
 
 ```
+
+The uncertainty found by the boostrap method provides a Confidence Interval. I set the seed, so the result I am reading in my browser will be the same one you see in these notes. The "one sigma" **Confidence Interval** in this case is:
+
+$2.703 \leq \sigma_{\mathsf{true}} \leq 3.085\;\;$ (68.27% CL).
+
+
+The 68.27% CL corresponds to the $\pm 1\sigma$ region we calculated using bootstrap method, which involves random sampling, so will give a slightly different interval each time we run it (unless we set the seed). The interpretation of this interval is a little fiddly (as with all things frequentist): 
+
+:::{card}
+If we repeat the above boostrap process (unseeded!) a large number of times, the computed interval would contain $\sigma_{\mathsf{true}}$ 68.27% of the time. 
+:::
+
 
 
 ### Bootstrap Example: `scipy`
 
+The "by hand" example above was an unneccessary "re-invention of the wheel", as `scipy.stats` provides a `boostrap` method [scipy.stats.bootstrap](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.bootstrap.html). It is helpful to illustrate what the bootstrap method actually does. Let's use the `scipy` method for the same job:
+
 ```{code-cell} python
 
-def ScipyBootstrap(data):
+def ScipyBootstrap(data, seed=None):
 
-  # thank you scipy for providing yet another lovely method
+  import numpy as np
+  rng = np.random.default_rng(seed)
 
+  # thanks scipy!
   from scipy.stats import bootstrap
 
-  # first argument is data, second is the statistic of interest, optional rng parameter is for reproducibility
+  # first argument is data
+  # second is the statistic of interest
+  # optional rng parameter is for reproducibility
+  # optional confidence_level parameter sets the CL
 
-  sbs = bootstrap( (data,), np.std, rng=rng )
+  # we would like a 1sigma CL, convert this to % to pass to bootstrap
+  from scipy.stats import norm
+  CL = norm.cdf(1) - norm.cdf(-1)
 
+  sbs = bootstrap( (data,), np.std, rng=rng, confidence_level=CL )
+
+  # extract the mean from the bootstrap_distribution
   sp_mean = np.mean(sbs.bootstrap_distribution)
   
+  # extract the SEM directly
   sp_ser = sbs.standard_error
 
+  # extract the confidence interval directly
   sp_ci_lo, sp_ci_hi = sbs.confidence_interval
 
   print( f"scipy bootstrap estimate for sigma: {sp_mean:.3f} +/- {sp_ser:.3f}")
 
-  print( f"95% Confidence Interval: {sp_ci_lo:.3f}--{sp_ci_hi:.3f} ")
+  print( f"1sigma ({100*CL}%) Confidence Interval: ({sp_ci_lo:.3f}, {sp_ci_hi:.3f}) ")
 
   return sbs.bootstrap_distribution
 
-# call the function
-scipy_sigmas = ScipyBootstrap(ndata)
+# call our by-hand function again as a reminder
+byhand_sigmas = LongBootstrap(data,seed=111)
+# call the scipy version
+scipy_sigmas = ScipyBootstrap(data)
 ```
+
+Note that the `ScipyBootstrap` finds a noticeably different Confidence Interval from the `LongBootstrap` - I leave the reasons for this for you to explore in the workshop.
+
 
 ### Parametric Bootstrap Example
 
-If you know the underlying distribution (eg Norm in this case), you can do a parametric bootstrap using the parameters estimated from the data.
+If we know the underlying distribution (eg Norm in this case), we may wish to do a **Parametric Bootstrap** using the parameters estimated from the data.
 
 ```{code-cell} python
 
-def ParaBootstrap(data):
+def ParaBootstrap(data, seed=None):
+
+  import numpy as np
+  from scipy.stats import norm
+
+  rng = np.random.default_rng(seed)
 
   psigmas=[]
   for i in range(9999):
     
-    respin_data = norm.rvs(loc=np.mean(data), scale=np.std(data,ddof=1), size=100)
+    respin_data = norm.rvs(loc=np.mean(data), scale=np.std(data,ddof=1), size=100, random_state=rng)
 
     psigmas.append( np.std(respin_data) )
 
@@ -746,17 +914,20 @@ def ParaBootstrap(data):
 
 # call the function
 
-parametric_sigmas =ParaBootstrap(ndata)
+parametric_sigmas =ParaBootstrap(data)
 ```
+
+Note that we are assuming the parameters of the underlying distribution are unknown, and using the Estimators $\hat{\mu} = \overline{x}$ and $\hat{\sigma}_{\mathsf{true}} = \sigma_{x}$ to generate the `respin_data`. Think: is there any difference between this method and the nonparametric bootstrap in `LongBootstrap`?
 
 ### Plot Comparing Methods
 
-This is a frequentist process, so the true value of $\sigma$ is expected to lie within our error margin in 68% of repeated experiments.
+This is a frequentist process, so the true value of $\sigma$ is expected to lie within our error margin in $\approx~68 \%$ of repeated experiments.
 
 ```{code-cell} python
 
 def PlotBootsraps(a,b,c):
 
+  import numpy as np
   import matplotlib.pyplot as plt
 
   fig, ax = plt.subplots()
@@ -769,9 +940,13 @@ def PlotBootsraps(a,b,c):
   labs = ['byhand', 'scipy', 'parametric']
   cols = ['darkgreen', 'dodgerblue', 'grey']
   styles = ['-','--',':']
+  fills = ['darkgreen', 'none', 'none']
+  alphas = [0.2, 1, 1]
+
   for i, d in enumerate([a,b,c]):
     ax.hist(d, 
-            fc='none',
+            fc=fills[i],
+            alpha=alphas[i],
             lw=2,
             ls=styles[i],
             ec=cols[i], 
@@ -780,9 +955,9 @@ def PlotBootsraps(a,b,c):
 
   ax.set_xlabel(r"Bootstrap $\sigma$")
 
-  # don't want legend to overlap with plot. Extend y-axis by 20%
+  # don't want legend to overlap with plot. Extend y-axis by 25%
   ymax = ax.get_ylim()[1]
-  ax.set_ylim(0, ymax*1.2)
+  ax.set_ylim(0, ymax*1.25)
 
   plt.legend()
   plt.show()
@@ -793,7 +968,119 @@ def PlotBootsraps(a,b,c):
 PlotBootsraps(byhand_sigmas,scipy_sigmas,parametric_sigmas)
 ```
 
+(sec:seeding-breaks-randomness)=
+## Seeding breaks randomness!
 
+Please don't get in the habit of setting seeds in your code by default. Setting a seed **breaks the randomness**. It should only be done for testing and demonstration purposes, where you really do want to break the randomness and get the same answer every time. 
+
+I strongly recommend that anyone who intends to use PRNGs in their actual job or research reads [numpy-rng](https://blog.scientific-python.org/numpy/numpy-rng/) for a very nice overview. The numpy default PRNG (at the time of writing) is [`PCG64`](https://numpy.org/doc/stable/reference/random/bit_generators/pcg64.html). You can check this on your machine in a python script like so:
+
+```{code-cell} python
+import numpy as np
+rng = np.random.default_rng()
+print(type(rng.bit_generator).__name__)
+```
+
+The behaviour of `random_state` in `scipy.stats` depends on what you pass:
+
+```{code-cell} python
+import numpy as np
+from scipy.stats import norm
+
+mu = 0
+sigma = 1
+N = 10
+
+# --- Passing a Generator object ---
+# The generator's state advances with each call.
+# data1 and data2 are different (sequential draws from the same generator).
+# The full sequence of N draws is reproducible from seed 42.
+rng = np.random.default_rng(seed=42)
+
+# pull random values from Norm, passing the generator object
+data1 = norm.rvs(loc=mu, scale=sigma, size=N, random_state=rng)
+data2 = norm.rvs(loc=mu, scale=sigma, size=N, random_state=rng)
+
+# print the arrays of values, rounding all values up to two decimal places
+print("data1:", data1.round(2))
+print("data2:", data2.round(2))
+
+# check if the data values (in order) are close - see note below. 
+print("data1 == data2:", np.allclose(data1, data2))
+
+print()
+
+# --- Passing a raw integer seed ---
+# Each call constructs a fresh generator seeded with 42, then discards it.
+# data3 and data4 are identical — both start from scratch.
+data3 = norm.rvs(loc=mu, scale=sigma, size=N, random_state=42)
+data4 = norm.rvs(loc=mu, scale=sigma, size=N, random_state=42)
+
+print("data3:", data3.round(2))
+print("data4:", data4.round(2))
+print("data3 == data4:", np.allclose(data3, data4))
+```
+
+:::{tip}
+See the docs on [`numpy.allclose`](https://numpy.org/doc/stable/reference/generated/numpy.allclose.html) - this is a very useful method providing we understand what it is doing. 
+:::
+
+Passing a `Generator` object is the correct approach — it maintains a single coherent random sequence. Passing a raw integer seed is a common mistake that silently produces repeated data if you call it more than once.
+
+Note that reproducibility from seeding only holds if `rng` is created with the same seed **before each sequence of draws**. If `rng` is created once outside a function and reused across multiple calls, its state advances and the draws will differ each time — which is usually what you want.
+
+The distinction becomes clearest when `random_state` is used inside a reusable function. Compare these two designs:
+
+```{code-cell} python
+import numpy as np
+from scipy.stats import norm
+
+mu = 0
+sigma = 1
+N = 5
+
+# --- Design 1: create a Generator inside the function ---
+# d1 and d2 are different (consecutive draws), but every call
+# with the same seed produces the same d1 and the same d2.
+
+def func_generator(seed):
+    rng = np.random.default_rng(seed=seed)   # reset state each call
+    d1 = norm.rvs(loc=mu, scale=sigma, size=N, random_state=rng)
+    d2 = norm.rvs(loc=mu, scale=sigma, size=N, random_state=rng)
+    return d1, d2
+
+print("=== Design 1: random_state=rng (Generator created inside func) ===")
+d1, d2 = func_generator(42)
+print(f"Call 1  d1: {d1.round(2)}")
+print(f"Call 1  d2: {d2.round(2)}")
+print(f"d1 == d2: {np.allclose(d1, d2)}")
+
+d1b, d2b = func_generator(42)
+print(f"Call 2  d1: {d1b.round(2)}")
+print(f"Reproducible (d1 same both calls): {np.allclose(d1, d1b)}")
+
+print()
+
+# --- Design 2: pass an integer seed directly ---
+# d1 and d2 are identical — each call builds a fresh generator
+# from scratch, so both draws start from the same state.
+def func_int(seed):
+    d1 = norm.rvs(loc=mu, scale=sigma, size=N, random_state=seed)
+    d2 = norm.rvs(loc=mu, scale=sigma, size=N, random_state=seed)
+    return d1, d2
+
+print("=== Design 2: random_state=seed (integer) ===")
+d1, d2 = func_int(42)
+print(f"Call 1  d1: {d1.round(2)}")
+print(f"Call 1  d2: {d2.round(2)}")
+print(f"d1 == d2: {np.allclose(d1, d2)}")
+
+d1b, d2b = func_int(42)
+print(f"Call 2  d1: {d1b.round(2)}")
+print(f"Reproducible (d1 same both calls): {np.allclose(d1, d1b)}")
+```
+
+Design 1 is usually what we want: independent draws within the function, with full reproducibility controlled by the seed argument. Design 2 silently duplicates data — `d1` and `d2` are identical — which can bias any analysis that treats them as independent samples.
 
 
 

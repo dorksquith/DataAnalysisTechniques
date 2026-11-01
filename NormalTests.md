@@ -210,7 +210,7 @@ The solution to problem 1 is to use the [SEM](#eq:SEM), but we must assume we do
 
  $\mathsf{\widehat{SEM}} =  \dfrac{\sigma_{x} }{\sqrt{N}}$: the **Estimated** Standard Error on the Mean is denoted with a hat symbol $\widehat{}$ .
 
-Here $\sigma_x$ must be computed with $N-1$ in the denominator (``ddof=1`` in numpy). Using $N$ instead (``ddof=0``) systematically underestimates the true variance — see [](#fig:lilyproof_varbias) for a proof — which would make $\widehat{\mathsf{SEM}}$ too small. Correcting for this bias by using $N-1$ gives an unbiased estimate of the true variance, and therefore a reliable estimate of the SEM.
+Here $\sigma_x$ must be computed with $N-1$ in the denominator (``ddof=1`` in numpy). Using $N$ instead (``ddof=0``) systematically underestimates the true variance — see [Math Methods B](#sec:var-bias-proof) for a proof — which would make $\widehat{\mathsf{SEM}}$ too small. Correcting for this bias by using $N-1$ gives an unbiased estimate of the true variance, and therefore a reliable estimate of the SEM.
 
 
 I have replaced the standard deviation with the $\mathsf{\widehat{SEM}}$ for the blue shaded barsin the  plots for [N=3](#fig:sem5), [N=30](#fig:sem6), and [N=100](#fig:sem7).[^estsem]
@@ -544,7 +544,7 @@ In the (much more realistic) scenario where we don't know $\sigma_{true}$, we **
 
 ```
 
-Here $\sigma_x$ is the sample standard deviation computed with $N-1$ in the denominator (``ddof=1`` in numpy). This matters: using $N$ in the denominator (``ddof=0``) systematically underestimates the true variance — see [](#fig:lilyproof_varbias) for a proof — which would make our $\widehat{\mathsf{SEM}}$ too small. Correcting for this bias by using $N-1$ gives an unbiased estimate of the true variance, and therefore a reliable estimate of the SEM. This is the convention used by ``scipy.stats.ttest_1samp``.
+Here $\sigma_x$ is the sample standard deviation computed with $N-1$ in the denominator (``ddof=1`` in numpy). This matters: using $N$ in the denominator (``ddof=0``) systematically underestimates the true variance — see [Math Methods B](#sec:var-bias-proof) for a proof — which would make our $\widehat{\mathsf{SEM}}$ too small. Correcting for this bias by using $N-1$ gives an unbiased estimate of the true variance, and therefore a reliable estimate of the SEM. This is the convention used by ``scipy.stats.ttest_1samp``.
 
 The T distribution has one parameter: the number of degrees of freedom, with symbol [$\nu$](#eq:Tnu). 
 
@@ -895,7 +895,6 @@ The denominator $\mathsf{ \sum \limits_{j}  N_j - N_s}$  is the number of degre
 We now have the ingredients to calculate the **F statistic**:
 
 ```{math}
-:label: eq:fstat
 
 \mathsf{F\; Test\; Statistic = V_{between} \; / \; V_{within} }
 
@@ -1018,17 +1017,5 @@ OneSampleTtest(data, mu0, alpha)
 
 ```
 
-
-## Notes
-
-We will look at Estimator Bias in Part 2 of this module. If you can't wait until then to know why the unbiased variance has a factor $N-1$ in the denominator, here is my rather long proof from last year. The students and I were unable to find this proof in the text books, which we found frustrating; this might be because it is so long and boring, nobody has been bothered to typeset it.
-
-:::{figure}
-:label: fig:lilyproof_varbias
-
-![](/figures/var-proof-long.png)
-
-Proof that the sample variance is a biased estimator for the true variance.
-:::
 
 

@@ -29,11 +29,19 @@ project:
     - file: EstimatorsIntro.md
     - file: PMFs.md
     - file: PDFs.md
-    #- file: GeneralisedPDFs.md    
     #- file: MaxLike.md
     #- file: LeastSquares.md
+    #- file: DistributionsOverview.md    
     #- file: BayesianInference.md
-    #- file: MCMC.md    
+    #- file: MCMC.md
+    - file: Coding.md
+      children:    
+      - file: PythonMethods.md
+      - file: PlottingTipsAndTricks.md
+    - file: Mathematics.md
+      children:
+      - file: MathMethodsA.md
+      - file: MathMethodsB.md    
     - file: CheatSheets.md
       children:
       - file: UnixCheatsheet.md
@@ -42,10 +50,20 @@ project:
     - file: Workshops.md
       children:
       - file: Workshop2.md
+      - file: Workshop2_solutions.md
       - file: Workshop3.md
+      - file: Workshop3_solutions.md
       - file: Workshop4.md
-      - file: Workshop5.md      
-    
+      - file: Workshop4_solutions.md
+      - file: Workshop5.md
+      - file: Workshop5_solutions.md      
+      - file: Workshop6.md
+      #- file: Workshop6_solutions.md
+      #- file: Workshop7.md
+      #- file: Workshop8.md
+      #- file: Workshop9.md
+      #- file: Workshop10.md                        
+
   numbering:
     title: true
     headings: true

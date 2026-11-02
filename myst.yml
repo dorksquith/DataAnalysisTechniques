@@ -50,7 +50,7 @@ project:
       - file: cheatsheets/LatexCheatSheet.md
 
     - file: workshops/Workshops.md
-    children:
+      children:
       - file: workshops/Workshop2.md
       - file: workshops/Workshop2_solutions.md
       - file: workshops/Workshop3.md

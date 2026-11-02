@@ -253,13 +253,13 @@ Dividing through by $N$:
 
 ```{math}
 :label: eq:vartruesamp-proof
-E\!\left[v_x\right] = E\!\left[\hat{V}[X]\right] = \dfrac{N-1}{N}\,\sigma^2
+E\!\left[v_{x,b}\right] = E\!\left[\hat{V}[X]\right] = \dfrac{N-1}{N}\,\sigma^2
 ```
 
 The bias is $b = E[\hat{V}] - \sigma^2 = -\sigma^2/N$. The **unbiased** estimator divides by $(N-1)$ instead:
 
 ```{math}
-v_{x,u} = \dfrac{1}{N-1}\sum_{i=1}^N (x_i - \overline{x})^2 \;\; \Rightarrow \;\; E[v_{x,u}] = \sigma^2
+v_{x} = \dfrac{1}{N-1}\sum_{i=1}^N (x_i - \overline{x})^2 \;\; \Rightarrow \;\; E[v_{x}] = \sigma^2
 ```
 
 ---
@@ -302,19 +302,19 @@ where $b = \mu - \theta = E[\hat{\theta}] - \theta$ is the **bias**.
 <!--
 **Application to the variance estimators.** Using the results from [](#sec:normal-sev) (assuming Normality):
 
-Biased estimator $v_x$ ($b = -\sigma^2/N$, $V[v_x] = 2(N-1)\sigma^4/N^2$):
+Biased estimator $v_{x,b}$ ($b = -\sigma^2/N$, $V[v_{x,b}] = 2(N-1)\sigma^4/N^2$):
 
 ```{math}
-\mathrm{MSE}(v_x) = \dfrac{2(N-1)\sigma^4}{N^2} + \dfrac{\sigma^4}{N^2} = \dfrac{(2N-1)\sigma^4}{N^2}
+\mathrm{MSE}(v_{x,b}) = \dfrac{2(N-1)\sigma^4}{N^2} + \dfrac{\sigma^4}{N^2} = \dfrac{(2N-1)\sigma^4}{N^2}
 ```
 
-Unbiased estimator $v_{x,u}$ ($b = 0$, $V[v_{x,u}] = 2\sigma^4/(N-1)$):
+Unbiased estimator $v_{x}$ ($b = 0$, $V[v_{x}] = 2\sigma^4/(N-1)$):
 
 ```{math}
-\mathrm{MSE}(v_{x,u}) = \dfrac{2\sigma^4}{N-1}
+\mathrm{MSE}(v_{x}) = \dfrac{2\sigma^4}{N-1}
 ```
 
-For large $N$ both are $\sim 2\sigma^4/N$, but the biased estimator has slightly smaller MSE for finite $N$: $\mathrm{MSE}(v_x) < \mathrm{MSE}(v_{x,u})$ since $(2N-1)/N^2 < 2/(N-1)$ for all $N \geq 2$.
+For large $N$ both are $\sim 2\sigma^4/N$, but the biased estimator has slightly smaller MSE for finite $N$: $\mathrm{MSE}(v_{x,b}) < \mathrm{MSE}(v_x)$ since $(2N-1)/N^2 < 2/(N-1)$ for all $N \geq 2$.
 -->
 ---
 
@@ -694,10 +694,10 @@ In practice we estimate $\sigma^2 \approx v_x$, giving
 \widehat{\mathsf{SEV} } = v_x\sqrt{\dfrac{2}{N-1}}
 ```
 
-For the [biased estimator of variance](#eq:variance), we use here the notation $v_{xb}= \frac{N-1}{N}v_x$ [](#eq:vartruesamp-proof), and we have:
+For the [biased estimator of variance](#eq:variance), we use here the notation $v_{x,b}= \frac{N-1}{N}v_x$ [](#eq:vartruesamp-proof), and we have:
 
 ```{math}
-V[v_{xb}] = \left(\dfrac{N-1}{N}\right)^2 V[v_x] = \dfrac{2(N-1)\sigma^4}{N^2}
+V[v_{x,b}] = \left(\dfrac{N-1}{N}\right)^2 V[v_x] = \dfrac{2(N-1)\sigma^4}{N^2}
 ```
 
 which gives
@@ -753,12 +753,12 @@ The Delta Method generalises to multivariate functions via the Jacobian: $V[h] =
 (sec:mmb_ses)=
 ## Standard Error of the Standard Deviation (SES)
 
-The sample standard deviation is $s_x = \sqrt{v_{x,u}}$: a nonlinear function of the sample variance. Applying the Delta method with $g(\theta) = \sqrt{\theta}$:
+The sample standard deviation is $\sigma_x = \sqrt{v_x}$: a nonlinear function of the sample variance. Applying the Delta method with $g(\theta) = \sqrt{\theta}$:
 
 $$g'(\theta) = \dfrac{1}{2\sqrt{\theta}}$$
 
 ```{math}
-V[s_x] = V[\sqrt{v_{x,u}}] \approx \left(\dfrac{1}{2\sqrt{\sigma^2}}\right)^2 V[v_{x,u}]
+V[\sigma_x] = V[\sqrt{v_x}] \approx \left(\dfrac{1}{2\sqrt{\sigma^2}}\right)^2 V[v_x]
 = \dfrac{1}{4\sigma^2} \cdot \dfrac{2\sigma^4}{N-1}
 = \dfrac{\sigma^2}{2(N-1)}
 ```
@@ -767,14 +767,14 @@ The **Standard Error of the Standard Deviation** is therefore:
 
 ```{math}
 :label: eq:ses
-\mathsf{SES} = \sqrt{V[s_x]} \approx \dfrac{\sigma}{\sqrt{2(N-1)}}
+\mathsf{SES} = \sqrt{V[\sigma_x]} \approx \dfrac{\sigma}{\sqrt{2(N-1)}}
 ```
 
-In practice, replace $\sigma$ with $s_x$:
+In practice, replace $\sigma$ with $\sigma_x$:
 
 ```{math}
 :label: eq:ses-est
-\widehat{\mathsf{SES}} = \dfrac{s_x}{\sqrt{2(N-1)}}
+\widehat{\mathsf{SES}} = \dfrac{\sigma_x}{\sqrt{2(N-1)}}
 ```
 
 :::{note}
@@ -797,8 +797,8 @@ def ses(data):
 # Example
 rng = np.random.default_rng(42)
 data = rng.normal(loc=5.0, scale=2.0, size=200)
-s = np.std(data, ddof=1)
-print(f"s_x = {s:.4f} ± {ses(data):.4f}")
+sigma_x = np.std(data, ddof=1)
+print(f"sigma_x = {sigma_x:.4f} ± {ses(data):.4f}")
 print(f"Analytical SES: {2.0 / np.sqrt(2*(len(data)-1)):.4f}")  # true σ = 2
 ```
 
@@ -807,7 +807,7 @@ print(f"Analytical SES: {2.0 / np.sqrt(2*(len(data)-1)):.4f}")  # true σ = 2
 (sec:mvue)=
 ## Minimum Variance Unbiased Estimation
 
-We have seen that the unbiased sample variance $v_{x,u}$ is an unbiased estimator for $\sigma^2$. But could there be a *better* unbiased estimator — one with smaller variance? This is the question of **Minimum Variance Unbiased Estimation (MVUE)**.
+We have seen that the unbiased sample variance $v_x$ is an unbiased estimator for $\sigma^2$. But could there be a *better* unbiased estimator — one with smaller variance? This is the question of **Minimum Variance Unbiased Estimation (MVUE)**.
 
 ### Fisher Information and the Cramér–Rao Bound
 
@@ -843,9 +843,9 @@ The Cramér–Rao bound gives:
 V[\hat{\sigma}^2] \geq \dfrac{2\sigma^4}{N}
 ```
 
-But we showed in [](#sec:sev-proof) that $V[v_{x,u}] = 2\sigma^4/(N-1)$. Since $1/(N-1) > 1/N$, the unbiased sample variance does **not** achieve the Cramér–Rao bound! It is unbiased but not efficient.
+But we showed in [](#sec:sev-proof) that $V[v_x] = 2\sigma^4/(N-1)$. Since $1/(N-1) > 1/N$, the unbiased sample variance does **not** achieve the Cramér–Rao bound! It is unbiased but not efficient.
 
-This is one reason the biased estimator $v_x$ can have smaller MSE for finite $N$ (as we saw in [](#sec:mse-proof)): it sacrifices unbiasedness to trade variance for bias in a way that can be favourable.
+This is one reason the biased estimator $v_{x,b}$ can have smaller MSE for finite $N$ (as we saw in [](#sec:mse-proof)): it sacrifices unbiasedness to trade variance for bias in a way that can be favourable.
 
 ### Rao–Blackwell and Sufficient Statistics
 
@@ -855,7 +855,7 @@ $$\tilde{\theta} = E[\hat{\theta} \mid T]$$
 
 is also unbiased and has $V[\tilde{\theta}] \leq V[\hat{\theta}]$. Iterating this process leads to the MVUE.
 
-For the Normal distribution, the pair $(\overline{x},\, v_{x,u})$ is jointly sufficient for $(\mu, \sigma^2)$. It can be shown (via Lehmann–Scheffé) that $v_{x,u}$ is in fact the MVUE for $\sigma^2$ when $\mu$ is unknown — even though it doesn't achieve the Cramér–Rao bound (which assumes known $\mu$).
+For the Normal distribution, the pair $(\overline{x},\, v_x)$ is jointly sufficient for $(\mu, \sigma^2)$. It can be shown (via Lehmann–Scheffé) that $v_x$ is in fact the MVUE for $\sigma^2$ when $\mu$ is unknown — even though it doesn't achieve the Cramér–Rao bound (which assumes known $\mu$).
 
 ### Practical Note: Bootstrap
 

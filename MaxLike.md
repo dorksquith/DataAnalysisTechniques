@@ -336,21 +336,21 @@ The **Information Matrix** is the negative of the Hessian $H_\theta$ of the log-
 
 Starting from the log-likelihood
 
-$$\ln\mathcal{L} = -N\ln\sigma - \tfrac{N}{2}\ln(2\pi) - \frac{1}{2\sigma^2}\sum_{i=1}^N(y_i-\mu)^2$$
+$$\ln\mathcal{L} = -N\ln\sigma - \tfrac{N}{2}\ln(2\pi) - \frac{1}{2\sigma^2}\sum_{i=1}^N(x_i-\mu)^2$$
 
 the first partial derivatives are:
 
-$$\frac{\partial \ln\mathcal{L}}{\partial\mu} = \frac{1}{\sigma^2}\sum_{i=1}^N(y_i-\mu), \qquad \frac{\partial \ln\mathcal{L}}{\partial\sigma} = -\frac{N}{\sigma} + \frac{1}{\sigma^3}\sum_{i=1}^N(y_i-\mu)^2$$
+$$\frac{\partial \ln\mathcal{L}}{\partial\mu} = \frac{1}{\sigma^2}\sum_{i=1}^N(x_i-\mu), \qquad \frac{\partial \ln\mathcal{L}}{\partial\sigma} = -\frac{N}{\sigma} + \frac{1}{\sigma^3}\sum_{i=1}^N(x_i-\mu)^2$$
 
 The second partial derivatives are:
 
-$$\frac{\partial^2\ln\mathcal{L}}{\partial\mu^2} = -\frac{N}{\sigma^2}, \qquad \frac{\partial^2\ln\mathcal{L}}{\partial\sigma^2} = \frac{N}{\sigma^2} - \frac{3}{\sigma^4}\sum_{i=1}^N(y_i-\mu)^2, \qquad \frac{\partial^2\ln\mathcal{L}}{\partial\mu\,\partial\sigma} = -\frac{2}{\sigma^3}\sum_{i=1}^N(y_i-\mu)$$
+$$\frac{\partial^2\ln\mathcal{L}}{\partial\mu^2} = -\frac{N}{\sigma^2}, \qquad \frac{\partial^2\ln\mathcal{L}}{\partial\sigma^2} = \frac{N}{\sigma^2} - \frac{3}{\sigma^4}\sum_{i=1}^N(x_i-\mu)^2, \qquad \frac{\partial^2\ln\mathcal{L}}{\partial\mu\,\partial\sigma} = -\frac{2}{\sigma^3}\sum_{i=1}^N(x_i-\mu)$$
 
 Assembling the Hessian:
 
-$$H_\theta = \begin{bmatrix} -N/\sigma^2 & -2\sigma^{-3}\displaystyle\sum(y_i-\mu) \\[6pt] -2\sigma^{-3}\displaystyle\sum(y_i-\mu) & N/\sigma^2 - 3\sigma^{-4}\displaystyle\sum(y_i-\mu)^2 \end{bmatrix}$$
+$$H_\theta = \begin{bmatrix} -N/\sigma^2 & -2\sigma^{-3}\displaystyle\sum(x_i-\mu) \\[6pt] -2\sigma^{-3}\displaystyle\sum(x_i-\mu) & N/\sigma^2 - 3\sigma^{-4}\displaystyle\sum(x_i-\mu)^2 \end{bmatrix}$$
 
-Taking expectations using $E[y_i-\mu]=0$ and $E[(y_i-\mu)^2]=\sigma^2$:
+Taking expectations using $E[x_i-\mu]=0$ and $E[(x_i-\mu)^2]=\sigma^2$:
 
 $$E[H_\theta] = \begin{bmatrix} -N/\sigma^2 & 0 \\ 0 & -2N/\sigma^2 \end{bmatrix}$$
 

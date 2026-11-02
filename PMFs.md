@@ -40,9 +40,9 @@ We will use this topic to:
 | Situation | Distribution |
 |-----------|-------------|
 | Single binary trial (yes/no) | [Bernoulli](#sec:bern) |
-| Count successes in N trials | [Binomial](#sec:binom) |
+| Count successes in n trials | [Binomial](#sec:binom) |
 | Trials needed until r successes | Negative Binomial |
-| N trials across k categories | Multinomial |
+| n trials across k categories | Multinomial |
 | Events per unit time/space | [Poisson](#sec:poisson) |
 
 
@@ -83,7 +83,7 @@ The second term, $p^k$
   $k=0$: Probability of success ($p^0=1$) to the power zero ($0$) = 1
 
 :::{note}
-I acknowledge the PMF seems a bit contrived, as one of the two terms is always going to be equal to one, given that any number to the power zero is equal to one. But keeping it explicit in this way will help us with the next PMF, Binomial.
+I acknowledge the PMF seems a b it contrived, as one of the two terms is always going to be equal to one, given that any number to the power zero is equal to one. But keeping it explicit in this way will help us with the next PMF, Binomial.
 :::
 
 The **Kernel** of the Bernoulli PMF is given in [](#eq:bern_kernel); this is the part of the PMF that depends on the RV, $k$, which in this case is the whole PMF.
@@ -822,10 +822,19 @@ The **Log-Likelihood** is:
 
 ```{math}
 :label: eq:poisson_loglike
-\ln\mathcal{L}(\lambda;\mathbf{k}) = -N\lambda + \ln(\lambda)\sum_{i=1}^{N} k_i - \sum_{i=1}^{N} \ln(k_i!)
+\ln\mathcal{L}(\lambda;k) = -N\lambda + \ln(\lambda)\sum_{i=1}^{N} k_i - \sum_{i=1}^{N} \ln(k_i!)
 ```
 
 The last term does not depend on $\lambda$, so it plays no role in finding the MLE. 
+
+
+The derivative of the Log Likelihood with respect to $\lambda$:
+
+```{math}
+:label: eq:poisson_loglike_deriv
+\dfrac{d}{d\lambda} \ln\mathcal{L}(\lambda;k) = -N + \dfrac{1}{\lambda}\sum_{i=1}^{N} k_i - 0
+```
+
 
 Setting $\dfrac{d}{d\lambda}\ln\mathcal{L} = 0$, we find:
 

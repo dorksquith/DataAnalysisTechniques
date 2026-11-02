@@ -253,9 +253,8 @@ This volume forms the second part of the module, and all the topics are ```wip``
 :::{dropdown} Estimation Essentials
 - [ ] Describe Point and Interval Estimation with examples
 - [ ] Define Consistency, Bias, and Minimum Variance and explain their importance for estimators
-- [ ] Understand why the Likelihood is the product of probabilities (densities) for a discrete (continuous) RV
-- [ ] Explain the Bootstrap Method
-- [ ] Implement the Bootstrap Method to esimate uncertainties
+- [ ] Understand the relationship between Bias, Variance, and Mean Squared Error
+- [ ] Explain the Bootstrap Method and implement it to estimate parameter uncertainties
 <!--[ ] Maybe,  Method of Moments-->
 :::
 
@@ -287,6 +286,8 @@ This volume forms the second part of the module, and all the topics are ```wip``
 - [ ] Estimate the fairness of a coin using the Binomial Likelihood
 - [ ] Describe the properties of $k\sim \mathsf{Poisson}(\lambda)$
 - [ ] Calculate and use the Poisson Likelihood
+- [ ] Derive the MLE $\hat{p}$ from Binomial data and interpret it
+- [ ] Derive the MLE $\hat{\lambda}$ from Poisson data and interpret it
 :::
 
 
@@ -315,6 +316,7 @@ This volume forms the second part of the module, and all the topics are ```wip``
 - [ ] Don't mix up ```scipy.stats.beta``` (the PDF) and ```scipy.special.beta``` (the function)
 - [ ] Recognise the kernel of the $\mathsf{Gamma}(\alpha)$ PDF and describe what the parameters mean
 - [ ] Don't mix up ```scipy.stats.gamma``` (the PDF) and ```scipy.special.gamma``` (the function) 
+- [ ] Derive the MLE $\hat{\lambda}$ from Exponential data and interpret it
 :::
 
 
@@ -326,14 +328,6 @@ This volume forms the second part of the module, and all the topics are ```wip``
 [//]: # ( matplotlib.pyplot:)
 [//]: # ( openstax: )
 
-(los:ChangingVariables)=
-:::{dropdown} Changing Variables
-- [ ] Give an example of when one might need to change variables in a PDF.
-- [ ] Describe what is meant by a monotonic function
-- [ ] Show that for monotonic RVs, $P(X \leq x) = P(Y \leq y)$
-- [ ] Show that for monotonic RVs, $f_Y(y) = \left|\dfrac{dx}{dy} \right| f_X(x)$
-- [ ] Transform a multivariate PDF using the Jacobian matrix of partial derivatives
-:::
 
 [//]: # ( Maximum Likelihood Method)
 [//]: # ( Relies on: Log rules, partial derivatives, expectation algebra, Taylor series for graphical, bias, LLN, chain and product rules, LOTUS )
@@ -353,12 +347,13 @@ This volume forms the second part of the module, and all the topics are ```wip``
 
 (los:MLM)=
 :::{dropdown} Maximum Likelihood Method
-- [ ] Describe what is meant by the bias of an estimator
-- [ ] Calculate the Mean Squared Error
-- [ ] Understand that sometimes, the best estimator for the job is the biased estimator
-- [ ] Understand what the Hessian (curvature) matrix represents
-- [ ] Describe the three ways to calculate parameter uncertainties for MLE
-- [ ] Maybe a hard math thing like the Fisher Information - we will decide together
+- [ ] Write down the log-likelihood for a dataset and find the MLE by differentiation
+- [ ] Derive the MLEs $\hat\mu$ and $\hat\sigma^2$ for Normal data
+- [ ] Explain what the Hessian (curvature) of the log-likelihood represents physically
+- [ ] Describe the three methods for estimating MLE parameter uncertainties: Monte Carlo, Fisher Information, and the Graphical method
+- [ ] Define the Fisher Information and Information Matrix, and state the Cram\'{e}r--Rao (Minimum Variance) Bound
+- [ ] Compare nested models using the Log Likelihood Ratio test and Wilks' theorem
+- [ ] Calculate AIC and BIC and use Akaike weights to quantify relative model support
 :::
 
 
@@ -380,10 +375,13 @@ This volume forms the second part of the module, and all the topics are ```wip``
 
 (los:LSQ)=
 :::{dropdown} Linear Regression
-- [ ] Understand what Residuals are
-- [ ] Calculate Pearson's Chi Squared Statistic
-- [ ] Explain what happens when you call ```fit```
-- [ ] Know how to deal with outliers
+- [ ] Understand what Residuals are and how they quantify fit quality
+- [ ] Derive the method of Least Squares and obtain the best-fit parameters
+- [ ] Estimate parameter uncertainties from the LSQ covariance matrix
+- [ ] State the $\chi^2$ goodness-of-fit statistic and interpret it relative to the degrees of freedom
+- [ ] Explain what happens when you call ```fit``` (scipy/numpy)
+- [ ] Know how to identify and handle outliers
+- [ ] Apply model selection criteria (LLR, AIC, BIC) to compare regression models
 :::
 
 [//]: # ( Model Tests)
@@ -394,12 +392,6 @@ This volume forms the second part of the module, and all the topics are ```wip``
 [//]: # ( matplotlib.pyplot:)
 [//]: # ( openstax: )
 
-(los:ModelTests)=
-:::{dropdown} Model Tests
-- [ ] Understand how Chi Squared is used for a fit
-- [ ] Calculate the Log Likelihood Ratio (LLR)
-- [ ] Calculate the Akaike and Bayes Information Criteria (AIC and BIC)
-:::
 
 [//]: # ( Bayesian Inference)
 [//]: # ( Relies on: )
@@ -422,7 +414,7 @@ This volume forms the second part of the module, and all the topics are ```wip``
 (los:Bayes)=
 :::{dropdown} Bayesian Inference
 - [ ] Apply Bayes theorem to Bernoulli data
-- [ ] Understand that the probability of testing sick if your are sick is not the same as the probability of being sick if you test sick.
+- [ ] Correctly apply the distinction between $P(\mathsf{sick}\mid\mathsf{test}^+)$ and $P(\mathsf{test}^+\mid\mathsf{sick})$
 - [ ] Describe the meaning of the terms prior, evidence, and posterior
 - [ ] Understand the meaning and use of conjugate priors
 - [ ] Calculate the Maximum A Posteriori (MAP) and Credible Interval

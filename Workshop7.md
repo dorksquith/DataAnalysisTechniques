@@ -115,7 +115,7 @@ a) Compute the log-likelihood $\ln\mathcal{L}_A$ and $\ln\mathcal{L}_B$ for each
 
 b) Compute the Log Likelihood Ratio statistic:
    $$
-   \Lambda = -2(\ln\mathcal{L}_B - \ln\mathcal{L}_A).
+   \mathsf{LLR} = -2(\ln\mathcal{L}_B - \ln\mathcal{L}_A).
    $$
    A positive $\Lambda$ favours Model A. Is the difference substantial?
 

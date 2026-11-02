@@ -354,11 +354,28 @@ Taking expectations using $E[y_i-\mu]=0$ and $E[(y_i-\mu)^2]=\sigma^2$:
 
 $$E[H_\theta] = \begin{bmatrix} -N/\sigma^2 & 0 \\ 0 & -2N/\sigma^2 \end{bmatrix}$$
 
-The Information Matrix is therefore:
+The **Information Matrix** is therefore:
 
 $$\mathcal{J}_\theta = -N\,E[H_\theta] = \begin{bmatrix} N/\sigma^2 & 0 \\ 0 & 2N/\sigma^2 \end{bmatrix}$$
 
 The off-diagonal zeros mean $\hat{\mu}$ and $\hat{\sigma}$ are uncorrelated estimators — information about $\mu$ and information about $\sigma$ are completely separable for the Normal distribution.
+
+
+<!--
+  The diagonal entries are the individual Fisher informations for each parameter, and their values become most meaningful when you invert the matrix to get the RCF lower bounds:
+
+$$\mathcal{J}_\theta^{-1} = \begin{bmatrix} \sigma^2/N & 0 \\ 0 & \sigma^2/(2N) \end{bmatrix}$$
+
+So the minimum achievable variance for $\hat{\mu}$ is $\sigma^2/N$, which you’ll recognise as exactly the variance of the sample mean $\bar{y}$ — confirming that $\bar{y}$ is an efficient estimator (it saturates the bound).
+
+The minimum achievable variance for $\hat{\sigma}$ is $\sigma^2/(2N)$, which is half the bound for $\hat{\mu}$. That factor of 2 comes directly from the $2N/\sigma^2$ on the diagonal, and it tells you something quite interesting: the data contains twice as much Fisher information about $\sigma$ as about $\mu$.
+
+Intuitively this makes sense. Every observation contributes two pieces of information about $\sigma$: how far it sits from the mean (via $(y_i - \mu)^2$), and the sign of that deviation (which contributes to estimating $\mu$ but averages out for $\sigma$). So $\sigma$ is actually easier to pin down precisely than $\mu$ from the same dataset.
+
+More generally, a larger diagonal entry means a smaller lower bound on variance, i.e. the parameter is more precisely estimable. The diagonal entries grow linearly with $N$ (more data → more information, as expected) and shrink with $\sigma^2$ (noisier data → harder to estimate $\mu$, which also makes intuitive sense).
+-->
+
+
 
 (sec:mvb)=
 ## The Minimum Variance Bound
@@ -866,10 +883,10 @@ The Log Likelihood Ratio test compares two different Log Likelihoods calculated 
 
 ```{math}
 :label: eq:llr
-   \mathsf{LLR} = -2(\ln\mathcal{L}_B - \ln\mathcal{L}_A).
+   \mathsf{LLR} = 2(\ln\mathcal{L}_B - \ln\mathcal{L}_A).
 ```
 
-To use this method, $\ln\mathcal{L}_A$ must be a simplified version of $\ln\mathcal{L}_B$.
+Note that since Model B is more complex, $\ln\mathcal{L}_B \geq \ln\mathcal{L}_A$ always, so $\mathsf{LLR} \geq 0$. To use LLR, the models must be **nested**: Model A must be obtainable from Model B by fixing or constraining parameters.
 
 
 Example 1
@@ -888,9 +905,19 @@ Example 2
 
   $|\nu_A - \nu_B| = 1$
 
+**Wilks' Theorem.** Under the null hypothesis that Model A is correct, and for large $N$:
 
+$$\mathsf{LLR} \sim \chi^2_\nu, \qquad \nu = N_{p,B} - N_{p,A}$$
 
-<!--We could then use `pvalue=chi2.sf(LLR, df=1)`: if  `pvalue` $< \alpha$, we reject the simpler model, A, in favour of its more complicated friend, B. But, there are other ways of doing this with LLR.-->
+where $\nu$ is the difference in the number of free parameters. A large LLR — falling in the tail of the $\chi^2_\nu$ distribution — is evidence against Model A. The $p$-value is $P(\chi^2_\nu > \mathsf{LLR})$.
+
+**Worked example (coin toss).** Model A: $p=0.5$ (no free parameters, $\nu_A=0$). Model B: $p=27/50$ (one fitted parameter, $\nu_B=1$). So $\nu=1$.
+
+$$\ln\mathcal{L}_A = \ln(0.09596) = -2.344, \qquad \ln\mathcal{L}_B = \ln(0.11263) = -2.184$$
+
+$$\mathsf{LLR} = 2\bigl(-2.184 - (-2.344)\bigr) = 0.320$$
+
+Since $\chi^2_1(0.05)=3.84$ and $0.320 < 3.84$, the $p$-value is $0.57$: we **fail to reject** the fair-coin hypothesis at the 5\% level.
 
 
 ### Akaike and Bayes Information Criteria (AIC and BIC)
@@ -925,167 +952,92 @@ The Likelihood under Model $b$ (p=27/50)
 : $$\mathcal{L}_b = \dfrac{50!}{27! 23!} (27/50)^{27} (23/50)^{23} = 0.11263$$
 
 
-$\mathsf{AIC}_a =  2k - 2 \ln \mathcal{L}_a = 2 - 2 \ln (0.09596)  = 6.6876$
+Model $a$ fixes $p=0.5$ (a theoretical prediction, so $k_a=0$ free parameters). Model $b$ fits $p$ from the data ($k_b=1$). For BIC we take $N=50$ Bernoulli trials as the sample size.
 
-$\mathsf{AIC}_b =  2k - 2 \ln \mathcal{L}_b = 2 - 2 \ln (0.11263)  = 6.3673$  $\leftarrow$ smaller preferred 
+$\mathsf{AIC}_a = 2(0) - 2\ln(0.09596) = 4.688$
+
+$\mathsf{AIC}_b = 2(1) - 2\ln(0.11263) = 6.367$
+
+$\mathsf{AIC}_a < \mathsf{AIC}_b \;\leftarrow$ model $a$ preferred by AIC
+
+$\mathsf{BIC}_a = 0\cdot\ln(50) - 2\ln(0.09596) = 4.688$
+
+$\mathsf{BIC}_b = 1\cdot\ln(50) - 2\ln(0.11263) = 3.912 + 4.367 = 8.279$
+
+$\mathsf{BIC}_a < \mathsf{BIC}_b \;\leftarrow$ model $a$ preferred by BIC
 
 
 
 ### AIC Probabilities
-We identify the minimum: $\mathsf{m} = \mathsf{min}( \mathsf{AIC}_{a}, \mathsf{AIC}_{b}) = \mathsf{min}( 6.6876, 6.3673) = 6.3673 $
+We identify the minimum: $\mathsf{m} = \mathsf{min}(\mathsf{AIC}_a, \mathsf{AIC}_b) = \mathsf{min}(4.688, 6.367) = 4.688$
 
 The Relative Likelihoods for AIC are:
 
-$r_{\alpha} = \exp[\frac{1}{2}( m - \mathsf{AIC}_{\alpha})] = \exp[\frac{1}{2}( 6.3673 - 6.6876)] = 0.852$
+$r_a = \exp\!\left[\tfrac{1}{2}(m - \mathsf{AIC}_a)\right] = \exp\!\left[\tfrac{1}{2}(4.688 - 4.688)\right] = 1.000$
 
-$r_{\beta} = \exp[\frac{1}{2}( m - \mathsf{AIC}_{\beta})] = \exp[\frac{1}{2}( 6.6876 - 6.6876)] = 1$
+$r_b = \exp\!\left[\tfrac{1}{2}(m - \mathsf{AIC}_b)\right] = \exp\!\left[\tfrac{1}{2}(4.688 - 6.367)\right] = 0.432$
 
+The Akaike Weights are:
 
-The Akaike Weights are then:
+$p_a = r_a / (r_a + r_b) = 1.000 / 1.432 = 0.699$
 
-$p_{\alpha} = r_{\alpha}/(r_{\alpha} + r_{\beta}) = 0.852/1.852 = 0.460$
+$p_b = r_b / (r_a + r_b) = 0.432 / 1.432 = 0.302$
 
-$p_{\beta} = r_{\beta}/(r_{\alpha} + r_{\beta}) = 1/1.852 = 0.540$
-
-The weight $p_{b}$ is the probability that $p=27/50$ is the best of the two options, given the data. 
-
-Generally, if the difference $|\mathsf{AIC_{\alpha}} - \mathsf{AIC_{\beta}}| < 2 $ it is classified as "not worth more than a bare mention" - see [Kass 1995](https://sites.stat.washington.edu/raftery/Research/PDF/kass1995.pdf).
+The weight $p_a = 0.699$ means model $a$ (fair coin, $p=0.5$) is the better-supported model with probability 70%. Since $|\mathsf{AIC}_a - \mathsf{AIC}_b| = 1.68 < 2$, this is classified as "not worth more than a bare mention" — see [Kass 1995](https://sites.stat.washington.edu/raftery/Research/PDF/kass1995.pdf). All three tests (LLR, AIC, BIC) agree: the data cannot meaningfully distinguish a fair coin from $p=0.54$.
 
 
-<!---
-### Using `sympy` for derivatives
 
-`sympy` can compute analytical derivatives of the log-likelihood, which is helpful for checking analytical results or for simple cases:
-
-```{code-cell} python
-from sympy import symbols, log, factorial, diff
-
-def binom_mle_sympy(n=50, k=27):
-    """Derive the Binomial log-likelihood score with sympy."""
-    n_sym, k_sym, p = symbols('n k p')
-
-    # log-likelihood (up to constant)
-    ln_L = log(factorial(n_sym)/(factorial(k_sym)*factorial(n_sym-k_sym))) \
-           + k_sym*log(p) + (n_sym-k_sym)*log(1-p)
-
-    # score: first derivative w.r.t. p
-    score = diff(ln_L, p)
-    print("Score  d(lnL)/dp =", score)
-
-    # information: minus second derivative
-    info  = -diff(ln_L, p, 2)
-    print("Info  -d²(lnL)/dp² =", info)
-
-binom_mle_sympy()
-```
-
-### Using `scipy.optimize` for numerical minimisation
-
-`scipy.optimize` provides several routines for minimising the NLL.
--->
- <!--For continuous distributions `scipy.stats.fit()` (which uses MLE by default) is the most convenient:-->
-
-<!--
 ```{code-cell} python
 import numpy as np
-from scipy.stats import binom, expon
-import scipy.optimize as opt
+from scipy.stats import chi2
+from scipy.special import comb
 
-def binomial_mle_numerical(n=50, k=27):
-    """Numerical MLE for Binomial p using minimize and fsolve"""
-    true_p = k / n
-    rng = np.random.default_rng(42)
-    data = binom.rvs(n, true_p, size=1000, random_state=rng)
+def model_comparison(n=50, k=27):
+    """Compare fair-coin (Model a) vs fitted-p (Model b) using LLR, AIC, BIC."""
 
-    # negative log-likelihood (using scipy's built-in nnlf)
-    def nll(p, n, data):
-        return binom.nnlf((n, p, 0), data)
+    log_C = np.log(comb(n, k, exact=True))
 
-    p_guess = 0.5
+    # Log-likelihoods
+    lnL_a = log_C + k*np.log(0.5) + (n-k)*np.log(0.5)
+    p_hat  = k / n
+    lnL_b  = log_C + k*np.log(p_hat) + (n-k)*np.log(1 - p_hat)
+    print(f"ln L_a (p=0.50)  = {lnL_a:.4f}")
+    print(f"ln L_b (p={p_hat:.2f}) = {lnL_b:.4f}\n")
 
-    # scipy.optimize.minimize with SLSQP (handles bounds)
-    res_min = opt.minimize(nll, p_guess, args=(n, data),
-                           bounds=[(0, 1)], method='SLSQP')
-    print(f"minimize (SLSQP): p_hat = {res_min.x[0]:.4f}")
+    # LLR test (nu = 1 extra parameter in model b)
+    LLR  = 2 * (lnL_b - lnL_a)
+    pval = chi2.sf(LLR, df=1)
+    print(f"LLR = {LLR:.4f},  chi2(1) p-value = {pval:.3f}")
+    print(f"  -> {{'Fail to reject' if pval > 0.05 else 'Reject'}} fair-coin hypothesis\n")
 
-    # scipy.optimize.fsolve (root-finder on NLL)
-    res_fs = opt.fsolve(nll, p_guess, args=(n, data), full_output=True)
-    print(f"fsolve:           p_hat = {res_fs[0][0]:.4f}")
+    # AIC  (k_a = 0, k_b = 1)
+    AIC_a = 2*0 - 2*lnL_a
+    AIC_b = 2*1 - 2*lnL_b
+    print(f"AIC_a = {AIC_a:.4f},  AIC_b = {AIC_b:.4f}")
+    print(f"  -> Model {{'a' if AIC_a < AIC_b else 'b'}} preferred  (|DELTA_AIC| = {abs(AIC_a-AIC_b):.3f})\n")
 
+    # BIC  (k_a = 0, k_b = 1,  N = n Bernoulli trials)
+    N = n
+    BIC_a = 0*np.log(N) - 2*lnL_a
+    BIC_b = 1*np.log(N) - 2*lnL_b
+    print(f"BIC_a = {BIC_a:.4f},  BIC_b = {BIC_b:.4f}")
+    print(f"  -> Model {{'a' if BIC_a < BIC_b else 'b'}} preferred  (|DELTA_BIC| = {abs(BIC_a-BIC_b):.3f})")
 
-    print(f"True p: {true_p:.4f}")
-
-binomial_mle_numerical()
+model_comparison()
 ```
--->
-<!--
-```{code-cell} python
-def expon_mle_numerical():
-    """Numerical MLE for Exponential rate using scipy.stats.expon.fit."""
-    data = np.array([15, 18, 11])          # taxi waiting times (minutes)
 
-    # scipy.stats fit: floc=0 fixes the location parameter at 0
-    _, scale_hat = expon.fit(data, floc=0)
-    print(f"MLE mean waiting time: {scale_hat:.3f} min")
-    print(f"MLE rate: {1/scale_hat:.4f} min⁻¹")
-    print(f"Analytical: rate = 3/44 = {3/44:.4f} min⁻¹")
+### When to Use Each Test
 
-expon_mle_numerical()
-```
--->
-<!--
-### Plotting the Likelihood, Log-Likelihood, and NLL
-
-Plotting all three functions helps build intuition. The likelihood is a sharply peaked product; the log-likelihood is a smooth parabola-like curve; the NLL is the same parabola flipped:
-
-```{code-cell} python
-import matplotlib.pyplot as plt
-from scipy.stats import norm
-
-def plot_likelihood_suite(mu_true=5.0, sigma=1.0, N=100, seed=42):
-    """Plot L, lnL, and -lnL as a function of mu."""
-    rng = np.random.default_rng(seed)
-    data = norm.rvs(loc=mu_true, scale=sigma, size=N, random_state=rng)
-    mus  = np.linspace(mu_true - 1.5, mu_true + 1.5, 200)
-
-    L     = np.array([np.prod(norm.pdf(data, m, sigma)) for m in mus])
-    lnL   = np.array([np.sum(np.log(norm.pdf(data, m, sigma))) for m in mus])
-    nll   = -lnL
-
-    fig, axes = plt.subplots(1, 3, figsize=(12, 3))
-    for ax, y, label in zip(axes,
-                            [L, lnL, nll],
-                            [r'$\mathcal{L}_\theta$',
-                             r'$\ln\,\mathcal{L}_\theta$',
-                             r'$-\ln\,\mathcal{L}_\theta$']):
-        ax.plot(mus, y, 'r--')
-        ax.axvline(mu_true, color='k', ls=':', label=rf'$\mu={mu_true}$')
-        ax.set_xlabel(r'$\theta$')
-        ax.set_ylabel(label)
-        ax.legend()
-    fig.tight_layout()
-    plt.show()
-
-plot_likelihood_suite()
-```
--->
-
-<!--
-(sec:mle-summary)=
-## Summary
-
-| Distribution | Parameter | MLE | Biased? |
+| | LLR | AIC | BIC |
 |---|---|---|---|
-| Binomial$(n,p)$ | $p$ | $\hat{p} = k/n$ | No |
-| Exponential$(\lambda)$ | $\lambda$ | $\hat{\lambda} = 1/\bar{t}$ | No |
-| Normal$(\mu,\sigma^2)$ | $\mu$ | $\hat{\mu} = \bar{y}$ | No |
-| Normal$(\mu,\sigma^2)$ | $\sigma^2$ | $\hat{\sigma}^2 = \frac{1}{N}\sum(y_i-\bar{y})^2$ | Yes (use $N-1$ for unbiased) |
+| Models must be nested | Yes | No | No |
+| Gives a $p$-value | Yes (via $\chi^2_\nu$) | No | No |
+| Parameter penalty | via $\chi^2$ df | $+2k$ per param | $+k\ln N$ per param |
+| Penalises complexity more as $N$ grows | No | No | Yes |
 
-Key results:
+**Use LLR** when the models are nested — one is a special case of the other. It gives an explicit $p$-value via Wilks' theorem and is the most statistically powerful test when it applies.
 
-- The Score $s = \partial\ln\mathcal{L}/\partial\theta$ is zero at the MLE, and $E[s]=0$ always.
-- The Fisher Information $\mathcal{J}_\theta = V[s] = -NE[\partial^2\ln f_X/\partial\theta^2]$.
-- The Rao-Cramér-Fréchet inequality: $V[\hat{\theta}] \geq 1/\mathcal{J}_\theta$ for any unbiased estimator.
-- The log-likelihood is approximately parabolic near $\hat{\theta}$; the width gives $\sigma_{\hat{\theta}}$.
-- Numerically: minimise the NLL using `scipy.optimize.minimize`, `fsolve`, or `scipy.stats.fit`.
--->
+**Use AIC or BIC** when models are non-nested: for example, comparing a Gaussian to an Exponential fit to the same data. A smaller value identifies the preferred model.
+
+**AIC vs BIC**: BIC penalises extra parameters more heavily as $N$ grows — the $k\ln N$ factor exceeds $2k$ whenever $N > e^2 \approx 7.4$. For large datasets BIC therefore favours simpler models more aggressively than AIC. If the goal is predictive accuracy, AIC is usually preferred; if the goal is recovering the true model structure, BIC is more conservative and often appropriate.
+

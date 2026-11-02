@@ -974,17 +974,19 @@ The Likelihood under Model $b$ (p=27/50)
 
 Model $a$ fixes $p=0.5$ (a theoretical prediction, so $k_a=0$ free parameters). Model $b$ fits $p$ from the data ($k_b=1$). For BIC we take $N=50$ Bernoulli trials as the sample size.
 
-$\mathsf{AIC}_a = 2(0) - 2\ln(0.09596) = 4.688$
+The AICs
+: $\mathsf{AIC}_a = 2(0) - 2\ln(0.09596) = 4.688$
 
-$\mathsf{AIC}_b = 2(1) - 2\ln(0.11263) = 6.367$
+  $\mathsf{AIC}_b = 2(1) - 2\ln(0.11263) = 6.367$
 
-$\mathsf{AIC}_a < \mathsf{AIC}_b \;\leftarrow$ model $a$ preferred by AIC
+  $\mathsf{AIC}_a < \mathsf{AIC}_b \;\leftarrow$ model $a$ preferred by AIC
 
-$\mathsf{BIC}_a = 0\cdot\ln(50) - 2\ln(0.09596) = 4.688$
+The BICs
+: $\mathsf{BIC}_a = 0\cdot\ln(50) - 2\ln(0.09596) = 4.688$
 
-$\mathsf{BIC}_b = 1\cdot\ln(50) - 2\ln(0.11263) = 3.912 + 4.367 = 8.279$
+  $\mathsf{BIC}_b = 1\cdot\ln(50) - 2\ln(0.11263) = 3.912 + 4.367 = 8.279$
 
-$\mathsf{BIC}_a < \mathsf{BIC}_b \;\leftarrow$ model $a$ preferred by BIC
+  $\mathsf{BIC}_a < \mathsf{BIC}_b \;\leftarrow$ model $a$ preferred by BIC
 
 
 
@@ -992,16 +994,14 @@ $\mathsf{BIC}_a < \mathsf{BIC}_b \;\leftarrow$ model $a$ preferred by BIC
 We identify the minimum: $\mathsf{m} = \mathsf{min}(\mathsf{AIC}_a, \mathsf{AIC}_b) = \mathsf{min}(4.688, 6.367) = 4.688$
 
 The Relative Likelihoods for AIC are:
+: $r_a = \exp\!\left[\tfrac{1}{2}(m - \mathsf{AIC}_a)\right] = \exp\!\left[\tfrac{1}{2}(4.688 - 4.688)\right] = 1.000$
 
-$r_a = \exp\!\left[\tfrac{1}{2}(m - \mathsf{AIC}_a)\right] = \exp\!\left[\tfrac{1}{2}(4.688 - 4.688)\right] = 1.000$
-
-$r_b = \exp\!\left[\tfrac{1}{2}(m - \mathsf{AIC}_b)\right] = \exp\!\left[\tfrac{1}{2}(4.688 - 6.367)\right] = 0.432$
+: $r_b = \exp\!\left[\tfrac{1}{2}(m - \mathsf{AIC}_b)\right] = \exp\!\left[\tfrac{1}{2}(4.688 - 6.367)\right] = 0.432$
 
 The Akaike Weights are:
-
-$p_a = r_a / (r_a + r_b) = 1.000 / 1.432 = 0.699$
-
-$p_b = r_b / (r_a + r_b) = 0.432 / 1.432 = 0.302$
+: $p_a = r_a / (r_a + r_b) = 1.000 / 1.432 = 0.699$
+  
+  $p_b = r_b / (r_a + r_b) = 0.432 / 1.432 = 0.302$
 
 The weight $p_a = 0.699$ means model $a$ (fair coin, $p=0.5$) is the better-supported model with probability 70%. Since $|\mathsf{AIC}_a - \mathsf{AIC}_b| = 1.68 < 2$, this is classified as "not worth more than a bare mention" — see [Kass 1995](https://sites.stat.washington.edu/raftery/Research/PDF/kass1995.pdf). All three tests (LLR, AIC, BIC) agree: the data cannot meaningfully distinguish a fair coin from $p=0.54$.
 

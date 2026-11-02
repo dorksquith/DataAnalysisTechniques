@@ -9,7 +9,7 @@ kernelspec:
   display_name: 'Python 3'
 numbering:
   title: false
-  headings: false
+  headings: true
   equation: true
 ---
 
@@ -18,10 +18,14 @@ numbering:
 
 A practical reference for the `matplotlib` plotting examples used across the module. Each section gives a minimal working pattern followed by a complete example.
 
+:::{note}
+This is a first draft - I will add some more useful examples when I have time!
+:::
+
 ---
 
 (sec:plot-functions)=
-## 1. Basic Function Plots
+## Basic Function Plots
 
 The standard pattern for a clean single-panel line plot:
 
@@ -82,7 +86,7 @@ plt.show()
 ---
 
 (sec:plot-semilog)=
-## 2. Semilog Plots
+## Semilog Plots
 
 When one axis spans several orders of magnitude, a logarithmic scale makes structure visible that would be invisible on a linear scale.
 
@@ -127,9 +131,10 @@ plt.show()
 ---
 
 (sec:plot-derivatives)=
-## 3. Visualising Derivatives
+## Visualising Derivatives
 
 Plotting a function alongside its derivative helps build intuition: the derivative is zero where $f$ has a stationary point, and its sign tells you whether $f$ is rising or falling.
+
 
 ```{code-cell} python
 import numpy as np
@@ -150,20 +155,21 @@ d2f = lambdify(x_sym, d2f_sym, 'numpy')
 
 x = np.linspace(0, 2 * np.pi, 400)
 
+
 fig, axes = plt.subplots(1, 3, figsize=(13, 4), sharex=True)
-pairs = [
-    (f,   r"$f(x) = \sin^2 x$",       'steelblue'),
-    (df,  r"$f'(x)$",                  'darkorange'),
-    (d2f, r"$f''(x)$",                 'seagreen'),
-]
-for ax, (func, label, col) in zip(axes, pairs):
+color_set = [(f,   r"$f(x) = \sin^2 x$",       'steelblue'),
+             (df,  r"$f'(x)$",                  'darkorange'),
+             (d2f, r"$f''(x)$",                 'seagreen'),
+            ]
+for ax, (func, label, col) in zip(axes, color_set):
     ax.plot(x, func(x), color=col, linewidth=2)
     ax.axhline(0, color='black', linewidth=0.7, linestyle='--')
     ax.set_xlabel(r'$x$')
     ax.set_title(label, fontsize=13)
-plt.suptitle(r'$f$, $f\,\'$, and $f\'\'$ for $f(x) = \sin^2 x$', fontsize=13, y=1.02)
-#plt.tight_layout()
+
+plt.tight_layout()
 plt.show()
+
 ```
 
 **Tips:**
@@ -175,7 +181,7 @@ plt.show()
 ---
 
 (sec:plot-bivariate)=
-## 4. Bivariate (2D) Function Plots
+## Bivariate (2D) Function Plots
 
 To plot a function of two variables $f(x, y)$, first build a grid of $(x, y)$ evaluation points with `np.meshgrid`, then evaluate $f$ at every point on the grid.
 
@@ -337,6 +343,7 @@ joint_integral_plot1()
 
 ---
 
+<!--
 (sec:plot-bivariate-exercise)=
 ## Exercise: Adapt `joint_integral_plot1` for a New Function
 
@@ -355,7 +362,7 @@ You will need to change:
 ```{note}
 This is the same function whose joint integral you computed analytically in [](#sec:joint-integrals): $\displaystyle\int_{-1}^{1}\int_{-1}^{1}(e^{2x}-3y)\,dy\,dx = e^2 - e^{-2} \approx 7.25$. Does the contour plot make the $3y$ term's symmetry visually obvious?
 ```
-
+-->
 ---
 
 (sec:plot-methods-ref)=

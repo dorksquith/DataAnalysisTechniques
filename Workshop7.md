@@ -53,7 +53,7 @@ State whether each of the following is **True** or **False**, and give a one-sen
 
 ## Task 2: Poisson MLE — one parameter, one method
 
-The `counts` dataset contains Poisson-distributed integers. Recall from the notes that the Poisson NLL for a dataset $\{x_i\}$ is
+The `counts` dataset contains Poisson-distributed integers. Recall from the notes [](#sec:poisson_like) that the Poisson NLL for a dataset $\{x_i\}$ is
 
 $$
 -\ln\mathcal{L}(\lambda) = -\sum_i \bigl[x_i \ln\lambda - \lambda - \ln(x_i!)\bigr],
@@ -98,7 +98,7 @@ c) Extract the estimated **standard errors** from the inverse Hessian:
 
    Report $\hat\mu \pm \sigma_\mu$ and $\hat\sigma \pm \sigma_\sigma$. Do the uncertainties look reasonable for your dataset size?
 
-d) Make a 2D filled contour plot of the NLL surface in $(\mu, \sigma)$ space around the minimum. Use `np.meshgrid` with about 40 points on each axis spanning ±3 standard errors from the MLE. Overplot the MLE as a white marker. Add a contour at $\text{NLL}_\min + 0.5$ (the 1$\sigma$ boundary) and at $\text{NLL}_\min + 2.0$ (the 2$\sigma$ boundary).
+d) Make a 2D filled contour plot of the NLL surface in $(\mu, \sigma)$ space around the minimum. Use `np.meshgrid` with about 40 points on each axis spanning $\pm 3\sigma$ from the MLE. Plot the MLE on the same axes as a white marker. Add a contour at $\mathsf{NLL_{min}} + 0.5$ (the 1$\sigma$ boundary) and at $\mathsf{NLL_{min}} + 2.0$ (the 2$\sigma$ boundary).
 
 ---
 

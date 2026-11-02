@@ -587,6 +587,7 @@ ExploreBinom(5,0.5)
 
 ---
 
+(sec:binom_like)=
 ### Likelihoods
 
 Is my coin fair?
@@ -803,6 +804,7 @@ ExplorePoisson(5.4)
 
 ---
 
+(sec:poisson_like)=
 ### Likelihoods
 
 Poisson distributions model **Rates** (counts in given time periods) — this is something we do a lot of in my field. My friend Alf is not a big fan of work, but he has found an example from his life that he would like me to share.

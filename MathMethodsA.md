@@ -9,19 +9,19 @@ kernelspec:
   display_name: 'Python 3'
 numbering:
   title: false
-  headings: false
+  headings: true
   equation: true
 ---
 
 (chapter:math-methods-a)=
 # Math Methods A: Functions and Calculus
 
-This appendix introduces the mathematical tools used throughout the module: functions, logarithms, differentiation, and integration. Plotting examples for the functions and results covered here are collected in [PlottingTipsAndTricks](#chapter:plotting-tips).
+This appendix introduces the mathematical tools used throughout the module: functions, logarithms, differentiation, and integration. <!--Plotting examples for the functions and results covered here are collected in [PlottingTipsAndTricks](#chapter:plotting-tips).-->
 
 ---
 
 (sec:functions)=
-## 1. Functions
+## Functions
 
 A **function** $f$ maps each input value $x$ to exactly one output value $y$:
 
@@ -58,7 +58,7 @@ A function is **odd** if $f(-x) = -f(x)$ for all $x$ — it has rotational symme
 ---
 
 (sec:logs-exponents)=
-## 2. Bases, Exponents, and Logarithms
+## Bases, Exponents, and Logarithms
 
 ### Bases and Exponents
 
@@ -156,7 +156,7 @@ for n in [0, 1, 5, 10]:
 ---
 
 (sec:diff-calc-1)=
-## 3. Differential Calculus I
+## Differential Calculus I
 
 ### Notation
 
@@ -245,7 +245,7 @@ for n in range(5):
 ---
 
 (sec:diff-calc-2)=
-## 4. Differential Calculus II
+## Differential Calculus II
 
 ### Definition from First Principles
 
@@ -353,8 +353,9 @@ print(df_num(x_vals).round(4))
 ---
 
 (sec:multivariable-calc)=
-## 5. Multivariable Calculus
+## Multivariable Calculus
 
+(sec:mma-grad)=
 ### The Gradient
 
 For a scalar function $f(x_1, x_2, \ldots, x_n)$, the **gradient** $\nabla f$ is a column vector of all first-order partial derivatives:
@@ -363,6 +364,7 @@ $$\nabla f = \begin{pmatrix} \dfrac{\partial f}{\partial x_1} \\[6pt] \dfrac{\pa
 
 The gradient points in the direction of steepest ascent of $f$. Setting $\nabla f = \mathbf{0}$ locates stationary points in multiple dimensions.
 
+(sec:mma_hessian)=
 ### The Hessian
 
 The **Hessian** $\mathbf{H}$ (also written $\nabla^2 f$) is the square matrix of all second-order partial derivatives:
@@ -410,7 +412,7 @@ The Jacobian of a scalar function's gradient is its Hessian.
 ---
 
 (sec:integral-calc)=
-## 6. Integral Calculus
+## Integral Calculus
 
 ### Anti-differentiation
 
@@ -535,7 +537,7 @@ print(f"∫ ln(x) dx = {result}")
 ---
 
 (sec:joint-integrals)=
-## 7. Joint and Marginal Integrals
+## Joint and Marginal Integrals
 
 For a function of two variables $f(x, y)$, the **double integral** over a rectangular region is:
 

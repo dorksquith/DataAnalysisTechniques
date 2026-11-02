@@ -1,13 +1,22 @@
 ---
+jupytext:
+  formats: md:myst
+  text_representation:
+    extension: .md
+    format_name: myst
 kernelspec:
   name: python3
   display_name: 'Python 3'
+numbering:
+  title: false
+  headings: false
+  equation: true
 ---
 
 (chapter:python-methods)=
 # Python Methods Reference
 
-A reference table of all Python methods introduced across the module notes chapters.
+A reference table of all Python methods introduced across the module notes chapters. This will be updated as the notes evolve.
 
 ```{note}
 Plotting methods (`matplotlib.pyplot` and `seaborn`) are documented separately in [Plotting Tips and Tricks](#chapter:plotting-tips).

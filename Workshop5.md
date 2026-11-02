@@ -16,7 +16,7 @@ numbering:
 (workshop-5)=
 # Workshop 5: Normal Tests
 
-This workshop uses the Three Cities dataset introduced in [Normal Tests](#chapter:normtest). Run the `three_cities_data` function from that notebook, reproduced [here](#gen-3cities) for convenience.
+This workshop uses the Three Cities dataset introduced in [Normal Tests](#chapter:normtest). Run the `three_cities_data` function from that notebook, reproduced [here](#gen-3cities-dupe) for convenience.
 
 ---
 
@@ -44,7 +44,7 @@ This workshop uses the Three Cities dataset introduced in [Normal Tests](#chapte
 
 ::::{dropdown} Show Code for generating 3 Cities Datasets
 
-(gen-3cities)=
+(gen-3cities-dupe)=
 ```{code-cell}python
 import numpy as np
 np.random.default_rng()

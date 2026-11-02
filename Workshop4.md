@@ -66,7 +66,3 @@ c) Can you make a 3D plot of the bivariate Gaussian, with the z-axis being the P
 
 
 ---
-
-## Example Solutions
-
-To follow after the workshop.

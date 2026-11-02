@@ -34,35 +34,35 @@ project:
     #- file: DistributionsOverview.md    
     #- file: BayesianInference.md
     #- file: MCMC.md
-    - file: Coding.md
+    - file: coding/Coding.md
       children:    
-      - file: PythonMethods.md
-      - file: PlottingTipsAndTricks.md
-    - file: Mathematics.md
+      - file: coding/PythonMethods.md
+      - file: coding/PlottingTipsAndTricks.md
+    - file: maths/Mathematics.md
       children:
-      - file: MathMethodsA.md
-      - file: MathMethodsB.md    
-    - file: CheatSheets.md
+      - file: maths/MathMethodsA.md
+      - file: maths/MathMethodsB.md    
+    - file: cheatsheets/CheatSheets.md
       children:
-      - file: UnixCheatsheet.md
-      - file: MarkdownCheatSheet.md
-      - file: LatexCheatSheet.md
-    - file: Workshops.md
+      - file: cheatsheets/UnixCheatsheet.md
+      - file: cheatsheets/MarkdownCheatSheet.md
+      - file: cheatsheets/LatexCheatSheet.md
+    - file: workshops/Workshops.md
       children:
-      - file: Workshop2.md
-      - file: Workshop2_solutions.md
-      - file: Workshop3.md
-      - file: Workshop3_solutions.md
-      - file: Workshop4.md
-      - file: Workshop4_solutions.md
-      - file: Workshop5.md
-      - file: Workshop5_solutions.md      
-      - file: Workshop6.md
-      #- file: Workshop6_solutions.md
-      #- file: Workshop7.md
-      #- file: Workshop8.md
-      #- file: Workshop9.md
-      #- file: Workshop10.md                        
+      - file: workshops/Workshop2.md
+      - file: workshops/Workshop2_solutions.md
+      - file: workshops/Workshop3.md
+      - file: workshops/Workshop3_solutions.md
+      - file: workshops/Workshop4.md
+      - file: workshops/Workshop4_solutions.md
+      - file: workshops/Workshop5.md
+      - file: workshops/Workshop5_solutions.md      
+      - file: workshops/Workshop6.md
+      #- file: workshops/Workshop6_solutions.md
+      #- file: workshops/Workshop7.md
+      #- file: workshops/Workshop8.md
+      #- file: workshops/Workshop9.md
+      #- file: workshops/Workshop10.md                        
 
   numbering:
     title: true

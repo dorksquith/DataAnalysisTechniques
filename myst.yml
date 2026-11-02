@@ -42,13 +42,15 @@ project:
       children:
       - file: maths/MathMethodsA.md
       - file: maths/MathMethodsB.md    
+
     - file: cheatsheets/CheatSheets.md
       children:
       - file: cheatsheets/UnixCheatsheet.md
       - file: cheatsheets/MarkdownCheatSheet.md
       - file: cheatsheets/LatexCheatSheet.md
+
     - file: workshops/Workshops.md
-      children:
+    children:
       - file: workshops/Workshop2.md
       - file: workshops/Workshop2_solutions.md
       - file: workshops/Workshop3.md

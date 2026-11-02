@@ -29,7 +29,7 @@ project:
     - file: EstimatorsIntro.md
     - file: PMFs.md
     - file: PDFs.md
-    #- file: MaxLike.md
+    - file: MaxLike.md
     #- file: LeastSquares.md
     #- file: DistributionsOverview.md    
     #- file: BayesianInference.md

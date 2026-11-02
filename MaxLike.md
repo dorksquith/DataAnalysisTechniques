@@ -314,7 +314,7 @@ $$ \mathcal{J}_\mu = -\frac{\partial^2 \ln \mathcal{L}}{\partial \mu^2}  = \frac
 
 ### Hessian Matrix for Multiple Parameters
 
-The Hessian Matrix for a function is the matrix of second order partial derivatives (see[](#sec:mma_hessian)). For multiple parameters $\theta = [\theta_1, \ldots, \theta_Z]$, the Hessian Matrix for the Log Likelihood is:
+The Hessian Matrix for a function is the matrix of second order partial derivatives (see [](#sec:mma_hessian)). For multiple parameters $\theta = [\theta_1, \ldots, \theta_Z]$, the Hessian Matrix for the Log Likelihood is:
 
 ```{math}
 :label: eq:hessian_ll
@@ -356,29 +356,20 @@ $$E[H_\theta] = \begin{bmatrix} -N/\sigma^2 & 0 \\ 0 & -2N/\sigma^2 \end{bmatrix
 
 The **Information Matrix** is therefore:
 
-$$\mathcal{J}_\theta = -N\,E[H_\theta] = \begin{bmatrix} N/\sigma^2 & 0 \\ 0 & 2N/\sigma^2 \end{bmatrix}$$
+```{math}
+:label: eq:infomat_norm
+\mathcal{J}_\theta = -N\,E[H_\theta] = \begin{bmatrix} N/\sigma^2 & 0 \\ 0 & 2N/\sigma^2 \end{bmatrix}
+```
 
 The off-diagonal zeros mean $\hat{\mu}$ and $\hat{\sigma}$ are uncorrelated estimators — information about $\mu$ and information about $\sigma$ are completely separable for the Normal distribution.
 
 
-<!--
-  The diagonal entries are the individual Fisher informations for each parameter, and their values become most meaningful when you invert the matrix to get the RCF lower bounds:
 
-$$\mathcal{J}_\theta^{-1} = \begin{bmatrix} \sigma^2/N & 0 \\ 0 & \sigma^2/(2N) \end{bmatrix}$$
-
-So the minimum achievable variance for $\hat{\mu}$ is $\sigma^2/N$, which you’ll recognise as exactly the variance of the sample mean $\bar{y}$ — confirming that $\bar{y}$ is an efficient estimator (it saturates the bound).
-
-The minimum achievable variance for $\hat{\sigma}$ is $\sigma^2/(2N)$, which is half the bound for $\hat{\mu}$. That factor of 2 comes directly from the $2N/\sigma^2$ on the diagonal, and it tells you something quite interesting: the data contains twice as much Fisher information about $\sigma$ as about $\mu$.
-
-Intuitively this makes sense. Every observation contributes two pieces of information about $\sigma$: how far it sits from the mean (via $(y_i - \mu)^2$), and the sign of that deviation (which contributes to estimating $\mu$ but averages out for $\sigma$). So $\sigma$ is actually easier to pin down precisely than $\mu$ from the same dataset.
-
-More generally, a larger diagonal entry means a smaller lower bound on variance, i.e. the parameter is more precisely estimable. The diagonal entries grow linearly with $N$ (more data → more information, as expected) and shrink with $\sigma^2$ (noisier data → harder to estimate $\mu$, which also makes intuitive sense).
--->
 
 
 
 (sec:mvb)=
-## The Minimum Variance Bound
+### The Minimum Variance Bound (MVB)
 
 The **Rao-Cramér-Fréchet (RCF) Inequality** states that for any **unbiased** estimator $\hat{\theta}$:
 
@@ -405,8 +396,29 @@ and the corresponding lower bound on the [MSE](#eq:mse) is:
 \text{MSE} \geq \left(1 + \frac{db}{d\theta}\right)^2 \bigg/ \mathcal{J}_\theta \;\; + \;\; b^2
 ```
 
+### Using the Information Matrix
+
+
+The diagonal entries in e.g. [](#eq:infomat_norm) are the individual Fisher informations for each parameter, and their values become most meaningful when we invert the matrix to get the [Minimum Variance Bounds](#eq:rcf) (MVBs):
+
+```{math}
+:label: eq:infomat_norm_invert
+\mathcal{J}_\theta^{-1} = \begin{bmatrix} \sigma^2/N & 0 \\ 0 & \sigma^2/(2N) \end{bmatrix}
+```
+
+The MVB for $\hat{\mu}$ is $\sigma^2/N$, which is the **variance of the sample mean** $\bar{x}$ (the squared [SEM](#eq:sem)) — confirming that $\bar{x}$ is an efficient estimator (it "saturates the bound").
+
+The MVB for $\hat{\sigma}$ is $\sigma^2/(2N)$, which is half the bound for $\hat{\mu}$. This tells us something quite interesting: the data contains twice as much Fisher information about $\sigma$ as about $\mu$.
+
+Intuitively this makes sense. Every observation contributes two pieces of information about $\sigma$: how far it sits from the mean (via $(x_i - \mu)^2$), and the sign of that deviation (which contributes to estimating $\mu$ but averages out for $\sigma$). So $\sigma$ is actually easier to pin down precisely than $\mu$ from the same dataset.
+
+More generally, a larger diagonal entry means a smaller MVB, i.e. the parameter is more precisely estimable. The diagonal entries grow linearly with $N$ (**more data $\rightarrow$ more information**, as expected) and shrink with $\sigma^2$ (noisier data → harder to estimate $\mu$, which also makes intuitive sense).
+
+
+
+
 (sec:mle-graphical)=
-## The Graphical Method
+### The Graphical Method
 
 The shape of the log-likelihood near its maximum encodes the uncertainty on $\hat{\theta}$. To see this, Taylor-expand $\ln \mathcal{L}_\theta$ about $\hat{\theta}$:
 
@@ -426,7 +438,15 @@ This is a Gaussian shape! The log-likelihood is approximately parabolic near its
 \ln \mathcal{L}_{\hat{\theta}} - \ln \mathcal{L}_{\hat{\theta}\pm\sigma_{\hat{\theta}}} = \frac{1}{2}
 ```
 
-In practice: plot $\ln \mathcal{L}_\theta$ vs $\theta$, find the peak $\hat{\theta}$, and read off the values of $\theta$ where the curve drops by $1/2$ from the peak. The half-width is $\sigma_{\hat{\theta}}$.
+In practice: plot $\ln \mathcal{L}_\theta$ vs $\theta$, as per the example in [](#fig:graph-meth), find the peak $\hat{\theta}$, and read off the values of $\theta$ where the curve drops by $1/2$ from the peak. The half-width is $\sigma_{\hat{\theta}}$.
+
+:::{figure}
+:label: fig:graph-meth
+![](figures/PLOTDAT6-MLM-ParEst-GraphicalMethod-N50-zoom.png)
+
+The graphical method is one way to estimate the uncertainty on a maximum likelihood estimate.
+:::
+
 
 (sec:mle-numerical)=
 ## Numerical MLE with `scipy`

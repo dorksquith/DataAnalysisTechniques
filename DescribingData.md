@@ -212,7 +212,7 @@ V[X] = \sum\limits_i^{\infty}  (x_i - \mu)^2\, p_i
 
 Compare this with the [sample variance](#eq:variance): both measure squared deviations from a central value, but the sample variance uses the *sample mean* $\overline{x}$ and normalises by $\tfrac{1}{N}$, while the true variance uses the *true mean* $\mu$ and normalises through the probabilities $p_i$.
 
-Or, with [a bit of algebra](#a-bit-of-algebra), the true variance can be written in the equally useful form:
+Or, with [a bit of algebra](#sec:mmb_varequiv), the true variance can be written in the equally useful form:
 
 ```{math}
 :label: eq:truevar2
@@ -231,27 +231,14 @@ The True Standard Deviation $\sigma_X$ [](#eq:truesigma) is a measure of variabi
 ```
 
 
-:::{dropdown} Proof that [](#eq:truevar) and [](#eq:truevar2) are equivalent
-:label: a-bit-of-algebra
-```{math}
-\begin{aligned}
-V[X] & = E[\, X^2 + E^2[X] - 2X\,E[X] \,]\\
-	& = E[\, X^2\,] + E[\, E^2[X] \,]- E[\,2X\,E[X] \,]\;\; \mathsf{\textcolor{blue}{because}}\; E[A+B] = E[A] + E[B] \\
-	& = E[ X^2] + E^2[X] - 2E[X]  E[X]\;\; \mathsf{\textcolor{blue}{because}}\; E[E[A]] = E[A]\\
-	& = E[ X^2] + E^2[X]  - 2E^2[X]   \\	
-	& = E[ X^2] - E^2[X]   \\
-\end{aligned}
-```
-
-:::
-
 
 (VarianceAlgebra)=
 ### Variance Algebra
 
 Some very useful properties of Variance:
 
-If we multiply an RV by a constant $a$ , we multiply its expectation by the same constant **squared**.
+If we multiply an RV by a constant $a$ , we multiply its expectation by the same constant **squared** (see [proof](#sec:mmb_varlinf) ).
+
 $$\label{eq:var_multc} V[aX] = a^2 V[X]$$
 
 
@@ -266,6 +253,7 @@ For the **special case of Independent RVs only**, the variance of a sum is the s
 $$\label{eq:var_sumind} V[X + Y] = V[X] + V[Y]$$
 
 > [](#eq:var_sumind) **is only true if X and Y are mutually independent.** <!--Compare with [](eq:expect_multind).-->
+
 
 
 
@@ -515,6 +503,7 @@ The three black points are a scatter plot of the dataset of two RVs, a and b. Th
 
 
 
+
 ### Linear Correlations
 
 We can see from [](#fig:mda-cov) that as a increases, b decreases. This could indicate that the variables a and b are somehow dependent on one another.
@@ -686,140 +675,370 @@ Cartoon from [xkcd](https://xkcd.com/).
 
 ---
 
-(sec:dd-varfunc)=
+### Summary of Formulae
+
+The Expectation of a Continuous RV
+: $$\label{eq:dd_sum_expectx} E[X] = \int\limits_{S} x\, f_X(x)\, dx$$
+  
+The Expectation of a Discrete RV
+: $$\label{eq:dd_sum_expectk} E[K] = \sum\limits_{S} k_i\, p_K(k_i)$$
+
+Equivalent Notation for Expectation
+: $$\label{eq:dd_sum_not} E[X] \equiv \mu$$
+
+The Variance of a RV
+: $$\label{eq:dd_sum_var} V[X] = E[\,(X-E[X]\,)^2\,] = E[X^2] - E^2[X] $$
+
+
+The Covariance of two RVs
+: $$\label{eq:dd_sum_cov} \mathsf{cov}(X,Y) = E[\,(X-E[X]\,)\,(Y-E[Y]\,)\, ]$$
+
+
+
+
+
+---
+
+(CovarianceAlgebra)=
+### Covariance Algebra
+
+The covariance of a RV with itself is:
+
+$$\label{eq:cov_self} \mathsf{cov}(X,X) = V[X] $$
+
+
+For linear functions of one RV $f(X) = a\,X + \alpha$, and $g(Y) = b\,Y + \beta$, the covariance is: 
+
+$$\label{eq:cov_linfs} \mathsf{cov}(f,g) = a\,b\, \mathsf{cov}(X,Y) $$
+
+
+For the linear function of two RVs $f(X,Y) = X + Y$:
+
+$$\label{eq:cov_linf2} \mathsf{cov}(f,Z) = \mathsf{cov}(X,Z) +  \mathsf{cov}(Y,Z) $$
+
+
+
+---
+
+(sec:dd-propuncert)=
 ## 🆕 Propagation of Uncertainties
 
-$\textcolor{red}{\mathsf{TODO}}$: update this section with full notes from last year's lectures.
+Measurements are meaningless without quoted uncertainties. Very often, the quantity we wish to measure is not directly obtainable — it is a function of the random variables we measure, rather than the random variables themselves. The question is: how do we propagate the statistical uncertainties from the random variables to the function?
 
+(sec:dd-varfunc)=
+### Variance of a Function
 
-
-### LOTUS
-
-A function $g(x)$ of a RV is itself a RV, and we can calculate its expected value by using $x\rightarrow g$ in [](#eq:expectC):
+A function $g(x)$ of a RV is itself a RV, and we can calculate its expected value by using $x\rightarrow g(x)$ in [](#eq:expectC) - this is sometimes known as **LOTUS**: Law Of The Unconscious Statistician.
 
 ```{math}
 :label: eq:expectF
-E[ g ] = \int g\, f_X\, dx 
+E[ g(x) ] = \int g(x)\, f_X(x)\, dx 
 ```
 
-This is sometimes known as LOTUS: Law Of The Unconscious Statistician.
-
-The variance of the function can then be calculated by the definition [](#eq:truevar2) of variance in terms of expectation: 
+The variance of the function can then be calculated either by the definition [](#eq:truevar2) of variance in terms of expectation: 
 
 ```{math}
 :label: eq:varF
 V[ g ] = E[ (g - E[g])^2 ] = E[g^2] - E^2[g]
 ```
 
-or by using [Variance Algebra](#VarianceAlgebra) for the function in question.
+or by [Taylor expansion](#sec:mmb_varlinf2) (also known as the Delta Method): 
 
-
-### $g(x) = aX + b$
-
-A linear function of one RV is $g = aX + b$, where $a$ and $b$ are constants.
-
-The Expectation of the function can be found using [Expectation Algebra](#ExpectationAlgebra):
+For a linear function of one RV, $X$:
 
 ```{math}
-E[g(x)] = E[ aX + b] =  E[ aX] + E[ b ]  = a E[X] + b
-``` 
-
-The Variance of the function can be found similarly:
-
-```{math}
-V[ g(x) ] = V[ aX + b] =  a^2 V[X] 
+:label: eq:varFT_dd_1
+V[g] = \frac{dg}{dx}\bigg|_{x=\mu}^{\!2} V[X]
 ```
 
-The Standard Deviation is therefore:
+For a linear function of $Z$ RVs, $X_{(1)}, ..., X_{(Z)}$:
 
 ```{math}
-\sigma_g =  a \sigma_X 
+:label: eq:varFT_dd_Z
+V[g] = \mathsf{J}\,\Sigma\,\mathsf{J}^{\mathsf{T}}
 ```
 
+The squared function derivative in [](#eq:varFT_dd_1) is replaced by the Jacobian matrix of partial derivatives in [](#eq:varFT_dd_Z), $\mathsf{J}$, and its transpose $\mathsf{J}^{\mathsf{T}}$:
 
-### $g(x,y) = aX + bY$
+$$ \mathsf{J} = \begin{bmatrix} \dfrac{\partial g}{\partial x_{(1)}} & \dots &\dfrac{\partial g}{\partial x_{(Z)}} \end{bmatrix},\;\; \mathsf{J}^{\mathsf{T}} = \begin{bmatrix} \dfrac{\partial g}{\partial x_{(1)}} \\ \vdots \\\dfrac{\partial g}{\partial x_{(Z)}} \end{bmatrix}$$
 
-A linear function of two RVs is $g = aX + bY$, where $a$ and $b$ are constants.
+The variance in [](#eq:varFT_dd_1) is replaced by the covariance matrix in [](#eq:varFT_dd_Z), $\Sigma$:
 
-The Expectation of the function can, again, be found using [Expectation Algebra](#ExpectationAlgebra):
+$$\Sigma = \begin{bmatrix} \sigma^2_{x_{(1)}} & \cdots & \mathsf{cov}(x_{(1)}, x_{(Z)})\\ \vdots & \ddots & \vdots\\ \mathsf{cov}(x_{(Z)}, x_{(1)}) & \cdots & \sigma^2_{x_{(Z)}}\end{bmatrix}$$
 
-```{math}
-E[ g(x,y) ] = E[ aX + bY ] =  E[ aX] + E[ bY ]  = a E[X] + b E[Y] 
-``` 
 
-For the Variance we have, using [](#eq:varF):
+See [Variance Algebra](#VarianceAlgebra) and [Expectation Algebra](#ExpectationAlgebra) for the function in question.
 
-```{math}
+
+### A Linear Function of One RV
+
+A linear function of one RV is $g(x) = aX + b$, where $a$ and $b$ are constants. Using shorthand $g \equiv g(x)$:
+
+Expectation
+: $E[g] = E[ aX + b] =  E[ aX] + E[ b ]  = a E[X] + b$
+
+
+Variance
+: $V[ g ] = V[ aX + b] =  a^2 V[X]$
+
+Standard Deviation (statistical uncertainty)
+: $\sigma_g =  a\, \sigma_X$ 
+
+The statistical uncertainty on a linear function of one RV is the uncertainty on the RV multiplied by the constant scale.
+
+Example
+: I ask for a quote from a taxi company to take me from Brighton to Gatwick airport. They use the formula $g(x) = ax + b$ to estimate the fare, where the RV is $X$: distance in km, and the constants are $a$: price per mile and $b$: callout charge (base rate).
+  The distance in km is uncertain because there are several different routes that might be chosen, dependent on traffic conditions at the time and other random factors such as weather. The estimate is $x = 45 \pm 5$ km.
+
+  Let's choose the parameters: Price per mile: $a=£1.50$ and callout charge $b=£5$.
+
+  The estimated cost of the ride is $g(x) = (£1.50) \times (45) + (£5) = £72.50$
+
+  The uncertainty on the cost of the ride is $ \sigma_g =  a\, \sigma_x = (£1.50) \times (5) = £7.50$.
+
+  I should therefore expect to pay between £65 and £80 for the trip.
+
+
+
+
+---
+
+### A Linear Function of Two RVs
+
+A linear function of two RVs is $g(x,y) = aX + bY$, where $a$ and $b$ are constants. Using shorthand $g \equiv g(x,y)$:
+
+Expectation
+: $E[ g ] = E[ aX + bY ] =  E[ aX] + E[ bY ]  = a E[X] + b E[Y]$ 
+
+
+Variance (using expectation)
+: $$
+\label{eq:var-f2-exp}
 \begin{aligned}
-V[ g(x,y) ] & = E[ (g - E[g])^2 ] \\
-            & = E[ ( a (X-E[X]) + b(Y-E[Y]) )^2 ] \\
-            & = a^2 V[X] + b^2 V[Y] + 2ab\, \mathsf{cov}(X,Y) \\
+V[ g] & = E[\, (g - E[g]\,)^2\, ] \\ \\
+      & = E[\, \left(\, aX + bY - E[aX + bY]\right)^2\, ] \\ \\
+      & = E[\, \left(\, a (X-E[X]\,) + b(Y-E[Y]\,)\, \right)^2\, ] \\ \\
+      & = E[\, a^2 (X-E[X])^2 + b^2(Y-E[Y])^2 + 2ab(X-E[X])(Y-E[Y])\,  ] \\ \\
+      & = a^2 V[X] + b^2 V[Y] + 2ab\, \mathsf{cov}(X,Y) \\
 \end{aligned}
-```
+$$
 
-Or, **if X and Y are independent**, 
+Variance (using Taylor expansion)
+: The function has two RVS, so use [](#eq:varFT_dd_Z):
 
-```{math}
-V[ g(x,y) ]  = a^2 V[X] + b^2 V[Y] 
-```
+  The Jacobian is:
 
-The Standard Deviation for independent X,Y is therefore:
+  $J = \begin{bmatrix} \dfrac{\partial g}{\partial x} & \dfrac{\partial g}{\partial y} \end{bmatrix} =   \begin{bmatrix} a & b \end{bmatrix}$
 
-```{math}
-\sigma_g =  \sqrt{ a^2 V[X] + b^2 V[Y] }
-```
+  With transpose:
+  $J^T = \begin{bmatrix} a \\ b \end{bmatrix} $
 
-Which is often written as the "sum in quadrature":
 
-```{math}
-\sigma_g =  \sqrt{ a^2 \sigma^2_x + b^2 \sigma^2_y }
-```
+  The covariance matrix is:
 
-### $g = \sum\limits_j^Z \alpha_j X_{(j)}$
+  $\Sigma = \begin{bmatrix} 
+            V[X] & \mathsf{cov}(x,y) \\
+            \mathsf{cov}(x,y) & V[Y]
+            \end{bmatrix}$
+
+  So the variance of the function is:
+
+  ```{math}
+  \begin{aligned}
+  \label{eq:var-f2-taylor}
+  V[g] &= \mathsf{J}\,\Sigma\,\mathsf{J}^{\mathsf{T}}  \\
+       &= \begin{bmatrix} a & b \end{bmatrix}
+         \, 
+         \begin{bmatrix} 
+          V[X] & \mathsf{cov}(x,y) \\
+          \mathsf{cov}(x,y) & V[Y] \\
+          \end{bmatrix}
+          \,
+          \begin{bmatrix} a \\ b \end{bmatrix} \\ \\
+       &= a^2 V[X] + b^2 V[Y] + 2ab\, \mathsf{cov}(X,Y)
+  \end{aligned}
+  ```
+
+Note that [](#eq:var-f2-exp) and [](#eq:var-f2-taylor) give identical forms for the variance of a linear function, as the coefficients of the RVs (expectations method) are the partial derivatives of the function (Taylor series method). We can use whichever method we prefer.
+
+Index Notation
+: We can write the Expectation and Variance more compactly using index notation for the coefficients and RVs:
+
+  $(a, b) = (\alpha_1, \alpha_2)$
+
+  $(X, Y) = (X_{(1)}, X_{(2)})$
+
+  The function is $g = \sum\limits_{i=1}^2 \alpha_i X_{(i)}$
+
+  The variance is
+
+  $V[g] = \sum\limits_{i=1}^{2}\sum\limits_{j=1}^{2} \alpha_i \alpha_j \mathsf{cov}( X_{(i)}, X_{(j)} ) = \sum\limits_{i=1}^{2} \sum\limits_{j=1}^{2} 
+\frac{\partial f}{\partial x_{(i)}} \frac{\partial f}{\partial x_{(j)}}\bigg|_{\boldsymbol{\mu}}\,
+\mathsf{cov}(x_{(i)}, x_{(j)})= \mathsf{J}\,\Sigma\,\mathsf{J}^{\mathsf{T}}$ 
+
+  - When $i=j$ we get terms like $a^2 V[X]$ because $\mathsf{cov}(X, X) = V[X]$; 
+
+  - When $i \neq j$ we get the cross-covariance terms (appearing twice, for the $(i,j)$ and $(j,i)$ pairs).
+
+
+If X and Y are independent 
+: $V[g]  = a^2 V[X] + b^2 V[Y]$ 
+  
+
+  The Standard Deviation for independent X,Y is then:
+
+  $\sigma_g =  \sqrt{ a^2 V[X] + b^2 V[Y] }$
+
+
+  Which is often referred to as the "sum in quadrature":
+
+  $\sigma_g =  \sqrt{ a^2 \sigma^2_x + b^2 \sigma^2_y }$
+
+
+---
+
+### A Linear Function of Three RVs
+
+A linear function of three RVs is $g = aX + bY + cZ$, where $a$, $b$, and $c$ are constants. For three or more RVs, index notation is a must for keeping the algebra under control.
+
+Coefficients: $(a, b, c) = (\alpha_1, \alpha_2, \alpha_3)$
+
+RVs: $(X, Y, Z) = (X_{(1)}, X_{(2)}, X_{(3)})$
+
+The function is $g = \sum\limits_{i=1}^3 \alpha_i X_{(i)}$
+
+
+Expectation
+: $E[ g ] = E[\, \sum\limits_{i=1}^3 \alpha_i X_{(i)}\, ] = \sum\limits_{i=1}^3 \alpha_i \, E[ X_{(i)} ]$
+
+Variance
+: $V[ g ] = \sum\limits_{i=1}^{3} \sum\limits_{j=1}^{3} \alpha_i\, \alpha_j\, \mathsf{cov}(X_{(i)}, X_{(j)}) = \sum\limits_{i=1}^{3} \sum\limits_{j=1}^{3} 
+\frac{\partial f}{\partial x_{(i)}} \frac{\partial f}{\partial x_{(j)}}\bigg|_{\boldsymbol{\mu}}\,
+\mathsf{cov}(x_{(i)}, x_{(j)}) = \mathsf{J}\,\Sigma\,\mathsf{J}^{\mathsf{T}}$
+
+
+
+
+Example: uncertainty on a container volume
+: A cuboid container has the following dimensions (in cm):
+
+  Length: $l \pm \sigma_l = 4.995 \pm 0.064$
+
+  Width: $w \pm \sigma_w = 4.099 \pm 0.062$
+
+  Height: $h \pm \sigma_h = 10.014 \pm 0.586$
+
+  Volume:$ f(l,w,h) = l \cdot w \cdot h = 205$ (cm$^3$).
+
+  Jacobian: $J = \begin{bmatrix} \dfrac{\partial f}{\partial l} & \dfrac{\partial f}{\partial w} & \dfrac{\partial f}{\partial h} \end{bmatrix} =   \begin{bmatrix} wh & lh & lw \end{bmatrix}$
+
+  Covariance Matrix: $\Sigma = \begin{bmatrix} 
+             \sigma^2_l  & 0 & 0 \\
+             0 & \sigma^2_w & 0\\
+             0 & 0 & \sigma^2_h\\
+            \end{bmatrix}$ - changing any one dimension of the container has no effect on the other dimensions, so there are no covariance terms.
+
+
+
+  Variance on the volume: $V[f] = \mathsf{J}\,\Sigma\,\mathsf{J}^{\mathsf{T}} = w^2 h^2\, \sigma^2_l + l^2 h^2\, \sigma^2_w + l^2 w^2\, \sigma^2_h= 160.5$ (cm$^6$)
+
+
+  Uncertainty on the volume: $\sigma_{f} = \sqrt{V[f]} = 12.67$ (cm$^3$)
+
+---
+
+### A Linear Function of $Z$ RVs
+
 
 A linear function of $Z$ RVs is $g = \sum\limits_j^Z \alpha_j X_{(j)}$, where $\alpha_j$ are constants.
 
-The Expectation:
+Expectation
+: $E[ g ] = E[ \sum\limits_j^Z \alpha_j X_{(j)} ] = \sum\limits_j^Z \alpha_j E[ X_{(j)}]$ 
 
+Variance
+: $V[ g ]  = \sum\limits_i^Z \sum\limits_j^Z \alpha_i \alpha_j\, \mathsf{cov}( X_{(i)}, X_{(j)})  = \sum\limits_i^Z \sum\limits_j^Z 
+\left.\frac{\partial f}{\partial x_{(i)}} \frac{\partial f}{\partial x_{(j)}}\right|_{\boldsymbol{\mu}}\,
+\mathsf{cov}(x_{(i)}, x_{(j)}) = \mathsf{J}\,\Sigma\,\mathsf{J}^{\mathsf{T}}$
+
+---
+
+<!--
 ```{math}
-E[ g ] = E[ \sum\limits_j^Z \alpha_j X_{(j)} ] = \sum\limits_j^Z \alpha_j E[ X_{(j)}]
-``` 
-
-The Variance:
-
-```{math}
-
-V[ g ]  = \sum\limits_i^Z \sum\limits_j^Z \alpha_i \alpha_j\, \mathsf{cov}( X_{(i)}, X_{(j)}) 
-
+V[f_Z] = 
+\underbrace{
+\begin{bmatrix}
+\dfrac{\partial f_Z}{\partial x_{(1)}} & \cdots & \dfrac{\partial f_Z}{\partial x_{(Z)}}
+\end{bmatrix}
+}_{\mathsf{J}\;[1\times Z]}
+\underbrace{
+\begin{bmatrix}
+\sigma^2_{x_{(1)}} & \cdots & \mathsf{cov}(x_{(1)}, x_{(Z)})\\
+\vdots & \ddots & \vdots\\
+\mathsf{cov}(x_{(Z)}, x_{(1)}) & \cdots & \sigma^2_{x_{(Z)}}
+\end{bmatrix}
+}_{\Sigma\;[Z\times Z]}
+\underbrace{
+\begin{bmatrix}
+\dfrac{\partial f_Z}{\partial x_{(1)}}\\
+\vdots\\
+\dfrac{\partial f_Z}{\partial x_{(Z)}}
+\end{bmatrix}
+}_{\mathsf{J}^{\mathsf{T}}\;[Z\times 1]}
 ```
 
-Alternatively, we can use the Taylor Expansion of the function's derivatives to write the variance as:
+Matrix multiplication rules give $[1\times Z]\cdot[Z\times Z]\cdot[Z\times 1] = [1\times 1]$: we obtain a single value for the variance, as required.
+-->
+
+
+
+
+### A Nonlinear function of $Z$ RVs
+
+A nonlinear function can be written as a product of linear functions:
 
 ```{math}
-\begin{aligned}
-V[ g ]  & = \sum\limits_i^Z \sum\limits_j^Z \dfrac{\partial g}{\partial x_{(i)} }  \dfrac{\partial g}{\partial x_{(j)} } \mathsf{cov}( X_{(i)}, X_{(j)}) \\
-        & = J\, \Sigma\, J^{T}
-\end{aligned}
+h(X) = \prod_{k=1}^M f_k(X)
 ```
 
-where J is the **Jacobian Matrix** of partial derivatives, $J^{T}$ is its transpose, and $\Sigma$ is the **Covariance Matrix**.
+For example, $h(X) = aX^2$ is nonlinear; it can be written as $(aX)(X)$, the product of two linear functions $f_1 = aX$ and $f_2 = X$. Here $M=2$ functions and $Z=1$ RV.
 
-
-### $h(X) = \prod\limits_k^M g_k(X)$ — the Delta Method
-
-For a **nonlinear function**, the uncertainty can be propagated by linearising via a first-order Taylor expansion. This is known as the **Delta Method**.
-
-The variance of such a function can be written as before:
+A product of $M$ functions leads to an $[M\times Z]$ Jacobian matrix. Instead of a single value for the variance we obtain an $[M\times M]$ matrix:
 
 ```{math}
-V[h]   = J\, \Sigma\, J^{T}
+V[h] = \mathsf{J}\,\Sigma\,\mathsf{J}^{\mathsf{T}}
 ```
 
-However, rather than having a single value (as in the case of a linear function), $V[h]$ is a $M\times M$ matrix of variances, because the Jacobian has shape $M\times Z$.
+Each element $V_{kl}$ of this matrix is:
 
+```{math}
+V_{kl} = \sum_i^Z \sum_j^Z \left.\frac{\partial f_k}{\partial x_{(i)}} \frac{\partial f_l}{\partial x_{(j)}}\right|_{\boldsymbol{\mu}} \mathsf{cov}(x_{(i)}, x_{(j)})
+```
+
+<!--
 :::{seealso}
 The scalar (1D) case of the Delta Method — including a full derivation and an application to the Standard Error of the Standard Deviation — is worked out in [Math Methods B](#sec:mmb_delta-method).
 :::
+-->
+
+### Combining Systematic and Statistical Uncertainties
+
+A measurement often carries both a **statistical** uncertainty (from random fluctuations) and a **systematic** uncertainty (from calibration, modelling assumptions, etc.). We can account for both by separating the measurement into two independent parts: $x = x_{\rm stat} + x_{\rm sys}$.
+
+Because the two parts are independent, the variance of the sum is the sum of the variances:
+
+```{math}
+V[x] = V[x_{\rm stat}] + V[x_{\rm sys}] = \sigma^2_{\rm stat} + \sigma^2_{\rm sys}
+```
+
+For **two measurements** that share the same systematic uncertainty but have independent statistical uncertainties, the covariance between them is $\sigma^2_{\rm sys}$ (there is no statistical contribution to their covariance). The covariance matrix is therefore:
+
+```{math}
+\Sigma = 
+\begin{bmatrix}
+\sigma^2_{\rm stat} + \sigma^2_{\rm sys} & \sigma^2_{\rm sys}\\
+\sigma^2_{\rm sys} & \sigma^2_{\rm stat} + \sigma^2_{\rm sys}
+\end{bmatrix}
+```
 
 ---
 

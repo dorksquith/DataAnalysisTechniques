@@ -10,9 +10,9 @@ kernelspec:
 ---
 
 (chapter:mcmc)=
-# Resampling & Markov Chain Monte Carlo
+# Markov Chain Monte Carlo
 
-This chapter covers two powerful techniques for working with uncertainty when analytical solutions are unavailable: **Resampling** (generating new samples from existing data) and **Markov Chain Monte Carlo** (sampling from complex posterior distributions). We then walk through the workshop Python file `PoissonGamma-v2.py`, which implements Metropolis-Hastings MCMC for the Poisson-Gamma model introduced in the [previous chapter](#chapter:bayesian).
+This chapter covers a powerful technique for working with uncertainty when analytical solutions are unavailable: **Markov Chain Monte Carlo** (sampling from complex posterior distributions). We then walk through the workshop Python file `PoissonGamma-v2.py`, which implements Metropolis-Hastings MCMC for the Poisson-Gamma model introduced in the [previous chapter](#chapter:bayesian).
 
 Key Python tools used in this chapter:
 * `scipy.stats`: `norm`, `gamma`, `poisson`, `bootstrap`
@@ -21,6 +21,7 @@ Key Python tools used in this chapter:
 
 ---
 
+<!--
 ## Resampling
 
 ### The Problem: Never Enough Data
@@ -161,7 +162,7 @@ This was possible because Poisson-Gamma is a **conjugate pair** with a known clo
 **What if we cannot construct an analytical posterior?**
 
 In general, the posterior integral $\int \mathcal{L}(y|\theta)\,\pi(\theta)\,d\theta$ cannot be solved analytically. We can approximate the posterior by **sampling** from it using a Markov Chain.
-
+-->
 ---
 
 ## Markov Chain Monte Carlo
@@ -378,6 +379,7 @@ When properly tuned, the MCMC histogram should closely match the analytical post
 
 ---
 
+<!--
 ## Summary
 
 | Technique | When to Use | Key Idea |
@@ -390,3 +392,4 @@ When properly tuned, the MCMC histogram should closely match the analytical post
 | Differential Evolution | Multiple correlated parameters | Multiple chains; proposals informed by inter-chain differences |
 
 The bootstrap is a **frequentist** tool: it estimates sampling variability of a statistic under repeated experiments. MCMC is a **Bayesian** tool: it explores the posterior distribution of parameters given the data. Both are indispensable for modern data analysis.
+00-->

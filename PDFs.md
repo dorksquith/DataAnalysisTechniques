@@ -477,6 +477,7 @@ ExploreNormal(0, 1)
 
 ---
 
+(sec:norm_like)=
 ### Likelihoods
 
 Suppose we observe $N$ measurements $\mathbf{x} = (x_1, x_2, \ldots, x_N)$ drawn independently from Norm($\mu, \sigma$).
@@ -488,8 +489,9 @@ The Likelihood is the joint PDF evaluated at the observed data:
 
 \begin{aligned}
 
-\mathcal{L}(\mu,\sigma;x) &= \prod_{i=1}^{N}\dfrac{1}{\sigma\sqrt{2\pi}}\exp\!\left(-\dfrac{1}{2}\left(\dfrac{x_i-\mu}{\sigma}\right)^2\right)\\
-&= \left(\dfrac{1}{\sigma\sqrt{2\pi}}\right)^{\!N} \exp\!\left(-\dfrac{1}{2}\sum_{i=1}^{N}\left(\dfrac{x_i-\mu}{\sigma}\right)^2\right)
+\mathcal{L}(\mu,\sigma;x) &= \prod_{i=1}^{N}\dfrac{1}{\sigma\sqrt{2\pi}}\exp\!\left[-\dfrac{1}{2}\left(\dfrac{x_i-\mu}{\sigma}\right)^2\right]\\ \\
+
+&= \left(\dfrac{1}{\sigma\sqrt{2\pi}}\right)^{\!N} \exp\!\left[-\dfrac{1}{2}\sum_{i=1}^{N}\left(\dfrac{x_i-\mu}{\sigma}\right)^2\right]
 
 \end{aligned}
 ```
@@ -501,10 +503,27 @@ The Log Likelihood is:
 
 \begin{aligned}
 
-\ln\mathcal{L}(\mu,\sigma;x) &= - N\ln(\sigma) - N\ln(2\pi) -\dfrac{1}{2}\sum_{i=1}^{N}\left(\dfrac{x_i-\mu}{\sigma}\right)^2
+\ln\mathcal{L}(\mu,\sigma;x) &= - N\ln(\sigma) - \dfrac{N}{2}\ln(2\pi) -\dfrac{1}{2}\sum_{i=1}^{N}\left(\dfrac{x_i-\mu}{\sigma}\right)^2
 
 \end{aligned}
 ```
+
+The Negative Log Likelihood is:
+
+```{math}
+:label: eq:norm_nll
+
+\begin{aligned}
+
+\mathsf{NLL} = -\ln\mathcal{L}(\mu,\sigma;x) &= N\ln(\sigma) + \dfrac{N}{2}\ln(2\pi) +\dfrac{1}{2}\sum_{i=1}^{N}\left(\dfrac{x_i-\mu}{\sigma}\right)^2
+
+\end{aligned}
+```
+
+
+:::{note}
+We are assuming that $\sigma$ is a constant parameter value in [](#eq:norm_lik) and [](#eq:norm_loglik). When we look at the Method of Least Squares later [](#sec:ls-chisquared), we will make a different assumption and get a different form.
+:::
 
 Setting the **Partial Derivatives** $\dfrac{ \partial}{\partial\mu}\ln\mathcal{L} = 0$ and $\dfrac{ \partial}{\partial\sigma}\ln\mathcal{L} = 0$ gives the MLEs:
 
@@ -630,14 +649,14 @@ The $\chi^2$ distribution is frequently used to find **critical values**: for a 
 ### Expectation & Variance
 
 The $Q\sim\chi^2(\nu)$ distribution has:
-: $$E[Q] = \nu$$
+: $$\label{eq:exp_chisq} E[Q] = \nu$$
 
-  $$V[Q] = 2\nu$$
+  $$\label{eq:var_chisq} V[Q] = 2\nu$$
 
 The Reduced $Q/\nu$ distribution has:
-: $$E[Q/\nu] = 1$$
+: $$\label{eq:exp_chisq_red} E[Q/\nu] = 1$$
 
-  $$V[Q/\nu] = \frac{2}{\nu}$$
+  $$\label{eq:var_chisq_red} V[Q/\nu] = \frac{2}{\nu}$$
 
 Please see [Math Methods B: Chi Squared Expectation](#sec:mmb_chisq_expect) if you are interested in the proofs for these.
 

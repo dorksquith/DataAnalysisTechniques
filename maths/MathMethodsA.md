@@ -193,11 +193,45 @@ A **stationary point** occurs where $f'(x) = 0$. Its nature is determined by the
 - $f''(x) < 0$: local **maximum**
 - $f''(x) = 0$: inconclusive (may be a point of inflection)
 
+(sec:mma_taylor)=
 ### Taylor and Maclaurin Series
+
+Consider a polynomial function $f(x) = \alpha_0 + \alpha_1 x + \alpha_2 x^2 + \alpha_3 x^3 + \cdots$
+
+Evaluating the derivatives at $x=0$:
+
+```{math}
+\begin{aligned}
+f(0) &= \alpha_0 \\
+f'(0) &= \alpha_1 \\
+f''(0) &= 2\alpha_2 \\
+f'''(0) &= (3)(2)\alpha_3 \\
+\end{aligned}
+```
+
+The pattern gives the coefficients in terms of derivatives:
+
+```{math}
+\alpha_n = \frac{f^{(n)}(0)}{n!}
+```
+
+where $f^{(n)}$ means the $n$th derivative of $f$.
+
+Substituting back into the series:
+
+```{math}
+f(x) = \sum_{n=0}^{\infty} \frac{f^{(n)}(0)}{n!}\, x^n
+```
+
+And, more generally, expanding about an arbitrary point $a$:
+
+```{math}
+f(x) = \sum_{n=0}^{\infty} \frac{f^{(n)}(a)}{n!}\, (x-a)^n
+```
 
 Any smooth function can be approximated near a point $a$ by a polynomial:
 
-$$f(x) = \sum_{n=0}^{\infty} \frac{f^{(n)}(a)}{n!}(x-a)^n = f(a) + f'(a)(x-a) + \frac{f''(a)}{2!}(x-a)^2 + \cdots$$
+$$\label{eq:mma_taylor} f(x) = \sum_{n=0}^{\infty} \frac{f^{(n)}(a)}{n!}(x-a)^n = f(a) + f'(a)(x-a) + \frac{f''(a)}{2!}(x-a)^2 + \cdots$$
 
 The special case $a = 0$ is the **Maclaurin series**:
 
@@ -208,6 +242,11 @@ Comparing with the general polynomial $f(x) = \sum_k \alpha_k x^k$, the coeffici
 $$\alpha_n = \frac{f^{(n)}(0)}{n!} \qquad \Longleftrightarrow \qquad f^{(n)}(0) = n!\,\alpha_n$$
 
 This lets us read off polynomial coefficients directly from repeated derivatives at zero.
+
+:::{note}
+For a linear function of $x$, all terms after $n=1$ are zero — the Taylor series terminates exactly at first order.
+:::
+
 
 ### Symbolic Differentiation with `sympy`
 

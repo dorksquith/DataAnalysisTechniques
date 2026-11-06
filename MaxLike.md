@@ -5,8 +5,9 @@ jupytext:
     extension: .md
     format_name: myst
 kernelspec:
+  display_name: Python 3
+  language: python
   name: python3
-  display_name: 'Python 3'
 ---
 
 (chapter:MaxLike)=
@@ -334,7 +335,7 @@ The **Information Matrix** is the negative of the Hessian $H_\theta$ of the log-
 
 **Example: Normal PDF for $\theta = \{\mu, \sigma\}$.**
 
-Starting from the log-likelihood
+Starting from the [log-likelihood](#eq:norm_loglik):
 
 $$\ln\mathcal{L} = -N\ln\sigma - \tfrac{N}{2}\ln(2\pi) - \frac{1}{2\sigma^2}\sum_{i=1}^N(x_i-\mu)^2$$
 
@@ -482,7 +483,7 @@ Here we look at what can be done with ```sympy``` and at a few of the (many) met
 * ```minimize_scalar```  [ [scipy.optimize.minimize_scalar](https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize_scalar.html#scipy.optimize.minimize_scalar
 ) ] is another method for doing the same, and you don't need to calculate the derivative function.
 
-
+(sec:minim_intro)=
 ### General Introduction to Minimisation
 
 

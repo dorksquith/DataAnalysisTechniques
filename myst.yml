@@ -30,7 +30,7 @@ project:
     - file: PMFs.md
     - file: PDFs.md
     - file: MaxLike.md
-    #- file: LeastSquares.md
+    - file: LeastSquares.md
     #- file: DistributionsOverview.md    
     #- file: BayesianInference.md
     #- file: MCMC.md
@@ -60,7 +60,7 @@ project:
       - file: workshops/Workshop5.md
       - file: workshops/Workshop5_solutions.md      
       - file: workshops/Workshop6.md
-      #- file: workshops/Workshop6_solutions.md
+      - file: workshops/Workshop6_solutions.md
       #- file: workshops/Workshop7.md
       #- file: workshops/Workshop8.md
       #- file: workshops/Workshop9.md

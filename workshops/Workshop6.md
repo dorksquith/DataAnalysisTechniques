@@ -67,7 +67,7 @@ a) Generate a dataset using `data = generate_data(seed=42)` (default parameters:
 
 b) Compute the sample mean $\overline{x}$ and sample standard deviation $\hat{\sigma}_x$ directly from the data using `numpy`. What values do you get?
 
-c) It can be shown (using the [delta method](#sec:mmb_delta-method)) that for a normally distributed dataset, the standard error of the standard deviation is approximately:
+c) It can be shown (using the Taylor Series expansion method)  that for a normally distributed dataset, the standard error of the standard deviation is approximately:
 
    $$\hat{\sigma}(\hat{\sigma}_x) \approx \frac{\hat{\sigma}_x}{\sqrt{2(N-1)}}$$
 

@@ -191,7 +191,7 @@ print(f" mean x : {mean_x}, check: {mean_x_check }")
 
 [^disc]: $E[K]  = \sum\limits_i^{\infty}  k_i p_i$ is for a Discrete RV, $K$. The expectation for a Continuous RV, $X$, is $E[X]  = \int\limits_{x\in S}  x\, f_X(x)\, dx$.
 
-(binned-mean)=
+(sec:binned-mean)=
 ### The Binned Mean
 
 The Binned Mean is important in real life, as we tend to analyse data using histograms, which aggregate the frequencies over ranges of values.

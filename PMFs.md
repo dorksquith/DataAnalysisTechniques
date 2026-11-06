@@ -625,7 +625,7 @@ For $k=6$ heads from $n=10$ tosses: $\hat{p} = 0.6$. The MLE suggests the coin i
 (sec:poisson)=
 ## The Poisson Distribution
 
-The Poisson distribution models rates rather than counts. The rate is the number of events **in a given time period**. For example, emails received in one hour, donuts sold in one day. 
+The Poisson distribution models rates rather than counts. The rate is the number of events **in a given time/space period**. For example, emails received in one hour, donuts sold in one day, number of events in one histogram bin. 
 
 $K\sim$ Poisson($\lambda$)
 

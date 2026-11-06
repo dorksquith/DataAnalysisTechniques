@@ -20,6 +20,85 @@ This appendix collects a few proofs and derivations referenced from the main mod
 
 ---
 
+(sec:mmb_varequiv)=
+## Equivalence of Variance Definitions
+
+Proof that [](#eq:truevar2) is equivalent to [](#eq:truevar).
+
+
+```{math}
+\begin{aligned}
+V[X] & = E[\, X^2 + E^2[X] - 2X\,E[X] \,]\\ \\
+  & = E[\, X^2\,] + E[\, E^2[X] \,]- E[\,2X\,E[X] \,]\;\; \mathsf{because}\; E[A+B] = E[A] + E[B] \\ \\
+  & = E[ X^2] + E^2[X] - 2E[X]  E[X]\;\; \mathsf{because}\; E[E[A]] = E[A]\\ \\
+  & = E[ X^2] + E^2[X]  - 2E^2[X]   \\  \\
+  & = E[ X^2] - E^2[X]   \\
+\end{aligned}
+```
+
+
+---
+
+(sec:mmb_varlinf)=
+## Proof that $V[aX+b] = a^2 V[X]$
+
+A linear function of one RV, $X$, is $g(x) = ax + b $.
+
+(sec:mmb_varlinf1)=
+### Method 1: Expectations
+
+Using the definition [](#eq:varF) of variance, $V[g] = E[g^2] - E^2[g]$.
+
+The first term is:
+
+$E[g^2] = E[(aX+b)^2] = E[ a^2X^2 + b^2 + 2abX ] = a^2 E[X^2] + b^2 + 2ab E[X]$
+
+The second term is:
+
+$E^2[g] = \bigl(a E[X] + b\bigr)^2 = a^2 E^2[X] + b^2 + 2ab E[X]$
+
+Therefore the variance is:
+
+```{math}
+:label: eq:proof_varf
+V[g] = E[g^2] - E^2[g] = a^2 \bigl(E[X^2] - E^2[X]\bigr) = a^2 V[X]
+```
+
+(sec:mmb_varlinf2)=
+### Method 2: Taylor Series Expansion
+
+Using the notation $f'_{\mu} \equiv \dfrac{df}{dx}\bigg|_{x=\mu}$, the [Taylor expansion](#sec:mma_taylor) truncated at first order (exact for linear $f$) gives:
+
+```{math}
+f = f_{\mu} + f'_{\mu}\,(x - \mu)
+```
+
+Rearranging and squaring:
+
+```{math}
+(f - f_{\mu})^2 = f^{'2}_{\mu}\,(x-\mu)^2
+```
+
+Taking the expectation of both sides, and noting that $f_{\mu}' = \mathrm{const}$ (because the function is linear):
+
+```{math}
+E\!\left[(f - f_{\mu})^2\right] = {f_{\mu}'}^2\, E\!\left[(x-\mu)^2\right]
+```
+
+Since $f_{\mu} = E[f]$, the left side is $V[f]$ by definition, and the right side is ${f_{\mu}'}^2\, V[X]$:
+
+```{math}
+V[f] = \frac{df}{dx}\bigg|_{x=\mu}^{\!2} V[X]
+```
+
+For the linear function $g(x) = ax + b $, with derivative $\frac{dg}{dx} = a $, we find:
+
+```{math}
+V[g] = a^2 V[X]
+```
+
+---
+
 (sec:gamma-function)=
 ## The Gamma Function
 
@@ -712,7 +791,7 @@ confirming [](#eq:sevB).
 ---
 
 (sec:mmb_delta-method)=
-## The Delta Method
+## The Delta Method (Taylor Expansion)
 
 Suppose $\hat{\theta}$ is an estimator with known variance $V[\hat{\theta}]$. We want the variance of a smooth function $g(\hat{\theta})$.
 
@@ -753,7 +832,7 @@ The Delta Method generalises to multivariate functions via the Jacobian: $V[h] =
 (sec:mmb_ses)=
 ## Standard Error of the Standard Deviation (SES)
 
-The sample standard deviation is $\sigma_x = \sqrt{v_x}$: a nonlinear function of the sample variance. Applying the Delta method with $g(\theta) = \sqrt{\theta}$:
+The sample standard deviation is $\sigma_x = \sqrt{v_x}$: a nonlinear function of the sample variance. Applying the [Delta Method](#sec:mmb_delta-method) with $g(\theta) = \sqrt{\theta}$:
 
 $$g'(\theta) = \dfrac{1}{2\sqrt{\theta}}$$
 

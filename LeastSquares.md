@@ -11,12 +11,14 @@ kernelspec:
 ---
 
 (chapter:LeastSquares)=
-# Least Squares Fitting
+# Linear Regression
 
-Fitting means estimating the parameters, and sometimes also the functional form,
-that best describes a dataset. A functional form can have one parameter or lots of them.
+* `numpy` methods: `linalg.inv`
+* `scipy.optimize` methods: `least_squares`
 
-The **Least Squares** approach minimises the [Residuals](#sec:ls-residuals) for all parameters simultaneously, to provide the best set of parameter estimates.  We will see that when the measurement uncertainties are Gaussian, minimising the sum of squared residuals is identical to minimising the [Negative Log Likelihood](#chapter:MaxLike).
+Fitting means estimating the parameters, and sometimes also the functional form, that best describes a dataset. A functional form can have one parameter or lots of them.
+
+The **Least Squares** approach minimises the [Residuals](#sec:ls-residuals) for all parameters simultaneously, to provide the best set of parameter estimates. The parameter estimates from the Least Squares Method are the **Least Squares Estimates (LSE)**, and are often indicated with the notation $\hat{\theta}_{\mathsf{LSE}}$ - akin to the Maximum Likelihood Estimates being denoted  $\hat{\theta}_{\mathsf{MLE}}$.  When the measurement uncertainties are Gaussian, minimising the sum of squared residuals is identical to minimising the [Negative Log Likelihood](#eq:nll), so $\hat{\theta}_{\mathsf{LSE}} \equiv \hat{\theta}_{\mathsf{MLE}}$ for Gaussian Errors. 
 
 An example of a Least Squares Fit (straight line) is shown in [](#fig:lsq) for an example of Plant growth as a function of time. The control variable is the number of days since planting ($x$-axis). The control variable has evenly spaced intervals and negligible uncertainty. The Random Variable is the measured plant growth ($y$-axis) which has measurement uncertainty indicated by the vertical error bars on the data points.
 
@@ -25,7 +27,7 @@ An example of a Least Squares Fit (straight line) is shown in [](#fig:lsq) for a
 
 ![](figures/LinearLeastSquaresExample_a0.3_b2.0_noise1.0_outliers4.png)
 
-The Least Squares fit (red dashed line) is a simultaneous estimation of the parameters of the function $y(x)$. In this case the function is a straight line, $y(x)=ax+b$, with parameter estimates $\hat{a}=-4.17$ (the gradient or slope of the line) and $\hat{b}=0.70$ (the intercept: the value of $y(x)$ when $x=0$). Least Squares estimates these parameters by minimising^[minim] the sum of the squared Residuals. The Residuals are shown as blue dotted lines for each data point.
+The Least Squares fit (red dashed line) is a simultaneous estimation of the parameters of the function $m(x)$. In this case the function is a straight line, $m(x)=ax+b$, with parameter estimates $\hat{a}=-4.17$ (the gradient or slope of the line) and $\hat{b}=0.70$ (the intercept: the value of $y(x)$ when $x=0$). Least Squares estimates these parameters by minimising^[minim] the sum of the squared Residuals. The Residuals are shown as blue dotted lines for each data point.
 :::
 
 [^minim]: minimising a function means setting the first derivative of the function to zero, and checking the second derivative is positive. See [](#sec:minim_intro).
@@ -330,7 +332,7 @@ So the **Hessian matrix** [](#sec:mma_hessian) is:
 :label: eq:chisq_hess
 H = 2
 \begin{bmatrix}
-s_{xx} & s_x \\ \\
+s_{xx} & s_x \\[6pt]
 s_x & s_1 \\
 \end{bmatrix}
 ```
@@ -358,10 +360,10 @@ The Hessian/2 has **determinant**[^det] $\Delta = \left( s_{xx}s_1 - s_x^2\right
 The two equations can be written in matrix form as
 
 $$
-\begin{pmatrix} s_{xx} & s_x \\ s_x & s_1 \end{pmatrix}
-\begin{pmatrix} \hat m \\ \hat c \end{pmatrix}
+\begin{bmatrix} s_{xx} & s_x \\ s_x & s_1 \end{bmatrix}
+\begin{bmatrix} \hat m \\ \hat c \end{bmatrix}
 =
-\begin{pmatrix} s_{xy} \\ s_y \end{pmatrix}.
+\begin{bmatrix} s_{xy} \\ s_y \end{bmatrix}.
 $$
 
 The determinant of the coefficient matrix is $\Delta = s_{xx}s_1 - s_x^2$.  Cramer's rule replaces each column in turn by the right-hand side vector and divides by $\Delta$:
@@ -380,7 +382,7 @@ Note that $\Delta=s_{xx}s_1 - s_x^2$ depends only on $x_i$ and $\sigma_i$, not o
 ```{math}
 \begin{aligned}
 \Delta &= s_{xx}s_1 - s_x^2 \\
-	   &= \sum_i \frac{x_i^2}{\sigma_i^2} \sum_j \frac{1}{\sigma_j^2} - \sum_i \frac{x_i}{\sigma_i^2}\sum_j \frac{x_j}{\sigma_j^2} \\
+       &= \sum_i \frac{x_i^2}{\sigma_i^2} \sum_j \frac{1}{\sigma_j^2} - \sum_i \frac{x_i}{\sigma_i^2}\sum_j \frac{x_j}{\sigma_j^2} \\
 
 \end{aligned}
 ```
@@ -456,15 +458,15 @@ The third term (second order derivative)
 
    
 
-Setting the second term to zero, and noting $(\theta-\hat{\theta}) = \begin{pmatrix} a-\hat a \\ b-\hat b \end{pmatrix}$, we have:
+Setting the second term to zero, and noting $(\theta-\hat{\theta}) = \begin{bmatrix} a-\hat a \\ b-\hat b \end{bmatrix}$, we have:
 
 ```{math}
 :label: eq:chisq-taylor
 \chi^2(a,b) = \chi^2(\hat a,\hat b) +
 \frac{1}{2!}
-\begin{pmatrix} a-\hat a \\ b-\hat b \end{pmatrix}^{\!\top}
+\begin{bmatrix} a-\hat a \\ b-\hat b \end{bmatrix}^{\!\top}
 \mathsf{H}
-\begin{pmatrix} a-\hat a \\ b-\hat b \end{pmatrix},
+\begin{bmatrix} a-\hat a \\ b-\hat b \end{bmatrix},
 ```
 
 
@@ -473,17 +475,17 @@ The factor of $\tfrac{1}{2!}$ cancels with the factor of $2$ in [$\mathsf{H}$](#
 ```{math}
 :label: eq:ls_chi2_taylor
 \chi^2(a,b) = \chi^2(\hat a,\hat b) +
-\begin{pmatrix} a-\hat a \\ b-\hat b \end{pmatrix}^{\!\top}
-\begin{pmatrix} s_{xx} & s_x \\ s_x & s_1 \end{pmatrix}
-\begin{pmatrix} a-\hat a \\ b-\hat b \end{pmatrix}.
+\begin{bmatrix} a-\hat a \\ b-\hat b \end{bmatrix}^{\!\top}
+\begin{bmatrix} s_{xx} & s_x \\ s_x & s_1 \end{bmatrix}
+\begin{bmatrix} a-\hat a \\ b-\hat b \end{bmatrix}.
 ```
 
 The **Covariance Matrix** of the estimates is the inverse of the matrix in [](#eq:ls_chi2_taylor):
 
 ```{math}
 :label: eq:ls_hess_hetero
-\boldsymbol{\Sigma} = \begin{pmatrix} s_{xx} & s_x \\ s_x & s_1 \end{pmatrix}^{-1}
-= \frac{1}{\Delta}\begin{pmatrix} s_1 & -s_x \\ -s_x & s_{xx} \end{pmatrix},
+\boldsymbol{\Sigma} = \begin{bmatrix} s_{xx} & s_x \\ s_x & s_1 \end{bmatrix}^{-1}
+= \frac{1}{\Delta}\begin{bmatrix} s_1 & -s_x \\ -s_x & s_{xx} \end{bmatrix},
 ```
 
 giving
@@ -574,18 +576,18 @@ Simultaneous Equations
 -->
 
 Hessian/2
-: $\mathsf{H/2} =  \begin{pmatrix} s_{xx} & s_x \\ \\ s_x & s_1 \end{pmatrix} = \dfrac{1}{\sigma^2} \begin{pmatrix} \sum x_i^2 & N\bar{x} \\ \\ N\bar{x} & N \end{pmatrix}$
+: $\mathsf{H/2} =  \begin{bmatrix} s_{xx} & s_x \\[6pt] s_x & s_1 \end{bmatrix} = \dfrac{1}{\sigma^2} \begin{bmatrix} \sum x_i^2 & N\bar{x} \\[6pt] N\bar{x} & N \end{bmatrix}$
 
 Determinant
 : $\Delta = \left( s_{xx} s_1 - s_x^2 \right) = \dfrac{1}{\sigma^4} \left( N \sum x^2_i - N^2\bar{x}^2 \right)$
 
 Covariance Matrix = Inverse Hessian/2
-: $\mathsf{H/2}^{-1} = \dfrac{1}{\Delta}\left(\dfrac{1}{\sigma^2}\right)^{-1} \begin{pmatrix} s_1 & -s_x \\ \\ -s_x & s_{xx} \end{pmatrix} = \dfrac{\sigma^2}{\Delta} \begin{pmatrix} N & -N\bar{x} \\ \\ -N\bar{x} & \sum x_i^2 \end{pmatrix} $
+: $\mathsf{H/2}^{-1} = \dfrac{1}{\Delta} \begin{bmatrix} s_1 & -s_x \\[6pt] -s_x & s_{xx} \end{bmatrix} = \dfrac{1}{\sigma^2\Delta} \begin{bmatrix} N & -N\bar{x} \\[6pt] -N\bar{x} & \sum x_i^2 \end{bmatrix} $
 
 <!--
 $\chi^2$ Statistic 
 : $E[\chi^2] = E\left[ \sum\limits_i^N \dfrac{1}{\sigma^2} (d_i - m_i) \right]
-			 = \dfrac{N}{\sigma^2} E\left[ \sum\limits_i^N (d_i - \hat{a}x_i + \hat{b}) \right]
+             = \dfrac{N}{\sigma^2} E\left[ \sum\limits_i^N (d_i - \hat{a}x_i + \hat{b}) \right]
  = \nu = N-2$
   
   $V[\chi^2] = 2\nu =2(N-2)$
@@ -594,13 +596,24 @@ $\chi^2$ Statistic
 -->
 
 Parameter Uncertainties
-: $\sigma^2_{\hat{a}} = \dfrac{s_1}{\Delta} = \dfrac{\sigma^2 N}{\Delta},\;\;\;\;\;\; \sigma^2_{\hat{b}} = \dfrac{s_{xx}}{\Delta} = \dfrac{ \sigma^2 \sum x_i^2}{\Delta}$
+: $\sigma^2_{\hat{a}} = \dfrac{s_1}{\Delta} = \dfrac{N}{\sigma^2\Delta},\;\;\;\;\;\; \sigma^2_{\hat{b}} = \dfrac{s_{xx}}{\Delta} = \dfrac{\sum x_i^2}{\sigma^2\Delta}$
 
 
 ---
 
 (sec:ls-python)=
 ## LSE with Python 
+
+:::{note} `scipy.optimize` method choice
+`scipy.optimize` provides several optimisation routines; the right choice depends on the problem structure:
+
+| Function | Use when | Returns |
+|----------|----------|---------|
+| `least_squares` | Minimising a **sum of squares** $\\sum_i r_i^2$; supports robust losses and returns the Jacobian for covariance estimation | `result.x`, `result.jac`, `result.fun` |
+| `minimize` | Minimising an **arbitrary scalar** function (e.g.\ a negative log-likelihood); general-purpose | `result.x`, optionally `result.hess_inv` |
+| `minimize_scalar` | Minimising a **1-D scalar** function of a single variable only | `result.x` |
+| `fsolve` | Finding **roots** of a system of equations $f(x)=0$ (e.g.\ score equations); not an optimiser | array of root values |
+:::
 
 Let's generate some fake data that follows $y(x) = ax + b$ but has some added noise to make it more realistic.
 
@@ -619,7 +632,7 @@ def gen_data(seed=None):
   # independent variable x
   x = np.linspace(0, 10, 10)
 
-  # Gaussian Noise term: 10% (to make fake data more realistic)
+  # Gaussian Noise term: standard normal (sigma=1)
   #noise = 0.1 * rng.standard_normal(x.size)
   noise = rng.standard_normal(x.size)
 
@@ -685,7 +698,7 @@ def byhand_LSE(x, data):
   model = a_est * x + b_est
 
   # residuals - not standardised
-  resids    = model - data
+  resids    = data - model
 
   # number of degrees of freedom = Ndata - Nparams
   nu = N - 2
@@ -705,9 +718,9 @@ def byhand_LSE(x, data):
   print(f"cov(a,b):  {cov_ab:.4f}")
   print(f"rho(a,b):  {rho_ab:.4f}")
 
-  return a_est, sigma_a, b_est, sigma_b
+  return a_est, b_est, sigma_a, sigma_b, cov_ab
 
-a_est, sigma_a, b_est, sigma_b = byhand_LSE(xvals, data)
+a_est, b_est, sigma_a, sigma_b, cov_ab = byhand_LSE(xvals, data)
 
 ```
 
@@ -717,31 +730,112 @@ Let's plot the fit result on top of the fake data:
 ```{code-cell} python
 
 
-def plot_data_and_fit(x, data, a_est, sigma_a, b_est, sigma_b):
+def plot_data_and_fit(x, data, a_est, b_est, sigma_a, sigma_b, cov_ab):
 
   import matplotlib.pyplot as plt
 
   fig, ax = plt.subplots()
 
-  ax.scatter(xvals, data, color='black',label="data d(x)")
+  ax.scatter(x, data, color='black',label="data d(x)")
   model = a_est * x + b_est
-  model_bdown = a_est * x + (b_est-sigma_b)
-  model_bup = a_est * x + (b_est+sigma_b)
-  model_adown = (a_est-sigma_a) * x + b_est
-  model_aup = (a_est+sigma_a) * x + b_est
-  ax.plot(xvals, model,'r--', label=f"model m(x) = {a_est:.2f}x + {b_est:.2f}")
-  ax.fill_between(xvals, model_bdown, model_bup, alpha=0.25, color='red')
-  ax.fill_between(xvals, model_adown, model_aup, alpha=0.25, color='red')
+
+  # Propagated uncertainty on model prediction at each x 
+  sigma_model = np.sqrt(x**2 * sigma_a**2 + sigma_b**2 + 2 * x * cov_ab)
+
+  ax.plot(x, model,'r--', label=f"model m(x) = {a_est:.2f}x + {b_est:.2f}")
+
+  ax.fill_between(x, model-sigma_model, model+sigma_model, alpha=0.25, color='red')
+
   ax.set_xlabel('x')
   ax.set_ylabel('y')
   plt.legend()
   plt.show()
 
-plot_data_and_fit(xvals, data, a_est, sigma_a, b_est, sigma_b)
+plot_data_and_fit(xvals, data, a_est, b_est, sigma_a, sigma_b, cov_ab)
 
 ```
 
+The uncertainty band (shaded red) indicates the uncertainty on the model prediction at each value of the independent variable, $x$. We calculate this using Propagation of Uncertainty for a linear function of two RVs [](#sec:dd_linear2).
 
+<!--
+:::{dropdown} Show Reminder: Taylor Method
+
+For a model $m(x; a,b) = ax +b$ where $x$ is known and $a,b$ are unknown, we treat $a,b$ as the RVs.
+
+The Jacobian matrix $\mathsf{J}$  and its transpose $\mathsf{J^T}$ are:
+
+```{math}
+\mathsf{J} =  \begin{bmatrix} \dfrac{\partial m}{\partial a} &  \dfrac{\partial m}{\partial b} \end{bmatrix},\;\;\; \mathsf{J^T} = \begin{bmatrix} \dfrac{\partial m}{\partial a} \\[6pt]  \dfrac{\partial m}{\partial b} \end{bmatrix}
+``` 
+
+The Covariance matrix $\mathsf{\Sigma}$ is:
+
+```{math}
+\Sigma  = \begin{bmatrix} \sigma^2_{\hat{a}} & \mathsf{cov}(\hat{a},\hat{b})\\
+ \mathsf{cov}(\hat{a},\hat{b}) & \sigma^2_{\hat{b}} \\
+ \end{bmatrix} 
+``` 
+
+So the variance on the function (the model) is:
+
+```{math}
+\begin{aligned}
+V[m] &= \begin{bmatrix} \dfrac{\partial m}{\partial a} &  \dfrac{\partial m}{\partial b} \end{bmatrix}
+\begin{bmatrix} \sigma^2_{\hat{a}} & \mathsf{cov}(\hat{a},\hat{b})\\
+ \mathsf{cov}(\hat{a},\hat{b}) & \sigma^2_{\hat{b}} \\
+ \end{bmatrix} 
+ \begin{bmatrix} \dfrac{\partial m}{\partial a} \\[6pt]  \dfrac{\partial m}{\partial b} \end{bmatrix} \\[6pt]
+ &= 
+\dfrac{\partial m}{\partial a}\bigg|^2_{\hat{a}} \sigma^2_{\hat{a}} + \dfrac{\partial m}{\partial b}\bigg|^2_{\hat{b}} \sigma^2_{\hat{b}} + 2 \dfrac{\partial m}{\partial a} \dfrac{\partial m}{\partial b} \mathsf{cov}(\hat{a},\hat{b})
+\end{aligned}
+```
+
+For this model, we have $\dfrac{\partial m}{\partial a} = x\;\;\; \dfrac{\partial m}{\partial b} = 1$.
+
+:::
+-->
+
+:::{tip}
+For a model $m(x; a,b) = ax +b$ where $x$ is known and $a,b$ are unknown, we treat $a,b$ as the RVs.
+:::
+
+The Expectation [](#eq:exp-f2-exp) is $E[m] = E[ax+b] = xE[\hat{a}] + E[\hat{b}]$
+
+The Variance [](#eq:var-f2-exp) is $V[m] = x^2 V[\hat{a}] + V[\hat{b}] + 2x\, \mathsf{cov}(\hat{a},\hat{b})$
+
+The model uncertainty is therefore:
+
+```{math}
+\sigma_m = \sqrt{ x^2 \sigma^2_{\hat{a}} + \sigma^2_{\hat{b}} + 2x\, \mathsf{cov}(\hat{a},\hat{b}) }
+``` 
+
+indicated in the code as:
+
+```
+# Propagated uncertainty on model prediction at each x 
+  sigma_model = np.sqrt(x**2 * sigma_a**2 + sigma_b**2 + 2 * x * cov_ab)
+```
+
+The output of `byhand_LSE` includes the covariance between the parameters, `cov_ab`, and we see it is negative. This makes sense: if we over-estimate the intercept parameter $\hat{a}$, the fit has to under-estimate the slope parameter $\hat{b}$ to compensate.
+
+Notice that the uncertainty band is narrowest towards the center of the plot. This narrowest region corresponds to the minimum of the model uncertainty. The minimum of a function is found by taking its first derivative:
+
+
+```{math}
+\dfrac{d}{dx} \sigma^2_m = \dfrac{d}{dx} \left( x^2 \sigma^2_{\hat{a}} + \sigma^2_{\hat{b}} + 2x\, \mathsf{cov}(\hat{a},\hat{b})\right) = 2x\,\sigma^2_{\hat{a}} + 2\,\mathsf{cov}(\hat{a},\hat{b}) 
+``` 
+
+This is equal to zero (indicating a minimum, a maximum, or an inflection point) when:
+
+```{math}
+x = -  \dfrac{\mathsf{cov}(\hat{a},\hat{b})}{\sigma^2_{\hat{a}}} = \dfrac{s_x}{s_1} = \bar{x},
+``` 
+
+confirming that the uncertainty is at a minimum[^notemin] at the mean value of the independent variable, $\bar{x}$.
+
+[^notemin]: We confirm this is a minimum, rather than a maximum or inflection point, by taking the second derivative $\dfrac{d^2}{dx^2} \sigma^2_m  = 2\sigma^2_{\hat{a}}$: this is positive, so we have a minimum.
+
+---
 
 (sec:ls-scipy)=
 ### LSE with `scipy.optimize.least_squares` 
@@ -783,6 +877,10 @@ Multiplying the expectation by the constant $\frac{\sigma^2}{\nu}$ yields $E\lef
 
 **When constructing the Covariance Matrix using the `result.jac` returned by `least_squares`, we must multiply through by the estimator for $\sigma^2$:  $\frac{S}{\nu}$**, where $\nu = N-N_p$.
 
+:::{seealso}
+When using `scipy.optimize.minimize` for MLE, the inverse Hessian of the log-likelihood — $[-\partial^2 \ln\mathcal{L}/\partial\theta^2]^{-1}$, which equals the parameter covariance matrix — is available directly as `result.hess_inv` when `method='BFGS'` is specified. See [](#sec:ml_scipy_minimize) for details and caveats.
+:::
+
 ```
 # Vector of unstandardised residuals: [d_i - m_i] =  [d_i - (est_a * x_i + est_b) ]
 r = result.fun
@@ -818,10 +916,10 @@ def scipy_LSE(x, data):
 
   # residuals function, parameters are theta = [a, b]
   def residuals(theta, x, data):
-  	# model: y = ax + b
-  	model = theta[0] * x + theta[1]
-  	# residual (not standardised!) : (data - model ) 
-  	return data - model
+      # model: y = ax + b
+      model = theta[0] * x + theta[1]
+      # residual (not standardised!) : (data - model ) 
+      return data - model
 
   # we are estimating two parameters: a and b
   N_params = 2
@@ -837,7 +935,7 @@ def scipy_LSE(x, data):
   # second argument - theta0 - is the array of starting parameter values for the fit
   # third argument - args=(x, data) - tells the fit that the x,data arguments of the residuals function are "spectators", we are not trying to estimate their values 
 
-  result = least_squares(residuals, theta0, args=(xvals, data))
+  result = least_squares(residuals, theta0, args=(x, data))
 
   # Vector of unstandardised residuals: [d_i - m_i] =  [d_i - (est_a * x_i + est_b) ]
   r = result.fun
@@ -875,6 +973,7 @@ scipy_LSE(xvals, data)
 
 Note that the `scipy_LSE` function returns exactly the same parameters and uncertainties as the `byhand_LSE` function above.
 
+---
 
 (sec:ls-outliers)=
 ### Extreme outliers and robust least squares
@@ -890,6 +989,26 @@ Because the residuals appear **squared** in $\chi^2$, a single outlier can domin
 | `'soft_l1'`| Smooth approximation to LAD |
 | `'huber'`  | Quadratic near zero, linear in the tails |
 | `'cauchy'` | Very robust, maximally down-weights outliers |
+
+**Why is the default loss called `'linear'`?** The loss function is characterised by the *rho function* $\\rho(z)$, where $z = r_i^2$ is the squared residual.  For the default `'linear'` choice, $\\rho(z) = z$, which is linear in $z$ — hence the name.  This gives the ordinary sum of squares $\\sum_i \\rho(r_i^2) = \\sum_i r_i^2$.  The model itself can still be linear *or* nonlinear in $x$; the word “linear” here refers to the rho function, not to the functional form of $m(x)$.  For `'soft_l1'`, $\\rho(z) = 2(\\sqrt{1+z}-1)$, which grows more slowly for large $z$ and therefore down-weights outliers.
+
+:::{note} Loss function vs.\ distributional assumption
+The `loss` argument and the distributional assumption of the model are **two separate choices**:
+
+* **`loss`** controls *outlier robustness* — how much a large residual is allowed to influence the parameter estimates.  It says nothing about the distribution of the measurement uncertainties.
+* **Distributional assumption** determines *which likelihood* underpins the fit.  Gaussian errors → standard LS (minimise $\\chi^2$).  Non-Gaussian errors require a different model.
+
+For non-Gaussian/non-Poisson measurements, a **Generalised Linear Model (GLM)** provides the appropriate framework.  `statsmodels.genmod` implements GLMs for the most common families:
+
+| Distribution | Typical use | `statsmodels` family |
+|--------------|-------------|----------------------|
+| Gaussian | Continuous measurements with additive noise | `families.Gaussian()` |
+| Poisson | Count data (events per bin, photons, etc.) | `families.Poisson()` |
+| Binomial | Binary outcomes, proportions | `families.Binomial()` |
+| Gamma | Positive-valued, skewed continuous data | `families.Gamma()` |
+
+Using `loss='soft_l1'` with standard `least_squares` does **not** make your model Poisson or Binomial; it only changes how outliers are weighted.  To fit a Poisson model properly, maximise the Poisson log-likelihood (see [](#chapter:MaxLike)).
+:::
 
 The `f_scale` parameter is crucial for all `loss` functions other than `linear`. It sets the transition scale between the near-quadratic and near-linear regimes.
 
@@ -926,10 +1045,10 @@ def gen_quad_data(seed=None):
 # only set the seed for demos!
 xvals_quad, data_quad, true_params = gen_quad_data(seed=123)
 
-print(f"data measurements: {data}")
+#print(f"data measurements: {data_quad}")
 ```
 
-As usual, we will plot the fake data next.
+As usual, we will plot the fake data next. We are using `scatter` rather than `errorbar` in the python snippet below, because we are assuming we have no information about the uncertainty on our fake data measurements.
 
 
 ```{code-cell} python
@@ -947,11 +1066,13 @@ def plot_quad_data(xvals, data):
 
 
 # only set the seed for demos!
-plot_data(xvals_quad, data_quad)
+plot_quad_data(xvals_quad, data_quad)
 
 ```
 
-Now let's fit!
+We can see the data follow a quadratic shape, as expected given the choice we made for generating the fake data. We can also see the very obvious outliers: two points that do not seem to follow the same function as the others.
+
+**Now let's fit!** We will define two models this time. One will use the default `least_squares`, which uses `linear` as the loss function. The other will use `loss='soft_l1'` and `f_scale=0.1`.
 
 
 ```{code-cell} python
@@ -969,20 +1090,40 @@ def LSE_fit(x, data):
   # robust LS with loss function soft_l1
   result_softl1  = least_squares(residuals_quad, p0, args=(x, data), loss='soft_l1', f_scale=0.1)
 
-  print("True:        a={:.2f}, b={:.2f}".format(true_params[0], true_params[1]))
+  print("True:        a={:.3f}, b={:.3f}".format(true_params[0], true_params[1]))
   
-  print("Standard LS: a={:.2f}, b={:.2f}".format(*result_linear.x))
+  print("Standard LS: a={:.3f}, b={:.3f}".format(*result_linear.x))
   
-  print("soft_l1 LS:  a={:.2f}, b={:.2f}".format(*result_softl1.x))
+  print("soft_l1 LS:  a={:.3f}, b={:.3f}".format(*result_softl1.x))
 
-  return result_linear.x[0], result_linear.x[1], result_softl1.x[0], result_softl1.x[1]
+  # --- Covariance matrices from Jacobian ---
+  nu = len(x) - len(p0)  # degrees of freedom = N - N_params
 
-a_lin, b_lin, a_sl1, b_sl1 = LSE_fit(xvals_quad, data_quad)
+  # Standard LS: exact covariance, Cov = (J^T J)^{-1} * (S / nu)
+  J_lin = result_linear.jac
+  S_lin = np.sum(result_linear.fun**2)
+  cov_lin = np.linalg.inv(J_lin.T @ J_lin) * (S_lin / nu)
+
+  # Robust LS: approximate covariance (Jacobian is computed on the
+  # re-weighted residuals, so the resulting Cov is approximate)
+  J_sl1 = result_softl1.jac
+  S_sl1 = np.sum(result_softl1.fun**2)
+  cov_sl1 = np.linalg.inv(J_sl1.T @ J_sl1) * (S_sl1 / nu)
+
+  return result_linear.x[0], result_linear.x[1], result_softl1.x[0], result_softl1.x[1], cov_lin, cov_sl1
+
+a_lin, b_lin, a_sl1, b_sl1, cov_lin, cov_sl1 = LSE_fit(xvals_quad, data_quad)
 
 ```
 
-Let's plot the fit result on top of the fake data:
+Notice that we have printed the parameter estimates **rounded up** to 3 decimal places using `:.3f` in the f-string. For this demo I chose 3 decimal places because I wanted to keep it as short as possible (3 significant figures = 2 decimal places is usually a good rule of thumb for this sort of thing). Using a precision of 2 decimal places I found the parameter estimates with `soft_l1` were identical to the true parameters, so I dialled up the precision as a sanity check.
 
+Reminder: **never, ever round up estimates within calculations**. We only round up numerical values when we are displaying them as final results, and when we do that we must be thoughtful and consistent in the precision we give.
+
+We see that the default `least_squares` method finds $m = -1.271 x + 2.162 x^2$, while the fit using `soft_l1` loss finds $m = 0.498 x + 2.000 x^2$. In this example with two extreme outliers we find that using a `soft_l1` loss results in significantly better parameter estimates.
+
+
+**Now let's plot the fit results!** I will use a blue dotted line for `soft_l1` using the matplotlib shorthand `b:`, and a red dashed line for the default loss function using `r--`.
 
 ```{code-cell} python
 
@@ -993,7 +1134,7 @@ def plot_data_quad_and_fit(x, data, a_lin, b_lin, a_sl1, b_sl1 ):
 
   fig, ax = plt.subplots()
 
-  ax.scatter(x, data, color='black',label="data d(x)")
+  ax.scatter(x, data, color='black',label="data")
 
   model_lin = a_lin * x + b_lin * x**2
 
@@ -1005,14 +1146,84 @@ def plot_data_quad_and_fit(x, data, a_lin, b_lin, a_sl1, b_sl1 ):
 
   ax.set_xlabel('x')
   ax.set_ylabel('y')
-  plt.legend()
+
+  # ncols=3 makes the three legend entries appear in a row rather than in one column.
+  plt.legend(loc='upper center', ncols=3)
   plt.show()
 
 plot_data_quad_and_fit(xvals_quad, data_quad,a_lin, b_lin, a_sl1, b_sl1)
 
 ```
 
-The `soft_l1` loss function with `f_scale=0.1` prevents the outliers from pulling the fit away from the more reliable data points, resulting in significantly better parameter estimates.
+The `soft_l1` loss function with `f_scale=0.1` prevents the outliers from pulling the fit away from the more reliable data points, resulting in significantly better parameter estimates and an improved fit, visible by eye.
+
+**Parameter uncertainties from the Jacobian** can be visualised as uncertainty bands on the model.
+For the model $m(x) = \hat{a}x + \hat{b}x^2$, error propagation gives:
+
+$$
+\sigma^2_m(x) = x^2\,\sigma^2_{\hat{a}} + x^4\,\sigma^2_{\hat{b}} + 2x^3\,\mathsf{cov}(\hat{a},\hat{b}),
+$$
+
+where $\sigma^2_{\hat{a}}$, $\sigma^2_{\hat{b}}$ and $\mathsf{cov}(\hat{a},\hat{b})$ are the diagonal and off-diagonal elements of the 2×2 covariance matrix returned by `LSE_fit`.  For the robust `soft_l1` fit this covariance is **approximate**, as noted above.
+
+```{code-cell} python
+def plot_data_quad_fit_and_bands(x, data, a_lin, b_lin, a_sl1, b_sl1, cov_lin, cov_sl1):
+  import matplotlib.pyplot as plt
+
+  x_fine = np.linspace(x.min(), x.max(), 300)
+
+  # Model predictions on a fine grid
+  model_lin = a_lin * x_fine + b_lin * x_fine**2
+  model_sl1 = a_sl1 * x_fine + b_sl1 * x_fine**2
+
+  # 1-sigma band: sigma^2_m = x^2*cov[0,0] + x^4*cov[1,1] + 2*x^3*cov[0,1]
+  sigma_lin = np.sqrt(
+      x_fine**2 * cov_lin[0, 0] +
+      x_fine**4 * cov_lin[1, 1] +
+      2 * x_fine**3 * cov_lin[0, 1]
+  )
+  sigma_sl1 = np.sqrt(
+      x_fine**2 * cov_sl1[0, 0] +
+      x_fine**4 * cov_sl1[1, 1] +
+      2 * x_fine**3 * cov_sl1[0, 1]
+  )
+
+  fig, ax = plt.subplots()
+  ax.scatter(x, data, color='black', label='data')
+
+  ax.plot(x_fine, model_lin, 'r--', label='linear LS')
+  ax.fill_between(
+      x_fine, model_lin - sigma_lin, model_lin + sigma_lin,
+      color='red', alpha=0.15, label=r'linear LS $\pm1\sigma$'
+  )
+
+  ax.plot(x_fine, model_sl1, 'b:', label='soft l1 LS')
+  ax.fill_between(
+      x_fine, model_sl1 - sigma_sl1, model_sl1 + sigma_sl1,
+      color='blue', alpha=0.15, label=r'soft l1 LS $\pm1\sigma$'
+  )
+
+  ax.set_xlabel('x')
+  ax.set_ylabel('y')
+  plt.legend(loc='upper center', ncols=3)
+  plt.show()
+
+plot_data_quad_fit_and_bands(
+    xvals_quad, data_quad, a_lin, b_lin, a_sl1, b_sl1, cov_lin, cov_sl1
+)
+```
+
+Notice that the uncertainty bands on the robust `soft_l1` fit are much narrower than those on the standard fit.  The robust fit correctly identifies most points as inliers with small residuals, giving tight parameter estimates; the standard fit is dragged towards the outliers, inflating $S$ and thus $\hat{\sigma}^2 = S/\nu$ and the uncertainty bands.
+
+:::{note} Gradient descent and stochastic gradient descent
+**Gradient descent** is an iterative algorithm for minimising a loss function $L(\boldsymbol\theta)$ when no closed-form solution exists.  Starting from an initial guess $\boldsymbol\theta_0$, it updates the parameters by stepping in the direction of steepest descent:
+
+$$\boldsymbol\theta_{j+1} = \boldsymbol\theta_j - \gamma\,\nabla_{\boldsymbol\theta} L(\boldsymbol\theta_j),$$
+
+where $\gamma > 0$ is the **learning rate** (step size).  Choosing $\gamma$ too small makes convergence slow; too large and the algorithm overshoots or oscillates.  Many practical optimisers (including BFGS, used in [](#sec:ml_scipy_minimize)) adaptively rescale the gradient using curvature information.
+
+In **Stochastic Gradient Descent (SGD)**, the gradient is estimated from a randomly selected **mini-batch** of data points rather than the full dataset.  Each update is noisier but computationally cheaper, and the stochasticity helps the algorithm escape shallow local minima.  SGD and its variants (Adam, RMSProp) are the backbone of modern **neural network** training, where the gradient of the loss with respect to millions of parameters is computed efficiently by **backpropagation** — a systematic application of the chain rule through the network’s layered structure.
+:::
 
 <!--
 (sec:ls-nonlinear)=
@@ -1077,7 +1288,38 @@ Outliers.
 (sec:ls-summary)=
 ## Summary
 
-The key results from this chapter are: To be added
+**Least Squares** minimises the Chi Squared statistic ([](#eq:chisq)) over the model parameters.  For Gaussian measurement uncertainties this is equivalent to maximising the Likelihood ([](#eq:chisq_ll)).
+
+**The Chi Squared statistic**
+: $\chi^2 = \sum_{i=1}^{N}\left(\dfrac{d_i - m_i}{\sigma_i}\right)^2$,
+  where $d_i \pm \sigma_i$ are the data points and $m_i$ are the model predictions.
+
+**Parameter estimates for a straight line** $m(x;a,b)=ax+b$ ([](#eq:ls-ahat), [](#eq:ls-bhat))
+: $\hat a = \dfrac{s_{xy}s_1 - s_y s_x}{\Delta}, \qquad \hat b = \dfrac{s_{xx}s_y - s_x s_{xy}}{\Delta}$,
+  where the shorthand sums $s_1,\,s_x,\,s_{xx},\,s_y,\,s_{xy}$ are defined in [](#eq:ls-sums) and $\Delta = s_{xx}s_1 - s_x^2$.
+
+**Covariance matrix** ([](#eq:ls_hess_hetero), [](#eq:ls-cov))
+: $\boldsymbol{\Sigma} = \dfrac{1}{\Delta}\begin{bmatrix}s_1 & -s_x \\ -s_x & s_{xx}\end{bmatrix},
+  \qquad \sigma^2_{\hat a} = \dfrac{s_1}{\Delta},\quad
+  \sigma^2_{\hat b} = \dfrac{s_{xx}}{\Delta},\quad
+  \operatorname{cov}(\hat a,\hat b) = -\dfrac{s_x}{\Delta}.$
+  The covariance matrix is the inverse of $\mathsf{H}/2$, where $\mathsf{H}$ is the Hessian of $\chi^2$ ([](#eq:chisq_hess)).
+
+**Homoscedastic case** ($\sigma_i = \sigma$ for all $i$, [](#sec:ls-homo))
+: The sums simplify ([](#eq:ls-sums-homo)) and $\Delta = \frac{1}{\sigma^4}(N\sum_i x_i^2 - N^2\bar{x}^2)$.
+  When $\sigma$ is unknown it is estimated from the residuals: $\hat\sigma^2 = S/\nu$, where $S=\sum_i(d_i-m_i)^2$ and $\nu = N-2$.
+
+**Using `scipy.optimize.least_squares`** ([](#sec:ls-scipy))
+: The function minimises the **unweighted** residuals $r_i = d_i - m_i$ (no $1/\sigma_i$ weights).
+  The Jacobian $\mathsf{J}$ returned by `result.jac` satisfies $\mathsf{J}^\top\mathsf{J} \neq \mathsf{H}/2$.
+  The covariance matrix must be constructed as
+  $\boldsymbol{\Sigma} = (\mathsf{J}^\top\mathsf{J})^{-1}\,\hat\sigma^2$, where $\hat\sigma^2 = S/\nu$.
+
+**Robust Least Squares** ([](#sec:ls-outliers))
+: When outliers are present, the `loss` argument of `scipy.optimize.least_squares`
+  (`'soft_l1'`, `'huber'`, `'cauchy'`) replaces squared residuals with a function that grows
+  more slowly for large deviations, reducing the influence of outliers on the parameter estimates.
+  The scale parameter `f_scale` sets the transition between the near-quadratic and near-linear regimes.
 
 <!--
 Least squares minimises $\chi^2 = \sum_i (d_i - \mu_i)^2/\sigma_i^2$, which is equivalent to Gaussian MLE.

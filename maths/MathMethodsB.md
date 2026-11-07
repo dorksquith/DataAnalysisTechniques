@@ -289,14 +289,25 @@ where $\mathbf{J}$ is the $Z\times Z$ **matrix** of partial derivatives and $|\m
 
 **Example: Cartesian to Polar.** Points $(x,y)$ are uniformly distributed in a plane. Transform to polar coordinates $(r,\theta)$ via $r = \sqrt{x^2+y^2}$, $\theta = \arctan(y/x)$.
 
-The partial derivatives give:
-$$\dfrac{\partial r}{\partial x} = \dfrac{x}{r}, \quad \dfrac{\partial r}{\partial y} = \dfrac{y}{r}, \quad \dfrac{\partial \theta}{\partial x} = -\dfrac{y}{r^2}, \quad \dfrac{\partial \theta}{\partial y} = \dfrac{x}{r^2}$$
+The partial derivatives are:
+$$\dfrac{\partial r}{\partial x} = \dfrac{1}{2} (x^2+y^2)^{-\frac{1}{2}}\cdot 2x = \dfrac{x}{r}$$
+
+$$\dfrac{\partial r}{\partial y} = \dfrac{1}{2} (x^2+y^2)^{-\frac{1}{2}}\cdot 2y= \dfrac{y}{r}$$
+
+$$\dfrac{\partial \theta}{\partial x} =  \dfrac{1}{1+(\frac{y}{x})^2}\cdot \left(-\dfrac{y}{x}\right) = -\dfrac{y}{r^2} $$
+
+$$ \dfrac{\partial \theta}{\partial y} = \dfrac{1}{1+(\frac{y}{x})^2}\cdot \left(\dfrac{1}{x}\right)= \dfrac{x}{r^2}$$
 
 The Jacobian determinant is:
 $$|\mathbf{J}| = \dfrac{x}{r}\cdot\dfrac{x}{r^2} - \dfrac{y}{r}\cdot\!\left(-\dfrac{y}{r^2}\right) = \dfrac{x^2+y^2}{r^3} = \dfrac{1}{r}$$
 
 So $f(r,\theta) = r\, g(x,y)$: if $(x,y)$ are uniform (constant $g$), then $f(r,\theta) \propto r$, meaning the density in polar coordinates increases linearly with $r$. This makes geometric sense — concentric rings of equal width have area $\propto r$.
 
+
+:::{figure}
+![](../figures/PLOTDAT4-CartesianToPolar.png)
+
+:::
 ---
 
 (sec:var-bias-proof)=

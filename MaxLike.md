@@ -12,6 +12,12 @@ kernelspec:
 
 (chapter:MaxLike)=
 # Maximum Likelihood Estimation
+
+* `scipy.stats` methods: `fit`
+* `scipy.optimize` methods: `fsolve, minimize, minimize_scalar,`
+* `scipy.special` methods: `binom, gammaln`
+
+
 <!--LectureSlides2025/MaxLike.tex-->
 <!--PythonWorkshopsAndExamples2025/Week8-MathHelpers-and-MLE.py-->
 <!--PythonWorkshopsAndExamples2025/MaximumLikelihood.py-->
@@ -25,6 +31,8 @@ Use scipy to compute MLE numerically
 -->
 
 Given a set of data $\{x_1, x_2, \ldots, x_N\}$, we want to estimate the unknown parameter(s) $\theta$ of the distribution from which the data were drawn. **Maximum Likelihood Estimation** (MLE) answers: *which value of $\theta$ makes the observed data most probable?*
+
+---
 
 (sec:likelihood)=
 ## The Likelihood Function (Recap)
@@ -44,6 +52,8 @@ The **Maximum Likelihood Estimate** $\hat{\theta}$ is the value of $\theta$ that
 :label: eq:mle-def
 \hat{\theta}_{\mathsf{MLE}} = \arg\max_\theta \mathcal{L}_\theta
 ```
+
+---
 
 ### The Log-Likelihood
 
@@ -68,6 +78,8 @@ The **Maximum Likelihood Estimate** $\hat{\theta}$ is the value of $\theta$ that
 \hat{\theta}_{\mathsf{MLE}} = \arg\min_\theta \mathsf{NLL}_{\theta}
 ```
 
+---
+
 (sec:mle-uncertainties)=
 ## Uncertainties on MLE
 
@@ -82,6 +94,7 @@ Information / Minimum Variance Bound
 Graphical Method
 : Read off $\sigma_{\hat{\theta}}$ from the shape of the log-likelihood curve (see [](#sec:mle-graphical)).
 
+---
 
 (sec:mle-analytical)=
 ## Analytical MLE
@@ -94,6 +107,8 @@ To find $\hat{\theta}$ analytically we differentiate the log-likelihood and set 
 ```
 
 We must also check that the second derivative is negative (confirming a maximum, not a minimum or saddle point).
+
+---
 
 (sec:mle-gauss)=
 ### Example: estimating Norm $\mu$ and $\sigma$
@@ -193,6 +208,7 @@ Since $\frac{19}{100} < \frac{2}{9}$, **the biased variance estimator actually h
 
 -->
 
+---
 
 (sec:mle-score)=
 ### The Score
@@ -223,6 +239,7 @@ s &= \sum_i \frac{\partial }{\partial \theta} \ln f_X \\
 
 Note that for the last line in [](#eq:score-pdf) we have used the [LLN](#eq:lln).
 
+---
 
 ### Expected Value of the Score
 
@@ -245,6 +262,8 @@ E[s] &= \int s\, f_X\, dx\\ \\
      &= N\frac{\partial}{\partial\theta}\,1 = 0
 \end{aligned}
 ```
+
+---
 
 ### Derivative of the Expected Value of the Score
 
@@ -273,6 +292,8 @@ Rearranging:
 :label: eq:descore-result
 -N\,E\!\left[\frac{\partial s}{\partial\theta}\right] = E[s^2]
 ```
+
+---
 
 (sec:mle-information)=
 ## The Fisher Information
@@ -312,6 +333,7 @@ The **Observed Information** is the curvature at the estimate
 $$ \mathcal{J}_\mu = -\frac{\partial^2 \ln \mathcal{L}}{\partial \mu^2}  = \frac{N}{\sigma^2} = \frac{N}{V[X]} = \frac{1}{V[\bar{X}]}$$
 
 
+---
 
 ### Hessian Matrix for Multiple Parameters
 
@@ -366,7 +388,7 @@ The off-diagonal zeros mean $\hat{\mu}$ and $\hat{\sigma}$ are uncorrelated esti
 
 
 
-
+---
 
 
 (sec:mvb)=
@@ -397,6 +419,8 @@ and the corresponding lower bound on the [MSE](#eq:mse) is:
 \text{MSE} \geq \left(1 + \frac{db}{d\theta}\right)^2 \bigg/ \mathcal{J}_\theta \;\; + \;\; b^2
 ```
 
+---
+
 ### Using the Information Matrix
 
 
@@ -416,7 +440,7 @@ Intuitively this makes sense. Every observation contributes two pieces of inform
 More generally, a larger diagonal entry means a smaller MVB, i.e. the parameter is more precisely estimable. The diagonal entries grow linearly with $N$ (**more data $\rightarrow$ more information**, as expected) and shrink with $\sigma^2$ (noisier data → harder to estimate $\mu$, which also makes intuitive sense).
 
 
-
+---
 
 (sec:mle-graphical)=
 ### The Graphical Method
@@ -448,6 +472,7 @@ In practice: plot $\ln \mathcal{L}_\theta$ vs $\theta$, as per the example in []
 The graphical method is one way to estimate the uncertainty on a maximum likelihood estimate.
 :::
 
+---
 
 (sec:mle-numerical)=
 ## Numerical MLE with `scipy`
@@ -711,7 +736,9 @@ estimate_binomial_p_sympy()
 This solution makes perfect sense. If we toss the coin n=3 times and find k=1 heads, the information in the data is that there is a 1/3 chance of heads on each toss. So this is the logical value for the MLE of the parameter p.
 
 
+---
 
+(sec:ml_scipy_methods)=
 ### `scipy` Methods
 
 Now, let's try out some of the ```scipy``` methods!
@@ -723,7 +750,8 @@ Now, let's try out some of the ```scipy``` methods!
 
 Note that ```scipy``` methods are numeric rather than symbolic, so we need to pass in values for n and k (k is the data). We are not providing a value for p because this is the parameter we are estimating, but we will often pass an initial guess and/or bounds on this parameter, depending on the method in question.
 
-### Set the fake data and ```n``` parameter value
+
+**Set the fake data and ```n``` parameter value**:
 
 ```{code-cell} python
 # n parameter: number of coin tosses
@@ -732,6 +760,9 @@ n=50
 data=np.array([27,28,29,11])
 ```
 
+---
+
+(sec:ml_scipy_fit)=
 ### ```scipy.stats.fit```
 
 This is a lovely simple way to estimate the parameter of a ```scipy.stats``` probability distribution. Note that it cannot be used for a regular function.
@@ -764,6 +795,9 @@ print(f"scipy.stats.fit MLE estimate for p={mle_est_fit:.3f}")
 print(f"\n (full precision: {mle_est_fit})")
 ```
 
+---
+
+(sec:ml_scipy_fsolve)=
 ### ```scipy.optimize.fsolve```
 
 The job of ```fsolve``` is to provide the roots of a function or system of functions. For ```fsolve``` to work, the function must have roots, meaning it must be equal to zero at one or more values of its variable(s).
@@ -810,6 +844,9 @@ print(f"scipy.optimize.fsolve MLE estimate for p={mle_est_fsolve:.3f}")
 print(f"\n (full precision: {mle_est_fsolve})")
 ```
 
+---
+
+(sec:ml_scipy_minimize_scalar)=
 ### ```scipy.optimize.minimize_scalar```
 
 The  ```minimize_scalar``` function finds the minimum of the passed scalar function.
@@ -854,6 +891,9 @@ print(f"scipy.optimize.minimize_scalar MLE estimate for p={mle_est_minimize_scal
 print(f"\n (full precision: {mle_est_minimize_scalar})")
 ```
 
+---
+
+(sec:ml_scipy_minimize)=
 ### ```scipy.optimize.minimize```
 
 The use of this method is not necessary for the Binomial, as it is a scalar function, but I am including it in case future-you needs to minimize a vector function. It works perfectly well on scalar functions too.
@@ -870,27 +910,64 @@ The differences to note with respect to ```minimize_scalar``` include:
 def estimate_binomial_p_scipy_minimize(n,data):
 
     def NLL(p, n, data ):
+
+        # Guard: BFGS can step outside (0,1) during line search
+        if p <= 0.0 or p >= 1.0:
+          return 1e10
+
         k = data
         c = bnc(n,k) 
         log_pmf = np.log(c) + k * np.log(p) + (n-k) * np.log(1-p) 
         return -1*np.sum( log_pmf )
 
-    p_guess=0.1
+    p_guess = 0.1
     spectators = (n, data)
-    bounds_p = [(0.001,0.999)]
-
-    result_minimize = opt.minimize(fun=NLL, x0=p_guess, args=spectators, bounds=bounds_p )
+    # Note: BFGS does not support parameter bounds; the NLL returns
+    # large values near p=0 and p=1, keeping the optimiser in the valid domain.
+    result_minimize = opt.minimize(fun=NLL, x0=p_guess, args=spectators,
+                                   method='BFGS')
 
     mle_est_p = result_minimize.x[0]
 
-    return mle_est_p 
+    # hess_inv: BFGS quasi-Newton approximation to [−∂²ln𝓛/∂p²]⁻¹ = Var(p̂)
+    var_p = result_minimize.hess_inv[0, 0]
 
-mle_est_minimize = estimate_binomial_p_scipy_minimize(n,data)
+    return mle_est_p, var_p
 
-print(f"scipy.optimize.minimize MLE estimate for p={mle_est_minimize:.3f}")
+mle_est_minimize, var_p_minimize = estimate_binomial_p_scipy_minimize(n, data)
 
+print(f"scipy.optimize.minimize MLE estimate for p = {mle_est_minimize:.3f}")
+print(f"Estimated std dev on p̂:          {np.sqrt(var_p_minimize):.4f}")
 print(f"\n (full precision: {mle_est_minimize})")
 ```
+
+The uncertainty on the MLE follows from the curvature of the log-likelihood at its maximum.
+For a parameter vector $\boldsymbol\theta$, the **observed Fisher information** evaluated at $\hat{\boldsymbol\theta}$ is:
+
+$$
+\mathcal{I}(\hat{\boldsymbol\theta}) = -\frac{\partial^2 \ln\mathcal{L}}{\partial\boldsymbol\theta^2}\bigg|_{\hat{\boldsymbol\theta}},
+$$
+
+and by the **Cramér–Rao bound**, for large samples the MLE achieves the minimum variance:
+
+$$
+\mathsf{Cov}(\hat{\boldsymbol\theta}) \approx \mathcal{I}(\hat{\boldsymbol\theta})^{-1} = \left[-\frac{\partial^2 \ln\mathcal{L}}{\partial\boldsymbol\theta^2}\bigg|_{\hat{\boldsymbol\theta}}\right]^{-1}.
+$$
+
+BFGS stores an approximation to this inverse Hessian as `result.hess_inv`; for a single parameter it is a $1\times1$ matrix, so the variance is `result.hess_inv[0, 0]`.
+
+:::{warning} `hess_inv` is an approximation
+`result.hess_inv` is **not** the exact inverse Hessian of $\ln\mathcal{L}$.  It is a quasi-Newton approximation
+built up iteratively from gradient differences during the BFGS search.  For a well-converged optimisation on a
+smooth, approximately-quadratic log-likelihood it is a reliable covariance estimate.  It may be inaccurate when:
+
+* Convergence was poor (`result.success` is `False` or the number of iterations was very small).
+* The log-likelihood is highly non-quadratic near the maximum (e.g.\ skewed posteriors, boundary effects).
+* The true covariance is very large — BFGS can underestimate it in flat landscapes.
+
+For a more reliable covariance, compute the Hessian of the NLL numerically (e.g.\ with `numdifftools.Hessian`)
+and invert it, or use the Fisher information matrix derived analytically.
+:::
 
 ## Model Tests
 

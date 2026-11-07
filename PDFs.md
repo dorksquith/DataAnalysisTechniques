@@ -550,9 +550,9 @@ The variance of the unbiased sample variance estimate
 : $\dfrac{(N-1)\sigma_x^2}{\sigma^2} \sim \chi^2(N-1)$ [](#eq:vest_unbiased)
 
 The Pearson goodness-of-fit statistic
-: $\displaystyle\sum_i \dfrac{(O_i - E_i)^2}{E_i} \;\dot{\sim}\; \chi^2(\nu)$
+: $\displaystyle\sum_i \dfrac{(o_i - e_i)^2}{e_i} \;\dot{\sim}\; \chi^2(\nu)$
 
-  Where $O_i$ and $E_i$ are observed and expected counts, respectively. We will look at this soon.
+  Where $o_i$ and $e_i$ are observed and expected counts, respectively. We will look at this in [](#sec:ls-binned).
 
 
 :::{note}

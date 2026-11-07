@@ -769,7 +769,9 @@ $$\Sigma = \begin{bmatrix} \sigma^2_{x_{(1)}} & \cdots & \mathsf{cov}(x_{(1)}, x
 
 See [Variance Algebra](#VarianceAlgebra) and [Expectation Algebra](#ExpectationAlgebra) for the function in question.
 
+---
 
+(sec:dd_linear1)=
 ### A Linear Function of One RV
 
 A linear function of one RV is $g(x) = aX + b$, where $a$ and $b$ are constants. Using shorthand $g \equiv g(x)$:
@@ -803,12 +805,13 @@ Example
 
 ---
 
+(sec:dd_linear2)=
 ### A Linear Function of Two RVs
 
 A linear function of two RVs is $g(x,y) = aX + bY$, where $a$ and $b$ are constants. Using shorthand $g \equiv g(x,y)$:
 
 Expectation
-: $E[ g ] = E[ aX + bY ] =  E[ aX] + E[ bY ]  = a E[X] + b E[Y]$ 
+: $$\label{eq:exp-f2-exp} E[ g ] = E[ aX + bY ] =  E[ aX] + E[ bY ]  = a E[X] + b E[Y]$$ 
 
 
 Variance (using expectation)
@@ -897,6 +900,7 @@ If X and Y are independent
 
 ---
 
+(sec:dd_linear3)=
 ### A Linear Function of Three RVs
 
 A linear function of three RVs is $g = aX + bY + cZ$, where $a$, $b$, and $c$ are constants. For three or more RVs, index notation is a must for keeping the algebra under control.
@@ -947,6 +951,7 @@ Example: uncertainty on a container volume
 
 ---
 
+(sec:dd_linearz)=
 ### A Linear Function of $Z$ RVs
 
 
@@ -989,9 +994,7 @@ V[f_Z] =
 Matrix multiplication rules give $[1\times Z]\cdot[Z\times Z]\cdot[Z\times 1] = [1\times 1]$: we obtain a single value for the variance, as required.
 -->
 
-
-
-
+(sec:dd_nonlinear)=
 ### A Nonlinear function of $Z$ RVs
 
 A nonlinear function can be written as a product of linear functions:
@@ -1020,6 +1023,7 @@ The scalar (1D) case of the Delta Method — including a full derivation and an 
 :::
 -->
 
+(sec:dd_statsyst)=
 ### Combining Systematic and Statistical Uncertainties
 
 A measurement often carries both a **statistical** uncertainty (from random fluctuations) and a **systematic** uncertainty (from calibration, modelling assumptions, etc.). We can account for both by separating the measurement into two independent parts: $x = x_{\rm stat} + x_{\rm sys}$.

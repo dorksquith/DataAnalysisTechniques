@@ -1,28 +1,19 @@
 ---
-jupytext:
-  formats: md:myst
-  text_representation:
-    extension: .md
-    format_name: myst
 kernelspec:
   name: python3
   display_name: 'Python 3'
-numbering:
-  title: false
-  headings: false
-  equation: true
 ---
 
 (chapter:python-methods)=
 # Python Methods Reference
 
-A reference table of all Python methods introduced across the module notes chapters. This will be updated as the notes evolve.
+A reference table of all Python methods introduced across the module notes chapters.
 
 ```{note}
 Plotting methods (`matplotlib.pyplot` and `seaborn`) are documented separately in [Plotting Tips and Tricks](#chapter:plotting-tips).
 ```
 
-**Chapter key:** **T&C** = TerminologyAndConcepts · **PE** = ProbabilityEssentials · **DD** = DescribingData · **N** = Normal · **HT** = HypothesisTests · **NT** = NormalTests · **EI** = EstimatorsIntro
+**Chapter key:** **T&C** = TerminologyAndConcepts · **PE** = ProbabilityEssentials · **DD** = DescribingData · **N** = Normal · **HT** = HypothesisTests · **NT** = NormalTests · **EI** = EstimatorsIntro · **LS** = LeastSquares · **ML** = MaxLike
 
 ---
 
@@ -107,6 +98,41 @@ Plotting methods (`matplotlib.pyplot` and `seaborn`) are documented separately i
 | `sympy.init_printing()` | Enable pretty-printing of expressions | PE, DD |
 | `sympy.integrate(expr, (x, a, b))` | Symbolic (definite or indefinite) integration | PE, DD |
 | `sympy.exp(x)` | Symbolic exponential e^x | PE |
+
+---
+
+## `scipy.optimize`
+
+| Function | Description | Chapter(s) |
+|----------|-------------|------------|
+| `least_squares(fun, x0, args, loss, f_scale)` | Fit by minimising a sum of squares; supports robust losses (`'linear'`, `'soft_l1'`, `'huber'`, `'cauchy'`); returns Jacobian for covariance estimation | LS |
+| `minimize(fun, x0, args, method, bounds)` | Minimise an arbitrary scalar function; use `method='BFGS'` to obtain `result.hess_inv` (approximate inverse Hessian / parameter covariance) | ML |
+| `minimize_scalar(fun, args, bounds, method)` | Minimise a scalar function of **one** variable only | ML |
+| `fsolve(func, x0, args)` | Find roots of a system $f(x)=0$ (e.g.\ score equations); returns array of root values | LS, ML |
+
+**Key attributes of `least_squares` result:**
+
+| Attribute | Description |
+|-----------|-------------|
+| `result.x` | Parameter estimates at the minimum |
+| `result.fun` | Residual vector $r_i = d_i - m_i$ at the minimum |
+| `result.jac` | Jacobian matrix of residuals (use `J.T @ J * (S/ν)` for covariance) |
+
+---
+
+## `scipy.special`
+
+| Function | Description | Chapter(s) |
+|----------|-------------|------------|
+| `gammaln(x)` | Natural log of the Gamma function $\\ln\\Gamma(x)$; use `gammaln(k+1)` in place of $\\ln(k!)$ to avoid overflow for large $k$ | ML |
+
+---
+
+## `numpy.linalg`
+
+| Function | Description | Chapter(s) |
+|----------|-------------|------------|
+| `np.linalg.inv(A)` | Matrix inverse $A^{-1}$; used to obtain the covariance matrix from the Hessian | LS |
 
 ---
 

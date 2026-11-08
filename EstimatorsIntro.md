@@ -18,6 +18,7 @@ kernelspec:
 
 
 
+
 <!--Week7-Tools/Tools.tex-->
 <!--Week8-Tools/MaxLike.tex-->
 <!--Week9-Fits-Tests/LeastSquares.tex-->
@@ -170,6 +171,16 @@ Additionally using $\hat{\sigma}_{\mathsf{true}} = \sigma_{x}$:
 
 ````
 
+A plot illustrating the reduction of the $\mathsf{SEM}$ and $\widehat{\mathsf{SEM}}$ as the number of measurements N increases is shown in [](#fig:sem_v_n).
+
+:::{figure}
+:label: fig:sem_v_n
+
+![](figures/SEM_vs_N.png)
+
+The SEM versus the number of measurements.
+:::
+
 ---
 
 (sec:var-est)=
@@ -302,6 +313,16 @@ Before deciding that the the unbiased variance is the better estimator, we need 
 
 ````
 
+A plot illustrating the reduction of the Standard Error on the Standard Deviation $\mathsf{SES}$ and $\widehat{\mathsf{SES}}$  (see [Math Methods B: SES](#sec:mmb_ses)) as the number of measurements N increases is shown in [](#fig:ses_v_n).
+
+:::{figure}
+:label: fig:seS_v_n
+
+![](figures/SES_vs_N.png)
+
+The SES versus the number of measurements.
+:::
+
 
 ---
 
@@ -336,6 +357,11 @@ These estimators treat each bin as if all its measurements were exactly at the b
 :::{tip}
 A more powerful approach when working with histograms is to fit the parameters of a probability distribution directly to the histogram using the methods of [Maximum Likelihood](#chapter:MaxLike) or [Least Squares](#chapter:LeastSquares).
 :::
+
+
+
+
+
 
 ---
 

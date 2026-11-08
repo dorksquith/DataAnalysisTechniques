@@ -20,8 +20,8 @@ This workshop covers material from [Maximum Likelihood Estimation](#chapter:MaxL
 
 You will work with two toy datasets:
 
-- `DataW7.txt` — integer counts recorded at a surface particle detector (one column, one count per line)
-- `DataW7b.txt` — continuous energy measurements in GeV (one column, one value per line)
+- [`DataW7.txt`](DataW7.txt) — integer counts recorded at a surface particle detector (one column, one count per line)
+- [`DataW7b.txt`](DataW7b.txt) — continuous energy measurements in GeV (one column, one value per line)
 
 Load them as follows:
 

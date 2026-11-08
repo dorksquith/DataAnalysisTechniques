@@ -16,19 +16,12 @@ kernelspec:
 * `scipy.stats` methods: `fit`
 * `scipy.optimize` methods: `fsolve, minimize, minimize_scalar,`
 * `scipy.special` methods: `binom, gammaln`
-
+* `sympy` methods: `diff, solve, lambdify` 
 
 <!--LectureSlides2025/MaxLike.tex-->
 <!--PythonWorkshopsAndExamples2025/Week8-MathHelpers-and-MLE.py-->
 <!--PythonWorkshopsAndExamples2025/MaximumLikelihood.py-->
 
-<!--
-Derive and compute MLE for Binomial, Exponential and Gaussian
-Understand Bias, Variance and MSE of an MLE
-Know how to estimate uncertainties on an MLE
-Understand the Score, Fisher Information and Minimum Variance Bound
-Use scipy to compute MLE numerically
--->
 
 Given a set of data $\{x_1, x_2, \ldots, x_N\}$, we want to estimate the unknown parameter(s) $\theta$ of the distribution from which the data were drawn. **Maximum Likelihood Estimation** (MLE) answers: *which value of $\theta$ makes the observed data most probable?*
 
@@ -139,74 +132,6 @@ $$-\frac{N}{\sigma} + \frac{1}{\sigma^3}\sum_{i=1}^N(x_i - \hat{\mu})^2 = 0 \imp
 
 Note: the factor $N$ (rather than $N-1$) arises in [](#eq:mle-sigma) because we used the MLE $\hat{\mu}=\bar{x}$ rather than the true $\mu$. Recall from [](#sec:var-est) that the **unbiased** sample variance divides by $N-1$.
 
-<!--
-(sec:mle-binomial)=
-### Binomial: estimating $p$
-
-Let $K \sim \mathrm{Binom}(n, p)$ and suppose we observe $k$ successes in $n$ trials. The PMF is
-
-$$f_K(k;\,p) = \binom{n}{k} p^k (1-p)^{n-k}$$
-
-so the log-likelihood (up to constants that don't depend on $p$) is
-
-$$\ln \mathcal{L}_p = k \ln p + (n-k)\ln(1-p) + \text{const}$$
-
-Setting $\partial \ln \mathcal{L}_p / \partial p = 0$:
-
-$$\frac{k}{p} - \frac{n-k}{1-p} = 0 \implies \hat{p} = \frac{k}{n}$$
-
-```{math}
-:label: eq:mle-binom
-\boxed{\hat{p} = \frac{k}{n}}
-```
-
-This is simply the observed fraction of successes — exactly what intuition suggests.
-
-**Example.** A coin is tossed $n=50$ times and $k=27$ heads are observed. Then $\hat{p} = 27/50 = 0.54$.
-
-(sec:mle-expon)=
-### Exponential: estimating $\lambda$
-
-Let $T \sim \mathrm{Expon}(\lambda)$ with PDF $f_T(t;\lambda)=\lambda e^{-\lambda t}$. For $N$ iid observations $\{t_i\}$:
-
-$$\ln \mathcal{L}_\lambda = N\ln\lambda - \lambda\sum_{i=1}^N t_i$$
-
-Setting $\partial \ln \mathcal{L}_\lambda / \partial \lambda = 0$:
-
-$$\frac{N}{\lambda} - \sum t_i = 0 \implies \hat{\lambda} = \frac{N}{\sum t_i} = \frac{1}{\bar{t}}$$
-
-```{math}
-:label: eq:mle-expon
-\boxed{\hat{\lambda} = \frac{1}{\bar{t}}}
-```
-
-The MLE rate is the reciprocal of the sample mean waiting time.
-
-**Example (hitch-hiker).** Taxi waiting times (minutes): $t = \{15, 18, 11\}$. Then $\bar{t} = 44/3$, so $\hat{\lambda} = 3/44 \approx 0.068\;\mathrm{min}^{-1}$.
-
-
-
-(sec:mle-mse)=
-## Bias, Variance, and MSE of MLE
-
-Recall from [](#chapter:EstimatorsIntro) the **Mean Squared Error**:
-
-```{math}
-:label: eq:mse-mle
-\text{MSE}[\hat{\theta}] = V[\hat{\theta}] + b^2
-```
-
-For the biased Gaussian variance estimator $\hat{\sigma}^2_N = \frac{1}{N}\sum(y_i-\bar{y})^2$ (with $\hat{\sigma}^2_N = \frac{N-1}{N}\hat{V}$ where $\hat{V}$ is the unbiased estimator):
-
-$$V[\hat{\sigma}^2_N] = \frac{(N-1)^2}{N^2}\,V[\hat{V}] = \frac{2(N-1)}{N^2}\,\sigma^4$$
-
-The bias is $b = E[\hat{\sigma}^2_N] - \sigma^2 = -\sigma^2/N$, so $b^2 = \sigma^4/N^2$.
-
-For $N=10$ the MSE of the biased estimator is $\frac{2\cdot9}{100}\sigma^4 + \frac{1}{100}\sigma^4 = \frac{19}{100}\sigma^4$, while the unbiased estimator has $\text{MSE} = V[\hat{V}] = \frac{2}{9}\sigma^4$.
-
-Since $\frac{19}{100} < \frac{2}{9}$, **the biased variance estimator actually has a smaller MSE than the unbiased one for finite $N$**. The biased estimator is sometimes the better tool.
-
--->
 
 ---
 
@@ -224,64 +149,43 @@ Note that we have used the [chain rule](#sec:mma-chain-rule) in [](#eq:score).
 
 For a vector of parameters $\theta = [\theta_1, \ldots, \theta_Z]$, the score is the gradient $s = \nabla \ln \mathcal{L}$, where $\nabla$ is the [gradient operator](#sec:mma-grad).
 
-The score can helpfully be written in terms of the PDF, $f_X(x;\theta)$, which we will shorthand as $f$ in [](#eq:score-pdf): 
-
-<!--Since $\ln \mathcal{L}_\theta = \sum_i \ln f_X(x_i;\theta)$:-->
+The score for a **single measurement** can helpfully be written in terms of the PDF, $f_X(x;\theta)$, which we will shorthand as $f$ in [](#eq:score-pdf):
 
 ```{math}
 :label: eq:score-pdf
-\begin{aligned}
-s &= \sum_i \frac{\partial }{\partial \theta} \ln f_X \\
-  &= \sum_i \frac{1}{f_X}\frac{\partial f_X}{\partial \theta}  \\
-  &= \frac{N}{f_X}\frac{\partial f_X}{\partial \theta}  \\
-\end{aligned}
+s_1 = \frac{\partial \ln f_X}{\partial \theta} = \frac{1}{f_X}\frac{\partial f_X}{\partial \theta}
 ```
 
-Note that for the last line in [](#eq:score-pdf) we have used the [LLN](#eq:lln).
+The full score for $N$ measurements is the sum $s = \sum_i s_1(x_i)$.
 
----
 
-### Expected Value of the Score
-
-The expected value of the score is zero:
-
-```{math}
-:label: eq:escore
-E[s] = 0
-```
-
-**Proof:**
+The **Expectation of the Score** is zero: 
 
 ```{math}
 :label: eq:escore-proof
 \begin{aligned}
-E[s] &= \int s\, f_X\, dx\\ \\
-     &= \int \frac{N}{f_X}\frac{\partial f_X}{\partial\theta} f_X\, dx\\ \\
-     &= \int N\frac{\partial f_X}{\partial\theta}\, dx \\ \\
-     &= N\frac{\partial}{\partial\theta}\int f_X\, dx \\ \\
-     &= N\frac{\partial}{\partial\theta}\,1 = 0
+E[s_1] &= \int s_1\, f_X\, dx\\[4pt]
+        &= \int \frac{\partial f_X}{\partial\theta}\, dx \\[4pt]
+        &= \frac{\partial}{\partial\theta}\int f_X\, dx \\[4pt]
+        &= \frac{\partial}{\partial\theta}\,1 = 0
 \end{aligned}
 ```
 
----
-
-### Derivative of the Expected Value of the Score
-
-Since $E[s] = 0$, its derivative with respect to $\theta$ is also zero. Differentiating both sides and unpacking the result gives a useful identity:
+Since $E[s_1] = 0$, its derivative with respect to $\theta$ is also zero. Differentiating both sides and unpacking the result gives a useful identity (using $\partial f_X/\partial\theta = s_1 f_X$):
 
 ```{math}
 :label: eq:descore-proof
 
 \begin{aligned}
-\frac{\partial}{\partial\theta}E[s]
-= \frac{\partial}{\partial\theta}\int s\, f_X\, dx
-&= \int \frac{\partial}{\partial\theta}\bigl[s\, f_X\bigr]\, dx\\ \\
+\frac{\partial}{\partial\theta}E[s_1]
+= \frac{\partial}{\partial\theta}\int s_1\, f_X\, dx
+&= \int \frac{\partial}{\partial\theta}\left[s_1\, f_X\right]\, dx\\[4pt]
 
-&= \int \left[\frac{\partial s}{\partial\theta}f_X + s\frac{\partial f_X}{\partial\theta}\right]dx \\ \\
+&= \int \left[\frac{\partial s_1}{\partial\theta}f_X + s_1\frac{\partial f_X}{\partial\theta}\right]dx \\[4pt]
 
-&= \int \left[\frac{\partial s}{\partial\theta}f_X + \frac{s^2}{N}f_X\right]dx\\ \\
+&= \int \left[\frac{\partial s_1}{\partial\theta}f_X + s_1^2 f_X\right]dx\\[4pt]
 
-&= E\!\left[\frac{\partial s}{\partial\theta}\right] + \frac{1}{N}E[s^2] = 0
+&= E\!\left[\frac{\partial s_1}{\partial\theta}\right] + E[s_1^2] = 0
 
 \end{aligned}
 ```
@@ -290,7 +194,7 @@ Rearranging:
 
 ```{math}
 :label: eq:descore-result
--N\,E\!\left[\frac{\partial s}{\partial\theta}\right] = E[s^2]
+E[s_1^2] = -E\!\left[\frac{\partial s_1}{\partial\theta}\right] 
 ```
 
 ---
@@ -298,57 +202,66 @@ Rearranging:
 (sec:mle-information)=
 ## The Fisher Information
 
-The **Variance of the Score** is known as the **Fisher Information** $\mathcal{J}_\theta$. Using the two results above:
+The **Variance of the Score** for a single measurement is known as the **single-measurement Fisher Information** $\mathcal{J}_1$. Using the two results above for [$E[s_1]$](#eq:escore-proof) and [$E[s_1^2]$](#eq:descore-proof):
+
 
 ```{math}
 :label: eq:vscore-proof
 
 \begin{aligned}
-V[s] &= E[s^2] - E^2[s] \\
-     &= E[s^2] \\
-     &= -N\,E\!\left[\frac{\partial s}{\partial\theta}\right]\\
-     &= -N\,E\!\left[\frac{\partial^2 \ln\mathcal{L}_\theta}{\partial\theta^2}\right]
+\mathcal{J}_1 = V[s_1] &= E[s_1^2] - E^2[s_1] \\
+        &= -E\!\left[\frac{\partial s_1}{\partial\theta}\right] - 0\\
+        &= -E\!\left[\frac{\partial^2 \ln f_X}{\partial\theta^2}\right]
 \end{aligned}
 
 ```
 
+The Fisher Information for $N$ measurements is $\mathcal{J}_\theta = N\,\mathcal{J}_1$:
+
 ```{math}
 :label: eq:information
-\mathcal{J}_\theta \equiv V[s] = -N\,E\!\left[\frac{\partial^2 \ln \mathcal{L}_\theta}{\partial \theta^2}\right] = -N\,E\!\left[\frac{\partial^2 \ln f_X}{\partial \theta^2}\right]
+\mathcal{J}_\theta \equiv N\,\mathcal{J}_1 = -N\,E\!\left[\frac{\partial^2 \ln f_X}{\partial \theta^2}\right]
 ```
 
 A large $\mathcal{J}_\theta$ means the log-likelihood is sharply peaked: the data carry a lot of information about $\theta$, and we can discriminate close values of $\theta$ well.
 
 
-The **Expected Information**for a single measurement is $\mathcal{J}_s = \mathcal{J}_\theta/ N$. 
+The **Observed Information** for a single measurement is the curvature at $\hat{\theta}$ :
 
+```{math}
+:label: eq:information1
+\mathcal{J}_1^{\text{obs}} = -\frac{\partial^2 \ln f_X}{\partial \theta^2}\bigg|_{\hat{\theta}}
+```
 
-The **Observed Information** is the curvature at the estimate
+and for all $N$ measurements is:
 
-  $$\mathcal{J}_s^{\text{obs}} = -\frac{d^2 \ln \mathcal{L}_\theta}{d\theta^2}\bigg|_{\hat{\theta}}$$
+```{math}
+:label: eq:informationN
+\mathcal{J}_\theta^{\text{obs}} = N\mathcal{J}_1^{\text{obs}} 
+```
 
+**Example (Normal PDF for $\mu$).** For a single Normal measurement, $\partial^2 \ln f_X/\partial\mu^2 = -1/\sigma^2$, so from [](#sec:mle-gauss), the Fisher Information for $\mu$ from $N$ measurements is:
 
-**Example (Normal PDF for $\mu$).** From [](#sec:mle-gauss):
-
-$$ \mathcal{J}_\mu = -\frac{\partial^2 \ln \mathcal{L}}{\partial \mu^2}  = \frac{N}{\sigma^2} = \frac{N}{V[X]} = \frac{1}{V[\bar{X}]}$$
+$$ \mathcal{J}_\mu = -N\,E\!\left[\frac{\partial^2 \ln f_X}{\partial \mu^2}\right] = \frac{N}{\sigma^2} = \frac{N}{V[X]} = \frac{1}{V[\bar{X}]}$$
 
 
 ---
 
+(sec:ml_hess)=
 ### Hessian Matrix for Multiple Parameters
 
-The Hessian Matrix for a function is the matrix of second order partial derivatives (see [](#sec:mma_hessian)). For multiple parameters $\theta = [\theta_1, \ldots, \theta_Z]$, the Hessian Matrix for the Log Likelihood is:
+The Hessian Matrix for a function is the matrix of second order partial derivatives (see [Math Methods A: The Hessian](#sec:mma_hessian)). For multiple parameters $\theta = [\theta_1, \ldots, \theta_Z]$, the Hessian Matrix for the Log Likelihood is:
 
 ```{math}
 :label: eq:hessian_ll
 H_\theta = \begin{bmatrix}
-\dfrac{\partial^2 \ln \mathcal{L}}{\partial\theta_1^2} & \cdots & \dfrac{\partial^2 \ln \mathcal{L}}{\partial\theta_1\partial\theta_Z}\\[6pt]
+\dfrac{\partial^2 \ln f_X}{\partial\theta_1^2} & \cdots & \dfrac{\partial^2 \ln f_X}{\partial\theta_1\partial\theta_Z}\\[6pt]
 \vdots & \ddots & \vdots\\[6pt]
-\dfrac{\partial^2 \ln \mathcal{L}}{\partial\theta_Z\partial\theta_1} & \cdots & \dfrac{\partial^2 \ln \mathcal{L}}{\partial\theta_Z^2}
+\dfrac{\partial^2 \ln f_X}{\partial\theta_Z\partial\theta_1} & \cdots & \dfrac{\partial^2 \ln f_X}{\partial\theta_Z^2}
 \end{bmatrix}
 ```
 
-The **Information Matrix** is the negative of the Hessian $H_\theta$ of the log-likelihood:
+The **Information Matrix** for $N$ measurements is defined in terms of the **single-measurement Hessian** $H_\theta$ of $\ln f_X$:
 
 ```{math}
 :label: eq:info_matrix
@@ -357,34 +270,36 @@ The **Information Matrix** is the negative of the Hessian $H_\theta$ of the log-
 
 **Example: Normal PDF for $\theta = \{\mu, \sigma\}$.**
 
-Starting from the [log-likelihood](#eq:norm_loglik):
+For a single Normal measurement, the log-PDF is:
 
-$$\ln\mathcal{L} = -N\ln\sigma - \tfrac{N}{2}\ln(2\pi) - \frac{1}{2\sigma^2}\sum_{i=1}^N(x_i-\mu)^2$$
+$$\ln f_X = -\ln\sigma - \frac{1}{2}\ln(2\pi) - \frac{(x-\mu)^2}{2\sigma^2}$$
 
-the first partial derivatives are:
+The first partial derivatives are:
 
-$$\frac{\partial \ln\mathcal{L}}{\partial\mu} = \frac{1}{\sigma^2}\sum_{i=1}^N(x_i-\mu), \qquad \frac{\partial \ln\mathcal{L}}{\partial\sigma} = -\frac{N}{\sigma} + \frac{1}{\sigma^3}\sum_{i=1}^N(x_i-\mu)^2$$
+$$\frac{\partial \ln f_X}{\partial\mu} = \frac{x-\mu}{\sigma^2}, \qquad \frac{\partial \ln f_X}{\partial\sigma} = -\frac{1}{\sigma} + \frac{(x-\mu)^2}{\sigma^3}$$
 
 The second partial derivatives are:
 
-$$\frac{\partial^2\ln\mathcal{L}}{\partial\mu^2} = -\frac{N}{\sigma^2}, \qquad \frac{\partial^2\ln\mathcal{L}}{\partial\sigma^2} = \frac{N}{\sigma^2} - \frac{3}{\sigma^4}\sum_{i=1}^N(x_i-\mu)^2, \qquad \frac{\partial^2\ln\mathcal{L}}{\partial\mu\,\partial\sigma} = -\frac{2}{\sigma^3}\sum_{i=1}^N(x_i-\mu)$$
+$$\frac{\partial^2\ln f_X}{\partial\mu^2} = -\frac{1}{\sigma^2}, \qquad \frac{\partial^2\ln f_X}{\partial\sigma^2} = \frac{1}{\sigma^2} - \frac{3(x-\mu)^2}{\sigma^4}, \qquad \frac{\partial^2\ln f_X}{\partial\mu\,\partial\sigma} = -\frac{2(x-\mu)}{\sigma^3}$$
 
-Assembling the Hessian:
+The Expectations of the second partial derivatives, using $E[(x-\mu)^2]=\sigma^2$ and $E[x-\mu]=0$, are:
 
-$$H_\theta = \begin{bmatrix} -N/\sigma^2 & -2\sigma^{-3}\displaystyle\sum(x_i-\mu) \\[6pt] -2\sigma^{-3}\displaystyle\sum(x_i-\mu) & N/\sigma^2 - 3\sigma^{-4}\displaystyle\sum(x_i-\mu)^2 \end{bmatrix}$$
+$$E\left[\frac{\partial^2\ln f_X}{\partial\mu^2}\right] = -\frac{1}{\sigma^2}, \qquad E\left[\frac{\partial^2\ln f_X}{\partial\sigma^2}\right]  = -\frac{2}{\sigma^2}, \qquad E\left[ \frac{\partial^2\ln f_X}{\partial\mu\,\partial\sigma}\right] = 0$$
 
-Taking expectations using $E[x_i-\mu]=0$ and $E[(x_i-\mu)^2]=\sigma^2$:
 
-$$E[H_\theta] = \begin{bmatrix} -N/\sigma^2 & 0 \\ 0 & -2N/\sigma^2 \end{bmatrix}$$
 
-The **Information Matrix** is therefore:
+Assembling the Information Matrix using $\mathcal{J}_\theta = -N\,E[H_\theta]$:
 
 ```{math}
 :label: eq:infomat_norm
-\mathcal{J}_\theta = -N\,E[H_\theta] = \begin{bmatrix} N/\sigma^2 & 0 \\ 0 & 2N/\sigma^2 \end{bmatrix}
+\mathcal{J}_\theta = -N\begin{bmatrix} -1/\sigma^2 & 0 \\ 0 & -2/\sigma^2 \end{bmatrix} = \begin{bmatrix} N/\sigma^2 & 0 \\ 0 & 2N/\sigma^2 \end{bmatrix}
 ```
 
-The off-diagonal zeros mean $\hat{\mu}$ and $\hat{\sigma}$ are uncorrelated estimators — information about $\mu$ and information about $\sigma$ are completely separable for the Normal distribution.
+The off-diagonal zeros
+: The zero off-diagonal terms mean $\hat{\mu}$ and $\hat{\sigma}$ are **Uncorrelated Estimators** — information about $\mu$ and information about $\sigma$ are completely separable for the Normal distribution.
+
+The relative size
+: The Information for the standard deviation, $\mathcal{J}_\sigma = 2N/\sigma^2$, is twice the size of the Information for the mean, $\mathcal{J}_\mu = N/\sigma^2$.
 
 
 
@@ -401,9 +316,12 @@ The **Rao-Cramér-Fréchet (RCF) Inequality** states that for any **unbiased** e
 V[\hat{\theta}] \geq \frac{1}{\mathcal{J}_\theta}
 ```
 
-The right-hand side $1/\mathcal{J}_\theta$ is the **Minimum Variance Bound** (MVB). If an estimator achieves $V[\hat{\theta}] = 1/\mathcal{J}_\theta$ it is the **Minimum Variance Unbiased Estimator** (MVUE), the best possible unbiased estimator.
+The right-hand side, $1/\mathcal{J}_\theta$, is the **Minimum Variance Bound (MVB)**. If an estimator achieves $V[\hat{\theta}] = 1/\mathcal{J}_\theta$ it is the **Minimum Variance Unbiased Estimator (MVUE)**, the best possible unbiased estimator.
 
-**Example.** For the Gaussian mean, $\mathcal{J}_\mu = N/\sigma^2$, so MVB $= \sigma^2/N = V[\bar{X}]$. The sample mean $\hat{\mu}=\bar{x}$ attains this bound — it is the MVUE.
+Example
+: For the Gaussian mean, $\mathcal{J}_\mu = N/\sigma^2$, so MVB $= \sigma^2/N = V[\bar{X}]$. The sample mean $\hat{\mu}=\bar{x}$ attains this bound — it is the MVUE.
+
+
 
 For a **biased** estimator with bias $b = E[\hat{\theta}]-\theta$, the full RCF inequality is:
 
@@ -433,11 +351,9 @@ The diagonal entries in e.g. [](#eq:infomat_norm) are the individual Fisher info
 
 The MVB for $\hat{\mu}$ is $\sigma^2/N$, which is the **variance of the sample mean** $\bar{x}$ (the squared [SEM](#eq:sem)) — confirming that $\bar{x}$ is an efficient estimator (it "saturates the bound").
 
-The MVB for $\hat{\sigma}$ is $\sigma^2/(2N)$, which is half the bound for $\hat{\mu}$. This tells us something quite interesting: the data contains twice as much Fisher information about $\sigma$ as about $\mu$.
+The MVB for $\hat{\sigma}$ is $\sigma^2/(2N)$, which is half the bound for $\hat{\mu}$. **This makes sense**: every observation contributes two pieces of information about $\sigma$: how far it sits from the mean (via $(x_i - \mu)^2$), and the sign of that deviation (which contributes to estimating $\mu$ but averages out for $\sigma$). So $\sigma$ is actually easier to pin down precisely than $\mu$ from the same dataset.
 
-Intuitively this makes sense. Every observation contributes two pieces of information about $\sigma$: how far it sits from the mean (via $(x_i - \mu)^2$), and the sign of that deviation (which contributes to estimating $\mu$ but averages out for $\sigma$). So $\sigma$ is actually easier to pin down precisely than $\mu$ from the same dataset.
-
-More generally, a larger diagonal entry means a smaller MVB, i.e. the parameter is more precisely estimable. The diagonal entries grow linearly with $N$ (**more data $\rightarrow$ more information**, as expected) and shrink with $\sigma^2$ (noisier data → harder to estimate $\mu$, which also makes intuitive sense).
+More generally, a larger diagonal entry in the $\mathcal{J}_\theta$ matrix means a smaller MVB, i.e. the parameter is more precisely estimable. The diagonal entries grow linearly with $N$ (**more data $\rightarrow$ more information**, as expected) and shrink with $\sigma^2$ (noisier data → harder to estimate $\mu$, which also makes intuitive sense).
 
 
 ---
@@ -445,25 +361,56 @@ More generally, a larger diagonal entry means a smaller MVB, i.e. the parameter 
 (sec:mle-graphical)=
 ### The Graphical Method
 
-The shape of the log-likelihood near its maximum encodes the uncertainty on $\hat{\theta}$. To see this, Taylor-expand $\ln \mathcal{L}_\theta$ about $\hat{\theta}$:
+The shape of the Log Likelihood near its maximum encodes the uncertainty on $\hat{\theta}$. To see this, [Taylor-expand](#eq:mma_taylor) $\ln \mathcal{L}_\theta$ about $\hat{\theta}$:
 
 $$\ln \mathcal{L}_\theta = \ln \mathcal{L}_{\hat{\theta}} + \underbrace{\frac{d\ln\mathcal{L}}{d\theta}\bigg|_{\hat{\theta}}}_{=\,0\text{ (score)}} (\theta - \hat{\theta}) + \frac{1}{2}\frac{d^2\ln\mathcal{L}}{d\theta^2}\bigg|_{\hat{\theta}}(\theta - \hat{\theta})^2 + \cdots$$
 
-The first derivative is zero at the MLE by definition. The second derivative evaluated at $\hat{\theta}$ equals its expected value (both equal $-1/V[\hat{\theta}]$ at the maximum), so:
+
+The first derivative at $\hat{\theta}_{\mathsf{MLE}}$ (the **Score**) is zero by definition. 
+
+The second derivative at $\hat{\theta}$ is the (negative) of the Observed Fisher information [$-\mathcal{J}_1^{obs}$](#eq:information1), which is the (negative) of the [MVB](#eq:rcf): $-\dfrac{1}{V[\hat{\theta}]}$, so:
+
+
 
 ```{math}
 :label: eq:loglike-taylor
-\ln \mathcal{L}_\theta \approx \ln \mathcal{L}_{\hat{\theta}} - \frac{(\theta-\hat{\theta})^2}{2\,V[\hat{\theta}]}
+\ln \mathcal{L}_\theta \approx \ln \mathcal{L}_{\hat{\theta}} -\dfrac{1}{2} \frac{(\theta-\hat{\theta})^2}{\,V[\hat{\theta}]}
 ```
 
-This is a Gaussian shape! The log-likelihood is approximately parabolic near its peak. The uncertainty $\sigma_{\hat{\theta}} = \sqrt{V[\hat{\theta}]}$ can be read off as the distance from the peak to where $\ln \mathcal{L}$ falls by $1/2$:
+Note that the term $\frac{(\theta-\hat{\theta})^2}{\,V[\hat{\theta}]}$ resembles the square of the [standard normal RV](#eq:z), $z^2$. This is a Gaussian shape! The Log Likelihood is approximately parabolic near its peak. 
+
+Rearranging [](#eq:loglike-taylor) with $V[\hat{\theta}] = \sigma^2_{\hat{\theta}}$:
+
+```{math}
+:label: eq:loglike-taylor-re
+ \ln \mathcal{L}_{\hat{\theta}} - \ln \mathcal{L}_\theta \approx \dfrac{1}{2} \left( \frac{\theta-\hat{\theta}}{\,\sigma_{\hat{\theta}}}\right)^2
+```
+
+We note that at $\theta = \hat{\theta} + \sigma_{\hat{\theta}}$,
+
+```{math}
+:label: eq:thetaplus
+ \ln \mathcal{L}_{\hat{\theta}} - \ln \mathcal{L}_{\hat{\theta} + \sigma_{\hat{\theta}}} \approx \dfrac{1}{2} \left( \frac{\sigma_{\hat{\theta}}}{\,\sigma_{\hat{\theta}}}\right)^2 = \dfrac{1}{2},
+```
+
+and similarly at $\theta = \hat{\theta} - \sigma_{\hat{\theta}}$,
+
+```{math}
+:label: eq:thetaminus
+ \ln \mathcal{L}_{\hat{\theta}} - \ln \mathcal{L}_{\hat{\theta} - \sigma_{\hat{\theta}}} \approx \dfrac{1}{2} \left( \frac{-\sigma_{\hat{\theta}}}{\,\sigma_{\hat{\theta}}}\right)^2 = -\dfrac{1}{2},
+```
+
+
+The uncertainty $\sigma_{\hat{\theta}} = \sqrt{V[\hat{\theta}]}$ can be read off as the distance from the peak to where $\ln \mathcal{L}$ falls by $1/2$:
 
 ```{math}
 :label: eq:loglike-drop
 \ln \mathcal{L}_{\hat{\theta}} - \ln \mathcal{L}_{\hat{\theta}\pm\sigma_{\hat{\theta}}} = \frac{1}{2}
 ```
 
-In practice: plot $\ln \mathcal{L}_\theta$ vs $\theta$, as per the example in [](#fig:graph-meth), find the peak $\hat{\theta}$, and read off the values of $\theta$ where the curve drops by $1/2$ from the peak. The half-width is $\sigma_{\hat{\theta}}$.
+<!--In practice: plot $\ln \mathcal{L}_\theta$ vs $\theta$, as per the example in [](#fig:graph-meth), find the peak $\hat{\theta}$, and read off the values of $\theta$ where the curve drops by $1/2$ from the peak. The half-width is $\sigma_{\hat{\theta}}$.-->
+
+This cute way of estimating the MLE uncertainty is illustrated in [](#fig:graph-meth); find the peak $\hat{\theta}$, and read off the values of $\theta$ where the curve drops by $1/2$ from the peak. The half-width is $\sigma_{\hat{\theta}}$
 
 :::{figure}
 :label: fig:graph-meth
@@ -477,28 +424,7 @@ The graphical method is one way to estimate the uncertainty on a maximum likelih
 (sec:mle-numerical)=
 ## Numerical MLE with `scipy`
 
-When the log-likelihood has no closed-form derivative, or when there are many parameters, we use numerical optimisation. The standard approach is to minimise the NLL.
-
-Let's import some useful libraries:
-
-```{code-cell} python
-import numpy as np
-import matplotlib.pyplot as plt
-
-# scipy.special.binom is the binomial coefficient function
-from scipy.special import binom as bnc
-
-# scipy.stats.binom is the probability distribution
-from scipy.stats import binom
-
-# for parameter estimation
-from scipy.stats import fit
-import scipy.optimize as opt
-
-from sympy import symbols, diff, solve, lambdify
-from sympy import log, expand_log, factorial, expand, simplify, collect,cancel
-```
-
+When the Log Likelihood has no closed-form derivative, or when there are many parameters, we use numerical optimisation. The standard approach is to minimise the NLL (the NLL is the Objective Function).
 
 
 Here we look at what can be done with ```sympy``` and at a few of the (many) methods ```scipy``` offers:
@@ -507,6 +433,8 @@ Here we look at what can be done with ```sympy``` and at a few of the (many) met
  ] is a method for doing the same if you can figure out the first derivative of the function.
 * ```minimize_scalar```  [ [scipy.optimize.minimize_scalar](https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize_scalar.html#scipy.optimize.minimize_scalar
 ) ] is another method for doing the same, and you don't need to calculate the derivative function.
+
+---
 
 (sec:minim_intro)=
 ### General Introduction to Minimisation
@@ -526,11 +454,17 @@ def f1(x):
     return (x-2) * x * (x+2)**2
 ```
 
+
+
+
+
 ```{code-cell} python
 # plot the function over our chosen range with some sub-ranges to check the close-up behaviour
 
 def plot_func(x0=None,x1=None):
     
+    import numpy as np
+    import matplotlib.pyplot as plt
 
     if(x0 and x1):
         fig, ax = plt.subplots(nrows=1, ncols=1, figsize=(6,4), layout='tight')
@@ -560,10 +494,15 @@ Plotting the function over various ranges allows us to see that what looks like 
 
 Let's use the `minimize_scalar` method to find the coordinates of the global minimum.
 
-### `minimize_scalar` for f(x)
+<!--### `minimize_scalar` for f(x)-->
+
+
+
 
 ```{code-cell} python
 def minimize_demo(f1):
+
+    import scipy.optimize as opt
 
     result = opt.minimize_scalar(f1)
 
@@ -580,10 +519,12 @@ Lets replot around the lowest of the two minima, $x\approx 1.28$, to check the r
 plot_func(1,1.5)
 ```
 
-Scipy's `minimize_scalar` result of `(x=1.28, f(x)=-9.91)` looks legit. How did it do that? Calculus! And we know how to do it by hand.
+Scipy's `minimize_scalar` result of `(x=1.28, f(x)=-9.91)` looks legit. How did it do that? Calculus! 
+
+---
 
 
-### Using `sympy (diff, solve, lambdify)` for the math behind `minimize_scalar` :
+### Using `sympy` for the math behind `minimize_scalar` :
 
 We find the minimum of a function by differentiating it, as the derivative of a function evaluated at some point is its gradient (or slope), and the gradient is zero at points where the function turns over.
 
@@ -591,9 +532,13 @@ We find the minimum of a function by differentiating it, as the derivative of a 
 2. Determine if the points are minima or maxima. We use the second derivative for this. If it is **positive**, we have a **minimum**, because the function is curving upwards in the positive direction on either side of the turning point. Vice versa for **negative: maximum**. If the second derivative is zero, the turning point is an "inflection point", rather than a maximum or minimum.
 3. Select the minimum with the lowest function value.
 
+
+
 ```{code-cell} python
 def sympy_minimise_function(f):
 
+    from sympy import symbols, diff, lambdify, solve
+    
     x = symbols('x')
 
     #---------------------------
@@ -649,6 +594,8 @@ print(f"Find the lowest minimum coordinates using minimize_scalar: ")
 print(f" * x = {mini_x:.3f}, f = {mini_f:.3f}")
 ```
 
+---
+
 ## Parameter Estimation : Binomial `p`
 
 Now that we understand how a function is minimised, let's try doing this with a Negative Log Likelihood Function.
@@ -667,6 +614,8 @@ and the general form for the **Negative Log Likelihood**:
 
 $$\mathsf{NLL} = - \ln\mathcal{L} = \sum\limits_i^N \ln {p_K(k_i)}$$.
 
+---
+
 ### `sympy` methods
 
 This is essentially the "by-hand" method, with a bit of help from `sympy` on the derivatives, and perhaps most helpfully, on finding the roots with `solve`. All of this can also be done with a pen and paper, but `sympy` can be very useful.
@@ -680,19 +629,32 @@ The code below has the following steps:
 
 Note that the Binomial Coefficient does not depend on `p`. As such, $C_k^n$ will vanish when we take the derivative of the NLL with respect to p. We do not need to calculate it explicitly in this example, but we would need to calculate it for the PMF probabilities, in which case we would use:
 
+
+
+
 ```
+# scipy.special.binom is the binomial coefficient function
+
 from scipy.special import binom as bnc
 binco = bnc(n,k)
 ```
 
-There are several subtleties needed for maximising the helpfulness of ```sympy```. Relevant here:
-1. When defining the ```symbols```, if they are constrained to positive values you should mark them as such with the flag ```positive=True```.
-2. Sympy will not simplify/expand/cancel the results it finds unless you explictly ask it to. In the example below we use ```expand_log``` to put the result in the helpful log rules form of ```log(abc) = log(a) + log(b) + log(c)```, and we use ```cancel``` to cancel terms like ```a**b * a**-b = a**0 = 1```
+:::{warning}
+
+There are several subtleties needed for maximising the helpfulness of `sympy`. Relevant here:
+1. When defining the `symbols`, if they are constrained to positive values you should mark them as such with the flag `positive=True`.
+2. `sympy` will not simplify/expand/cancel the results it finds unless you explictly ask it to. In the example below we use `expand_log` to put the result in the helpful log rules form of `log(abc) = log(a) + log(b) + log(c)`, and we use `cancel` to cancel terms like `a**b * a**-b = a**0 = 1`
+
+:::
+
 
 ```{code-cell} python
 # let's do this first of all with sympy
 def estimate_binomial_p_sympy():
 
+    from sympy import symbols, log, expand_log, diff, cancel
+    from sympy.solvers import solve
+  
     # Important Note: the positive=True flag is crucial for getting a sensible answer from solve
     c,n,p,k = symbols('c n p k', positive=True)
 
@@ -731,7 +693,7 @@ def estimate_binomial_p_sympy():
 estimate_binomial_p_sympy()
 ```
 
-```Sympy``` did the derivative for us and found the symbolic maximum likelihood estimate $\hat{p}_{_\mathsf{MLE}}$=k/n.
+In the above code cell, `sympy` did the derivative for us and found the symbolic maximum likelihood estimate $\hat{p}_{_\mathsf{MLE}}$=k/n.
 
 This solution makes perfect sense. If we toss the coin n=3 times and find k=1 heads, the information in the data is that there is a 1/3 chance of heads on each toss. So this is the logical value for the MLE of the parameter p.
 
@@ -754,10 +716,17 @@ Note that ```scipy``` methods are numeric rather than symbolic, so we need to pa
 **Set the fake data and ```n``` parameter value**:
 
 ```{code-cell} python
-# n parameter: number of coin tosses
-n=50
-# some fake data points I made up, for the number of heads from 50 tosses
-data=np.array([27,28,29,11])
+
+def gen_binom_data():
+  import numpy as np
+  # n parameter: number of coin tosses
+  n=50
+  # some fake data points I made up, for the number of heads from 50 tosses
+  data=np.array([27,28,29,11])
+  return data, n
+
+binom_data, binom_n = gen_binom_data()
+
 ```
 
 ---
@@ -767,7 +736,7 @@ data=np.array([27,28,29,11])
 
 This is a lovely simple way to estimate the parameter of a ```scipy.stats``` probability distribution. Note that it cannot be used for a regular function.
 
-In this example we pass three things to fit:
+In this example we pass three things to `fit()`:
 * The binomial distribution, ```dist=binom``` without setting the parameters, straight "out-of-the-box" from ```scipy.stats import binom```.
 * The data, ```data=data```, which is an array of values for the RV (e.g. number of heads)
 * The bounds, ```bounds = {'n': (n,n), 'p': (0.001, 0.999) }```, on the parameters `n` and `p` of the Binomial distribution. For the `n` parameter we fix it by setting the lower and upper bound to the same value. For the `p` parameter we let it vary between 0.001-0.999, which is close to the maximum range allowed for a probability ($0\leq\,$`p`$\,\leq 1$).
@@ -780,15 +749,17 @@ The fit function returns a dictionary with the keys ```params, success, message`
 # ------------------------#
 def estimate_binomial_p_scipy_fit(n,data):
 
-    bounds = {'n': (n,n), 'p': (0.001, 0.999) }
+  from scipy.stats import binom, fit
 
-    result_fit = fit(dist=binom, data=data, bounds=bounds)
+  bounds = {'n': (n,n), 'p': (0.001, 0.999) }
 
-    mle_est_p = result_fit.params[1]
+  result_fit = fit(dist=binom, data=data, bounds=bounds)
 
-    return mle_est_p 
+  mle_est_p = result_fit.params[1]
 
-mle_est_fit = estimate_binomial_p_scipy_fit(n,data)
+  return mle_est_p 
+
+mle_est_fit = estimate_binomial_p_scipy_fit(binom_n,binom_data)
 
 print(f"scipy.stats.fit MLE estimate for p={mle_est_fit:.3f}")
 
@@ -805,7 +776,7 @@ The job of ```fsolve``` is to provide the roots of a function or system of funct
 This method is well-suited for the first derivative of the Log Likelihood function, $\dfrac{d}{dp} \ln \mathcal{L}$, as this is zero at the maximum likelihood estimate for `p`; or in other words, the root of the derivative LL function is `p`.
 
 In this example we pass three things to ```fsolve```:
-* The objective function, ```func=dLL_dp```, is the derivative, $\dfrac{d}{dp} \ln \mathcal{L}$, which the algorithm sets to zero in order to determine the root, ```p```.
+* The Objective Function, ```func=dLL_dp```, is the derivative, $\dfrac{d}{dp} \ln \mathcal{L}$, which the algorithm sets to zero in order to determine the root, ```p```.
 * An initial guess at the parameter, ```x0=p_guess```, which gives the algorithm a starting point.
 * The names of the objective function arguments that we are **not** seeking to estimate, ```args=spectators```. In this the objective function requires the data and n parameter, but these are known and are therefore not the job of the algorithm to solve for.
 
@@ -817,27 +788,30 @@ The ```fsolve``` function returns an array of the roots. In our example here the
 # ------------------------------#
 def estimate_binomial_p_scipy_fsolve(n,data):
 
-    # we have some fail-safes in this function to catch cases where p=0,1, because there is no option for bounds in fsolve
-    # the dLL_dp form was provided to us above in the printout from sympy:
-    # Derivative of Negative Log Likelihood:
-    # (k - n*p)/(p**2 - p)
-    def dLL_dp(p, n, data):
-        k = data
-        if(p==0 or p==1):
-            return -np.inf         
-        return np.sum( (k - n*p)/(p**2 - p) )
+  import scipy.optimize as opt
+  import numpy as np
 
-    p_guess = 0.1
+  # we have some fail-safes in this function to catch cases where p=0,1, because there is no option for bounds in fsolve
+  # the dLL_dp form was provided to us above in the printout from sympy:
+  # Derivative of Negative Log Likelihood:
+  # (k - n*p)/(p**2 - p)
+  def dLL_dp(p, n, data):
+      k = data
+      if(p==0 or p==1):
+          return -np.inf         
+      return np.sum( (k - n*p)/(p**2 - p) )
 
-    spectators = (n, data)
+  p_guess = 0.1
 
-    result_fsolve = opt.fsolve(func=dLL_dp, x0=p_guess, args=spectators )
+  spectators = (n, data)
 
-    mle_est_p = result_fsolve[0]
+  result_fsolve = opt.fsolve(func=dLL_dp, x0=p_guess, args=spectators )
 
-    return mle_est_p 
+  mle_est_p = result_fsolve[0]
 
-mle_est_fsolve = estimate_binomial_p_scipy_fsolve(n,data)
+  return mle_est_p 
+
+mle_est_fsolve = estimate_binomial_p_scipy_fsolve(binom_n,binom_data)
 
 print(f"scipy.optimize.fsolve MLE estimate for p={mle_est_fsolve:.3f}")
 
@@ -866,6 +840,10 @@ The ```minimize_scalar``` returns a dictionary with several keys. The key we are
 # ---------------------------------------#
 def estimate_binomial_p_scipy_minimize_scalar(n,data):
 
+    import scipy.optimize as opt
+    import numpy as np
+    from scipy.special import binom as bnc
+
     def NLL(p, n, data ):
         k = data
         c = bnc(n,k) 
@@ -884,7 +862,7 @@ def estimate_binomial_p_scipy_minimize_scalar(n,data):
 
     return mle_est_p 
 
-mle_est_minimize_scalar = estimate_binomial_p_scipy_minimize_scalar(n,data)
+mle_est_minimize_scalar = estimate_binomial_p_scipy_minimize_scalar(binom_n,binom_data)
 
 print(f"scipy.optimize.minimize_scalar MLE estimate for p={mle_est_minimize_scalar:.3f}")
 
@@ -908,6 +886,10 @@ The differences to note with respect to ```minimize_scalar``` include:
 # METHOD: scipy.optimize.minimize
 # ---------------------------------------#
 def estimate_binomial_p_scipy_minimize(n,data):
+
+    import scipy.optimize as opt
+    import numpy as np
+    from scipy.special import binom as bnc
 
     def NLL(p, n, data ):
 
@@ -934,25 +916,24 @@ def estimate_binomial_p_scipy_minimize(n,data):
 
     return mle_est_p, var_p
 
-mle_est_minimize, var_p_minimize = estimate_binomial_p_scipy_minimize(n, data)
+mle_est_minimize, var_p_minimize = estimate_binomial_p_scipy_minimize(binom_n, binom_data)
 
+import numpy as np
 print(f"scipy.optimize.minimize MLE estimate for p = {mle_est_minimize:.3f}")
 print(f"Estimated std dev on p̂:          {np.sqrt(var_p_minimize):.4f}")
 print(f"\n (full precision: {mle_est_minimize})")
 ```
 
 The uncertainty on the MLE follows from the curvature of the log-likelihood at its maximum.
-For a parameter vector $\boldsymbol\theta$, the **observed Fisher information** evaluated at $\hat{\boldsymbol\theta}$ is:
+For a parameter vector $\theta$, the **observed Fisher information** [](#eq:informationN) evaluated at $\hat{\theta}$ is:
 
 $$
-\mathcal{I}(\hat{\boldsymbol\theta}) = -\frac{\partial^2 \ln\mathcal{L}}{\partial\boldsymbol\theta^2}\bigg|_{\hat{\boldsymbol\theta}},
+\mathcal{J}^{obs}_\theta = -\frac{\partial^2 \ln\mathcal{L}}{\partial\theta^2}\bigg|_{\hat{\theta}},
 $$
 
-and by the **Cramér–Rao bound**, for large samples the MLE achieves the minimum variance:
+and for large samples the MLE achieves the minimum variance [](#eq:rcf):
 
-$$
-\mathsf{Cov}(\hat{\boldsymbol\theta}) \approx \mathcal{I}(\hat{\boldsymbol\theta})^{-1} = \left[-\frac{\partial^2 \ln\mathcal{L}}{\partial\boldsymbol\theta^2}\bigg|_{\hat{\boldsymbol\theta}}\right]^{-1}.
-$$
+$$\Sigma \approx \dfrac{1}{\mathcal{J}^{obs}_\theta}$$
 
 BFGS stores an approximation to this inverse Hessian as `result.hess_inv`; for a single parameter it is a $1\times1$ matrix, so the variance is `result.hess_inv[0, 0]`.
 
@@ -962,18 +943,22 @@ built up iteratively from gradient differences during the BFGS search.  For a we
 smooth, approximately-quadratic log-likelihood it is a reliable covariance estimate.  It may be inaccurate when:
 
 * Convergence was poor (`result.success` is `False` or the number of iterations was very small).
-* The log-likelihood is highly non-quadratic near the maximum (e.g.\ skewed posteriors, boundary effects).
+* The log-likelihood is highly non-quadratic near the maximum (e.g. skewed posteriors, boundary effects).
 * The true covariance is very large — BFGS can underestimate it in flat landscapes.
 
-For a more reliable covariance, compute the Hessian of the NLL numerically (e.g.\ with `numdifftools.Hessian`)
+For a more reliable covariance, compute the Hessian of the NLL numerically (e.g. with `numdifftools.Hessian`)
 and invert it, or use the Fisher information matrix derived analytically.
 :::
+
+---
 
 ## Model Tests
 
 In [](#chapter:normtest) we looked at some test statistics for comparing the means of a distribution and a hypothesis, and for comparing the means of more than one distribution. These tests were limited to use with approximately Normal data.
 
 Here we will look at tests for comparing the performance of two models. We will limit the model differences to a difference in parameter values, but note that the AIC and BIC tests can be used for different distributions.
+
+---
 
 ### Log Likelihood Ratio (LLR)
 
@@ -1017,6 +1002,7 @@ $$\mathsf{LLR} = 2\bigl(-2.184 - (-2.344)\bigr) = 0.320$$
 
 Since $\chi^2_1(0.05)=3.84$ and $0.320 < 3.84$, the $p$-value is $0.57$: we **fail to reject** the fair-coin hypothesis at the 5\% level.
 
+---
 
 ### Akaike and Bayes Information Criteria (AIC and BIC)
 
@@ -1067,6 +1053,8 @@ The BICs
   $\mathsf{BIC}_a < \mathsf{BIC}_b \;\leftarrow$ model $a$ preferred by BIC
 
 
+
+---
 
 ### AIC Probabilities
 We identify the minimum: $\mathsf{m} = \mathsf{min}(\mathsf{AIC}_a, \mathsf{AIC}_b) = \mathsf{min}(4.688, 6.367) = 4.688$
@@ -1124,13 +1112,15 @@ def model_comparison(n=50, k=27):
 model_comparison()
 ```
 
+---
+
 ### When to Use Each Test
 
 | | LLR | AIC | BIC |
 |---|---|---|---|
 | Models must be nested | Yes | No | No |
 | Gives a $p$-value | Yes (via $\chi^2_\nu$) | No | No |
-| Parameter penalty | via $\chi^2$ df | $+2k$ per param | $+k\ln N$ per param |
+| Parameter penalty | via $\nu$ | $+2k$ per param | $+k\ln N$ per param |
 | Penalises complexity more as $N$ grows | No | No | Yes |
 
 **Use LLR** when the models are nested — one is a special case of the other. It gives an explicit $p$-value via Wilks' theorem and is the most statistically powerful test when it applies.

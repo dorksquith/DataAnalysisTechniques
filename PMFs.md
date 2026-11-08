@@ -17,8 +17,8 @@ I strongly recommend the [Probability Playground](https://probabilityplayground.
 
 * `scipy.stats` distributions: `bernoulli, binom, poisson `
 * `math` methods: `factorial`
-* `scipy.special` methods: `binom`
-
+* `scipy.special` methods: `binom, gamma, gammaln, factorial`
+* `timeit` methods: `timeit`
 
 
 If a discrete RV $K$ follows a special distribution, we can immediately use it to calculate the probabilities. **But, we need to know the form and the parameter(s) of the special distribution to do this**. If the parameters are not known, we have to **Estimate** them using data. We can do this by calculating the Likelihoods for a range of parameter values and choosing the Maximum Likelihood Estimate (MLE).
@@ -45,6 +45,7 @@ We will use this topic to:
 | n trials across k categories | Multinomial |
 | Events per unit time/space | [Poisson](#sec:poisson) |
 
+---
 
 (sec:bern)=
 ## Bernoulli 
@@ -289,6 +290,21 @@ To do this we need to know how to differentiate. Here are some key results:
 (sec:useful-derivatives)=
 ### Some Useful Derivatives
 
+
+Using [MathMethodsA: Derivatives of Special Functions](#sec:mma_derivs_special_funcs) and [MathMethodsA: Chain Rule](#sec:mma-chain-rule):
+
+:::{table} 
+:align: center
+:label: tab:pmfs_derivs
+| Function $f(\theta)$ | Derivative $\dfrac{df}{d\theta}$ | Note
+|---|---|---|
+| $\ln{\theta}$ | $\dfrac{1}{\theta}$ | Derivative of Log |
+| $a\ln{\theta}$ | $\dfrac{a}{\theta}$ | Derivative of (Log times constant) |
+| $\ln{a}$ | $0$ | Derivative of (Log of constant) |
+| $f(\,g(\theta)\,)$ | $\dfrac{df}{dg}\,\dfrac{dg}{d\theta}$ | Derivative of (function of function) |
+:::
+
+<!--
 Derivative of Log
 : $\dfrac{d}{d\theta} \ln{\theta} = \dfrac{1}{\theta}$
 
@@ -300,7 +316,7 @@ Derivative of Log of constant
 
 Chain Rule
 : $\dfrac{d}{d\theta} f(g(\theta)) = \dfrac{df}{dg}\,\dfrac{dg}{d\theta}$
-
+-->
 
 The derivative of [](#eq:bern_loglike3) is:
 
@@ -315,7 +331,7 @@ The derivative of [](#eq:bern_loglike3) is:
 \end{aligned}
 ```
 
-We set this derivative to zero to solve for $\hat{p}_{MLE}$:
+We set this derivative to zero to solve for $\hat{p}_{\mathsf{MLE}}$:
 
 
 $\dfrac{d}{dp} \ln\mathcal{L}(p;\mathbf{k}) = \dfrac{n_1}{p} - \dfrac{n_0}{1-p} = 0$:
@@ -323,7 +339,7 @@ $\dfrac{d}{dp} \ln\mathcal{L}(p;\mathbf{k}) = \dfrac{n_1}{p} - \dfrac{n_0}{1-p} 
 
 and find:
 
-$\hat{p}_{MLE} = \dfrac{n_1}{n_0+n_1} = \dfrac{n_1}{N}$
+$\hat{p}_{\mathsf{MLE}} = \dfrac{n_1}{n_0+n_1} = \dfrac{n_1}{N}$
 
 
 The MLE for the Bernoulli probability is simply the observed fraction of successes — which is exactly what we would expect it to be.
@@ -338,7 +354,7 @@ We will stick with the coin toss for one more PMF. This time we will **toss the 
 
 $K\sim$ Binomial($n,p$)
 
-The parameters are $n,p$ where $p$ is again the probability of success for a single coin toss, just as for [](#sec:bern). Note that one Binomial trial consists of $n$ Bernoulli trials.
+The parameters are $n,p$ where $p$ is again the probability of success for a single coin toss, just as for [Bernoulli](#sec:bern). Note that one Binomial trial consists of $n$ Bernoulli trials.
 
 ---
 
@@ -353,12 +369,17 @@ p_K(k) = \binom{n}{k} \, p^k\, (1-p)^{n-k} \;\; ; \;\;  0\leq k \leq n
 
 The **Support** of $K$ is $0 \leq k \leq n$: all values $k$ with non-zero probability. 
 
-The **Kernel** of the Binomial PMF is given in [](#eq:binom_kernel); this is the part of the PMF that depends on the RV, which in this case means we omit the Binomial Coefficient $\binom{n}{k}$ (because it is just a number that scales the PMF).
+The **Kernel** of the Binomial PMF is given in [](#eq:binom_kernel); this is the part of the PMF that depends on the RV, $k$, which in this case is the whole PMF.
 
 ```{math}
 :label: eq:binom_kernel
- p^k\, (1-p)^{n-k}
+ \binom{n}{k} p^k\, (1-p)^{n-k}
 ```
+
+:::{warning}
+I incorrectly claimed the Binomial Kernel was $p^k\, (1-p)^{n-k}$ in a previous draft of these notes - this is not correct of course because the binomial coefficient is a function of the RV $K$, so belongs in the kernel.
+:::
+
 
 A plot of the Binomial PMF for chosen parameter values $p=0.5$ and $n=50$ is shown in [](#fig:binomPMF) along with the Cumulative Distribution Function (CDF).
 
@@ -419,7 +440,7 @@ Binomial PMF is valid.
 ---
 
 (sec:binom-coeff)=
-### Binomial Coefficient
+### The Binomial Coefficient
 
 The Binomial Coefficient $\binom{n}{k}$ is a count of the number of ways to get $k$ successful outcomes from $n$ trials.
 
@@ -470,16 +491,14 @@ print(f"bnc(n=20,k=9)= {ByHandBNC(20,9)}")
 
 # n=30 tosses, k=15 heads
 print(f"bnc(n=30,k=15)= {ByHandBNC(30,15)}")
+
+# n=200 tosses, k=171 heads
+print(f"bnc(n=200,k=172)= {ByHandBNC(200,172)}")
 ```
 
-Unsurprisingly, `scipy` has a method for calculating the binomial coefficients, shown below. I do not recommend reinventing the wheel  with eg the `ByHandBNC` function above - I include this for transparency only, as the built-in `scipy` methods tend to be very general and therefore not easy to understand in simple terms. The `scipy.special.binom` method for calculating the binomial coefficient is far superior to my toy version above[^nonintfact].
+Unsurprisingly, `scipy` has a method for calculating the binomial coefficients, shown below. I do not recommend reinventing the wheel  with eg the `ByHandBNC` function above - I include this for transparency only, as the built-in `scipy` methods tend to be very general and therefore not easy to understand in simple terms. The `scipy.special.binom` method for calculating the binomial coefficient is far superior to my toy version above[^nonintfact] - it works for any value of $k$ (not just integers, and not just $k\leq 170$).
 
-[^nonintfact]: For $K\sim$ Binomial($n,p$), $n$ and $k$ will always be integers, so the by-hand method is fine. We can calculate the binomial coefficient for any number using the `scipy.special.binom` method via use of Gamma and Beta functions, introduced briefly in [](#sec:chi2-pdf-gamma)
-
-:::{warning}
-There are two `binom` methods in `scipy`. The distribution (PMF) is accessed via `scipy.stats.binom`. The Binomial Coefficient is accessed via `scipy.special.binom`.
-:::
-
+[^nonintfact]: For $K\sim$ Binomial($n,p$), $n$ and $k$ will always be integers, so the by-hand method is fine, **providing k is not larger than 170**. See [](#sec:pmfs_gammaln_example) for a discussion of how to manage large factorials. We can calculate the binomial coefficient for non-integers using the `scipy.special.binom` method via use of Gamma and Beta functions, introduced briefly in [](#sec:chi2-pdf-gamma)
 
 
 ```{code-cell} python
@@ -496,6 +515,9 @@ print(f"bnc(n=20,k=9)= {ScipyBNC(20,9)}")
 print(f"bnc(n=30,k=15)= {ScipyBNC(30,15)}")
 ```
 
+:::{warning}
+There are two `binom` methods in `scipy`. The distribution (PMF) is accessed via `scipy.stats.binom`. The Binomial Coefficient is accessed via `scipy.special.binom`.
+:::
 
 ---
 
@@ -845,11 +867,112 @@ Setting $\dfrac{d}{d\lambda}\ln\mathcal{L} = 0$, we find:
 
 The MLE for the Poisson rate is simply the sample mean. For Alf's data: $\hat{\lambda} = (15+18+20+14+19+17+16)/7 = 17.0$ donuts per day.
 
+:::{tip}
+
+The Poisson Negative Log Likelihood is the objective function that we miniminise to find the parameter estimate $\hat{\lambda}$ using `scipy` methods.
+
+```{math}
+\begin{aligned}
+\mathsf{NLL} & = - \ln\mathcal{L}(\lambda;k) \\[4pt]
+&= \sum\limits_{i=1}^{N} \left( \lambda - \ln(\lambda)k_i +  \ln(k_i!) \right) \\[4pt]
+&= \sum\limits_{i=1}^{N} \left( \lambda - \ln(\lambda)k_i +  \ln \Gamma(k_i+1) \right) \\[4pt]
+
+\end{aligned}
+```
+
+The $\ln(k_i!)$ can be more helpfully written with the [Gamma function](#sec:gamma-function): $\ln(k_i!) = \ln \Gamma(k+1)$.
+
+An example of using `scipy`'s `gammaln` method is given [below](#sec:pmfs_gammaln_example).
+
+:::
+
+---
+
+(sec:pmfs_gammaln_example)=
+### 🆕 Example of using `gammaln` for $\ln(k!)$
+
+```{code-cell} python
+import numpy as np
+from scipy.special import gamma, gammaln, factorial
+
+def log_fac_comparison(k):
+    """Compute ln(k!) by three methods and check they agree."""
+
+    lfk = []
+
+    # Method 1: float factorial then log (overflows for large k)
+    log_factorial_k = float(np.log( factorial(k) ))
+    lfk.append(log_factorial_k)
+
+    # convert result to a right-justified string with a width of 12 characters
+    m1 = str(round(log_factorial_k,6)).rjust(12)
+
+    # Method 2: log of Gamma function (overflows for large k)
+    log_gamma_k1 = np.log( gamma(k+1) )
+    lfk.append(log_gamma_k1)
+    m2 = str(round(log_gamma_k1,6)).rjust(17)
+
+    # Method 3: gammaln - numerically stable, never overflows
+    gammaln_k1 = gammaln( k+1 )
+    lfk.append(gammaln_k1)
+    m3 = str(round(gammaln_k1,6)).rjust(12)
+
+    allclose = np.allclose(lfk[0], lfk[1:])
+    check = str(allclose).rjust(10)
+
+    print(f"{str(k).rjust(7)} | {m1} | {m2} | {m3} | {check}")
+
+
+
+print("# -------------------------------------------------")
+print("# Compare log factorial methods")
+print("# -------------------------------------------------\n")
+
+print(f"{'k'.rjust(7)} | {'log(k!)'.rjust(12)} | {'log(Gamma(k+1))'.rjust(17)} | {'gammaln(k+1)'.rjust(12)} | {'allclose?'.rjust(10)}")
+
+
+for k in [0, 0.2, 3, 170,171]:
+    log_fac_comparison(k)
+
+```
+
+Notice that all methods give the same result for small values of k, but for k=171 the first two methods hit the overflow problem - the number 171! in the intermediate calculation is too large for the computer to handle, so is set to `inf`. Using `gammaln` avoids this problem. The `scipy gamma` and `gammaln` methods are also significantly quicker than the `factorial` method, as illustrated in the `SpeedTest()` example below.
+
+
+```{code-cell} python
+# Which method is quickest? 
+
+def SpeedTest(k,num):
+
+  # using the timeit module
+  from timeit import timeit as tt
+
+  # the :_ formats the printed number with underscores at thousand separators 
+  # - makes it easier to read large numbers.
+  print("\n# -------------------------------------------------")
+  print(f"# Speed Tests for {num:_} repeated calls, k={k}")
+  print("# -------------------------------------------------")
+
+  # we pass the methods to timeit using the lambda function
+  # lambda: my_func returns the value of the function
+  t1   = tt(lambda: np.log(factorial(k)),  number=num)
+  t2   = tt(lambda: np.log(gamma(k + 1)),  number=num)
+  t3   = tt(lambda: gammaln(k + 1),        number=num)
+  print(f"  np.log(factorial(k)):  {t1:.4f} s")
+  print(f"  np.log(gamma(k+1)):    {t2:.4f} s")
+  print(f"  gammaln(k+1):          {t3:.4f} s")
+
+SpeedTest(123, 100_000)
+
+```
+
+
+
 ---
 
 ## Poisson versus Binomial
 
-The obvious choice for modelling the rate of donut sales in Alf's shop is to go with $K\sim\; Poisson(\lambda=17.0)$.
+The obvious choice for modelling the rate of donut sales in Alf's shop is to go with $K\sim\;$ Poisson($\lambda=17.0$).
 
 
 ```{figure}
@@ -887,6 +1010,7 @@ model for the hourly rate of donut sales.
 
 ---
 
+(sec:pmfs_summary)=
 ## Summary of Discrete Distributions
 
 ```{table} Bernoulli, Binomial, and Poisson
@@ -894,7 +1018,7 @@ model for the hourly rate of donut sales.
 |  Name | Kernel  | E[K] | V[K] | Support | Parameters  | `scipy.stats` |
 | ---   |  ---     | ---  | ---  | ---     |  ---        |  ---          |
 |  Bernoulli | $(1-p)^{(1-k)}\, p^k$ | p | p(1-p) |$0 \leq k \leq 1$ | $0\leq p \leq 1$ | `bernoulli(p)` |
-|  Binomial | $(1-p)^{(n-k)}\, p^k$ | np | np(1-p) |$0 \leq k \leq n$ | $0\leq p \leq 1$, $0\leq n \leq \infty$  | `binom(n,p)` |
+|  Binomial | $\binom{n}{k}\,(1-p)^{(n-k)}\, p^k$ | np | np(1-p) |$0 \leq k \leq n$ | $0\leq p \leq 1$, $0\leq n \leq \infty$  | `binom(n,p)` |
 |  Poisson | $\dfrac{\lambda^k}{k!}$ | $\lambda$ | $\lambda$ | $0 \leq k \leq \infty$ | $0\leq \lambda \leq \infty$  | `poisson(mu)` |
 
 

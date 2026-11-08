@@ -85,6 +85,7 @@ $$e = \lim_{n\to\infty}\left(1 + \frac{1}{n}\right)^n$$
 
 It is the unique base for which $\dfrac{d}{dx}e^x = e^x$.
 
+(sec:mma_logs)=
 ### Logarithms
 
 The logarithm $\log_b(x)$ is the inverse of exponentiation: $\log_b(b^x) = x$ and $b^{\log_b x} = x$.
@@ -306,6 +307,7 @@ print(f"Numerical f'({x0}) ≈ {numerical_derivative(f, x0):.6f}")
 print(f"Exact     f'({x0})  = {3 * x0**2:.6f}   (power rule: 3x² at x=2)")
 ```
 
+(sec:mma_derivs_special_funcs)=
 ### Derivatives of Special Functions
 
 | Function $f(x)$ | Derivative $f'(x)$ |

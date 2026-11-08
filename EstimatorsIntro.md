@@ -109,7 +109,7 @@ E\left[\, \overline{x}\, \right]  & = E\left[ \dfrac{1}{N} \sum\limits_i^N x_i \
 We have shown that $E\left[\, \overline{x}\, \right] = E[X]$, which with the notation $\mu \equiv E[X]$ and for this choice of estimator $\hat{\mu} =\overline{x}$, shows that **the Sample Mean is an unbiased estimator for the True Mean**.
 
 Variance Check
-: Is the sample mean the minimum variance estimate for the true mean? Proving that an estimator is the minimum variance of all possible estimators is beyond the scope of this module, but we will look briefly at the variance of $\overline{x}$ because it gives us the [SEM](#eq:sem), and I will state without proof that $\overline{x}$ is the Minimum Variance Unbiased Estimator [MVUE](https://en.wikipedia.org/wiki/Rao%E2%80%93Blackwell_theorem) for $\mu$. 
+: Is the sample mean the minimum variance estimate for the true mean? Proving that an estimator is the minimum variance of all possible estimators is briefly touched upon later in these notes [](#sec:mvb), but we will look briefly at the variance of $\overline{x}$ now because it gives us the [SEM](#eq:sem), and I will state without proof that $\overline{x}$ is the Minimum Variance Unbiased Estimator [MVUE](https://en.wikipedia.org/wiki/Rao%E2%80%93Blackwell_theorem) for $\mu$. 
 
 Let's calculate the variance of the sample mean[^notevn]:
 
@@ -175,45 +175,48 @@ Additionally using $\hat{\sigma}_{\mathsf{true}} = \sigma_{x}$:
 (sec:var-est)=
 ## The Sample Variance as an Estimator for the True Variance
 
-The Sample Variance $v_x$ is an Estimator for the True Variance $V[x]$.
+The Sample Variance $v_x$ is an Estimator for the True Variance $V[X]$. We will use the following general notation to avoid bamboozling statements such as "the variance of the variance estimator" in what follows:
 
-```{math}
-:label: eq:vhat
-\hat{V}[X] = v_x
-```
+$\theta \equiv V[X]$: the true variance.
 
-To check the Consistency, Bias, and Variance of the Estimator, we need to write down $\hat{V}[X] = v_x$ in terms of the True Variance, $V[X]$.
+$\hat{\theta}_u \equiv \hat{V}[X]$: the [unbiased variance](#eq:varianceU) estimator.
 
-A proof using a clean algebraic identity is given in [Math Methods B](#sec:var-bias-proof). The conclusion is:
+$\hat{\theta}_b \equiv \hat{V}[X]$: the [biased variance](#eq:variance) estimator.
 
-```{math}
-:label: eq:vartruesamp
-E\!\left[\hat{V}[X]\right] = \dfrac{N-1}{N} V[X]
-```
+
+
+
+The Expectation and Bias for the two choices of variance estimator are given in [](#tab:ei_varest).
+
+[^proofa]: Proofs are given in [Math Methods B: Bias of the Sample Variance](#sec:var-bias-proof).
+
+:::{table} The Expectation and Bias for the unbiased and biased variance estimators
+:align: center
+:label: tab:ei_varest
+| Variance Estimator $\hat{\theta}$ | Expectation[^proofa]  | Bias $b = E[\hat{\theta}] - \theta$ |
+|---|---|---|
+| $\hat{\theta}_u = \dfrac{1}{N-1} \sum\limits_i^N (x_i - \bar{x})^2$   | $E[\hat{\theta}_u] = \theta$  | $b=0$ | 
+| $\hat{\theta}_b = \dfrac{1}{N} \sum\limits_i^N (x_i - \bar{x})^2$   |  $E[\hat{\theta}_b] =\dfrac{N-1}{N} \theta$  | $b = -\dfrac{\theta}{N}$ | 
+:::
+
 
 Consistency Check
-: Does $\hat{V}[X] \rightarrow V[X]\; as \; N\rightarrow \infty$?
+: Does $\hat{\theta} \rightarrow \theta\; as \; N\rightarrow \infty$?
 
-In the **Asymptotic Limit** ($N\to\infty$), it is clear that $ \dfrac{N-1}{N} \to 1$. **The Sample Variance is a consistent estimator for the true variance**.
+  In the biased variance case, we can see that in the **Asymptotic Limit** ($N\to\infty$), $ \dfrac{N-1}{N} \to 1$, so this estimator is consistent.
+
+  In the unbiased variance case, we found $E[\hat{\theta}_u] = \theta$, so this estimator is consistent.
 
 
 
 Bias Check
-: We can use [](#eq:vartruesamp) in [](#eq:est_bias) to quantify the bias:
-
-```{math}
-:label: eq:varbias
-b = E[\hat{V}[X]] - V[X] = \dfrac{N-1}{N} V[X] - V[X]
-```
-The Bias $b$ is non-zero, so **the Sample Variance is a biased estimator for the true variance**.
-
-This is why we have the factor $\dfrac{1}{N-1}$ as opposed to $\dfrac{1}{N}$ in the [definition](#eq:varianceU) for the **Unbiased Variance**.
+: From [](#tab:ei_varest), we see that the biased variance estimator is biased and the unbiased variance estimator is unbiased!
 
 :::{note}
 Bias is not the only thing that matters. Sometimes, the Best Estimator is not the zero bias estimator.
 :::
 
-If we continue simplifying [](#eq:varbias), we see that $b = -\dfrac{V[X]}{N} $: there is a negative bias. This means that our Estimator $\hat{V}[X]$ is smaller than the true variance $V[X]$. This makes sense, because in our Estimator we have used a finite number of measurements, which will be clustered around the sample mean $\overline{x}$. The True Variance uses **all possible measurements**. Given that these will include all of the measurements used for the sample variance plus a great deal more, it makes sense that the True Variance is larger than the sample variance. The larger we make $N$, the closer the Estimator gets to the True Variance.
+It makes sense that the biased variance estimator $\hat{\theta}$ is smaller than the true variance $\theta$, because in our Estimator we have used a finite number of measurements, which will be clustered around the sample mean $\overline{x}$. The True Variance uses **all possible measurements**. Given that these will include all of the measurements used for the sample variance plus a great deal more, it makes sense that the True Variance is larger than the sample variance. The larger we make $N$, the closer the Estimator gets to the True Variance.
 
 :::{tip}
 I acknowledge that thinking about the "variance on the variance" can cause issues in terms of making new neural connections[^neurons] in the old wheelbox[^wot]. The approach that works for me is to think of the variance as a parameter of the distribution; some number. All numbers have some uncertainty.
@@ -225,74 +228,59 @@ I acknowledge that thinking about the "variance on the variance" can cause issue
 
 
 Variance Check
-: Calculating the variance on the sample variance (the square root of which gives us the Standard Error on the Variance, SEV) is not as straightforward as [](#eq:varmean), especially in cases where the data are not normally distributed. I have included some notes on this below for those who are interested, but we will note that **for all practical purposes ("fapp") we calculate the SEV** without the help of any analytical formulas, using eg the [**Bootstrap Method**](#sec:Resampling).
+: Calculating the variance on the sample variance (the square root of which gives us the Standard Error on the Variance, SEV) is not as straightforward as the [variance on the mean](#eq:varmean), especially in cases where the data are not normally distributed. I have included some notes on this below for those who are interested, but we will note that **for all practical purposes (fapp) we calculate the SEV** without the help of any analytical formulas, using eg the [**Bootstrap Method**](#sec:Resampling) introduced below.
 
 
-(sec:normal-sev)=
-### The SEV for Normal data
+(sec:ei_sev)=
+### The Standard Error on the Variance (SEV)
 
-In the **special case** that the data are Normally Distributed, the variance on the (unbiased) variance estimator $\hat{\theta} = v_x$ is:
+Notation 
+: $\theta \equiv V[X]$: the true variance.
 
-```{math}
-:label: eq:vest_unbiased
-V[\hat{\theta}] =  \dfrac{2\theta^2}{N-1} 
-```
+  $\hat{\theta}_b \equiv \hat{V}[X] = \frac{1}{N} \sum\limits_i^N  (x_i - \overline{x})^2 $ is the biased variance estimator.
 
-The proof of [](#eq:vest_unbiased) is given in [Math Methods B](#sec:sev-proof), using the result that $(N-1)v_{x,u}/\sigma^2 \sim \chi^2(N-1)$.
-
-The SEV is the square root of the variance:
-
-```{math}
-:label: eq:sev
-\mathsf{SEV} = \sqrt{ \dfrac{2\theta^2}{N-1} }
-```
+  $\hat{\theta}_u \equiv \hat{V}[X] = \frac{1}{N-1} \sum\limits_i^N  (x_i - \overline{x})^2 $ is the unbiased variance estimator.   
 
 
-If our data are normally distributed we can estimate the SEV from data, using the (unbiased) sample variance ($\hat{\theta} = v_x$) as an estimate for the true variance ($\theta=V[X]$), just as we can do for the [SEM](#eq:sem). Note that [](#eq:sev) applies for the [unbiased variance](#eq:varianceU) estimator. 
-
-If we wish to use the [biased variance](#eq:variance) estimator, we must adjust the formula for the SEV, because:
-
-$v_{x,\mathsf{biased}} =  \dfrac{N-1}{N}\, v_{x,\mathsf{unbiased}} $. 
-
-This gives us the form of the Estimator Variance to use with the biased estimator:
-
-```{math}
-:label: eq:vest_biased
-V[\hat{\theta_b}] =  \dfrac{2(N-1)\theta^2}{N^2} 
-```
+In the **special case** that the data are **Normally Distributed**, the Variances (along with the Biases and Mean Squared Errors) on the two choices of variance estimator are given in [](#tab:ei_varest_var).
 
 
-This gives us the form of the SEV to use with the biased estimator:
-
-```{math}
-:label: eq:sevB
-\mathsf{SEV_b} = \sqrt{ \dfrac{2(N-1)\theta^2 }{N^2} }
-```
-
-(sec:central-moments-sev-gen)=
-### The SEV and Central Moments
-
-Generally, with no assumption of Normality, the Estimator Variance is:
-
-
-```{math}
-:label: eq:vest-gen
-V[\hat{\theta}] =   \left( \kappa - \dfrac{N-3}{N-1} \right) \dfrac{\theta^2}{N}
-```
-
-and the SEV is:
-
-```{math}
-:label: eq:sev-gen
-\mathsf{SEV} = \sqrt{ \left( \kappa - \dfrac{N-3}{N-1} \right) \dfrac{\theta^2}{N} }
-```
-
-where $\kappa$ is the **Kurtosis**, described briefly in [MathMethodsB:Central Moments](#sec:mmb-central-moments). 
-
-For those with a mathematical bent, there is a somewhat accessible proof of [](#eq:sev-gen) on mathematics stack exchange [here](https://math.stackexchange.com/questions/72975/variance-of-sample-variance).
+:::{table} The Variance, Bias, and MSE for the biased and unbiased variance estimators with **Normal Data**
+:align: center
+:label: tab:ei_varest_var
+| Variance Estimator  | $V[\hat{\theta}]$[^proof1] | Bias $b=E[\hat{\theta}] -\theta$ | $\mathsf{MSE} = V[\hat{\theta}] + b^2$ |
+|---|---|---|---|
+| $\hat{\theta}_u = \dfrac{1}{N-1} \sum\limits_i^N (x_i - \bar{x})^2$   | $V[\hat{\theta}_u] = \dfrac{2\theta^2}{N-1}$  | $b=0$| $\dfrac{2\theta^2}{N-1}$| 
+| $\hat{\theta}_b = \dfrac{1}{N} \sum\limits_i^N (x_i - \bar{x})^2$  | $V[\hat{\theta}_b] = \dfrac{2(N-1)\theta^2}{N^2}$  |  $b=-\dfrac{\theta}{N}$ | $\dfrac{(2N-1)\theta^2}{N^2}$ |
+:::
 
 
 
+[^proof1]: The proofs are given in [Math Methods B: SEV for Normal Data](#sec:sev-proof).
+
+In the **general case**, with **no Normality assumption**, the variances on the two choices of variance estimator are written in terms of the **Kurtosis**, $\kappa$, described briefly in [MathMethodsB:Central Moments](#sec:mmb-central-moments). They are given in [](#tab:ei_varest_var_gen). 
+
+
+
+:::{table} The Variance, Bias, and MSE for the biased and unbiased variance estimators. There is no requirement of Normal data for these forms - they are generally true.
+:align: center
+:label: tab:ei_varest_var_gen
+| Variance Estimator | $V[\hat{\theta}]$[^proof2] | $\mathsf{MSE} = V[\hat{\theta}] + b^2$ |
+|---|---|---|
+| $\hat{\theta}_u$ | $V[\hat{\theta}_u] = \left(\kappa - \dfrac{N-3}{N-1}\right)\dfrac{\theta^2}{N}$ |  $\left(\kappa - \dfrac{N-3}{N-1}\right)\dfrac{\theta^2}{N}$ |
+| $\hat{\theta}_b$ | $V[\hat{\theta}_b] = \dfrac{(N-1)^2}{N^2}V[\hat{\theta}_u]$ |  $\dfrac{(N-1)^2}{N^2}V[\hat{\theta}_u] + \dfrac{\theta^2}{N^2}$ |
+:::
+
+
+[^proof2]: The biased estimator result follows from $\hat{\theta}_b = \frac{N-1}{N}\hat{\theta}_u$, giving $V[\hat{\theta}_b] = \left(\frac{N-1}{N}\right)^2 V[\hat{\theta}_u]$. Setting $\kappa = 3$ (Normal distribution) recovers the results in [](#tab:ei_varest_var).
+
+
+
+<!--For those with a mathematical bent, there is a somewhat accessible proof of [](#eq:sev-gen) on mathematics stack exchange [here](https://math.stackexchange.com/questions/72975/variance-of-sample-variance).-->
+
+The **Standard Error on the Variance [SEV](#eq:sev)** is the square root of the variance, which takes one of the four forms given in [](#tab:ei_varest_var) and [](#tab:ei_varest_var_gen).
+
+$$\label{eq:sev} \mathsf{SEV} = \sqrt{V[\hat{\theta}]}$$
 
 
 ````{card}
@@ -308,41 +296,14 @@ For a single RV, we can Estimate the variance and its uncertainty directly from 
 
 where the SEV is the Standard Error (uncertainty) on the Variance, and is most easily and efficiently calculated using e.g. the [**Bootstrap Method**](#sec:Resampling), as we shall see.
 
-We noted in [](#eq:vartruesamp) that the [sample variance](#eq:variance) is a biased estimator for the true variance, hence the modified definition of [unbiased sample variance](#eq:varianceU). Before deciding that the the unbiased variance is the better estimator, we need to consider overall quality metric, the Mean Squared Error, for the two choices.
+<!--We noted in [](#eq:vartruesamp) that the [sample variance](#eq:variance) is a biased estimator for the true variance, hence the modified definition of [unbiased sample variance](#eq:varianceU). -->
+
+Before deciding that the the unbiased variance is the better estimator, we need to consider overall quality metric, the Mean Squared Error, for the two choices.
 
 ````
 
-(sec:mse)=
-## The Mean Squared Error (MSE)
 
-Recall the bias of an estimator for some true parameter $\theta$ is [](#eq:est_bias): the difference between the Expectation of the estimate $\hat{\theta}$ and the true value of the parameter, $\theta$.
-
-The MSE [](#eq:mse) considers the bias and variance of the estimator together. It is defined as the expectation of the square of the difference between the estimate and the true value, $E[(\hat{\theta} - \theta)^2]$. A proof is provided in [Math Methods B](#sec:mse-proof) for those with a hankering for math-induced dopamine.
-
-
-The proof is given in [Math Methods B](#sec:mse-proof).
-
-Let's calculate the MSE using the two different estimators (biased and unbiased) for the variance.
-
-Biased Sample Variance [](#eq:variance)
-: True parameter: $\theta = V[X]$
-  
-  Estimator: $\hat{\theta} = \dfrac{1}{N} \sum\limits_i^N (x_i -\overline{x})^2$ 
-
-  Bias: $b = -\dfrac{1}{N} \theta$
-
-  Variance (assuming normality): $\dfrac{2(N-1)\theta^2}{N^2}$ 
-
-
-Unbiased Sample Variance [](#eq:varianceU)
-: True parameter: $\theta = V[X]$
-  
-  Estimator: $\hat{\theta} = \dfrac{1}{N-1} \sum\limits_i^N (x_i -\overline{x})^2$ 
-
-  Bias: $b = 0$
-
-  Variance (assuming normality): $\dfrac{2\theta^2}{N-1}$ 
- 
+---
 
 (sec:binned-data)=
 ## What to do when Data are Binned?
@@ -365,7 +326,7 @@ The (unbiased) binned sample variance is:
 v_x = \dfrac{1}{N-1}\sum\limits_{j=1}^{M} n_j\, (c_j - \overline{x})^2
 ```
 
-The Estimated SEM is unchanged: $\widehat{\mathsf{SEM}} = \sqrt{ \dfrac{v_x}{N} }$.
+The Estimated SEM formula is unchanged: $\widehat{\mathsf{SEM}} = \sqrt{ \dfrac{v_x}{N} }$.
 
 
 :::{note}
@@ -373,28 +334,29 @@ These estimators treat each bin as if all its measurements were exactly at the b
 :::
 
 :::{tip}
-A more powerful approach when working with histograms is to fit the parameters of a probability distribution directly to the histogram using the Maximum Likelihood Method or Least Squares — see [](#sec:general-param-est).
+A more powerful approach when working with histograms is to fit the parameters of a probability distribution directly to the histogram using the methods of [Maximum Likelihood](#chapter:MaxLike) or [Least Squares](#chapter:LeastSquares).
 :::
 
-
+---
 
 (sec:general-param-est)=
 ## Parameter Estimation Generally
 
 
-In the two examples above, we looked at using Summary Statistics ($\overline{x}$ and $v_x$) as Estimators ($\hat{\mu}$ and $\hat{V}$) for the parameters of the True Underlying Distribution ($\mu$ and $\sigma^2$).
+In the two examples above, we looked at using Summary Statistics ($\overline{x}$ and $v_x$) as Estimators for the parameters of the True Underlying Distribution ($\mu$ and $\sigma^2$).
 
-For a single RV following a (e.g.) Normal distribution, the parameters of the true distribution can be accessed directly from the data in this way. We saw that in the case of $\hat{\mu}$ it is possible to extract the **Uncertainty on the Estimated Mean**, using the [SEM](#sem). 
+For a single RV following a (e.g.) Normal distribution, the parameters of the true distribution can be accessed directly from the data in this way. We saw that in the case of $\hat{\mu}$ it is possible to extract the **Uncertainty on the Estimated Mean**, using the [SEM](#eq:sem), and the **Uncertainty on the Estimated Variance** using the appropriate form for the [SEV](#eq:sev).
 
-We can similarly extract the **Uncertainty on the Estimated Variance**, [SEV](#eq:sev-gen) if the data are normally distributed, but this is not quite as straightforward as the SEM; 
+
 
 The parameters of the true underlying distribution will not always be so easily accessible from the data, so it is helpful to explore general methods for parameter estimation. 
 
-The parameter estimation methods we will explore are the Maximum Likelihood Method and the Method of Least Squares. Both methods compare the data with true distributions having different parameter values, and find the parameter values that minimize the differences between data and truth. This process of minimising the differences is known as **Fitting**, or **Regression**, thus both these terms mean **Parameter Estimation**.
+The parameter estimation methods we will explore are the methods of [Maximum Likelihood](#chapter:MaxLike) and [Least Squares](#chapter:LeastSquares). Both methods compare the data with true distributions having different parameter values, and find the parameter values that minimize the differences between data and truth. This process of minimising the differences is known as **Fitting**, or **Regression**, thus both these terms mean **Parameter Estimation**.
 
 
 Before we go further, we must define the **Likelihood**.
 
+---
 
 (sec:likelihood-est)=
 ## Likelihood
@@ -427,7 +389,8 @@ We could try turning around the PMF definition, letting the parameter $\theta$ b
 $P(\theta=\theta_a | k) = p_\theta(\theta_a; k)$
 -->
 
-### Single data point
+(sec:ei_toy_single)=
+### Toy Example: Single data point
 
 Let's consider a single measurement, $k_1$, and two different PMFs having the same form but different parameter values. One has $\theta=\theta_a$ and the other has $\theta=\theta_b$, illustrated in [](#fig:toylike1).
 
@@ -451,8 +414,8 @@ Ine the example shown in [](#fig:toylike1) I find $\mathcal{L_{\theta}}(\theta_a
 
 This is a toy version of the **Maximum Likelihood Method** for parameter estimation. The "toy" aspect arises from an important issue with the above example: we only used one data point. **We are very unlikely to successfully estimate a parameter using a single data point!**. The uncertainty on such an estimate would be so large as to make the estimate useless.
 
-
-### Two data points
+(sec:ei_toy_two)=
+### Toy Example: Two data points
 
 Let's consider two data points, and just consider a single parameter value, $\theta_a$. This is the parameter value for which we are going to calculate the Likelihood of the data.
 
@@ -530,12 +493,12 @@ import sys
 print(f"The smallest number my computer can compute = {sys.float_info.min}")
 ```
 
-Given that we like large datasets and want to calculate Likelihoods (to estimate unknown parameters), we have a problem. But, it is okay, because we have Logarithms.
+Given that we like large datasets and want to calculate Likelihoods (to estimate unknown parameters), we have a problem. But, it is okay, because we have [Logarithms](#sec:mma_logs).
 
 Log Rules
 : Power rule: $$\label{eq:logrule_power} \log(a^b) = b\log(a)$$
 
-  Quotient rule: $$\label{eq:logrule_quotient} \log(\dfrac{a}{b}) = \log(a) - \log(b)$$
+  Quotient rule: $$\label{eq:logrule_quotient} \log\left(\dfrac{a}{b}\right) = \log(a) - \log(b)$$
 
   Product rule: $$\label{eq:logrule_product}\log(ab) = \log(a) + \log(b)$$
 
@@ -710,6 +673,8 @@ Consider the exercise above; you could estimate the MLE using $N=10$ or using $N
 We must always give the uncertainty on our estimates, e.g. $\hat{\mu}_{_{\mathsf{MLE}}} = 4.89 \pm 1.10$. We will look at one nice way of estimating the MLE uncertainty in [](#sec:Resampling).
 :::
 
+---
+
 (sec:interval-est)=
 ## Interval Estimation
 
@@ -729,6 +694,7 @@ Sometimes, we will find that we have an estimate for the mean and cannot use the
 
 Given that measurements without quoted uncertainties are meaningless, we must estimate the uncertainty. The [**Bootstrap Method**](#sec:Resampling) is an excellent way of doing this.
 
+---
 
 (sec:Resampling)=
 ## The Bootstrap Method
@@ -774,7 +740,7 @@ data = generate_data(seed=42)
 
 ```
 
-Now we have a fake dataset of 100 measurements, we can find $\overline{x}$ and $\sigma_x$ of the dataset using the usual `numpy` methods, but what is the **uncertainty** on $\sigma_x$? We could calculate this using the appropriate [SEV](#eq:sev-gen) formula, but we can't use that approach if we don't know anything about the data's true underlying distribution, or if it doesn't have a simple true underlying distribution.
+Now we have a fake dataset of 100 measurements, we can find $\overline{x}$ and $\sigma_x$ of the dataset using the usual `numpy` methods, but what is the **uncertainty** on $\sigma_x$? We could calculate this using the appropriate [SEV](#eq:sev) formula, but we can't use that approach if we don't know anything about the data's true underlying distribution, or if it doesn't have a simple true underlying distribution.
 
 **Let's bootstrap!**
 
@@ -967,6 +933,8 @@ def PlotBootsraps(a,b,c):
 
 PlotBootsraps(byhand_sigmas,scipy_sigmas,parametric_sigmas)
 ```
+
+---
 
 (sec:seeding-breaks-randomness)=
 ## Seeding breaks randomness!

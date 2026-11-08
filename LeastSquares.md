@@ -33,7 +33,7 @@ The Least Squares fit (red dashed line) is a simultaneous estimation of the para
 [^minim]: minimising a function means setting the first derivative of the function to zero, and checking the second derivative is positive. See [](#sec:minim_intro).
 
 
-
+---
 
 
 (sec:ls-residuals)=
@@ -84,6 +84,8 @@ The statistic defined in [](#eq:ls_ssresid) is known as **Pearson's Chi Squared*
 Gauss came up with the Normal distribution to justify the Least Squares method. See [this nice blog](https://notarocketscientist.xyz/posts/2023-01-27-how-gauss-derived-the-normal-distribution/) for the story.
 :::
 
+
+---
 
 (sec:ls-chisquared)=
 ## The Chi Squared Statistic, $\chi^2$
@@ -174,6 +176,7 @@ Homoscedastic data have equal variances ($\sigma_i = \sigma$ for all $i$); heter
 ::::
 
 
+---
 
 (sec:ls-binned)=
 ## Chi Squared with Binned Data
@@ -219,7 +222,7 @@ The **binned** standardised residuals [](#eq:ls_standresid) are often written in
  \frac{n_j - \hat{n}_j}{\sqrt{n_j}} = \frac{\mathsf{observed} - \mathsf{expected}}{\mathsf{\sqrt{observed}}}
 ```
 
-
+---
 
 (sec:ls-straightline)=
 ## Estimating the Parameters of a Straight Line
@@ -437,6 +440,7 @@ $\bar{d} = \hat a\,\bar{x} + \hat b$, so immediately:
 ::::
 -->
 
+---
 
 (sec:ls-uncertainties)=
 ### Parameter Uncertainties
@@ -545,7 +549,7 @@ The **Gauss–Markov theorem** states: if the measurement uncertainties are homo
 If the data are **heteroscedastic** (different $\sigma_i$), we must either transform the data or use *Weighted Least Squares*, which keeps the $1/\sigma_i^2$ weights non-trivially.
 -->
 
-
+---
 
 (sec:ls-homo)=
 ### Homoscedastic Least Squares 
@@ -1284,6 +1288,8 @@ Outliers.
 :::
 
 -->
+
+---
 
 (sec:ls-summary)=
 ## Summary

@@ -12,12 +12,15 @@ kernelspec:
 (chapter:bayesian)=
 # Bayesian Inference
 
-Bayesian Inference gives us a mathematically coherent framework for updating our beliefs about a parameter $\theta$ using data $y$. Rather than treating $\theta$ as a fixed but unknown constant (the Frequentist view), the Bayesian approach treats $\theta$ as a random variable with its own probability distribution, and updates that distribution as data arrive.
-
-Key Python tools used in this chapter:
 * `scipy.stats`: `beta`, `gamma`, `nbinom`, `poisson`
 * `scipy.special`: `beta as betafunc`
-* Workshop file: `Week10-BayesUpdating.py`
+<!--* Workshop file: `Week10-BayesUpdating.py`-->
+
+
+
+Bayesian Inference gives us a mathematically coherent framework for **updating our beliefs** about a parameter $\theta$ using data $y$. Rather than treating $\theta$ as a fixed but unknown constant (the Frequentist view), the Bayesian approach treats $\theta$ as a random variable with its own probability distribution, and updates that distribution as data arrive.
+
+
 
 ---
 
@@ -46,8 +49,6 @@ The Prior is a PDF (or PMF for discrete $\theta$), not a single number.
 
 ## The COVID Test Example
 
-### Setup
-
 A COVID test has the following known properties (from the manufacturer):
 
 | Hypothesis | Negative | Positive |
@@ -58,6 +59,8 @@ A COVID test has the following known properties (from the manufacturer):
 Data $y$ are **Bernoulli**: a binary outcome from a single test ($y=1$ positive, $y=0$ negative).
 
 The prior probability of being sick at any given time is $\pi(\theta_+) = 1/1000$.
+
+---
 
 ### Likelihoods
 
@@ -70,6 +73,8 @@ $$\mathcal{L}(y_+ \mid \theta_+) = 1^1 \cdot 0^0 = 1 \qquad \mathcal{L}(y_- \mid
 For the **healthy** hypothesis ($\theta_- = 0.05$):
 
 $$\mathcal{L}(y_+ \mid \theta_-) = 0.05^1 \cdot 0.95^0 = 0.05 \qquad \mathcal{L}(y_- \mid \theta_-) = 0.95$$
+
+---
 
 ### Posterior Calculation
 
@@ -91,6 +96,8 @@ The full posterior table:
 
 Despite a perfect sensitivity (sick people always test positive), the probability of actually being sick given a positive test is only $\approx 2\%$. This is because the disease is rare, so most positives come from the false positive rate applied to the large healthy population.
 
+---
+
 ### Bayesian Updating
 
 What we did above is called **Bayesian Updating**:
@@ -99,6 +106,8 @@ What we did above is called **Bayesian Updating**:
 - **After** the test, we calculated a Posterior $P(\theta_+ \mid y_+) \approx 0.02$
 
 The data have updated our belief. With more data (more tests), the posterior would narrow further.
+
+---
 
 ### The Evidence as a Constant
 
@@ -261,6 +270,8 @@ from scipy.stats import beta
 | Bernoulli: $\theta^y(1-\theta)^{1-y}$ | $\text{Beta}(\alpha+y,\; \beta+1-y)$ |
 | Binomial: $\binom{n}{y}\theta^y(1-\theta)^{n-y}$ | $\text{Beta}(\alpha+y,\; \beta+n-y)$ |
 
+---
+
 ### Gamma (for rate/count parameters, $0 \leq \theta < \infty$)
 
 ```python
@@ -359,6 +370,7 @@ prediction = nbinom.pmf(xvals, n=nbn_n, p=nbn_p)
 The Poisson-Gamma chain in full:
 
 $$\underbrace{\text{Gamma}(\alpha, \beta)}_{\text{Prior}} \xrightarrow{\text{Poisson data}} \underbrace{\text{Gamma}(\alpha+n\bar{y},\; \beta+n)}_{\text{Posterior}} \xrightarrow{\text{integrate out }\theta} \underbrace{\text{NBinom}\!\left(\alpha+n\bar{y},\; \frac{\beta+n}{\beta+n+1}\right)}_{\text{Predictive Posterior}}$$
+
 
 ---
 

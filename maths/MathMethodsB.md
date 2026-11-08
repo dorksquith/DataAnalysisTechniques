@@ -128,8 +128,15 @@ $$\Gamma(s+1) = \left[-x^s e^{-x}\right]_0^{\infty} + s\int_0^{\infty} x^{s-1}e^
 :label: eq:gamma-factorial
 \Gamma(n) = (n-1)! \qquad (n = 1, 2, 3, \ldots)
 ```
+<!--
+This can be demonstrated by repeatedly applying [](#eq:gamma-recurrence):
 
-This follows immediately by applying the recurrence [](#eq:gamma-recurrence) repeatedly: $\Gamma(1) = 1 = 0!$, $\Gamma(2) = 1\cdot\Gamma(1) = 1 = 1!$, and so on.
+* $\Gamma(1) = 1 = 0!$
+* $\Gamma(2) = 1\cdot\Gamma(1) = 1 = 1!$
+
+ and so on.
+-->
+
 
 **Half-integer values:**
 
@@ -138,13 +145,13 @@ This follows immediately by applying the recurrence [](#eq:gamma-recurrence) rep
 \Gamma\!\left(\tfrac{1}{2}\right) = \sqrt{\pi}
 ```
 
-*Proof:* Set $x = u^2$ in [](#eq:gamma-def):
+*Proof:* Set $x = u^2,\; dx = 2u\, du$ in [](#eq:gamma-def):
 
 $$\Gamma\!\left(\tfrac{1}{2}\right) = \int_0^{\infty} x^{-1/2} e^{-x}\,dx = 2\int_0^{\infty} e^{-u^2}\,du = \int_{-\infty}^{\infty} e^{-u^2}\,du = \sqrt{\pi}$$
 
 where the last step uses the [Gaussian integral trick](#sec:gaus-int-trick) below.
 
-Higher half-integers follow from the recurrence: $\Gamma(3/2) = \frac{1}{2}\sqrt{\pi}$, $\Gamma(5/2) = \frac{3}{4}\sqrt{\pi}$, etc.
+Higher half-integers follow from the [recurrence](#eq:gamma-recurrence): $\Gamma(3/2) = \frac{1}{2}\sqrt{\pi}$, $\Gamma(5/2) = \frac{3}{4}\sqrt{\pi}$, etc.
 
 ### Values appearing in the $\chi^2$ PDF
 
@@ -158,7 +165,10 @@ The $\chi^2(\nu)$ PDF contains $\Gamma(\nu/2)$ in its normalisation. The first f
 | 4 | 2   | $1! = 1$ |
 | 5 | 5/2 | $\frac{3}{4}\sqrt{\pi}$ |
 
+
+(sec:mmb_gammaln_example)=
 ### Python
+
 
 ```{code-cell} python
 import numpy as np
@@ -176,7 +186,9 @@ print(f"\nlog Γ(100) = {gammaln(100):.4f}")
 
 :::{note}
 For numerical work with large arguments, use `scipy.special.gammaln` (the natural log of the Gamma function) to avoid floating-point overflow — then exponentiate only at the end if needed.
+See also the example in [PMFs](#sec:pmfs_gammaln_example).
 :::
+
 
 ---
 
@@ -189,7 +201,7 @@ In real life we often cannot measure the RV we want directly. We measure $X$ and
 
 ### One-Dimensional Monotonic Transform
 
-Suppose $Y = f(X)$ is a **monotonically increasing** function of $X$ (no turning points), with inverse $X = g(Y)$.
+Suppose $Y = f(X)$ is a **monotonically increasing** function of $X$ (no turning points - see [](#fig:mono) ), with inverse $X = g(Y)$.
 
 Because $Y$ increases whenever $X$ increases:
 
@@ -310,6 +322,7 @@ So $f(r,\theta) = r\, g(x,y)$: if $(x,y)$ are uniform (constant $g$), then $f(r,
 :::
 ---
 
+<!--
 (sec:var-bias-proof)=
 ## Bias of the Sample Variance
 
@@ -317,7 +330,17 @@ So $f(r,\theta) = r\, g(x,y)$: if $(x,y)$ are uniform (constant $g$), then $f(r,
 This replaces the uploaded png of my ipad proof, finally :)
 :::
 
-The [sample variance](#eq:variance) is a **biased** estimator of the true variance $\sigma^2 = V[X]$, as stated in the main notes [](#eq:vartruesamp). 
+
+The [sample variance](#eq:variance) is a **biased** estimator of the true variance $\sigma^2 = V[X]$, as stated in the main notes [](#eq:vartruesamp).
+
+Notation
+: $\theta$ denotes the true variance $V[X]$
+  
+  $\hat{\theta}$ denotes the estimated variance $v_x$
+  
+  $\overline{x}$ denotes the sample mean
+  
+  $\mu$ denotes the true mean
 
 **Key identity.** For any sample $\{x_i\}$ with mean $\overline{x}$ and true mean $\mu$:
 
@@ -325,8 +348,120 @@ The [sample variance](#eq:variance) is a **biased** estimator of the true varian
 :label: eq:var-identity
 \sum_{i=1}^N (x_i - \overline{x})^2 = \sum_{i=1}^N (x_i - \mu)^2 - N(\overline{x} - \mu)^2
 ```
+-->
 
-*Proof of the identity:* Write $x_i - \overline{x} = (x_i - \mu) - (\overline{x} - \mu)$, expand the square, and sum over $i$. The cross-term gives $-2(\overline{x}-\mu)\sum_i(x_i-\mu) = -2N(\overline{x}-\mu)^2$, and the third term gives $N(\overline{x}-\mu)^2$, leaving the result above.
+(sec:var-bias-proof)=
+## Bias of the Sample Variance
+
+Notation
+: $\theta \equiv V[X] = \sigma^2$: the true variance.
+  
+  $\mu$: the true mean. 
+
+  $\overline{x} = \frac{1}{N}\sum_i x_i$: the sample mean.
+
+The **biased** sample variance is $\hat{\theta}_b = \dfrac{1}{N}\displaystyle\sum_i (x_i - \overline{x})^2$.
+We compute $E[\hat{\theta}_b]$ term by term.
+
+Pull $1/N$ outside, then move $E$ inside the sum (linearity):
+
+$$E[\hat{\theta}_b]
+= E\!\left[\tfrac{1}{N}\sum_i (x_i-\overline{x})^2\right]
+= \tfrac{1}{N}\sum_i E\!\left[(x_i-\overline{x})^2\right]$$
+
+**Step 1.** Add and subtract $\mu$ inside the bracket:
+
+$$x_i - \overline{x} = (x_i - \mu) - (\overline{x} - \mu)$$
+
+**Step 2.** Expand the square:
+
+$$(x_i-\overline{x})^2 = (x_i-\mu)^2 + (\overline{x}-\mu)^2 - 2(x_i-\mu)(\overline{x}-\mu)$$
+
+**Step 3.** Take expectations of each term (linearity of $E$):
+
+$$E[(x_i-\overline{x})^2]
+= \underbrace{E[(x_i-\mu)^2]}_{V[x_i]}
++ \underbrace{E[(\overline{x}-\mu)^2]}_{V[\overline{x}]}
+- 2\,E[(x_i-\mu)(\overline{x}-\mu)]$$
+
+**Step 4.** Sum over $i$ and divide by $N$:
+
+```{math}
+:label: eq:var-bias-step4
+\begin{aligned}
+E[\hat{\theta}_b]
+&= \frac{1}{N}\sum_i V[x_i]
+ + \frac{1}{N}\sum_i V[\overline{x}]
+ - \frac{2}{N}\sum_i E[(x_i-\mu)(\overline{x}-\mu)] \\[4pt]
+&= V[X] \;+\; V[\overline{x}] \;-\; \frac{2}{N}\sum_i E[(x_i-\mu)(\overline{x}-\mu)]
+\end{aligned}
+```
+
+where we used $\tfrac{1}{N}\sum_i V[x_i] = V[X]$ (all $x_i$ i.i.d.) and
+$\tfrac{1}{N}{\cdot}N{\cdot}V[\overline{x}] = V[\overline{x}]$.
+
+**Step 5.** Evaluate the cross-term $\displaystyle\sum_i E[(x_i-\mu)(\overline{x}-\mu)]$.
+
+Substitute $\overline{x} = \tfrac{1}{N}\sum_j x_j$:
+
+```{math}
+\begin{aligned}
+E[(x_i-\mu)(\overline{x}-\mu)]
+&= E\!\left[(x_i-\mu)\!\left(\tfrac{1}{N}\sum_j x_j - \mu\right)\right] \\
+&= \tfrac{1}{N}\,E\!\left[(x_i-\mu)\!\left(\sum_j x_j - N\mu\right)\right] \\
+&= \tfrac{1}{N}\,E\!\left[(x_i-\mu)\sum_j (x_j-\mu)\right] \\
+&= \tfrac{1}{N}\sum_j E[(x_i-\mu)(x_j-\mu)]
+\end{aligned}
+```
+
+Since the $x_i$ are **independent**:
+
+- $i \neq j$: $E[(x_i-\mu)(x_j-\mu)] = E[x_i-\mu]\cdot E[x_j-\mu] = 0\cdot 0 = 0$
+- $i = j$: $E[(x_i-\mu)^2] = V[x_i] = V[X]$
+
+Only the $j=i$ term survives, so:
+
+$$E[(x_i-\mu)(\overline{x}-\mu)] = \tfrac{1}{N}\,V[X]$$
+
+Summing over all $i$:
+
+$$\sum_i E[(x_i-\mu)(\overline{x}-\mu)] = \sum_i \tfrac{1}{N}V[X] = V[X]$$
+
+**Step 6.** Substitute back into [](#eq:var-bias-step4),
+using $V[\overline{x}] = V[X]/N$:
+
+```{math}
+\begin{aligned}
+E[\hat{\theta}_b]
+&= V[X] + \tfrac{1}{N}V[X] - \tfrac{2}{N}V[X] \\
+&= \left(1 - \tfrac{1}{N}\right)V[X]
+\end{aligned}
+```
+
+```{math}
+:label: eq:vartruesamp-proof
+E[\hat{\theta}_b] = \frac{N-1}{N}\,V[X]
+```
+
+The bias is $b = E[\hat{\theta}_b] - V[X] = -\dfrac{1}{N}V[X] \neq 0$,
+so $\hat{\theta}_b$ is **biased**.
+Multiplying by $\dfrac{N}{N-1}$ corrects this:
+
+$$\hat{\theta}_u = \frac{1}{N-1}\sum_i(x_i-\overline{x})^2
+\quad\Rightarrow\quad E[\hat{\theta}_u] = V[X] \checkmark$$
+
+
+<!--
+**Proof** 
+
+```{math}
+:label: eq:var-identity-proof
+x_i - \overline{x} = (x_i - \mu) - (\overline{x} - \mu)
+
+```
+
+
+Write $x_i - \overline{x} = (x_i - \mu) - (\overline{x} - \mu)$, expand the square, and sum over $i$. The cross-term gives $-2(\overline{x}-\mu)\sum_i(x_i-\mu) = -2N(\overline{x}-\mu)^2$, and the third term gives $N(\overline{x}-\mu)^2$, leaving the result above.
 
 **Taking expectations.** Each $x_i$ is independent with $E[(x_i - \mu)^2] = V[X] = \sigma^2$, and $E[(\overline{x}-\mu)^2] = V[\overline{x}] = \sigma^2/N$. Therefore:
 
@@ -351,6 +486,7 @@ The bias is $b = E[\hat{V}] - \sigma^2 = -\sigma^2/N$. The **unbiased** estimato
 ```{math}
 v_{x} = \dfrac{1}{N-1}\sum_{i=1}^N (x_i - \overline{x})^2 \;\; \Rightarrow \;\; E[v_{x}] = \sigma^2
 ```
+-->
 
 ---
 
@@ -373,11 +509,11 @@ The MSE decomposes into variance plus squared bias.
 \begin{aligned}
 E\!\left[ (\hat{\theta} -\theta)^2 \right]
 &= E\!\left[ ( \hat{\theta} -\mu + \mu - \theta )^2 \right]
- & & \textcolor{blue}{\text{add and subtract } \mu = E[\hat{\theta}]}\\
+ & & \\
 &= E\!\left[ (\hat{\theta}-\mu)^2 \right] + (\mu-\theta)^2 + 2(\mu-\theta)\,E[\hat{\theta}-\mu]
- & & \textcolor{blue}{E(\text{sum}) = \text{sum}(E)}\\
+ & & \\
 &= V[\hat{\theta}] + (\mu-\theta)^2 + 0
- & & \textcolor{blue}{E[\hat{\theta}-\mu] = \mu - \mu = 0}\\
+ & & \\
 &= V[\hat{\theta}] + b^2
 \end{aligned}
 ```
@@ -732,6 +868,7 @@ Giving:
 
 
 ---
+
 (sec:sev-proof)=
 ## SEV for Normal Data
 
@@ -797,7 +934,7 @@ which gives
 \mathsf{SEV}_b = \sigma^2\sqrt{\dfrac{2(N-1)}{N}},
 ```
 
-confirming [](#eq:sevB).
+confirming [](#eq:sev).
 
 ---
 
@@ -839,6 +976,7 @@ This is the **Delta method** (sometimes called **error propagation**). It is exa
 The Delta Method generalises to multivariate functions via the Jacobian: $V[h] = \mathbf{J}\,\Sigma\,\mathbf{J}^T$. This general form is covered in [Describing Data](#sec:dd-varfunc).
 :::
 
+---
 
 (sec:mmb_ses)=
 ## Standard Error of the Standard Deviation (SES)
@@ -872,7 +1010,7 @@ The SES formula [](#eq:ses) assumes Normally distributed data. For non-Normal da
 :::
 
 
-
+(sec:ses_python)=
 ### Python
 
 ```{code-cell} python
@@ -897,7 +1035,7 @@ print(f"Analytical SES: {2.0 / np.sqrt(2*(len(data)-1)):.4f}")  # true σ = 2
 (sec:mvue)=
 ## Minimum Variance Unbiased Estimation
 
-We have seen that the unbiased sample variance $v_x$ is an unbiased estimator for $\sigma^2$. But could there be a *better* unbiased estimator — one with smaller variance? This is the question of **Minimum Variance Unbiased Estimation (MVUE)**.
+The unbiased sample variance $v_x$ is an unbiased estimator for $\sigma^2$ [](#sec:var-bias-proof). But could there be a *better* unbiased estimator — one with smaller variance? This is the question of **Minimum Variance Unbiased Estimation (MVUE)**.
 
 ### Fisher Information and the Cramér–Rao Bound
 

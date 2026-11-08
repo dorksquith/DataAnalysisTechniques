@@ -38,6 +38,8 @@ I strongly recommend the [Probability Playground](https://probabilityplayground.
 | Proportions summing to 1 | Dirichlet |
 
 
+---
+
 (sec:uniform)=
 ## The Uniform Distribution
 
@@ -532,7 +534,7 @@ Setting the **Partial Derivatives** $\dfrac{ \partial}{\partial\mu}\ln\mathcal{L
 \hat{\mu} = \overline{x}, \qquad \hat{\sigma}^2 = \dfrac{1}{N}\sum_{i=1}^{N}(x_i - \overline{x})^2
 ```
 
-$\textcolor{red}{\mathsf{TODO}}$: give full working $\hat{\mu}_{\mathsf{MLE}}$ and $\hat{\sigma}_{\mathsf{MLE}}$ 
+<!--$\textcolor{red}{\mathsf{TODO}}$: give full working $\hat{\mu}_{\mathsf{MLE}}$ and $\hat{\sigma}_{\mathsf{MLE}}$--> 
 
 
 Note that $\hat{\sigma}^2$ is the **biased** sample variance (divides by $N$, not $N-1$). See [](#chapter:EstimatorsIntro) for the distinction between the MLE and the unbiased estimator.
@@ -544,10 +546,10 @@ Note that $\hat{\sigma}^2$ is the **biased** sample variance (divides by $N$, no
 (sec:chi2dist)=
 ## The Chi Squared ($\chi^2$) Distribution
 
-The Chi Squared ($\chi^2$) distribution arises naturally when working with sums of squared Normal RVs. Recall the Standard Normal RV is $Z = \dfrac{X-\mu}{\sigma}$ (see [](#chapter:norm)). It most often arises as a **derived distribution** rather than as a primary sampling model. Two key examples of $\chi^2$ RVs in this module are:
+The Chi Squared ($\chi^2$) distribution arises naturally when working with sums of squared Normal RVs. Recall the Standard Normal RV is $Z = \dfrac{X-\mu}{\sigma}$ [](#eq:z). It most often arises as a **derived distribution** rather than as a primary sampling model. Two key examples of $\chi^2$ RVs in this module are:
 
 The variance of the unbiased sample variance estimate 
-: $\dfrac{(N-1)\sigma_x^2}{\sigma^2} \sim \chi^2(N-1)$ [](#eq:vest_unbiased)
+: $\dfrac{(N-1)\sigma_x^2}{\sigma^2} \sim \chi^2(N-1)$ [](#eq:sev)
 
 The Pearson goodness-of-fit statistic
 : $\displaystyle\sum_i \dfrac{(o_i - e_i)^2}{e_i} \;\dot{\sim}\; \chi^2(\nu)$

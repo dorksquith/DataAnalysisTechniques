@@ -29,33 +29,33 @@ project:
     #- file: MCMC.md
     - file: coding/Coding.md
       children:    
-          - file: coding/PythonMethods.md
-          - file: coding/PlottingTipsAndTricks.md
+        - file: coding/PythonMethods.md
+        - file: coding/PlottingTipsAndTricks.md
     - file: maths/Mathematics.md
       children:
-          - file: maths/MathMethodsA.md
-          - file: maths/MathMethodsB.md    
+        - file: maths/MathMethodsA.md
+        - file: maths/MathMethodsB.md    
     - file: cheatsheets/CheatSheets.md
       children:
-          - file: cheatsheets/UnixCheatsheet.md
-          - file: cheatsheets/MarkdownCheatSheet.md
-          - file: cheatsheets/LatexCheatSheet.md
+        - file: cheatsheets/UnixCheatsheet.md
+        - file: cheatsheets/MarkdownCheatSheet.md
+        - file: cheatsheets/LatexCheatSheet.md
     - file: workshops/Workshops.md
       children:
-          - file: workshops/Workshop2.md
-          - file: workshops/Workshop2_solutions.md
-          - file: workshops/Workshop3.md
-          - file: workshops/Workshop3_solutions.md
-          - file: workshops/Workshop4.md
-          - file: workshops/Workshop4_solutions.md
-          - file: workshops/Workshop5.md
-          - file: workshops/Workshop5_solutions.md      
-          - file: workshops/Workshop6.md
-          - file: workshops/Workshop6_solutions.md
-          - file: workshops/Workshop7.md
-      #- file: workshops/Workshop8.md
-      #- file: workshops/Workshop9.md
-      #- file: workshops/Workshop10.md                        
+        - file: workshops/Workshop2.md
+        - file: workshops/Workshop2_solutions.md
+        - file: workshops/Workshop3.md
+        - file: workshops/Workshop3_solutions.md
+        - file: workshops/Workshop4.md
+        - file: workshops/Workshop4_solutions.md
+        - file: workshops/Workshop5.md
+        - file: workshops/Workshop5_solutions.md      
+        - file: workshops/Workshop6.md
+        - file: workshops/Workshop6_solutions.md
+        - file: workshops/Workshop7.md
+        #- file: workshops/Workshop8.md
+        #- file: workshops/Workshop9.md
+        #- file: workshops/Workshop10.md                        
   numbering:
     title: true
     headings: true

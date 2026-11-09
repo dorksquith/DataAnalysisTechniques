@@ -30,7 +30,7 @@ Given a set of data $\{x_1, x_2, \ldots, x_N\}$, we want to estimate the unknown
 (sec:likelihood)=
 ## The Likelihood Function (Recap)
 
-Suppose the data are independent and identically distributed (iid), each drawn from a PDF (or PMF) $f_X(x;\theta)$. The joint probability of observing all $N$ values is the product of the individual probabilities:
+Suppose data are independent and identically distributed (iid), each drawn from a PDF (or PMF) $f_X(x;\theta)$. The joint probability of observing all $N$ values is the product of the individual probabilities:
 
 ```{math}
 :label: eq:likelihood

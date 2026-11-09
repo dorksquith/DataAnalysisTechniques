@@ -632,11 +632,36 @@ The **Log-Likelihood** is:
 \ln\mathcal{L}(p; k, n) = \text{const} + k\ln p + (n-k)\ln(1-p)
 ```
 
-Setting $\dfrac{d}{dp} \ln\mathcal{L} = 0$ gives the **MLE**:
+The derivative of the Log Likelihood with respect to p:
+
+```{math}
+:label: eq:binom_loglike_deriv
+\begin{aligned}
+\dfrac{\partial \ln\mathcal{L}}{\partial p} &= 0 + \dfrac{k}{p} - \dfrac{n-k}{1-p} \\
+&= \dfrac{k}{p} - \dfrac{n-k}{1-p} \\
+\end{aligned}
+```
+
+
+
+Setting $\dfrac{d}{dp} \ln\mathcal{L} = 0$:
+
+```{math}
+:label: eq:binom_loglike_deriv_zero
+\begin{aligned}
+ \dfrac{k}{\hat{p}} &= \dfrac{n-k}{1-\hat{p}} \\
+  k(1-\hat{p}) &= \hat{p}(n-k) \\
+  k- k\hat{p} - \hat{p}n + \hat{p}k &= 0 \\
+  k- \hat{p}n &= 0 \\
+  \hat{p} &= \dfrac{k}{n} \\
+ \end{aligned}
+```
+
+The **MLE** for p is:
 
 ```{math}
 :label: eq:binom_mle
-\hat{p} = \frac{k}{n}
+\hat{p}_{\mathsf{MLE}} = \frac{k}{n}
 ```
 
 For $k=6$ heads from $n=10$ tosses: $\hat{p} = 0.6$. The MLE suggests the coin is slightly biased toward heads. Whether this departure from $p=0.5$ is significant given only 10 tosses is a question for [Hypothesis Testing](#chapter:hypothesis_tests).

@@ -27,6 +27,7 @@ project:
     #- file: DistributionsOverview.md    
     #- file: BayesianInference.md
     #- file: MCMC.md
+
     - file: coding/Coding.md
       children:    
         - file: coding/PythonMethods.md

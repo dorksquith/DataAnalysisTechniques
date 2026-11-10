@@ -16,7 +16,7 @@ numbering:
 (app:math)=
 # Appendix: Mathematics
 
-Math Methods A [](#chapter:math-methods-a)
+Math Methods A [](#chapter:mma)
 
-Math Methods B [](#chapter:math-methods-b)
+Math Methods B [](#chapter:mmb)
 

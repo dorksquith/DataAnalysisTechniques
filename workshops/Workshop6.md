@@ -16,7 +16,7 @@ numbering:
 (workshop-6)=
 # Workshop 6: Likelihood and the Bootstrap Method
 
-This workshop covers material from [Estimators](#chapter:EstimatorsIntro): interval estimation ([](#sec:interval-est)), the Negative Log Likelihood ([](#sec:nll)), and the Bootstrap method ([](#sec:Resampling)).
+This workshop covers material from [Estimators](#chapter:ei): interval estimation ([](#sec:ei_intest)), the Negative Log Likelihood ([](#sec:ei_nll)), and the Bootstrap method ([](#sec:ei_res)).
 
 ---
 
@@ -42,7 +42,7 @@ This workshop covers material from [Estimators](#chapter:EstimatorsIntro): inter
 
 ## Task 2: Likelihood for the Scale Parameter
 
-The code in [](#sec:nllpython) plots the Likelihood, Log Likelihood, and NLL as functions of a **trial mean** $\mu$, holding $\sigma$ fixed. In this task you will adapt it to vary $\sigma$ instead.
+The code in [](#sec:ei_nllpy) plots the Likelihood, Log Likelihood, and NLL as functions of a **trial mean** $\mu$, holding $\sigma$ fixed. In this task you will adapt it to vary $\sigma$ instead.
 
 a) Before modifying anything, run the provided `like_loglike_nll` function with the default parameters (`mu_true=5, sigma=1, N=100`). In your own words: what does each of the three curves show, and why do their maxima/minima all occur at the same trial value?
 
@@ -61,13 +61,13 @@ d) Increase $N$ from 100 to 1000. How does the NLL curve change? Explain briefly
 
 ## Task 3: Bootstrap Uncertainty by Hand
 
-Use the `generate_data` and `LongBootstrap` functions from [](#sec:Resampling).
+Use the `generate_data` and `LongBootstrap` functions from [](#sec:ei_res).
 
 a) Generate a dataset using `data = generate_data(seed=42)` (default parameters: `mu=6.0, sigma=3.77, N=100`).
 
 b) Compute the sample mean $\overline{x}$ and sample standard deviation $\hat{\sigma}_x$ directly from the data using `numpy`. What values do you get?
 
-c) It can be shown (using the Taylor Series expansion method)  that for a normally distributed dataset, the standard error of the standard deviation is approximately:
+c) It can be shown (using the [delta method](#sec:mmb_deltam)) that for a normally distributed dataset, the standard error of the standard deviation is approximately:
 
    $$\hat{\sigma}(\hat{\sigma}_x) \approx \frac{\hat{\sigma}_x}{\sqrt{2(N-1)}}$$
 
@@ -83,7 +83,7 @@ e) The `LongBootstrap` function returns the list of 9999 bootstrap standard devi
 
 ## Task 4: Bootstrap with `scipy`
 
-a) Repeat the bootstrap uncertainty estimate using `ScipyBootstrap(data)` from [](#sec:Resampling). Does the result agree with Task 3?
+a) Repeat the bootstrap uncertainty estimate using `ScipyBootstrap(data)` from [](#sec:ei_res). Does the result agree with Task 3?
 
 b) Repeat using `ParaBootstrap(data)` (the Parametric Bootstrap). Then call `PlotBootstraps` to compare all three bootstrap distributions on one plot. Comment on any differences.
 

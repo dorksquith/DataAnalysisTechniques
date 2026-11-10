@@ -13,20 +13,21 @@ numbering:
   equation: true
 ---
 
-(chapter:math-methods-a)=
+(chapter:mma)=
 # Math Methods A: Functions and Calculus
 
 This appendix introduces the mathematical tools used throughout the module: functions, logarithms, differentiation, and integration. <!--Plotting examples for the functions and results covered here are collected in [PlottingTipsAndTricks](#chapter:plotting-tips).-->
 
 ---
 
-(sec:functions)=
+(sec:mma_func)=
 ## Functions
 
 A **function** $f$ maps each input value $x$ to exactly one output value $y$:
 
 $$y = f(x)$$
 
+(sec:mma_comfun)=
 ### Common Function Types
 
 **Constant:** $f(x) = c$. The output is the same for every input.
@@ -43,12 +44,14 @@ $$f(x) = \alpha_0 + \alpha_1 x + \alpha_2 x^2 + \cdots + \alpha_n x^n = \sum_{k=
 
 The **degree** of a polynomial is the highest power of $x$ with a non-zero coefficient.
 
+(sec:mma_sym)=
 ### Symmetry
 
 A function is **even** if $f(-x) = f(x)$ for all $x$ — it is symmetric about the y-axis. Examples: $x^2$, $\cos x$, $|x|$.
 
 A function is **odd** if $f(-x) = -f(x)$ for all $x$ — it has rotational symmetry about the origin. Examples: $x$, $x^3$, $\sin x$.
 
+(sec:mma_specca)=
 ### Special Cases
 
 **Absolute value:** $|x| = x$ for $x \geq 0$ and $|x| = -x$ for $x < 0$.
@@ -57,9 +60,10 @@ A function is **odd** if $f(-x) = -f(x)$ for all $x$ — it has rotational symme
 
 ---
 
-(sec:logs-exponents)=
+(sec:mma_logexp)=
 ## Bases, Exponents, and Logarithms
 
+(sec:mma_basexp)=
 ### Bases and Exponents
 
 Any positive real number $a$ (the **base**) raised to a power $n$ (the **exponent**):
@@ -77,6 +81,7 @@ Key rules:
 | Negative exponent | $a^{-n} = 1/a^n$ |
 | Fractional exponent | $a^{1/n} = \sqrt[n]{a}$ |
 
+(sec:mma_euler)=
 ### Euler's Number
 
 Euler's number $e \approx 2.71828\ldots$ is defined by:
@@ -107,12 +112,14 @@ Key log rules:
 | Power | $\ln(a^n) = n \ln a$ |
 | Change of base | $\log_b(x) = \ln(x)/\ln(b)$ |
 
+(sec:mma_fpund)=
 ### Motivation: Floating-Point Underflow
 
 Likelihoods are products of many probability values, each $\leq 1$. For large datasets these products underflow to zero in floating-point arithmetic. Taking the logarithm converts the product to a sum, avoiding underflow:
 
 $$\ln\mathcal{L} = \ln\prod_i f(x_i;\theta) = \sum_i \ln f(x_i;\theta)$$
 
+(sec:mma_trig)=
 ### Trigonometric Functions
 
 For an angle $\theta$ (in radians):
@@ -128,6 +135,7 @@ Key values:
 
 Useful identities: $\sin^2\theta + \cos^2\theta = 1$; $\sin(-\theta) = -\sin\theta$; $\cos(-\theta) = \cos\theta$.
 
+(sec:mma_fac)=
 ### Factorial
 
 The factorial of a non-negative integer $n$ is:
@@ -156,9 +164,10 @@ for n in [0, 1, 5, 10]:
 
 ---
 
-(sec:diff-calc-1)=
+(sec:mma_difcal1)=
 ## Differential Calculus I
 
+(sec:mma_not)=
 ### Notation
 
 The derivative of $y = f(x)$ with respect to $x$ can be written in several equivalent ways:
@@ -169,6 +178,7 @@ The derivative of $y = f(x)$ with respect to $x$ can be written in several equiv
 | Lagrange | $f'(x)$ | Joseph-Louis Lagrange |
 | Newton | $\dot{x}$ (typically for time derivatives) | Isaac Newton |
 
+(sec:mma_powrul)=
 ### The Power Rule
 
 For $y = ax^n$:
@@ -179,6 +189,7 @@ Each term in a polynomial is differentiated independently:
 
 $$\frac{d}{dx}\left(\sum_k \alpha_k x^k\right) = \sum_k k\,\alpha_k\, x^{k-1}$$
 
+(sec:mma_secder)=
 ### Second Derivatives and Curvature
 
 The second derivative $\dfrac{d^2y}{dx^2} = f''(x)$ measures the **curvature** of $f$:
@@ -186,6 +197,7 @@ The second derivative $\dfrac{d^2y}{dx^2} = f''(x)$ measures the **curvature** o
 - $f''(x) > 0$: concave up (curve bends upward)
 - $f''(x) < 0$: concave down (curve bends downward)
 
+(sec:mma_stapo)=
 ### Stationary Points
 
 A **stationary point** occurs where $f'(x) = 0$. Its nature is determined by the second derivative:
@@ -249,6 +261,7 @@ For a linear function of $x$, all terms after $n=1$ are zero — the Taylor seri
 :::
 
 
+(sec:mma_symdif)=
 ### Symbolic Differentiation with `sympy`
 
 ```{code-cell} python
@@ -284,9 +297,10 @@ for n in range(5):
 
 ---
 
-(sec:diff-calc-2)=
+(sec:mma_difcal2)=
 ## Differential Calculus II
 
+(sec:mma_defpri)=
 ### Definition from First Principles
 
 The derivative is formally defined as a limit:
@@ -307,7 +321,7 @@ print(f"Numerical f'({x0}) ≈ {numerical_derivative(f, x0):.6f}")
 print(f"Exact     f'({x0})  = {3 * x0**2:.6f}   (power rule: 3x² at x=2)")
 ```
 
-(sec:mma_derivs_special_funcs)=
+(sec:mma_derspec)=
 ### Derivatives of Special Functions
 
 | Function $f(x)$ | Derivative $f'(x)$ |
@@ -330,6 +344,7 @@ for f in special_funcs:
     print(f"d/dx [{f}] = {diff(f, x)}")
 ```
 
+(sec:mma_parden)=
 ### Partial Derivatives
 
 For a function of several variables $f(x, y, \ldots)$, the **partial derivative** with respect to $x$ treats all other variables as constants:
@@ -350,6 +365,7 @@ print(f"∂²f/∂x²  = {diff(f, x, 2)}")
 print(f"∂²f/∂x∂y = {diff(diff(f, x), y)}")
 ```
 
+(sec:mma_prodr)=
 ### Product Rule
 
 For a product of two functions $h(x) = u(x)\,v(x)$:
@@ -360,13 +376,14 @@ This extends to three or more factors. For $h = uvw$:
 
 $$h' = u'vw + uv'w + uvw'$$
 
-(sec:mma-chain-rule)=
+(sec:mma_charu)=
 ### Chain Rule
 
 For a composite function $h(x) = f(g(x))$:
 
 $$h'(x) = f'(g(x)) \cdot g'(x) \qquad \text{or equivalently} \qquad \frac{dh}{dx} = \frac{df}{dg}\cdot\frac{dg}{dx}$$
 
+(sec:mma_consym)=
 ### Converting Symbolic Expressions to Numerical Functions
 
 `sympy.lambdify` converts a symbolic expression into a callable Python function for numerical evaluation:
@@ -393,10 +410,10 @@ print(df_num(x_vals).round(4))
 
 ---
 
-(sec:multivariable-calc)=
+(sec:mma_mulcal)=
 ## Multivariable Calculus
 
-(sec:mma-grad)=
+(sec:mma_grad)=
 ### The Gradient
 
 For a scalar function $f(x_1, x_2, \ldots, x_n)$, the **gradient** $\nabla f$ is a column vector of all first-order partial derivatives:
@@ -438,6 +455,7 @@ print(H)
 print(f"\nSymmetric (H = Hᵀ)? {H == H.T}")
 ```
 
+(sec:mma_jac)=
 ### The Jacobian
 
 ```{note}
@@ -452,9 +470,10 @@ The Jacobian of a scalar function's gradient is its Hessian.
 
 ---
 
-(sec:integral-calc)=
+(sec:mma_intcal)=
 ## Integral Calculus
 
+(sec:mma_antid)=
 ### Anti-differentiation
 
 Integration is the reverse of differentiation. The **indefinite integral** of $f(x)$ is a function $F(x)$ such that $F'(x) = f(x)$:
@@ -467,18 +486,21 @@ where $k$ is an arbitrary **constant of integration**. Because any constant diff
 `sympy.integrate()` does **not** include the constant of integration $k$. Always add it yourself when writing up indefinite integrals.
 ```
 
+(sec:mma_powint)=
 ### The Power Rule for Integration
 
 $$\int ax^n\,dx = \frac{a}{n+1}\,x^{n+1} + k \qquad (n \neq -1)$$
 
 For $n = -1$: $\displaystyle\int \frac{1}{x}\,dx = \ln|x| + k$.
 
+(sec:mma_defint)=
 ### Definite Integrals
 
 The **definite integral** from $a$ to $b$ gives the signed area under the curve:
 
 $$\int_a^b f(x)\,dx = \Big[F(x)\Big]_a^b = F(b) - F(a)$$
 
+(sec:mma_usint)=
 ### Useful Integrals
 
 | $f(x)$ | $\displaystyle\int f(x)\,dx$ |
@@ -493,6 +515,7 @@ $$\int_a^b f(x)\,dx = \Big[F(x)\Big]_a^b = F(b) - F(a)$$
 | $\sin x$ | $-\cos x + k$ |
 | $\cos x$ | $\sin x + k$ |
 
+(sec:mma_intsub)=
 ### Integration by Substitution
 
 Integration by substitution is the reverse of the chain rule. For a substitution $u = g(x)$, so that $du = g'(x)\,dx$:
@@ -550,7 +573,7 @@ print("The 1/3 is an additive constant, absorbed into k.")
 `sympy.integrate()` can silently drop **additive constants** from a result. In the example above, both $x^3/3 + x^2 + x$ and $(x+1)^3/3$ are valid anti-derivatives — they differ only by the constant $1/3$ — but sympy returns the expanded form rather than the compact factored form. I am not currently aware of a workaround for this.
 ```
 
-(sec:mma-int-by-parts)=
+(sec:mma_intbypar)=
 ### Integration by Parts
 
 Integration by parts is the reverse of the product rule. For two functions $u(x)$ and $v(x)$:
@@ -577,7 +600,7 @@ print(f"∫ ln(x) dx = {result}")
 
 ---
 
-(sec:joint-integrals)=
+(sec:mma_joinint)=
 ## Joint and Marginal Integrals
 
 For a function of two variables $f(x, y)$, the **double integral** over a rectangular region is:
@@ -590,6 +613,7 @@ By **Fubini's theorem**, the order of integration can be swapped without changin
 
 $$\int_{x_0}^{x_1}\int_{y_0}^{y_1} f(x,y)\,dy\,dx = \int_{y_0}^{y_1}\int_{x_0}^{x_1} f(x,y)\,dx\,dy$$
 
+(sec:mma_joinex1)=
 ### Example 1: $f(x,y) = 4xy$ over $0 < x < 1$, $\;0 < y < 2$
 
 Inner integral (over $y$, $x$ held constant):
@@ -612,6 +636,7 @@ result = integrate(f(x, y), (y, 0, 2), (x, 0, 1))
 print(f"∬ {f(x, y)} dy dx  (0<y<2, 0<x<1) = {result}")
 ```
 
+(sec:mma_joinex2)=
 ### Example 2: $f(x,y) = e^{2x} - 3y$ over $-1 < x < 1$, $\;-1 < y < 1$
 
 The $3y$ term integrates to zero over the symmetric interval $[-1, 1]$, leaving:
@@ -633,7 +658,7 @@ print(f"Numerically ≈ {float(result):.4f}")
 
 ---
 
-(sec:sympy-methods-ma)=
+(sec:mma_sympy)=
 ## `sympy` Methods Reference
 
 A reference table of `sympy` methods introduced in this appendix.

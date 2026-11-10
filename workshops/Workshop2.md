@@ -34,7 +34,7 @@ xL =[52.05, 52.03, 52.07, 51.90, 51.94]
 
 Calculate the mean and uncertainty for each dataset, and the weighted mean and uncertainty of the two datasets. Indicate which of them holds more weight and why that is.
 
-The weighted mean is defined [](#weighted-mean).
+The weighted mean is defined [](#sec:tandc_weimea).
 
 The uncertainty on the mean is defined as the standard deviation $\sigma$ divided by the square root of the number of measurements N:
 

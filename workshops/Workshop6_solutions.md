@@ -136,7 +136,7 @@ The true parameters are $\mu = 6.0$ and $\sigma = 3.77$; the sample values will 
 
 ### c) Analytical SEV for the standard deviation
 
-Using the quoted result (derived via the delta method in [](#sec:mmb_delta-method)):
+Using the quoted result (derived via the delta method in [](#sec:mmb_deltam)):
 
 $$\hat{\sigma}(\hat{\sigma}_x) \approx \frac{\hat{\sigma}_x}{\sqrt{2(N-1)}}$$
 

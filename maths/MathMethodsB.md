@@ -13,7 +13,7 @@ numbering:
   equation: true
 ---
 
-(chapter:math-methods-b)=
+(chapter:mmb)=
 # Math Methods B: Proofs and Estimator Theory
 
 This appendix collects a few proofs and derivations referenced from the main module notes. The focus is on results that require a little more mathematical machinery. I don't expect students to read this - it is here only for those with a special interest. 
@@ -23,7 +23,7 @@ This appendix collects a few proofs and derivations referenced from the main mod
 (sec:mmb_varequiv)=
 ## Equivalence of Variance Definitions
 
-Proof that [](#eq:truevar2) is equivalent to [](#eq:truevar).
+Proof that [](#eq:dd_truvar2) is equivalent to [](#eq:dd_truvar).
 
 
 ```{math}
@@ -47,7 +47,7 @@ A linear function of one RV, $X$, is $g(x) = ax + b $.
 (sec:mmb_varlinf1)=
 ### Method 1: Expectations
 
-Using the definition [](#eq:varF) of variance, $V[g] = E[g^2] - E^2[g]$.
+Using the definition [](#eq:dd_varf) of variance, $V[g] = E[g^2] - E^2[g]$.
 
 The first term is:
 
@@ -60,7 +60,7 @@ $E^2[g] = \bigl(a E[X] + b\bigr)^2 = a^2 E^2[X] + b^2 + 2ab E[X]$
 Therefore the variance is:
 
 ```{math}
-:label: eq:proof_varf
+:label: eq:mmb_proofvarf
 V[g] = E[g^2] - E^2[g] = a^2 \bigl(E[X^2] - E^2[X]\bigr) = a^2 V[X]
 ```
 
@@ -99,37 +99,38 @@ V[g] = a^2 V[X]
 
 ---
 
-(sec:gamma-function)=
+(sec:mmb_gamfun)=
 ## The Gamma Function
 
 The **Gamma function** is a generalisation of the factorial to non-integer (and complex) arguments. It appears in the $\chi^2$ PDF and in many other distributions.
 
 ```{math}
-:label: eq:gamma-def
+:label: eq:mmb_gamdef
 \Gamma(s) = \int_0^{\infty} x^{s-1}\, e^{-x}\, dx \;, \qquad s > 0
 ```
 
+(sec:mmb_keypro)=
 ### Key Properties
 
 **Recurrence relation:**
 
 ```{math}
-:label: eq:gamma-recurrence
+:label: eq:mmb_gamrec
 \Gamma(s+1) = s\,\Gamma(s)
 ```
 
-*Proof:* Integrate [](#eq:gamma-def) by parts with $u = x^s$ and $dv = e^{-x}\,dx$:
+*Proof:* Integrate [](#eq:mmb_gamdef) by parts with $u = x^s$ and $dv = e^{-x}\,dx$:
 
 $$\Gamma(s+1) = \left[-x^s e^{-x}\right]_0^{\infty} + s\int_0^{\infty} x^{s-1}e^{-x}\,dx = 0 + s\,\Gamma(s)$$
 
 **Integer arguments (factorials):**
 
 ```{math}
-:label: eq:gamma-factorial
+:label: eq:mmb_gamfac
 \Gamma(n) = (n-1)! \qquad (n = 1, 2, 3, \ldots)
 ```
 <!--
-This can be demonstrated by repeatedly applying [](#eq:gamma-recurrence):
+This can be demonstrated by repeatedly applying [](#eq:mmb_gamrec):
 
 * $\Gamma(1) = 1 = 0!$
 * $\Gamma(2) = 1\cdot\Gamma(1) = 1 = 1!$
@@ -141,18 +142,19 @@ This can be demonstrated by repeatedly applying [](#eq:gamma-recurrence):
 **Half-integer values:**
 
 ```{math}
-:label: eq:gamma-half
+:label: eq:mmb_gamhalf
 \Gamma\!\left(\tfrac{1}{2}\right) = \sqrt{\pi}
 ```
 
-*Proof:* Set $x = u^2,\; dx = 2u\, du$ in [](#eq:gamma-def):
+*Proof:* Set $x = u^2,\; dx = 2u\, du$ in [](#eq:mmb_gamdef):
 
 $$\Gamma\!\left(\tfrac{1}{2}\right) = \int_0^{\infty} x^{-1/2} e^{-x}\,dx = 2\int_0^{\infty} e^{-u^2}\,du = \int_{-\infty}^{\infty} e^{-u^2}\,du = \sqrt{\pi}$$
 
-where the last step uses the [Gaussian integral trick](#sec:gaus-int-trick) below.
+where the last step uses the [Gaussian integral trick](#sec:mmb_gastrick) below.
 
-Higher half-integers follow from the [recurrence](#eq:gamma-recurrence): $\Gamma(3/2) = \frac{1}{2}\sqrt{\pi}$, $\Gamma(5/2) = \frac{3}{4}\sqrt{\pi}$, etc.
+Higher half-integers follow from the [recurrence](#eq:mmb_gamrec): $\Gamma(3/2) = \frac{1}{2}\sqrt{\pi}$, $\Gamma(5/2) = \frac{3}{4}\sqrt{\pi}$, etc.
 
+(sec:mmb_chi2vals)=
 ### Values appearing in the $\chi^2$ PDF
 
 The $\chi^2(\nu)$ PDF contains $\Gamma(\nu/2)$ in its normalisation. The first few values are:
@@ -186,22 +188,23 @@ print(f"\nlog Γ(100) = {gammaln(100):.4f}")
 
 :::{note}
 For numerical work with large arguments, use `scipy.special.gammaln` (the natural log of the Gamma function) to avoid floating-point overflow — then exponentiate only at the end if needed.
-See also the example in [PMFs](#sec:pmfs_gammaln_example).
+See also the example in [PMFs](#sec:pmf_gamln).
 :::
 
 
 ---
 
-(sec:transforms)=
+(sec:mmb_trans)=
 ## Transforms: Changing Variables
 
 In real life we often cannot measure the RV we want directly. We measure $X$ and want the PDF for $Y = f(X)$. We saw in the main notes that we can access the uncertainties on a function using Expectation Algebra or Taylor Series expansion. When we want the **full PDF** of $Y$, not just its mean and variance, we need variable transforms.
 
 ---
 
+(sec:mmb_trans1d)=
 ### One-Dimensional Monotonic Transform
 
-Suppose $Y = f(X)$ is a **monotonically increasing** function of $X$ (no turning points - see [](#fig:mono) ), with inverse $X = g(Y)$.
+Suppose $Y = f(X)$ is a **monotonically increasing** function of $X$ (no turning points - see [](#fig:dd_mono) ), with inverse $X = g(Y)$.
 
 Because $Y$ increases whenever $X$ increases:
 
@@ -218,7 +221,7 @@ f_Y(y) = \dfrac{d}{dy} F_Y(y) = \dfrac{d}{dy} F_X(g(y)) = \dfrac{dg}{dy}\, f_X(g
 For a **monotonically decreasing** function the same argument applies with a sign flip, so in general:
 
 ```{math}
-:label: eq:transform_1d
+:label: eq:mmb_trans1d
 f_Y(y) = \left|\dfrac{dx}{dy}\right| f_X(x)
 ```
 
@@ -240,7 +243,7 @@ $Y \sim \mathrm{Expon}(\lambda/2)$: doubling the RV is equivalent to halving the
 
 ---
 
-(sec:gaus-int-trick)=
+(sec:mmb_gastrick)=
 ### The Gaussian Integral Trick
 
 Let $I = \int\limits_{-\infty}^{\infty} e^{-u^2}\,du$. We cannot evaluate $I$ directly, but we can evaluate $I^2$:
@@ -279,19 +282,20 @@ $$\int_{-\infty}^{\infty} \dfrac{1}{\sigma\sqrt{2\pi}}\exp\!\left(-\dfrac{(x-\mu
 
 ---
 
+(sec:mmb_multjac)=
 ### Multivariate Transform and the Jacobian
 
-For a multivariate RV $\mathbf{X} = (X_1, X_2, \ldots, X_Z)$ transformed to $\mathbf{Y} = (Y_1, Y_2, \ldots, Y_Z)$ via some set of relationships $Y_i = f_i(X_1, \ldots, X_Z)$, the generalisation of [](#eq:transform_1d) involves the **Jacobian**:
+For a multivariate RV $\mathbf{X} = (X_1, X_2, \ldots, X_Z)$ transformed to $\mathbf{Y} = (Y_1, Y_2, \ldots, Y_Z)$ via some set of relationships $Y_i = f_i(X_1, \ldots, X_Z)$, the generalisation of [](#eq:mmb_trans1d) involves the **Jacobian**:
 
 ```{math}
-:label: eq:transform_jacobian
+:label: eq:mmb_transjac
 f_{\mathbf{Y}}(\mathbf{y}) = \dfrac{1}{|\mathbf{J}|}\, f_{\mathbf{X}}(\mathbf{x})
 ```
 
 where $\mathbf{J}$ is the $Z\times Z$ **matrix** of partial derivatives and $|\mathbf{J}|$ denotes its determinant:
 
 ```{math}
-:label: eq:jacobian
+:label: eq:mmb_jac
 \mathbf{J} = \begin{pmatrix}
 \dfrac{\partial y_1}{\partial x_1} & \cdots & \dfrac{\partial y_1}{\partial x_Z} \\
 \vdots & \ddots & \vdots \\
@@ -323,7 +327,7 @@ So $f(r,\theta) = r\, g(x,y)$: if $(x,y)$ are uniform (constant $g$), then $f(r,
 ---
 
 <!--
-(sec:var-bias-proof)=
+(sec:mmb_varbias)=
 ## Bias of the Sample Variance
 
 :::{note}
@@ -331,7 +335,7 @@ This replaces the uploaded png of my ipad proof, finally :)
 :::
 
 
-The [sample variance](#eq:variance) is a **biased** estimator of the true variance $\sigma^2 = V[X]$, as stated in the main notes [](#eq:vartruesamp).
+The [sample variance](#eq:tandc_var) is a **biased** estimator of the true variance $\sigma^2 = V[X]$, as stated in the main notes [](#eq:vartruesamp).
 
 Notation
 : $\theta$ denotes the true variance $V[X]$
@@ -345,12 +349,12 @@ Notation
 **Key identity.** For any sample $\{x_i\}$ with mean $\overline{x}$ and true mean $\mu$:
 
 ```{math}
-:label: eq:var-identity
+:label: eq:mmb_varid
 \sum_{i=1}^N (x_i - \overline{x})^2 = \sum_{i=1}^N (x_i - \mu)^2 - N(\overline{x} - \mu)^2
 ```
 -->
 
-(sec:var-bias-proof)=
+(sec:mmb_varbias)=
 ## Bias of the Sample Variance
 
 Notation
@@ -439,7 +443,7 @@ E[\hat{\theta}_b]
 ```
 
 ```{math}
-:label: eq:vartruesamp-proof
+:label: eq:mmb_vartspro
 E[\hat{\theta}_b] = \frac{N-1}{N}\,V[X]
 ```
 
@@ -455,7 +459,7 @@ $$\hat{\theta}_u = \frac{1}{N-1}\sum_i(x_i-\overline{x})^2
 **Proof** 
 
 ```{math}
-:label: eq:var-identity-proof
+:label: eq:mmb_varidpro
 x_i - \overline{x} = (x_i - \mu) - (\overline{x} - \mu)
 
 ```
@@ -477,7 +481,7 @@ E\!\left[\sum_{i=1}^N (x_i - \overline{x})^2\right]
 Dividing through by $N$:
 
 ```{math}
-:label: eq:vartruesamp-proof
+:label: eq:mmb_vartspro
 E\!\left[v_{x,b}\right] = E\!\left[\hat{V}[X]\right] = \dfrac{N-1}{N}\,\sigma^2
 ```
 
@@ -490,13 +494,13 @@ v_{x} = \dfrac{1}{N-1}\sum_{i=1}^N (x_i - \overline{x})^2 \;\; \Rightarrow \;\; 
 
 ---
 
-(sec:mse-proof)=
+(sec:mmb_mse)=
 ## Mean Squared Error
 
 The **Mean Squared Error** (MSE) of an estimator $\hat{\theta}$ for a true parameter $\theta$ is defined as:
 
 ```{math}
-:label: eq:mse_again
+:label: eq:mmb_mseag
 \mathrm{MSE}(\hat{\theta}) = E\!\left[(\hat{\theta} - \theta)^2\right]
 ```
 
@@ -505,7 +509,7 @@ The MSE decomposes into variance plus squared bias.
 **Proof.** Let $\mu = E[\hat{\theta}]$ be the mean of the estimator. Add and subtract $\mu$ inside the square:
 
 ```{math}
-:label: eq:mse_proof
+:label: eq:mmb_msepro
 \begin{aligned}
 E\!\left[ (\hat{\theta} -\theta)^2 \right]
 &= E\!\left[ ( \hat{\theta} -\mu + \mu - \theta )^2 \right]
@@ -521,7 +525,7 @@ E\!\left[ (\hat{\theta} -\theta)^2 \right]
 where $b = \mu - \theta = E[\hat{\theta}] - \theta$ is the **bias**.
 
 ```{math}
-:label: eq:mse-decomp
+:label: eq:mmb_msedecomp
 \mathsf{MSE}(\hat{\theta}) = V[\hat{\theta}] + b^2
 ```
 
@@ -544,7 +548,7 @@ For large $N$ both are $\sim 2\sigma^4/N$, but the biased estimator has slightly
 -->
 ---
 
-(sec:mmb-central-moments)=
+(sec:mmb_cenmo)=
 ## Central Moments
 
 :::{tip}
@@ -565,10 +569,10 @@ $\mu_0  = E[(X-\mu)^0] = 1$
 : The zeroth central moment is 1, because any number to the power zero is 1, and the expectation of a number is just the number.
 
 $ \mu_1 = E[(X-\mu)^1] = 0$
-: The first central moment is 0, because $E[(X-\mu)] = E[X] - E[\mu] =  \mu - \mu$, where we used  E(sum) = sum(E) [](#eq:expect_sum).
+: The first central moment is 0, because $E[(X-\mu)] = E[X] - E[\mu] =  \mu - \mu$, where we used  E(sum) = sum(E) [](#eq:dd_expsum).
 
 $\mu_2 = E[(X-\mu)^2] $
-: The second central moment is the **Variance**, as shown in [](#sec:truvar). This quantifies the **spread** of the distribution. See [](#eq:truevar).
+: The second central moment is the **Variance**, as shown in [](#sec:dd_truvar). This quantifies the **spread** of the distribution. See [](#eq:dd_truvar).
 
 $\mu_3 = E[(X-\mu)^3] $
 : The third central moment has an odd power, meaning that it is "signed". The higher power also indicates a larger weight is given to values further from the mean.
@@ -577,7 +581,7 @@ $\mu_4 = E[(X-\mu)^4]$
 : The fourth central moment has an even power, so is always positive, and gives a higher weight still to values further from the mean.
 
 
-(sec:mmb-stand-central-moments)=
+(sec:mmb_stacenmo)=
 ### Standardised Central Moments
 
 It is useful (for the third and fourth moments) to write down the central moments in terms of the **Standard Normal RV** $Z = \dfrac{X-\mu}{\sigma}$.
@@ -609,7 +613,7 @@ $\overline{\mu}_4 =\dfrac{\mu_4}{\sigma^4} = E[Z^4] = \kappa$
 
 
 
-(sec:mmb-scm-good-to-know)=
+(sec:mmb_scmgtk)=
 ### Good to know
 
 For a Standard Normal RV:
@@ -630,16 +634,16 @@ where !! indicates a double factorial - a mathematical operation that multiplies
 To prove [](#eq:mmb_recursion) we need:
 
 
-[1] The definition of the [Expectation](#eq:expectC)
+[1] The definition of the [Expectation](#eq:dd_expc)
 : $E[X] = \int\limits_{-\infty}^{\infty} x f_X(x)\, dx$
 
-[2] The form of the [Standard Normal PDF](#eq:standard-norm)
+[2] The form of the [Standard Normal PDF](#eq:norm_stdn)
 : $f_Z(z) = \dfrac{1}{\sqrt{2\pi}} e^{-z^2/2}$
 
-[3] [Integration by parts](#sec:mma-int-by-parts)
+[3] [Integration by parts](#sec:mma_intbypar)
 : $\int u\, dv = uv - \int v\, du$
 
-[4] [The chain rule](#sec:mma-chain-rule)
+[4] [The chain rule](#sec:mma_charu)
 : $\frac{df}{dx}= \frac{df}{dg}\cdot\frac{dg}{dx}$
 
 
@@ -699,7 +703,7 @@ With the result [](#eq:mmb_recursion_p) we have proven [](#eq:mmb_recursion) - t
 | 3 | $E[Z^{6}] = 5\cdot E[Z^{4}]$ | 15 |
 | n | $E[Z^{2n}]$ | $(2n-1)!!$ |
 :::
-<!--Recall that we can write the Variance in terms of the Expectation, [](#eq:truevar). The Variance is the "second central moment", where the central moments $\mu_n$ are as follows:-->
+<!--Recall that we can write the Variance in terms of the Expectation, [](#eq:dd_truvar). The Variance is the "second central moment", where the central moments $\mu_n$ are as follows:-->
 
 
 
@@ -714,7 +718,7 @@ The $Q\sim \chi^2(\nu)$ distribution has:
 
   $$V[Q] = 2\nu$$
 
-These follow directly from the definition [](#eq:chi2), using the [Standardised Central Moments](#tab:mmb_recursion).
+These follow directly from the definition [](#eq:pdf_chi2), using the [Standardised Central Moments](#tab:mmb_recursion).
 
 $E[z_i^2]=1\;\;\rightarrow \;\; E[Q] = \sum\limits_{i=1}^\nu E[z_i^2] = \nu$
 
@@ -763,15 +767,15 @@ $\textcolor{red}{TO\;DO}$: Show A and B are independent - the above is only vali
 
 ---
 
-(sec:sev-chisq-proof)=
+(sec:mmb_sevchi2)=
 ## Variance Bias is a Chi Squared RV
 
-The unbiased estimator of variance is [](#eq:varianceU).
+The unbiased estimator of variance is [](#eq:tandc_varu).
 
 For IID $X \sim$ Norm($\mu, \sigma)$, we will show that:
 
 ```{math}
-:label: eq:sev-chisq
+:label: eq:mmb_eisevc
 \dfrac{ (N-1)v_x } {V[X]} \sim \chi^2(N-1)
 ```
 
@@ -813,7 +817,7 @@ Sum the squares of both sides:
 
 $\mathsf{\textcolor{blue}{Note\; 1}}$: The cross term vanishes because $\sum_{i=1}^N (x_i - \bar{x}) = N\bar{x} - N\bar{x} = 0$.
 
-$\mathsf{\textcolor{blue}{Note\; 2}}$: using $v_{x,b}$ for the [biased variance](#eq:variance).
+$\mathsf{\textcolor{blue}{Note\; 2}}$: using $v_{x,b}$ for the [biased variance](#eq:tandc_var).
 
 $\mathsf{\textcolor{blue}{Note\; 3}}$: using $v_{x,b} = \dfrac{N-1}{N} v_{x} $
 
@@ -869,19 +873,19 @@ Giving:
 
 ---
 
-(sec:sev-proof)=
+(sec:mmb_sevpro)=
 ## SEV for Normal Data
 
-The Standard Error on the Variance (SEV) for Normally distributed data is stated in the main notes as [](#eq:sev). Here we prove it.
+The Standard Error on the Variance (SEV) for Normally distributed data is stated in the main notes as [](#eq:ei_sev). Here we prove it.
 
-From [](#sec:sev-chisq-proof) we have:
+From [](#sec:mmb_sevchi2) we have:
 
 ```{math}
-:label: eq:chi2-samp-var
+:label: eq:mmb_chi2smpv
 \dfrac{(N-1)\, v_{x}}{\sigma^2} \sim \chi^2(N-1),
 ```
 
-where $v_x$ is the [unbiased estimator of variance](#eq:varianceU).
+where $v_x$ is the [unbiased estimator of variance](#eq:tandc_varu).
 
 
 **Deriving the SEV.** Since $V[\chi^2(\nu)] = 2\nu$ (see [](#sec:mmb_chisq_expect)):
@@ -890,7 +894,7 @@ where $v_x$ is the [unbiased estimator of variance](#eq:varianceU).
 V\!\left[\dfrac{(N-1)\,v_x}{\sigma^2}\right] = 2(N-1)
 ```
 
-Pulling the constant $\left(\dfrac{N-1}{\sigma^2}\right)^2$ out of the variance (see [](#eq:var_multc)):
+Pulling the constant $\left(\dfrac{N-1}{\sigma^2}\right)^2$ out of the variance (see [](#eq:dd_varmulc)):
 
 ```{math}
 \dfrac{(N-1)^2}{\sigma^4}\, V[v_x] = 2(N-1)
@@ -899,29 +903,29 @@ Pulling the constant $\left(\dfrac{N-1}{\sigma^2}\right)^2$ out of the variance 
 Solving for $V[v_x]$:
 
 ```{math}
-:label: eq:vest-proof
+:label: eq:mmb_vestpro
 V[v_x] = \dfrac{2\sigma^4}{N-1}
 ```
 
 Taking the square root:
 
 ```{math}
-:label: eq:mmb_sev-proof
+:label: eq:mmb_sevpro
 \mathsf{SEV} = \sqrt{V[v_x]} = \sigma^2\sqrt{\dfrac{2}{N-1}}
 ```
 
-This confirms [](#eq:sev) in the main notes. 
+This confirms [](#eq:ei_sev) in the main notes. 
 
 
 In practice we estimate $\sigma^2 \approx v_x$, giving 
 
 
 ```{math}
-:label: eq:mmb_esev-proof
+:label: eq:mmb_esevpro
 \widehat{\mathsf{SEV} } = v_x\sqrt{\dfrac{2}{N-1}}
 ```
 
-For the [biased estimator of variance](#eq:variance), we use here the notation $v_{x,b}= \frac{N-1}{N}v_x$ [](#eq:vartruesamp-proof), and we have:
+For the [biased estimator of variance](#eq:tandc_var), we use here the notation $v_{x,b}= \frac{N-1}{N}v_x$ [](#eq:mmb_vartspro), and we have:
 
 ```{math}
 V[v_{x,b}] = \left(\dfrac{N-1}{N}\right)^2 V[v_x] = \dfrac{2(N-1)\sigma^4}{N^2}
@@ -930,15 +934,15 @@ V[v_{x,b}] = \left(\dfrac{N-1}{N}\right)^2 V[v_x] = \dfrac{2(N-1)\sigma^4}{N^2}
 which gives
 
 ```{math}
-:label: eq:mmb_sevb-proof
+:label: eq:mmb_sevbpro
 \mathsf{SEV}_b = \sigma^2\sqrt{\dfrac{2(N-1)}{N}},
 ```
 
-confirming [](#eq:sev).
+confirming [](#eq:ei_sev).
 
 ---
 
-(sec:mmb_delta-method)=
+(sec:mmb_deltam)=
 ## The Delta Method (Taylor Expansion)
 
 Suppose $\hat{\theta}$ is an estimator with known variance $V[\hat{\theta}]$. We want the variance of a smooth function $g(\hat{\theta})$.
@@ -953,7 +957,7 @@ Rearranging:
 
 $$g(\hat{\theta}) - g(\theta) \approx g'(\theta)\,(\hat{\theta} - \theta)$$
 
-Now take the variance of both sides. Since $g(\theta)$ is a constant, subtracting it does not affect the variance [](#variancealgebra):
+Now take the variance of both sides. Since $g(\theta)$ is a constant, subtracting it does not affect the variance [](#sec:dd_varalg):
 
 $$V\!\left[g(\hat{\theta})\right] \approx V\!\left[g'(\theta)\,(\hat{\theta} - \theta)\right]$$
 
@@ -965,7 +969,7 @@ $$V\!\left[g(\hat{\theta})\right] \approx \left[g'(\theta)\right]^2 V\!\left[\ha
 Finally, $\theta$ is a constant, so $V[\hat{\theta} - \theta] = V[\hat{\theta}]$:
 
 ```{math}
-:label: eq:delta-method
+:label: eq:mmb_deltam
 V[g(\hat{\theta})] \approx \left[g'(\theta)\right]^2 V[\hat{\theta}]
 ```
 
@@ -973,7 +977,7 @@ This is the **Delta method** (sometimes called **error propagation**). It is exa
 
 
 :::{seealso}
-The Delta Method generalises to multivariate functions via the Jacobian: $V[h] = \mathbf{J}\,\Sigma\,\mathbf{J}^T$. This general form is covered in [Describing Data](#sec:dd-varfunc).
+The Delta Method generalises to multivariate functions via the Jacobian: $V[h] = \mathbf{J}\,\Sigma\,\mathbf{J}^T$. This general form is covered in [Describing Data](#sec:dd_varfun).
 :::
 
 ---
@@ -981,7 +985,7 @@ The Delta Method generalises to multivariate functions via the Jacobian: $V[h] =
 (sec:mmb_ses)=
 ## Standard Error of the Standard Deviation (SES)
 
-The sample standard deviation is $\sigma_x = \sqrt{v_x}$: a nonlinear function of the sample variance. Applying the [Delta Method](#sec:mmb_delta-method) with $g(\theta) = \sqrt{\theta}$:
+The sample standard deviation is $\sigma_x = \sqrt{v_x}$: a nonlinear function of the sample variance. Applying the [Delta Method](#sec:mmb_deltam) with $g(\theta) = \sqrt{\theta}$:
 
 $$g'(\theta) = \dfrac{1}{2\sqrt{\theta}}$$
 
@@ -994,23 +998,23 @@ V[\sigma_x] = V[\sqrt{v_x}] \approx \left(\dfrac{1}{2\sqrt{\sigma^2}}\right)^2 V
 The **Standard Error of the Standard Deviation** is therefore:
 
 ```{math}
-:label: eq:ses
+:label: eq:mmb_ses
 \mathsf{SES} = \sqrt{V[\sigma_x]} \approx \dfrac{\sigma}{\sqrt{2(N-1)}}
 ```
 
 In practice, replace $\sigma$ with $\sigma_x$:
 
 ```{math}
-:label: eq:ses-est
+:label: eq:mmb_sesest
 \widehat{\mathsf{SES}} = \dfrac{\sigma_x}{\sqrt{2(N-1)}}
 ```
 
 :::{note}
-The SES formula [](#eq:ses) assumes Normally distributed data. For non-Normal data, the Bootstrap method gives a more reliable uncertainty on the standard deviation.
+The SES formula [](#eq:mmb_ses) assumes Normally distributed data. For non-Normal data, the Bootstrap method gives a more reliable uncertainty on the standard deviation.
 :::
 
 
-(sec:ses_python)=
+(sec:mmb_sespy)=
 ### Python
 
 ```{code-cell} python
@@ -1032,17 +1036,18 @@ print(f"Analytical SES: {2.0 / np.sqrt(2*(len(data)-1)):.4f}")  # true σ = 2
 
 ---
 
-(sec:mvue)=
+(sec:mmb_mvue)=
 ## Minimum Variance Unbiased Estimation
 
-The unbiased sample variance $v_x$ is an unbiased estimator for $\sigma^2$ [](#sec:var-bias-proof). But could there be a *better* unbiased estimator — one with smaller variance? This is the question of **Minimum Variance Unbiased Estimation (MVUE)**.
+The unbiased sample variance $v_x$ is an unbiased estimator for $\sigma^2$ [](#sec:mmb_varbias). But could there be a *better* unbiased estimator — one with smaller variance? This is the question of **Minimum Variance Unbiased Estimation (MVUE)**.
 
+(sec:mmb_fishinfo)=
 ### Fisher Information and the Cramér–Rao Bound
 
 The **Fisher Information** quantifies how much information a single observation $x$ carries about a parameter $\theta$:
 
 ```{math}
-:label: eq:fisher-info
+:label: eq:mmb_fishinfo
 I(\theta) = E\!\left[\left(\dfrac{\partial \ln f(x;\theta)}{\partial \theta}\right)^2\right]
 ```
 
@@ -1051,12 +1056,13 @@ where $f(x;\theta)$ is the PDF of a single observation. Under mild regularity co
 The **Cramér–Rao bound** states that for any **unbiased** estimator $\hat{\theta}$ based on $N$ i.i.d.\ observations:
 
 ```{math}
-:label: eq:cramer-rao
+:label: eq:mmb_cramrao
 V[\hat{\theta}] \geq \dfrac{1}{N\, I(\theta)}
 ```
 
 An estimator that achieves this bound is called **efficient** — it is the MVUE.
 
+(sec:mmb_applnorm)=
 ### Application to the Normal Variance
 
 For the Normal distribution with known mean, the Fisher information for $\theta = \sigma^2$ is:
@@ -1071,10 +1077,11 @@ The Cramér–Rao bound gives:
 V[\hat{\sigma}^2] \geq \dfrac{2\sigma^4}{N}
 ```
 
-But we showed in [](#sec:sev-proof) that $V[v_x] = 2\sigma^4/(N-1)$. Since $1/(N-1) > 1/N$, the unbiased sample variance does **not** achieve the Cramér–Rao bound! It is unbiased but not efficient.
+But we showed in [](#sec:mmb_sevpro) that $V[v_x] = 2\sigma^4/(N-1)$. Since $1/(N-1) > 1/N$, the unbiased sample variance does **not** achieve the Cramér–Rao bound! It is unbiased but not efficient.
 
-This is one reason the biased estimator $v_{x,b}$ can have smaller MSE for finite $N$ (as we saw in [](#sec:mse-proof)): it sacrifices unbiasedness to trade variance for bias in a way that can be favourable.
+This is one reason the biased estimator $v_{x,b}$ can have smaller MSE for finite $N$ (as we saw in [](#sec:mmb_mse)): it sacrifices unbiasedness to trade variance for bias in a way that can be favourable.
 
+(sec:mmb_raobl)=
 ### Rao–Blackwell and Sufficient Statistics
 
 The **Rao–Blackwell theorem** gives a systematic way to improve estimators. If $\hat{\theta}$ is any unbiased estimator and $T$ is a **sufficient statistic** for $\theta$ (a statistic that captures all the information in the data about $\theta$), then:
@@ -1085,6 +1092,7 @@ is also unbiased and has $V[\tilde{\theta}] \leq V[\hat{\theta}]$. Iterating thi
 
 For the Normal distribution, the pair $(\overline{x},\, v_x)$ is jointly sufficient for $(\mu, \sigma^2)$. It can be shown (via Lehmann–Scheffé) that $v_x$ is in fact the MVUE for $\sigma^2$ when $\mu$ is unknown — even though it doesn't achieve the Cramér–Rao bound (which assumes known $\mu$).
 
+(sec:mmb_boot)=
 ### Practical Note: Bootstrap
 
 In practice, when the data distribution is unknown, analytical MVUE results may not apply. The **Bootstrap method** provides a reliable, assumption-free way to estimate the variance (and hence the uncertainty) of any estimator:

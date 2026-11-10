@@ -16,7 +16,7 @@ numbering:
 (workshop-7)=
 # Workshop 7: Numerical MLE with `scipy.optimize`
 
-This workshop covers material from [Maximum Likelihood Estimation](#chapter:MaxLike): the Negative Log Likelihood ([](#sec:nll)), numerical minimisation, and uncertainty estimation from the curvature of the NLL.
+This workshop covers material from [Maximum Likelihood Estimation](#chapter:mle): the Negative Log Likelihood ([](#sec:ei_nll)), numerical minimisation, and uncertainty estimation from the curvature of the NLL.
 
 You will work with two toy datasets:
 
@@ -53,7 +53,7 @@ State whether each of the following is **True** or **False**, and give a one-sen
 
 ## Task 2: Poisson MLE — one parameter, one method
 
-The `counts` dataset contains Poisson-distributed integers. Recall from the notes [](#sec:poisson_like) that the Poisson NLL for a dataset $\{x_i\}$ is
+The `counts` dataset contains Poisson-distributed integers. Recall from the notes [](#sec:pmf_poilike) that the Poisson NLL for a dataset $\{x_i\}$ is
 
 $$
 -\ln\mathcal{L}(\lambda) = -\sum_i \bigl[x_i \ln\lambda - \lambda - \ln(x_i!)\bigr],

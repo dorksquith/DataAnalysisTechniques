@@ -56,7 +56,7 @@ f) How would you interpret finding a measurement outside the $5\sigma$ region?
 
 ## Task 3: Optional Extension Task (if this is not your first rodeo)
 
-The module notes have a python snippet [MultiVariateGaus](#seaborn-gaus2) for plotting a bivariate Gaussian distribution with two choices of covariance matrix.
+The module notes have a python snippet [MultiVariateGaus](#sec:norm_sea) for plotting a bivariate Gaussian distribution with two choices of covariance matrix.
 
 a) Can you choose any values for the covariance matrix elements? What are the limitations?
 

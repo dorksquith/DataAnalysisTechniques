@@ -26,5 +26,6 @@ Workshop 5 [Normal Tests](#workshop-5), example solutions [here](#workshop-5-sol
 
 Workshop 6 [Likelihoods & Bootstrapping](#workshop-6), example solutions [here](#workshop-6-solutions)
 
-Workshop 7 [Numerical MLE and Model Comparison (LLR)](#workshop-7) <!--example solutions [here](#workshop-7-solutions)-->
+Workshop 7 [Numerical MLE and Model Comparison (LLR)](#workshop-7), example solutions [here](#workshop-7-solutions)
 
+Workshop 8 [Linear Regression (Least Squares)](#workshop-8)

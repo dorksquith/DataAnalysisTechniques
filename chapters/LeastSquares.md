@@ -613,10 +613,10 @@ Parameter Uncertainties
 
 | Function | Use when | Returns |
 |----------|----------|---------|
-| `least_squares` | Minimising a **sum of squares** $\\sum_i r_i^2$; supports robust losses and returns the Jacobian for covariance estimation | `result.x`, `result.jac`, `result.fun` |
-| `minimize` | Minimising an **arbitrary scalar** function (e.g.\ a negative log-likelihood); general-purpose | `result.x`, optionally `result.hess_inv` |
+| `least_squares` | Minimising a **sum of squares** $\sum_i r_i^2$; supports robust losses and returns the Jacobian for covariance estimation | `result.x`, `result.jac`, `result.fun` |
+| `minimize` | Minimising an **arbitrary scalar** function (e.g. a negative log-likelihood); general-purpose | `result.x`, optionally `result.hess_inv` |
 | `minimize_scalar` | Minimising a **1-D scalar** function of a single variable only | `result.x` |
-| `fsolve` | Finding **roots** of a system of equations $f(x)=0$ (e.g.\ score equations); not an optimiser | array of root values |
+| `fsolve` | Finding **roots** of a system of equations $f(x)=0$ (e.g. score equations); not an optimiser | array of root values |
 :::
 
 Let's generate some fake data that follows $y(x) = ax + b$ but has some added noise to make it more realistic.
@@ -994,13 +994,13 @@ Because the residuals appear **squared** in $\chi^2$, a single outlier can domin
 | `'huber'`  | Quadratic near zero, linear in the tails |
 | `'cauchy'` | Very robust, maximally down-weights outliers |
 
-**Why is the default loss called `'linear'`?** The loss function is characterised by the *rho function* $\\rho(z)$, where $z = r_i^2$ is the squared residual.  For the default `'linear'` choice, $\\rho(z) = z$, which is linear in $z$ — hence the name.  This gives the ordinary sum of squares $\\sum_i \\rho(r_i^2) = \\sum_i r_i^2$.  The model itself can still be linear *or* nonlinear in $x$; the word “linear” here refers to the rho function, not to the functional form of $m(x)$.  For `'soft_l1'`, $\\rho(z) = 2(\\sqrt{1+z}-1)$, which grows more slowly for large $z$ and therefore down-weights outliers.
+**Why is the default loss called `'linear'`?** The loss function is characterised by the *rho function* $\rho(z)$, where $z = r_i^2$ is the squared residual.  For the default `'linear'` choice, $\rho(z) = z$, which is linear in $z$ — hence the name.  This gives the ordinary sum of squares $\sum_i \rho(r_i^2) = \sum_i r_i^2$.  The model itself can still be linear *or* nonlinear in $x$; the word “linear” here refers to the rho function, not to the functional form of $m(x)$.  For `'soft_l1'`, $\rho(z) = 2(\sqrt{1+z}-1)$, which grows more slowly for large $z$ and therefore down-weights outliers.
 
 :::{note} Loss function vs.\ distributional assumption
 The `loss` argument and the distributional assumption of the model are **two separate choices**:
 
 * **`loss`** controls *outlier robustness* — how much a large residual is allowed to influence the parameter estimates.  It says nothing about the distribution of the measurement uncertainties.
-* **Distributional assumption** determines *which likelihood* underpins the fit.  Gaussian errors → standard LS (minimise $\\chi^2$).  Non-Gaussian errors require a different model.
+* **Distributional assumption** determines *which likelihood* underpins the fit.  Gaussian errors → standard LS (minimise $\chi^2$).  Non-Gaussian errors require a different model.
 
 For non-Gaussian/non-Poisson measurements, a **Generalised Linear Model (GLM)** provides the appropriate framework.  `statsmodels.genmod` implements GLMs for the most common families:
 

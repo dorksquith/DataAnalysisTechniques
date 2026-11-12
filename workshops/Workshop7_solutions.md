@@ -130,24 +130,24 @@ mu_hat, sig_hat = result2.x
 print(f"μ̂ = {mu_hat:.4f},  σ̂ = {sig_hat:.4f}")
 ```
 
-### 3c — Standard errors from Hessian
+### 3c — Standard errors (analytic)
 
 ```{code-cell} python
-hess_inv = result2.hess_inv.todense()
-se_mu  = np.sqrt(hess_inv[0, 0])
-se_sig = np.sqrt(hess_inv[1, 1])
+N = len(energies)
+se_mu  = sig_hat / np.sqrt(N)
+se_sig = sig_hat / np.sqrt(2 * N)
 print(f"μ̂ = {mu_hat:.4f} ± {se_mu:.4f}")
 print(f"σ̂ = {sig_hat:.4f} ± {se_sig:.4f}")
 ```
 
-The standard error on $\mu$ should be roughly $\sigma/\sqrt{N}$, and on $\sigma$ roughly $\sigma/\sqrt{2N}$.
+For a Gaussian the analytic standard errors are $\sigma/\sqrt{N}$ on $\mu$ and $\sigma/\sqrt{2N}$ on $\sigma$.
 
 ### 3d — 2D NLL contour
 
 ```{code-cell} python
-n_grid = 40
-mu_grid = np.linspace(mu_hat - 3*se_mu, mu_hat + 3*se_mu, n_grid)
-sig_grid = np.linspace(sig_hat - 3*se_sig, sig_hat + 3*se_sig, n_grid)
+n_grid = 80
+mu_grid  = np.linspace(mu_hat - 4*se_mu,  mu_hat + 4*se_mu,  n_grid)
+sig_grid = np.linspace(max(1e-3, sig_hat - 4*se_sig), sig_hat + 4*se_sig, n_grid)
 MU, SIG = np.meshgrid(mu_grid, sig_grid)
 
 NLL_grid = np.array([
@@ -157,9 +157,10 @@ NLL_grid = np.array([
 NLL_shift = NLL_grid - result2.fun
 
 fig, ax = plt.subplots(figsize=(6, 5))
-cf = ax.contourf(MU, SIG, NLL_shift, levels=30, cmap='viridis_r')
+cf = ax.contourf(MU, SIG, NLL_shift, levels=30, cmap='viridis_r', vmin=0, vmax=5)
 plt.colorbar(cf, ax=ax, label=r'NLL $-$ NLL$_{\min}$')
-ax.contour(MU, SIG, NLL_shift, levels=[0.5, 2.0], colors=['white', 'yellow'], linewidths=1.5)
+cs = ax.contour(MU, SIG, NLL_shift, levels=[0.5, 2.0], colors=['black', 'white'], linewidths=1.5)
+ax.clabel(cs, fmt={0.5: r'$+0.5$', 2.0: r'$+2.0$'}, fontsize=9)
 ax.plot(mu_hat, sig_hat, 'w*', ms=12, label='MLE')
 ax.set_xlabel(r'$\mu$ (GeV)')
 ax.set_ylabel(r'$\sigma$ (GeV)')
@@ -169,7 +170,7 @@ plt.tight_layout()
 plt.show()
 ```
 
-The white contour ($+0.5$) is the approximate 68% CI region; the yellow contour ($+2.0$) is the approximate 95% region.
+The black contour ($+0.5$) is the approximate 68% CI region; the white contour ($+2.0$) is the approximate 95% region.
 
 ---
 

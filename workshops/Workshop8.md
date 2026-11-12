@@ -22,14 +22,17 @@ Material is drawn from [Maximum Likelihood Estimation](#chapter:mle) and [Least 
 
 You will work with two toy datasets:
 
-- `DataW8_regression.txt` — a three-column file with columns `x_cm`, `y_N`, `sigma_N` (position, force measurement, measurement uncertainty). Load with:
+- [`DataW8_regression.txt`](DataW8_regression.txt) — a three-column file with columns `x_cm`, `y_N`, `sigma_N` (position, force measurement, measurement uncertainty). 
+- [`DataW8_models.txt`](DataW8_models.txt) — a four-column file with columns `bin_centre`, `D`, `M1`, `M2` (bin centres, observed counts, and two model predictions)
+
+Load with:
+
   ```python
   x, y, sigma = np.loadtxt('DataW8_regression.txt', skiprows=1, unpack=True)
-  ```
-- `DataW8_models.txt` — a four-column file with columns `bin_centre`, `D`, `M1`, `M2` (bin centres, observed counts, and two model predictions). Load with:
-  ```python
+ 
   bc, D, M1, M2 = np.loadtxt('DataW8_models.txt', skiprows=1, unpack=True)
   D = D.astype(int)
+
   ```
 
 ---

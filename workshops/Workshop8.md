@@ -89,7 +89,7 @@ b) Write a function `poisson_log_likelihood(D, M)` that computes
 
 c) Compute the Log Likelihood Ratio:
    $$
-   \Lambda = -2(\ln\mathcal{L}_2 - \ln\mathcal{L}_1).
+   \mathsf{LLR} = -2(\ln\mathcal{L}_2 - \ln\mathcal{L}_1).
    $$
    What does its sign tell you? If $k_1 = k_2 = 0$, what is $\Delta\text{AIC}$?
 

@@ -43,7 +43,7 @@ State whether each of the following is **True** or **False**, and give a one-sen
 
 1. `scipy.optimize.curve_fit` minimises the sum of squared residuals weighted by the measurement uncertainties $\sigma_i$.
 
-2. The covariance matrix `pcov` returned by `curve_fit` has diagonal entries equal to the **variances** of the fitted parameters.
+2. The covariance matrix returned by `curve_fit` has diagonal entries equal to the **variances** of the fitted parameters.
 
 3. For Poisson-distributed counts, using the unweighted $\chi^2$ statistic (without $\sigma_i^2$ in the denominator) is the correct goodness-of-fit measure.
 
@@ -61,7 +61,7 @@ The dataset `DataW8_regression.txt` contains measurements of a force $y$ (in New
 
 a) Plot the data with error bars (`plt.errorbar`). Add a title and axis labels.
 
-b) Define a linear model function `linear(x, m, c)` returning $mx + c$. Use `scipy.optimize.curve_fit` with the `sigma` column as the `sigma` argument and `absolute_sigma=True` to fit the model. Print the fitted slope $\hat m$ and intercept $\hat c$ with their uncertainties.
+b) Define a linear model function `linear(x, m, c)` returning $mx + c$. Use `scipy.optimize.curve_fit` with the `sigma` array (column) from `DataW8_regression.txt` as the `sigma` argument and `absolute_sigma=True` to fit the model. Print the fitted slope $\hat m$ and intercept $\hat c$ with their uncertainties.
 
 c) Overplot the best-fit line on your data plot. Extend the line slightly beyond the data range.
 
@@ -83,9 +83,9 @@ a) Plot `D`, `M1`, and `M2` as a function of `bin_centre` on the same axes. Use 
 
 b) Write a function `poisson_log_likelihood(D, M)` that computes
    $$
-   \ln\mathcal{L} = \sum_i \bigl[D_i \ln M_i - M_i - \ln(D_i!)\bigr].
+   \ln\mathcal{L} = \sum_i \bigl[d_i \ln m_i - m_i - \ln(d_i!)\bigr].
    $$
-   Use `scipy.special.gammaln` for the factorial term. Compute $\ln\mathcal{L}_1$ and $\ln\mathcal{L}_2$. Which model fits better?
+   Use `scipy.special.gammaln` for the factorial term. Compute $\ln\mathcal{L}_1$ and $\ln\mathcal{L}_2$. Which model fits the data better?
 
 c) Compute the Log Likelihood Ratio:
    $$
@@ -95,7 +95,7 @@ c) Compute the Log Likelihood Ratio:
 
 d) Compute the **Pearson $\chi^2$** statistic for each model:
    $$
-   \chi^2 = \sum_i \frac{(D_i - M_i)^2}{M_i}.
+   \chi^2 = \sum_i \frac{(d_i - m_i)^2}{m_i}.
    $$
    The expected value under a good fit is approximately equal to the number of bins. Do either or both models fit well?
 
@@ -113,7 +113,7 @@ b) Compute the reduced $\chi^2_\nu$ for the quadratic fit. Compare it to the lin
 
 c) Compute $\Delta\text{AIC} = \text{AIC}_\text{quad} - \text{AIC}_\text{lin}$.
 
-   Hint: for a Gaussian likelihood with known $\sigma_i$, the log-likelihood is $\ln\mathcal{L} = -\frac{1}{2}\sum_i \left(\frac{y_i - \hat y_i}{\sigma_i}\right)^2 + \text{const}$, so $\text{AIC} = 2k + \chi^2_\text{weighted}$ (up to constants independent of the model).
+   Hint: for a Gaussian likelihood with known $\sigma_i$, the log-likelihood is $\ln\mathcal{L} = \mathsf{const} -\frac{1}{2}\sum_i \left(\frac{y_i - \hat y_i}{\sigma_i}\right)^2$, so $\text{AIC} = 2k + \chi^2_\text{weighted}$ (up to constants independent of the model).
 
 d) Based on $\Delta\text{AIC}$ and the visual evidence, is the extra complexity of the quadratic model justified?
 

@@ -20,11 +20,11 @@ numbering:
 
 ## Task 1: True or False
 
-1. **True.** `curve_fit` minimises $\sum_i[(y_i - f(x_i))/\sigma_i]^2$ when `sigma` and `absolute_sigma=True` are supplied.
+1. **True.** `curve_fit` minimises $\sum_i[(y_i - f(x_i))/\sigma_i]^2$ when the arguments `sigma` and `absolute_sigma=True` are supplied.
 
-2. **True.** The diagonal of `pcov` gives the estimated variances; take `np.sqrt(np.diag(pcov))` for standard errors.
+2. **True.** The diagonal of the returned covariance matrix gives the estimated variances; take `np.sqrt(np.diag(covmat))` for standard errors.
 
-3. **False.** For Poisson data the correct goodness-of-fit measure uses the Poisson log-likelihood (or the Pearson $\chi^2$ with $M_i$ in the denominator, not $\sigma_i^2$); the unweighted $\chi^2$ ignores the Poisson variance structure.
+3. **False.** For Poisson data the correct goodness-of-fit measure uses the Poisson log-likelihood (or the Pearson $\chi^2$ with $m_i$ in the denominator, not $\sigma_i^2$).
 
 4. **False.** They are related but not numerically equal; the Pearson $\chi^2$ is an approximation to the LLR that works well in the large-count limit.
 
@@ -64,8 +64,8 @@ def linear(x, m, c):
 popt, pcov = curve_fit(linear, x, y, sigma=sigma, absolute_sigma=True)
 perr = np.sqrt(np.diag(pcov))
 m_hat, c_hat = popt
-print(f"Slope:     m̂ = {m_hat:.4f} ± {perr[0]:.4f}")
-print(f"Intercept: ĉ = {c_hat:.4f} ± {perr[1]:.4f}")
+print(f"Slope:     m_hat = {m_hat:.4f} ± {perr[0]:.4f}")
+print(f"Intercept: c_hat = {c_hat:.4f} ± {perr[1]:.4f}")
 ```
 
 ### 2c — Best-fit line
@@ -94,7 +94,7 @@ fig, ax = plt.subplots()
 ax.axhline(0, color='k', linewidth=0.8, linestyle='--')
 ax.scatter(x, residuals, color='steelblue')
 ax.set_xlabel('Position $x$ (cm)')
-ax.set_ylabel('Weighted residual $(y - \hat y)/\sigma$')
+ax.set_ylabel(r'Weighted residual $(y - \hat{y})/\sigma$')
 ax.set_title('Residuals')
 plt.tight_layout()
 plt.show()
@@ -109,7 +109,7 @@ k_lin = 2
 chi2_lin = np.sum(residuals**2)
 nu_lin = len(x) - k_lin
 chi2_nu_lin = chi2_lin / nu_lin
-print(f"χ²_ν (linear) = {chi2_nu_lin:.3f}  (N={len(x)}, k={k_lin}, dof={nu_lin})")
+print(f"Reduced Chi Squared (linear) = {chi2_nu_lin:.3f}  (N={len(x)}, k={k_lin}, dof={nu_lin})")
 ```
 
 A value near 1 indicates a good fit. Values much greater than 1 suggest underfit; much less than 1 may indicate over-estimated uncertainties.
@@ -146,22 +146,22 @@ def poisson_log_likelihood(D, M):
 
 lnL1 = poisson_log_likelihood(D, M1)
 lnL2 = poisson_log_likelihood(D, M2)
-print(f"ln L₁ = {lnL1:.3f}")
-print(f"ln L₂ = {lnL2:.3f}")
+print(f"ln L1 = {lnL1:.3f}")
+print(f"ln L2 = {lnL2:.3f}")
 print("Model 1 preferred" if lnL1 > lnL2 else "Model 2 preferred")
 ```
 
 ### 3c — LLR and ΔAIC
 
 ```{code-cell} python
-Lambda = -2 * (lnL2 - lnL1)
+LLR = -2 * (lnL2 - lnL1)
 k1 = k2 = 0
 dAIC = (2*k2 - 2*lnL2) - (2*k1 - 2*lnL1)
-print(f"LLR  Λ  = {Lambda:.3f}")
-print(f"ΔAIC    = {dAIC:.3f}  (equals LLR since k₁=k₂=0)")
+print(f"LLR   = {LLR:.3f}")
+print(f"Delta AIC    = {dAIC:.3f}  (equals LLR since k1=k1=0)")
 ```
 
-A positive $\Lambda$ means Model 1 fits better. Since $k_1 = k_2 = 0$, $\Delta\text{AIC} = \Lambda$ exactly.
+A positive $\Lambda$ means Model 1 fits better. Since $k_1 = k_2 = 0$, $\Delta\text{AIC} = LLR$ exactly.
 
 ### 3d — Pearson chi-squared
 
@@ -169,8 +169,8 @@ A positive $\Lambda$ means Model 1 fits better. Since $k_1 = k_2 = 0$, $\Delta\t
 chi2_1 = np.sum((D - M1)**2 / M1)
 chi2_2 = np.sum((D - M2)**2 / M2)
 n_bins = len(D)
-print(f"χ² (Model 1) = {chi2_1:.2f}  (expected ≈ {n_bins})")
-print(f"χ² (Model 2) = {chi2_2:.2f}  (expected ≈ {n_bins})")
+print(f"Chi Squared (Model 1) = {chi2_1:.2f}  (expected  {n_bins})")
+print(f"Chi Squared (Model 2) = {chi2_2:.2f}  (expected  {n_bins})")
 ```
 
 ### 3e — Summary
@@ -203,19 +203,19 @@ residuals_q = (y - y_pred_q) / sigma
 k_quad = 3
 chi2_quad = np.sum(residuals_q**2)
 chi2_nu_quad = chi2_quad / (len(x) - k_quad)
-print(f"χ²_ν (linear)    = {chi2_nu_lin:.3f}")
-print(f"χ²_ν (quadratic) = {chi2_nu_quad:.3f}")
+print(f"Reduced Chi Squared (linear)    = {chi2_nu_lin:.3f}")
+print(f"Reduced Chi Squared (quadratic) = {chi2_nu_quad:.3f}")
 ```
 
-### 4c — ΔAIC
+### 4c — Delta AIC
 
 ```{code-cell} python
-# For Gaussian likelihood with known sigma: -2 ln L ∝ chi2_weighted + const
+# For Gaussian likelihood with known sigma: -2 ln L ~ chi2_weighted + const
 # AIC = 2k + chi2_weighted (up to a dataset-constant)
 AIC_lin  = 2*k_lin  + chi2_lin
 AIC_quad = 2*k_quad + chi2_quad
 dAIC_lq = AIC_quad - AIC_lin
-print(f"ΔAIC = AIC_quad - AIC_lin = {dAIC_lq:.3f}")
+print(f"Delta AIC = AIC_quad - AIC_lin = {dAIC_lq:.3f}")
 ```
 
 ### 4d — Interpretation

@@ -24,10 +24,10 @@ project:
     - file: chapters/PDFs.md
     - file: chapters/MaxLike.md
     - file: chapters/LeastSquares.md
-    #- file: chapters/DistributionsOverview.md
-    #- file: chapters/Vocab.md    
     #- file: chapters/BayesianInference.md
     #- file: chapters/MCMC.md
+    #- file: chapters/DistributionsOverview.md
+    #- file: chapters/Vocab.md    
     - file: coding/Coding.md
       children:    
         - file: coding/PythonMethods.md
@@ -56,8 +56,8 @@ project:
         - file: workshops/Workshop7.md
         - file: workshops/Workshop7_solutions.md
         - file: workshops/Workshop8.md
-        #- file: workshops/Workshop9.md
-        #- file: workshops/Workshop10.md                        
+        #- file: workshops/Workshop8_solutions.md	
+        - file: workshops/Workshop10.md                        
   numbering:
     title: true
     headings: true

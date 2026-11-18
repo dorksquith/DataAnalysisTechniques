@@ -227,16 +227,18 @@ Volume 1 focuses on continuous and numerical data — the setting where probabil
 - [ ] Understand the limitations introduced by small datasets
 - [ ] Design a Z Test to compare the mean of a dataset with the null hypothesis, and calculate the test statistic
 - [ ] Describe the T Test and state when it is preferred over the Z Test
-- [ ] Design a "Student's" T Test to compare the means of two datasets, and calculate the test statistic
+- [ ] Design a T Test to compare the means of two datasets, and calculate the test statistic
 - [ ] Design a F Test (ANOVA) to compare the variances of two datasets, and calculate the test statistic
 :::
 
 
 ---
 
-## 🚧 Volume 2: Parameter Estimation & Fitting 
+## Volume 2: Parameter Estimation & Fitting 
 
+<!--
 This volume forms the second part of the module, and all the topics are ```wip``` (**work in progress**, marked with 🚧 ). I have put the Outline/ Learning Objectives here so you can get an idea of what will we cover. **These may well be subject to minor changes** as we get our ducks in a row.
+-->
 
 <!--
 > My student feedback from 2025 was that the level and speed of the maths was 😱 for people without a maths degree. I agree. My current strategy is to keep the hard maths bits in this jupyter book, but not dwell on the proofs and derivations during our lecture time.
@@ -310,12 +312,8 @@ This volume forms the second part of the module, and all the topics are ```wip``
 - [ ] Show that the Uniform PDF is valid
 - [ ] Calculate the Expectation for $X\sim \mathsf{Uniform}(a,b)$
 - [ ] Write down the PDF for $X\sim \mathsf{Expon}(\lambda)$
-- [ ] Compare $X\sim \mathsf{Expon}(\lambda)$ with $K\sim Poisson(\lambda)$, explaining why one is continuous and the other discrete
+- [ ] Compare $X\sim \mathsf{Expon}(\lambda)$ with $K\sim \mathsf{Poisson}(\lambda)$, explaining why one is continuous and the other discrete
 - [ ] Explain the Memoryless property of $\mathsf{Expon}(\lambda)$
-- [ ] Recognise the kernel of the $\mathsf{Beta}(\alpha, \beta)$ PDF and describe what the parameters mean
-- [ ] Don't mix up ```scipy.stats.beta``` (the PDF) and ```scipy.special.beta``` (the function)
-- [ ] Recognise the kernel of the $\mathsf{Gamma}(\alpha)$ PDF and describe what the parameters mean
-- [ ] Don't mix up ```scipy.stats.gamma``` (the PDF) and ```scipy.special.gamma``` (the function) 
 - [ ] Derive the MLE $\hat{\lambda}$ from Exponential data and interpret it
 :::
 
@@ -417,6 +415,10 @@ This volume forms the second part of the module, and all the topics are ```wip``
 - [ ] Correctly apply the distinction between $P(\mathsf{sick}\mid\mathsf{test}^+)$ and $P(\mathsf{test}^+\mid\mathsf{sick})$
 - [ ] Describe the meaning of the terms prior, evidence, and posterior
 - [ ] Understand the meaning and use of conjugate priors
+- [ ] Recognise the kernel of the $\mathsf{Beta}(\alpha, \beta)$ PDF and describe what the parameters mean
+<!--- [ ] Don't mix up ```scipy.stats.beta``` (the PDF) and ```scipy.special.beta``` (the function)-->
+- [ ] Recognise the kernel of the $\mathsf{Gamma}(\alpha)$ PDF and describe what the parameters mean
+<!--- [ ] Don't mix up ```scipy.stats.gamma``` (the PDF) and ```scipy.special.gamma``` (the function)-->
 - [ ] Calculate the Maximum A Posteriori (MAP) and Credible Interval
 - [ ] Explain the difference between a Credible Interval and a Confidence Interval
 - [ ] Understand what a Predictive Posterior is

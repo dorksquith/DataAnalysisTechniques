@@ -27,6 +27,20 @@ Bayesian Inference gives us a mathematically coherent framework for **updating o
 (sec:bay_baythm)=
 ## Bayes' Theorem
 
+You've already met Bayes' theorem in {ref}`sec:pe_baythm`, where we wrote it as {eq}`eq:pe_bayes`:
+
+$$P(A \mid B) = \frac{P(B \mid A)\, P(A)}{P(B)}$$
+
+Here we're doing something specific: we want the probability of a *parameter value* $\theta$ given some *data* $y$. That's exactly the conditional flip Bayes performs. Substitute $A \to \theta$, $B \to y$:
+
+$$P(\theta \mid y) = \frac{P(y \mid \theta)\, P(\theta)}{P(y)}$$
+
+Same theorem — but we rename three things, and each rename carries a meaning:
+
+- **$P(y \mid \theta) \to \mathcal{L}(y \mid \theta)$**: the data $y$ are now *fixed* (we've already observed them) and $\theta$ is what varies. Writing $\mathcal{L}$ flags this shift — the result is called a **Likelihood function**.
+- **$P(\theta) \to \pi(\theta)$**: $\pi$ signals "belief about $\theta$ before seeing the data," not a frequency from a repeatable experiment. The Greek letter is a deliberate choice to keep it separate from sampling probabilities.
+- **$P(y) \to \int \mathcal{L}(y \mid \theta)\, \pi(\theta)\, d\theta$**: $P(y)$ isn't an independent quantity — it's what you get by integrating the numerator over all $\theta$. Writing the integral out explicitly makes this obvious, and guarantees the Posterior integrates to 1.
+
 Bayes' Theorem relates the **Posterior** probability of a parameter given data to the **Likelihood** of the data given the parameter, the **Prior** probability of the parameter, and the **Evidence**:
 
 ```{math}
@@ -44,99 +58,120 @@ Each element has a precise name and role:
 | **Prior** | $\pi(\theta)$ | Our belief about $\theta$ *before* seeing data |
 | **Evidence** | $\int \mathcal{L}\, \pi\, d\theta$ | A normalisation constant ensuring $\int P(\theta \mid y)\, d\theta = 1$ |
 
-The Prior is a PDF (or PMF for discrete $\theta$), not a single number.
+The Prior is a PDF (or PMF for discrete $\theta$), not a single number. In the discrete example below there are only two hypotheses, so the Prior reduces to two numbers: $\pi(\theta_s)$ and $\pi(\theta_h)$. This is a special case; in general $\theta$ ranges continuously over a whole parameter space and the Prior is a full probability distribution over that space.
+
+:::{figure} /figures/BayesPic.png
+:name: fig:bay_bayespic
+:width: 60%
+Bayes' theorem with each term colour-coded: Posterior (pink), Likelihood (green), Prior (blue), Evidence (grey).
+:::
 
 ---
 
 (sec:bay_covid)=
-## The COVID Test Example
+## A Medical Screening Test
 
-A COVID test has the following known properties (from the manufacturer):
+A screening test for a rare condition has the following known properties (from the manufacturer):
 
 | Hypothesis | Negative | Positive |
 |---|---|---|
-| **Sick** ($\theta_+$) | $p = 0$ | $p = 1$ |
-| **Healthy** ($\theta_-$) | $p = 0.95$ | $p = 0.05$ |
+| **Sick** ($\theta_s$) | $p = 0$ | $p = 1$ |
+| **Healthy** ($\theta_h$) | $p = 0.95$ | $p = 0.05$ |
 
-Data $y$ are **Bernoulli**: a binary outcome from a single test ($y=1$ positive, $y=0$ negative).
+Data $y$ are **Bernoulli**: a binary outcome from a single test ($y=1$ positive, $y=0$ negative). Each hypothesis specifies a *different* value of the Bernoulli parameter $p$ — each lives in its own probability distribution:
 
-The prior probability of being sick at any given time is $\pi(\theta_+) = 1/1000$.
+:::{figure} /figures/NewBernCovid_sick.png
+:name: fig:bay_bernsick
+:width: 48%
+Bernoulli PMF under the sick hypothesis ($\theta_s$): $p = 1$, so a positive result is certain.
+:::
+
+:::{figure} /figures/NewBernCovid_healthy.png
+:name: fig:bay_bernhealthy
+:width: 48%
+Bernoulli PMF under the healthy hypothesis ($\theta_h$): $p = 0.05$, a small false-positive rate.
+:::
+
+We now walk through each term of {eq}`eq:bay_bayes` in turn.
 
 ---
 
 (sec:bay_covidlike)=
-### Likelihoods
 
-The Bernoulli PMF is $p_Y(y \mid \theta) = \theta^y (1-\theta)^{1-y}$, and for $N=1$ the Likelihood equals the PMF.
+**Likelihood.** The Bernoulli PMF is (see {eq}`eq:pmf_bernpmf`):
 
-For the **sick** hypothesis ($\theta_+ = 1$):
+$$p_Y(y \mid \theta) = \theta^y (1-\theta)^{1-y}$$
 
-$$\mathcal{L}(y_+ \mid \theta_+) = 1^1 \cdot 0^0 = 1 \qquad \mathcal{L}(y_- \mid \theta_+) = 0$$
+Here $\theta$ plays the role of the Bernoulli parameter $p$ — it labels which hypothesis we are under. For $N=1$ the Likelihood equals the PMF. We get one Likelihood function per hypothesis:
 
-For the **healthy** hypothesis ($\theta_- = 0.05$):
+$$\mathcal{L}(y_+ \mid \theta_s) = 1^1 \cdot 0^0 = 1 \qquad \mathcal{L}(y_- \mid \theta_s) = 0$$
 
-$$\mathcal{L}(y_+ \mid \theta_-) = 0.05^1 \cdot 0.95^0 = 0.05 \qquad \mathcal{L}(y_- \mid \theta_-) = 0.95$$
+$$\mathcal{L}(y_+ \mid \theta_h) = 0.05^1 \cdot 0.95^0 = 0.05 \qquad \mathcal{L}(y_- \mid \theta_h) = 0.95$$
+
+Under $\theta_s$ a positive test is certain; under $\theta_h$ it occurs with probability 0.05 (the false-positive rate).
+
+---
+
+**Prior.** The prevalence of this condition in the general population is roughly 1 in 1000. We set:
+
+$$\pi(\theta_s) = \tfrac{1}{1000}, \qquad \pi(\theta_h) = \tfrac{999}{1000}$$
+
+Two numbers feels unusually simple — that's because there are only two hypotheses. In general $\theta$ ranges over a continuous parameter space and the Prior is a full distribution (see {ref}`sec:bay_baythm`). It's also worth noticing that setting $\pi(\theta_s) = 1/1000$ *exactly* implies infinite precision — we're claiming to know the prevalence with zero uncertainty. A continuous prior, like the Beta distribution we'll meet in {ref}`sec:bay_betadist`, would let us express genuine uncertainty about that number too.
+
+---
+
+(sec:bay_evcon)=
+
+**Evidence.** The denominator of {eq}`eq:bay_bayes` is the total probability of the data under all hypotheses, weighted by their priors. With two discrete hypotheses it is a sum:
+
+```{math}
+:label: eq:bay_evidence
+
+\begin{aligned}
+\text{Evidence} &= \mathcal{L}(y_+ \mid \theta_s)\,\pi(\theta_s) + \mathcal{L}(y_+ \mid \theta_h)\,\pi(\theta_h) \\
+&= 1 \times \tfrac{1}{1000} + 0.05 \times \tfrac{999}{1000} \\
+&= 0.001 + 0.04995 \\
+&= 0.05095
+\end{aligned}
+```
+
+It doesn't depend on which $\theta$ you're evaluating — that's exactly why dividing by it makes the posteriors sum to 1. In the continuous case this sum becomes the integral in {eq}`eq:bay_bayes`, which is often impossible to compute analytically — a key motivation for the numerical methods in the MCMC chapter. <!-- TODO: add link to MCMC chapter when complete -->
 
 ---
 
 (sec:bay_covidpost)=
-### Posterior Calculation
 
-Applying Bayes' Theorem for a positive test result $y_+$:
+**Posterior.** We now have everything we need. For a positive test result $y_+$:
 
 ```{math}
 :label: eq:bay_covidpost
 
-P(\theta_+ \mid y_+) = \frac{\mathcal{L}(y_+ \mid \theta_+)\; \pi(\theta_+)}{\mathcal{L}(y_+ \mid \theta_+)\pi(\theta_+) + \mathcal{L}(y_+ \mid \theta_-)\pi(\theta_-)}
-= \frac{1 \times 0.001}{1 \times 0.001 + 0.05 \times 0.999} \approx 0.0196
+\begin{aligned}
+P(\theta_s \mid y_+) &= \frac{\mathcal{L}(y_+ \mid \theta_s)\,\pi(\theta_s)}{\text{Evidence}} \\[6pt]
+&= \frac{0.001}{0.05095} \approx 0.0196
+\end{aligned}
 ```
 
-The full posterior table:
-
-| $\theta$ | Likelihood $\mathcal{L}(y_+ \mid \theta)$ | Prior $\pi(\theta)$ | Numerator | Evidence | Posterior $P(\theta \mid y_+)$ |
-|---|---|---|---|---|---|
-| $\theta_+$ | 1 | 0.001 | 0.001 | 0.05095 | **0.0196** |
-| $\theta_-$ | 0.05 | 0.999 | 0.04995 | 0.05095 | **0.9804** |
-
-Despite a perfect sensitivity (sick people always test positive), the probability of actually being sick given a positive test is only $\approx 2\%$. This is because the disease is rare, so most positives come from the false positive rate applied to the large healthy population.
+Despite a perfect sensitivity — sick people *always* test positive — the probability of actually being sick given a positive test is only $\approx 2\%$. The condition is so rare that most positive results come from the small false-positive rate applied to the large healthy population.
 
 ---
 
 (sec:bay_bayupd)=
 ### Bayesian Updating
 
-What we did above is called **Bayesian Updating**:
+The full posterior table makes the update visible for both hypotheses:
 
-- **Before** the test, we held a Prior $\pi(\theta_+) = 0.001$
-- **After** the test, we calculated a Posterior $P(\theta_+ \mid y_+) \approx 0.02$
+| $\theta$ | Likelihood $\mathcal{L}(y_+ \mid \theta)$ | Prior $\pi(\theta)$ | Numerator | Evidence | Posterior $P(\theta \mid y_+)$ |
+|---|---|---|---|---|---|
+| $\theta_s$ | 1 | 0.001 | 0.001 | 0.05095 | **0.0196** |
+| $\theta_h$ | 0.05 | 0.999 | 0.04995 | 0.05095 | **0.9804** |
+
+This is **Bayesian Updating**:
+
+- **Before** the test, we held a Prior $\pi(\theta_s) = 0.001$
+- **After** the test, we calculated a Posterior $P(\theta_s \mid y_+) \approx 0.02$
 
 The data have updated our belief. With more data (more tests), the posterior would narrow further.
-
----
-
-(sec:bay_evcon)=
-### The Evidence as a Constant
-
-The Evidence (denominator) is just a constant factor $c$ identical for all hypotheses:
-
-$$P(\theta_+ \mid y_+) = \mathcal{L}(y_+ \mid \theta_+)\; \pi(\theta_+) \times c$$
-
-We can compute all numerators first, then normalise by their sum:
-
-- $\mathcal{L}(y_+ \mid \theta_+)\pi(\theta_+) = 0.001$
-- $\mathcal{L}(y_+ \mid \theta_-)\pi(\theta_-) = 0.04995$
-- Sum $= 0.05095$, so $c = 1/0.05095 \approx 19.627$
-
-This shortcut is useful when computing posteriors for many hypotheses.
-
----
-
-(sec:bay_contprior)=
-## From Discrete to Continuous Priors
-
-In the example above, we assigned a single number $\pi(\theta_+) = 1/1000$ as our prior. This implies infinite precision — zero uncertainty about the prevalence rate. A more honest treatment uses a **prior PDF** over the parameter.
-
-For a parameter that lives in $[0, 1]$ (like a probability or prevalence), the natural conjugate prior is the **Beta distribution**.
 
 ---
 

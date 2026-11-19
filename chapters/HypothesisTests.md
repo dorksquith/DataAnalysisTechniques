@@ -339,18 +339,18 @@ Let's label a positive classification as **a**, and a negative classification as
 We will use **A** to indicate that the truth is $H_1$, and **A'** to indicate that the truth is $H_0$.
 
 
-The **True Positive Rate (TPR)** can then be written as [](#eq:tpr):
+The **True Positive Rate (TPR)** can then be written as [](#eq:hyp_tpr):
 
 ```{math}
-:label: eq:tpr
+:label: eq:hyp_tpr
 
 TPR = \dfrac{N(a \cap A)}{N(A)} = P(a|A)
 ```
 
-The **False Positive Rate (FPR)** is [](#eq:fpr):
+The **False Positive Rate (FPR)** is [](#eq:hyp_fpr):
 
 ```{math}
-:label: eq:fpr
+:label: eq:hyp_fpr
 
 FPR = \dfrac{N(a \cap A')}{N(A')} = P(a|A')
 ```

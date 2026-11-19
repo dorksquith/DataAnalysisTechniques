@@ -18,7 +18,7 @@ kernelspec:
 
 
 
-Bayesian Inference gives us a mathematically coherent framework for **updating our beliefs** about a parameter $\theta$ using data $y$. Rather than treating $\theta$ as a fixed but unknown constant (the Frequentist view), the Bayesian approach treats $\theta$ as a random variable with its own probability distribution, and updates that distribution as data arrive.
+Bayesian Inference gives us a framework for **updating our beliefs** about a parameter $\theta$ using data $y$. Rather than treating $\theta$ as a fixed but unknown constant (the Frequentist view), the Bayesian approach treats $\theta$ as a random variable with its own probability distribution, and updates that distribution as data arrive.
 
 
 
@@ -27,27 +27,36 @@ Bayesian Inference gives us a mathematically coherent framework for **updating o
 (sec:bay_baythm)=
 ## Bayes' Theorem
 
-You've already met Bayes' theorem in {ref}`sec:pe_baythm`, where we wrote it as {eq}`eq:pe_bayes`:
+We already met Bayes' theorem in {ref}`sec:pe_baythm`, where we wrote it as {eq}`eq:pe_bayes`:
 
-$$P(A \mid B) = \frac{P(B \mid A)\, P(A)}{P(B)}$$
+$$P(A | B) = \frac{P(B | A)\, P(A)}{P(B)}$$
 
-Here we're doing something specific: we want the probability of a *parameter value* $\theta$ given some *data* $y$. That's exactly the conditional flip Bayes performs. Substitute $A \to \theta$, $B \to y$:
+The A and B in the above formula are events. We noted that Bayes' theorem becomes most interesting when we define the events as a hypothesis (or parameter value) $\theta$ and a dataset $y$:
 
-$$P(\theta \mid y) = \frac{P(y \mid \theta)\, P(\theta)}{P(y)}$$
+$$P(\theta | y) = \frac{P(y | \theta)\, P(\theta)}{P(y)}$$
 
-Same theorem — but we rename three things, and each rename carries a meaning:
+When using Bayes' theorem in this way, it is convenient to define each of the terms:
 
-- **$P(y \mid \theta) \to \mathcal{L}(y \mid \theta)$**: the data $y$ are now *fixed* (we've already observed them) and $\theta$ is what varies. Writing $\mathcal{L}$ flags this shift — the result is called a **Likelihood function**.
-- **$P(\theta) \to \pi(\theta)$**: $\pi$ signals "belief about $\theta$ before seeing the data," not a frequency from a repeatable experiment. The Greek letter is a deliberate choice to keep it separate from sampling probabilities.
-- **$P(y) \to \int \mathcal{L}(y \mid \theta)\, \pi(\theta)\, d\theta$**: $P(y)$ isn't an independent quantity — it's what you get by integrating the numerator over all $\theta$. Writing the integral out explicitly makes this obvious, and guarantees the Posterior integrates to 1.
+- **$P(y | \theta) \to \mathcal{L}(y | \theta)$**: the **Likelihood** of the data $y$ being described by a parameter value $\theta$. The data are now *fixed* (we've already observed them) and $\theta$ is what varies.
+- **$P(\theta) \to \pi(\theta)$**: the **Prior** Probability, $\pi$, is the belief about $\theta$ before seeing the data, not a frequency from a repeatable experiment. The use of the Greek letter $\pi$ is a deliberate choice to keep it separate from sampling probabilities.
+- **$P(y) \to \int \mathcal{L}(y | \theta)\, \pi(\theta)\, d\theta$**: the **Evidence**; $P(y)$ isn't an independent quantity — it's what we get by integrating the numerator over all possible $\theta$ values. Writing the integral out explicitly makes this obvious, and guarantees the right hand side integrates to 1.
+- **$P(\theta | y)$**: the **Posterior** Probability of the parameter $\theta$, given the data.
 
 Bayes' Theorem relates the **Posterior** probability of a parameter given data to the **Likelihood** of the data given the parameter, the **Prior** probability of the parameter, and the **Evidence**:
 
+:::{figure} /figures/BayesPic.png
+:name: fig:bay_bayespic
+:width: 60%
+Bayes' theorem: The Posterior is equal to the product of the Likelihood and Prior, divided by the Evidence.
+:::
+
+<!--
 ```{math}
 :label: eq:bay_bayes
 
 P(\theta \mid y) = \frac{\mathcal{L}(y \mid \theta)\; \pi(\theta)}{\int \mathcal{L}(y \mid \theta)\, \pi(\theta)\, d\theta}
 ```
+-->
 
 Each element has a precise name and role:
 
@@ -55,16 +64,12 @@ Each element has a precise name and role:
 |---|---|---|
 | **Posterior** | $P(\theta \mid y)$ | Our updated belief about $\theta$ after seeing data $y$ |
 | **Likelihood** | $\mathcal{L}(y \mid \theta)$ | The probability of observing data $y$ given $\theta$ |
-| **Prior** | $\pi(\theta)$ | Our belief about $\theta$ *before* seeing data |
-| **Evidence** | $\int \mathcal{L}\, \pi\, d\theta$ | A normalisation constant ensuring $\int P(\theta \mid y)\, d\theta = 1$ |
+| **Prior** | $\pi(\theta)$ | Our belief about $\theta$ before seeing data |
+| **Evidence** | $\int \mathcal{L}(y \mid \theta)\, \pi(\theta)\, d\theta$ | A normalisation constant ensuring $\int P(\theta \mid y)\, d\theta = 1$ |
 
 The Prior is a PDF (or PMF for discrete $\theta$), not a single number. In the discrete example below there are only two hypotheses, so the Prior reduces to two numbers: $\pi(\theta_s)$ and $\pi(\theta_h)$. This is a special case; in general $\theta$ ranges continuously over a whole parameter space and the Prior is a full probability distribution over that space.
 
-:::{figure} /figures/BayesPic.png
-:name: fig:bay_bayespic
-:width: 60%
-Bayes' theorem with each term colour-coded: Posterior (pink), Likelihood (green), Prior (blue), Evidence (grey).
-:::
+
 
 ---
 
@@ -73,42 +78,48 @@ Bayes' theorem with each term colour-coded: Posterior (pink), Likelihood (green)
 
 A screening test for a rare condition has the following known properties (from the manufacturer):
 
-| Hypothesis | Negative | Positive |
+|| Positive, $y=1$  | Negative $y=0$ | 
 |---|---|---|
-| **Sick** ($\theta_s$) | $p = 0$ | $p = 1$ |
-| **Healthy** ($\theta_h$) | $p = 0.95$ | $p = 0.05$ |
+| **Sick** ($\theta_s$) | $p = 1$ | $p = 0$ |
+| **Healthy** ($\theta_h$) | $p = 0.05$ | $p = 0.95$ |
 
-Data $y$ are **Bernoulli**: a binary outcome from a single test ($y=1$ positive, $y=0$ negative). Each hypothesis specifies a *different* value of the Bernoulli parameter $p$ — each lives in its own probability distribution:
+The data $y$ are **Bernoulli**: a binary outcome from a single test. Each hypothesis specifies a different value of the Bernoulli parameter $p$ — each lives in its own probability distribution:
+
+::::{grid} 1 1 2 2
 
 :::{figure} /figures/NewBernCovid_sick.png
 :name: fig:bay_bernsick
-:width: 48%
+:width: 100%
 Bernoulli PMF under the sick hypothesis ($\theta_s$): $p = 1$, so a positive result is certain.
 :::
 
 :::{figure} /figures/NewBernCovid_healthy.png
 :name: fig:bay_bernhealthy
-:width: 48%
+:width: 100%
 Bernoulli PMF under the healthy hypothesis ($\theta_h$): $p = 0.05$, a small false-positive rate.
 :::
 
-We now walk through each term of {eq}`eq:bay_bayes` in turn.
+::::
+
+We will now walk through each term of [](#fig:bay_bayespic) in turn.
 
 ---
 
 (sec:bay_covidlike)=
 
-**Likelihood.** The Bernoulli PMF is (see {eq}`eq:pmf_bernpmf`):
+**Likelihood.** The [Bernoulli PMF](#eq:pmf_bernpmf) is:
 
 $$p_Y(y \mid \theta) = \theta^y (1-\theta)^{1-y}$$
 
-Here $\theta$ plays the role of the Bernoulli parameter $p$ — it labels which hypothesis we are under. For $N=1$ the Likelihood equals the PMF. We get one Likelihood function per hypothesis:
+Here we are using $p \rightarrow \theta$ for the Bernoulli parameter and $k \rightarrow y$ for the data. 
 
-$$\mathcal{L}(y_+ \mid \theta_s) = 1^1 \cdot 0^0 = 1 \qquad \mathcal{L}(y_- \mid \theta_s) = 0$$
+For $N=1$ the Likelihood equals the PMF. We get one Likelihood function per hypothesis:
 
-$$\mathcal{L}(y_+ \mid \theta_h) = 0.05^1 \cdot 0.95^0 = 0.05 \qquad \mathcal{L}(y_- \mid \theta_h) = 0.95$$
+$$\mathcal{L}(y=1 \mid \theta_s) = 1^1 \cdot 0^0 = 1 \qquad \mathcal{L}(y=0 \mid \theta_s) = 0$$
 
-Under $\theta_s$ a positive test is certain; under $\theta_h$ it occurs with probability 0.05 (the false-positive rate).
+$$\mathcal{L}(y=1 \mid \theta_h) = 0.05^1 \cdot 0.95^0 = 0.05 \qquad \mathcal{L}(y=0 \mid \theta_h) = 0.95$$
+
+Under $\theta_s$ a positive test is certain; under $\theta_h$ it occurs with probability 0.05 (the [false positive rate](#eq:hyp_fpr)).
 
 ---
 
@@ -116,43 +127,49 @@ Under $\theta_s$ a positive test is certain; under $\theta_h$ it occurs with pro
 
 $$\pi(\theta_s) = \tfrac{1}{1000}, \qquad \pi(\theta_h) = \tfrac{999}{1000}$$
 
-Two numbers feels unusually simple — that's because there are only two hypotheses. In general $\theta$ ranges over a continuous parameter space and the Prior is a full distribution (see {ref}`sec:bay_baythm`). It's also worth noticing that setting $\pi(\theta_s) = 1/1000$ *exactly* implies infinite precision — we're claiming to know the prevalence with zero uncertainty. A continuous prior, like the Beta distribution we'll meet in {ref}`sec:bay_betadist`, would let us express genuine uncertainty about that number too.
+The prior distributions $\pi(\theta)$ is reduced to two numbers, because there are only two hypotheses. In general $\theta$ ranges over a continuous parameter space and the Prior is a full distribution. 
+
+:::{warning}
+Note that setting $\pi(\theta_s) = 1/1000$ without stating the uncertainty is highly improper! A continuous prior, like the Beta distribution we'll meet in [](#sec:bay_betpdf), would allow us to express the prior with uncertainty, as we always should. This is a toy example.
+:::
 
 ---
 
 (sec:bay_evcon)=
 
-**Evidence.** The denominator of {eq}`eq:bay_bayes` is the total probability of the data under all hypotheses, weighted by their priors. With two discrete hypotheses it is a sum:
+**Evidence.** The denominator of [](#fig:bay_bayespic) is the total probability of the data (a single outcome) under all hypotheses, weighted by their priors. With two discrete hypotheses it is a sum:
 
 ```{math}
 :label: eq:bay_evidence
 
 \begin{aligned}
-\text{Evidence} &= \mathcal{L}(y_+ \mid \theta_s)\,\pi(\theta_s) + \mathcal{L}(y_+ \mid \theta_h)\,\pi(\theta_h) \\
+\text{Evidence} &= \mathcal{L}(y=1 \mid \theta_s)\,\pi(\theta_s) + \mathcal{L}(y=1 \mid \theta_h)\,\pi(\theta_h) \\
 &= 1 \times \tfrac{1}{1000} + 0.05 \times \tfrac{999}{1000} \\
 &= 0.001 + 0.04995 \\
 &= 0.05095
 \end{aligned}
 ```
 
-It doesn't depend on which $\theta$ you're evaluating — that's exactly why dividing by it makes the posteriors sum to 1. In the continuous case this sum becomes the integral in {eq}`eq:bay_bayes`, which is often impossible to compute analytically — a key motivation for the numerical methods in the MCMC chapter. <!-- TODO: add link to MCMC chapter when complete -->
+Note that we do not integrate over the data $y$: this is the evidence for a positive test result only (one of the two possible outcomes). The same procedure can be done for the other possible outcome, $y=0$.
+
+Note also that the evidence doesn't depend on which $\theta$ you're evaluating — that's exactly why dividing by it makes the posteriors sum to 1. In the continuous case this sum becomes the integral in [](#fig:bay_bayespic), which is often impossible to compute analytically — a key motivation for the numerical methods in the next chapter. <!-- TODO: add link to MCMC chapter when complete -->
 
 ---
 
 (sec:bay_covidpost)=
 
-**Posterior.** We now have everything we need. For a positive test result $y_+$:
+**Posterior.** We now have everything we need. For a positive test result $y=1$:
 
 ```{math}
 :label: eq:bay_covidpost
 
 \begin{aligned}
-P(\theta_s \mid y_+) &= \frac{\mathcal{L}(y_+ \mid \theta_s)\,\pi(\theta_s)}{\text{Evidence}} \\[6pt]
+P(\theta_s \mid y=1) &= \frac{\mathcal{L}(y=1 \mid \theta_s)\,\pi(\theta_s)}{\text{Evidence}} \\[8pt]
 &= \frac{0.001}{0.05095} \approx 0.0196
 \end{aligned}
 ```
 
-Despite a perfect sensitivity — sick people *always* test positive — the probability of actually being sick given a positive test is only $\approx 2\%$. The condition is so rare that most positive results come from the small false-positive rate applied to the large healthy population.
+Despite a perfect sensitivity — sick people **always** test positive — the probability of actually being sick given a positive test is only $\approx 2\%$. The condition is so rare that most positive results come from the small false-positive rate applied to the large healthy population.
 
 ---
 
@@ -161,7 +178,7 @@ Despite a perfect sensitivity — sick people *always* test positive — the pro
 
 The full posterior table makes the update visible for both hypotheses:
 
-| $\theta$ | Likelihood $\mathcal{L}(y_+ \mid \theta)$ | Prior $\pi(\theta)$ | Numerator | Evidence | Posterior $P(\theta \mid y_+)$ |
+| $\theta$ | Likelihood $\mathcal{L}(y=1\mid \theta)$ | Prior $\pi(\theta)$ | Numerator | Evidence | Posterior $P(\theta \mid y=1)$ |
 |---|---|---|---|---|---|
 | $\theta_s$ | 1 | 0.001 | 0.001 | 0.05095 | **0.0196** |
 | $\theta_h$ | 0.05 | 0.999 | 0.04995 | 0.05095 | **0.9804** |
@@ -169,18 +186,35 @@ The full posterior table makes the update visible for both hypotheses:
 This is **Bayesian Updating**:
 
 - **Before** the test, we held a Prior $\pi(\theta_s) = 0.001$
-- **After** the test, we calculated a Posterior $P(\theta_s \mid y_+) \approx 0.02$
+- **After** the test, we calculated a Posterior $P(\theta_s \mid y=1) \approx 0.02$
 
 The data have updated our belief. With more data (more tests), the posterior would narrow further.
 
 ---
 
-(sec:bay_betadist)=
-## The Beta Distribution
+(sec:bay_priodist)=
+## Prior Distributions
+
+(sec:bay_betpdf)=
+### The Beta PDF
 
 (bayesian:beta)=
 
-The Beta distribution is a flexible PDF for parameters constrained to $(0, 1)$:
+The **kernel** of a distribution is the part of its PDF or PMF that depends on the random variable — the normalising constant is dropped. Recognising kernel shapes is a powerful shortcut: when two distributions share a kernel shape, one is the natural conjugate prior for the other.
+
+The [**Bernoulli**](#eq:pmf_berpmf) and [**Binomial**](#eq:pmf_binpmf) likelihoods both have the same kernel shape in $\theta$:
+
+$$\text{Bernoulli:}\quad \theta^y(1-\theta)^{1-y} \qquad \text{Binomial:}\quad \theta^y(1-\theta)^{n-y}$$
+
+Both are of the form $\theta^a(1-\theta)^b$. The **Beta kernel** is:
+
+$$\theta^{\alpha-1}(1-\theta)^{\beta-1}$$
+
+which has exactly the same form — with $a = \alpha-1$ and $b = \beta-1$. Beta is therefore the natural **Conjugate Prior** for both Bernoulli and Binomial likelihoods.
+
+The Beta distribution places a probability distribution on the **parameter** $\theta$ itself — not on data. The random variable is $\theta$, which plays the role of the Bernoulli parameter $p$. We are expressing uncertainty about what $p$ might be, rather than about what a data point will be.
+
+The Beta PDF is:
 
 ```{math}
 :label: eq:bay_betapdf
@@ -189,41 +223,48 @@ f_\theta(\theta) = \frac{1}{B(\alpha,\beta)}\, \theta^{\alpha-1} (1-\theta)^{\be
 \qquad 0 \leq \theta \leq 1, \quad \alpha > 0,\; \beta > 0
 ```
 
-where $B(\alpha, \beta)$ is the Beta function (a normalisation constant).
+where $B(\alpha, \beta)$ is the Beta function (a normalising constant).
 
-Its moments are:
+The Beta PDF has
+: $$\label{eq:bay_betaexp}E[\theta] = \frac{\alpha}{\alpha+\beta}$$
 
-```{math}
-:label: eq:bay_betamom
+  $$\label{eq:bay_betavar}V[\theta] = \frac{E[\theta]\,(1-E[\theta])}{\alpha+\beta+1}$$
 
-E[\theta] = \frac{\alpha}{\alpha+\beta} \qquad V[\theta] = \frac{E[\theta]\,(1-E[\theta])}{\alpha+\beta+1}
-```
+The two **shape hyper-parameters** $\alpha$ and $\beta$ are a "chameleon" pair: larger $\alpha$ pulls mass toward $\theta=1$; larger $\beta$ pulls it toward $\theta=0$; large equal values give a symmetric bell.
 
-The two **shape hyper-parameters** $\alpha$ and $\beta$ allow it to take on a huge range of shapes: uniform, U-shaped, bell-shaped, skewed left or right. In Python:
+::::{grid} 1 1 2 2
 
-```python
-from scipy.stats import beta
-from scipy.special import beta as betafunc   # careful: same name!
+:::{figure} /figures/Beta1_1.png
+:name: fig:bay_beta11
+:width: 100%
+$\mathsf{Beta}(1,1)$: uniform — no prior knowledge.
+:::
 
-# PDF evaluated at theta=0.3, with shape params alpha=2, beta=5
-beta.pdf(0.3, a=2, b=5)
+:::{figure} /figures/Beta1_100.png
+:name: fig:bay_beta1100
+:width: 100%
+$\mathsf{Beta}(1,100)$: concentrated near 0 — strong prior belief that $\theta$ is small.
+:::
 
-# Normalisation constant
-betafunc(2, 5)
-```
+:::{figure} /figures/BetaPDF-100-1.png
+:name: fig:bay_beta1001
+:width: 100%
+$\mathsf{Beta}(100,1)$: concentrated near 1 — strong prior belief that $\theta$ is large.
+:::
 
----
+:::{figure} /figures/Beta100_100.png
+:name: fig:bay_beta100100
+:width: 100%
+$\mathsf{Beta}(100,100)$: symmetric bell at 0.5 — strong belief that $\theta \approx 0.5$.
+:::
 
-(sec:bay_berbetcon)=
-## Bernoulli-Beta Conjugacy
+::::
+
+**Bernoulli-Beta conjugacy**
 
 (bayesian:conjugacy_bb)=
 
-A key computational convenience arises when the Prior and the Posterior belong to the same distribution family. This is called **conjugacy**, and the prior is called the **conjugate prior** for that likelihood.
-
-**Beta is conjugate for Bernoulli (and Binomial) likelihoods.**
-
-Starting with a Beta prior and a Bernoulli likelihood:
+Because the Beta kernel matches the Bernoulli/Binomial kernel, the posterior is also Beta. Starting with a $\mathsf{Beta}(\alpha, \beta)$ prior and a Bernoulli likelihood:
 
 ```{math}
 :label: eq:bay_bbpost
@@ -235,15 +276,67 @@ P(\theta \mid y) &\propto \mathcal{L}(y \mid \theta)\; \pi(\theta) \\
 \end{align*}
 ```
 
-The Posterior is $\text{Beta}(\alpha', \beta')$ with updated hyper-parameters:
+The posterior is $\mathsf{Beta}(\alpha', \beta')$ with updated hyper-parameters:
 
 $$\alpha' = \alpha + y \qquad \beta' = \beta + (1-y)$$
 
-A **positive** result ($y=1$) increments $\alpha$; a **negative** result ($y=0$) increments $\beta$. Each new data point nudges the posterior in a transparent, interpretable way.
+A **positive** result ($y=1$) increments $\alpha$; a **negative** result ($y=0$) increments $\beta$. For **Binomial** data with $n$ trials and $y$ successes:
 
-For **Binomial** data with $n$ trials and $y$ successes:
+$$P(\theta \mid y) \propto \mathsf{Beta}(\alpha+y,\; \beta+n-y)$$
 
-$$P(\theta \mid y) \propto \text{Beta}(\alpha+y,\; \beta+n-y)$$
+**Worked example.** Start with no prior knowledge: $\pi(\theta) = \mathsf{Beta}(1,1)$ (uniform). Observe a single positive result, $y=1$:
+
+$$\alpha' = 1 + 1 = 2 \qquad \beta' = 1 + (1-1) = 1$$
+
+The posterior is $\mathsf{Beta}(2,1)$, with $E[\theta] = 2/3$. One success has shifted our belief upward from $0.5$. The rule is: **each success adds 1 to $\alpha$, each failure adds 1 to $\beta$**.
+
+---
+
+(sec:bay_gampdf)=
+### The Gamma PDF
+
+(bayesian:gamma)=
+
+The **Poisson** and **Exponential** likelihoods have kernels in $\theta$:
+
+$$\text{Poisson:}\quad e^{-\theta}\theta^y \qquad \text{Exponential:}\quad \theta e^{-\theta y}$$
+
+Both are of the form $\theta^a e^{-b\theta}$. The **Gamma kernel** is $\theta^{\alpha-1} e^{-\beta\theta}$, which has the same form — making Gamma the natural conjugate prior for Poisson and Exponential likelihoods.
+
+The Gamma PDF is:
+
+```{math}
+:label: eq:bay_gammapdf
+
+f(\theta) = \frac{\beta^\alpha}{\Gamma(\alpha)}\, \theta^{\alpha-1} e^{-\beta\theta}
+```
+
+with $E[\theta] = \alpha\beta$ and $V[\theta] = \alpha\beta^2$ (using the scale convention, where $\beta$ is the scale parameter). Note: in `scipy.stats.gamma`, pass `scale=1/beta_rate` when $\beta$ is a *rate*.
+
+**Poisson-Gamma conjugacy**
+
+(bayesian:poisson_gamma)=
+
+Suppose we observe Poisson-distributed counts (e.g. particle decays, bus arrivals) with unknown rate $\theta$. We place a Gamma prior on $\theta$.
+
+**Choosing hyper-parameters**: If our best guess is $\theta = 15$, we want $E[\theta] = \alpha\beta = 15$ and $V[\theta] = \alpha\beta^2 = 15$ (matching Poisson's equal mean and variance). This gives $\beta = 1$, $\alpha = 15$. So we use $\pi(\theta) = \mathsf{Gamma}(15, 1)$.
+
+**Posterior update**: After $n$ data points with sample mean $\bar{y}$:
+
+$$P(\theta \mid y) = \mathsf{Gamma}(\alpha + n\bar{y},\; \beta + n)$$
+
+The **MAP estimate** (mode of Gamma) is:
+
+$$\hat{\theta}_{MAP} = \frac{\alpha' - 1}{\beta'} = \frac{(\alpha + n\bar{y}) - 1}{\beta + n}$$
+
+As $n$ grows, the posterior narrows around the true value and the choice of prior matters less.
+
+| Likelihood | Posterior |
+|---|---|
+| Bernoulli: $\theta^y(1-\theta)^{1-y}$ | $\mathsf{Beta}(\alpha+y,\; \beta+1-y)$ |
+| Binomial: $\binom{n}{y}\theta^y(1-\theta)^{n-y}$ | $\mathsf{Beta}(\alpha+y,\; \beta+n-y)$ |
+| Poisson: $e^{-\theta}\theta^y/y!$ | $\mathsf{Gamma}(\alpha+n\bar{y},\; \beta+n)$ |
+| Exponential: $\theta e^{-\theta y}$ | $\mathsf{Gamma}(\alpha+1,\; \beta+n\bar{y})$ |
 
 ---
 
@@ -303,91 +396,6 @@ If your parameter must be physically positive but theoretically unrestricted, a 
 
 ---
 
-(sec:bay_contab)=
-## Conjugate Priors: Summary Table
-
-(sec:bay_beta)=
-### Beta (for probability parameters, $0 \leq \theta \leq 1$)
-
-```python
-from scipy.stats import beta
-# beta.pdf(theta, a=alpha, b=beta_param)
-```
-
-| Likelihood | Posterior |
-|---|---|
-| Bernoulli: $\theta^y(1-\theta)^{1-y}$ | $\text{Beta}(\alpha+y,\; \beta+1-y)$ |
-| Binomial: $\binom{n}{y}\theta^y(1-\theta)^{n-y}$ | $\text{Beta}(\alpha+y,\; \beta+n-y)$ |
-
----
-
-(sec:bay_gamma)=
-### Gamma (for rate/count parameters, $0 \leq \theta < \infty$)
-
-```python
-from scipy.stats import gamma
-# gamma.pdf(theta, a=alpha, scale=1/beta_rate)
-```
-
-The Gamma PDF is:
-
-```{math}
-:label: eq:bay_gammapdf
-
-f(\theta) = \frac{\beta^\alpha}{\Gamma(\alpha)}\, \theta^{\alpha-1} e^{-\beta\theta}
-```
-
-with $E[\theta] = \alpha\beta$ and $V[\theta] = \alpha\beta^2$ (using the scale convention, where $\beta$ is the scale parameter). Note: in `scipy.stats.gamma`, pass `scale=1/beta_rate` when $\beta$ is a *rate*.
-
-| Likelihood | Posterior |
-|---|---|
-| Poisson: $e^{-\theta}\theta^y/y!$ | $\text{Gamma}(\alpha+n\bar{y},\; \beta+n)$ |
-| Exponential: $\theta e^{-\theta y}$ | $\text{Gamma}(\alpha+1,\; \beta+n\bar{y})$ |
-
----
-
-(sec:bay_poigam)=
-## Poisson-Gamma Example
-
-(bayesian:poisson_gamma)=
-
-Suppose we observe Poisson-distributed counts (e.g. particle decays, bus arrivals) with unknown rate $\theta$. We place a Gamma prior on $\theta$.
-
-**Choosing hyper-parameters**: If our best guess is $\theta = 15$, we want $E[\theta] = \alpha\beta = 15$ and $V[\theta] = \alpha\beta^2 = 15$ (matching Poisson's equal mean and variance). This gives $\beta = 1$, $\alpha = 15$. So we use $\pi(\theta) = \text{Gamma}(15, 1)$.
-
-**Posterior update**: After $n$ data points with sample mean $\bar{y}$:
-
-$$P(\theta \mid y) = \text{Gamma}(\alpha + n\bar{y},\; \beta + n)$$
-
-The **MAP estimate** (mode of Gamma) is:
-
-$$\hat{\theta}_{MAP} = \frac{\alpha' - 1}{\beta'} = \frac{(\alpha + n\bar{y}) - 1}{\beta + n}$$
-
-As $n$ grows, the posterior narrows around the true value and the choice of prior matters less. Starting from a poor prior (e.g. $\text{Gamma}(1,1)$) gives a slower initial convergence, but the data eventually override the prior.
-
-In Python (from `Week10-BayesUpdating.py`):
-
-```python
-from scipy.stats import gamma, poisson
-
-# Prior hyper-parameters
-a, b = 15, 1
-
-# After seeing n data points with mean mean_y
-a_post = a + n * mean_y
-b_post = b + n
-
-# MAP estimate
-map_est = (a_post - 1) / b_post
-
-# 95% credible interval
-ci = 0.95
-lower = gamma.ppf(0.5*(1-ci), a_post, 0, 1/b_post)
-upper = gamma.ppf(1 - 0.5*(1-ci), a_post, 0, 1/b_post)
-```
-
----
-
 (sec:bay_predpost)=
 ## Predictive Posterior
 
@@ -409,44 +417,9 @@ P(\tilde{y} \mid y) = \text{NBinom}\!\left(\alpha + n\bar{y},\;\frac{\beta+n}{\b
 
 The Negative Binomial models the number of failures before a fixed number of successes. As a predictive distribution it has a key property: unlike the Posterior (which shrinks to a spike at $\hat{\theta}$ as $n \to \infty$), the Predictive Posterior maintains the same shape as the data distribution, because it integrates over parameter uncertainty.
 
-In Python:
-
-```python
-from scipy.stats import nbinom
-
-nbn_n = a + n * mean_y
-nbn_p = (b + n) / (b + n + 1)
-prediction = nbinom.pmf(xvals, n=nbn_n, p=nbn_p)
-```
-
 The Poisson-Gamma chain in full:
 
-$$\underbrace{\text{Gamma}(\alpha, \beta)}_{\text{Prior}} \xrightarrow{\text{Poisson data}} \underbrace{\text{Gamma}(\alpha+n\bar{y},\; \beta+n)}_{\text{Posterior}} \xrightarrow{\text{integrate out }\theta} \underbrace{\text{NBinom}\!\left(\alpha+n\bar{y},\; \frac{\beta+n}{\beta+n+1}\right)}_{\text{Predictive Posterior}}$$
-
-
----
-
-(sec:bay_wshop)=
-## Workshop: `Week10-BayesUpdating.py`
-
-The workshop file `Week10-BayesUpdating.py` (Marimo notebook) implements the Poisson-Gamma Bayesian updating loop interactively. Key parameters to explore:
-
-```python
-ci = 0.95       # credible interval width
-mu = 15         # true Poisson rate for fake data
-a  = 2          # prior shape (try a=15 for a 'good' prior, a=1 for a bad one)
-b  = 1          # prior rate/scale
-n_for_plots = [1, 2, 3, 4, 5, 50]   # which data sizes to plot
-```
-
-For each value of $n$, the notebook plots:
-1. **Upper panel**: Prior, data histogram, and Posterior on the same axes, with MAP and credible interval printed.
-2. **Lower panel**: Predictive Posterior (NBinom) against the true Poisson PMF.
-
-**Suggested experiments**:
-- Try `a=15, b=1` (good prior) vs `a=2, b=1` (vague prior) vs `a=1, b=1` (very vague): observe how fast the posterior converges.
-- Try `a=1, b=1` (very bad prior): notice how many data points are needed before the prior stops distorting results.
-- Increase `ci` from 0.90 to 0.99 and observe how the credible interval widens.
+$$\underbrace{\mathsf{Gamma}(\alpha, \beta)}_{\text{Prior}} \xrightarrow{\text{Poisson data}} \underbrace{\mathsf{Gamma}(\alpha+n\bar{y},\; \beta+n)}_{\text{Posterior}} \xrightarrow{\text{integrate out }\theta} \underbrace{\text{NBinom}\!\left(\alpha+n\bar{y},\; \frac{\beta+n}{\beta+n+1}\right)}_{\text{Predictive Posterior}}$$
 
 ---
 

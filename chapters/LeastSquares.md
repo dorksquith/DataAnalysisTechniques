@@ -126,7 +126,7 @@ The Norm$(m_i, \sigma_i)$ PDF is:
 
 ```{math}
 :label: eq:lse_normpdf
-f_Y(y) = \dfrac{1}{\sigma_i\sqrt{2\pi}}\exp\!\left[-\frac{1}{2}\left(\frac{y-m_i}{\sigma_i}\right)^2\right] 
+f_Y(y) = \dfrac{1}{\sigma_i\sqrt{2\pi}}\exp\!\left[-\frac{1}{2}\left(\frac{d_i-m_i}{\sigma_i}\right)^2\right] 
 ```
 
 The Likelihood (of the $N$ data measurements $d_i$ being described by model parameters $\theta_i = m_i, \sigma_i$) is then:
@@ -994,25 +994,11 @@ Because the residuals appear **squared** in $\chi^2$, a single outlier can domin
 | `'huber'`  | Quadratic near zero, linear in the tails |
 | `'cauchy'` | Very robust, maximally down-weights outliers |
 
-**Why is the default loss called `'linear'`?** The loss function is characterised by the *rho function* $\rho(z)$, where $z = r_i^2$ is the squared residual.  For the default `'linear'` choice, $\rho(z) = z$, which is linear in $z$ — hence the name.  This gives the ordinary sum of squares $\sum_i \rho(r_i^2) = \sum_i r_i^2$.  The model itself can still be linear *or* nonlinear in $x$; the word “linear” here refers to the rho function, not to the functional form of $m(x)$.  For `'soft_l1'`, $\rho(z) = 2(\sqrt{1+z}-1)$, which grows more slowly for large $z$ and therefore down-weights outliers.
-
-:::{note} Loss function vs.\ distributional assumption
-The `loss` argument and the distributional assumption of the model are **two separate choices**:
-
-* **`loss`** controls *outlier robustness* — how much a large residual is allowed to influence the parameter estimates.  It says nothing about the distribution of the measurement uncertainties.
-* **Distributional assumption** determines *which likelihood* underpins the fit.  Gaussian errors → standard LS (minimise $\chi^2$).  Non-Gaussian errors require a different model.
-
-For non-Gaussian/non-Poisson measurements, a **Generalised Linear Model (GLM)** provides the appropriate framework.  `statsmodels.genmod` implements GLMs for the most common families:
-
-| Distribution | Typical use | `statsmodels` family |
-|--------------|-------------|----------------------|
-| Gaussian | Continuous measurements with additive noise | `families.Gaussian()` |
-| Poisson | Count data (events per bin, photons, etc.) | `families.Poisson()` |
-| Binomial | Binary outcomes, proportions | `families.Binomial()` |
-| Gamma | Positive-valued, skewed continuous data | `families.Gamma()` |
-
-Using `loss='soft_l1'` with standard `least_squares` does **not** make your model Poisson or Binomial; it only changes how outliers are weighted.  To fit a Poisson model properly, maximise the Poisson log-likelihood (see [](#chapter:mle)).
+:::{tip}Why is the default loss called `'linear'`?
+The loss function is $\rho(z)$, where $z = r_i^2$ is the squared [standardised residual](#eq:lse_standres).  For the default `'linear'` choice, $\rho(z) = z$, which is linear in $z$ — hence the name. The model itself can still be linear *or* nonlinear in $x$; the word “linear” here refers to the rho function, not to the functional form of $m(x)$.  For `'soft_l1'`, $\rho(z) = 2(\sqrt{1+z}-1)$, which grows more slowly for large $z$ and therefore down-weights outliers.
 :::
+
+
 
 The `f_scale` parameter is crucial for all `loss` functions other than `linear`. It sets the transition scale between the near-quadratic and near-linear regimes.
 
@@ -1164,11 +1150,33 @@ The `soft_l1` loss function with `f_scale=0.1` prevents the outliers from pullin
 **Parameter uncertainties from the Jacobian** can be visualised as uncertainty bands on the model.
 For the model $m(x) = \hat{a}x + \hat{b}x^2$, error propagation gives:
 
-$$
+```{math}
+:label: eq:lse_varmodel
 \sigma^2_m(x) = x^2\,\sigma^2_{\hat{a}} + x^4\,\sigma^2_{\hat{b}} + 2x^3\,\mathsf{cov}(\hat{a},\hat{b}),
-$$
+```
 
 where $\sigma^2_{\hat{a}}$, $\sigma^2_{\hat{b}}$ and $\mathsf{cov}(\hat{a},\hat{b})$ are the diagonal and off-diagonal elements of the 2×2 covariance matrix returned by `LSE_fit`.  For the robust `soft_l1` fit this covariance is **approximate**, as noted above.
+
+:::{dropdown} Show derivation using error propagation
+
+For the model $m(x) = \hat{a}x + \hat{b}x^2$ we treat $\hat{a}$ and $\hat{b}$ as the random variables ($x$ is fixed and known). The partial derivatives are:
+
+$$\dfrac{\partial m}{\partial \hat{a}} = x, \qquad \dfrac{\partial m}{\partial \hat{b}} = x^2$$
+
+Substituting into the general error-propagation result $V[m] = \mathsf{J}\,\Sigma\,\mathsf{J}^\top$:
+
+```{math}
+\begin{aligned}
+\sigma^2_m(x)
+&= \left(\dfrac{\partial m}{\partial \hat{a}}\right)^{\!2}\sigma^2_{\hat{a}}
+  + \left(\dfrac{\partial m}{\partial \hat{b}}\right)^{\!2}\sigma^2_{\hat{b}}
+  + 2\,\dfrac{\partial m}{\partial \hat{a}}\,\dfrac{\partial m}{\partial \hat{b}}\,\mathsf{cov}(\hat{a},\hat{b}) \\[6pt]
+&= x^2\,\sigma^2_{\hat{a}} + x^4\,\sigma^2_{\hat{b}} + 2x^3\,\mathsf{cov}(\hat{a},\hat{b})
+\end{aligned}
+```
+
+:::
+
 
 ```{code-cell} python
 def plot_data_quad_fit_and_bands(x, data, a_lin, b_lin, a_sl1, b_sl1, cov_lin, cov_sl1):
@@ -1219,8 +1227,9 @@ plot_data_quad_fit_and_bands(
 
 Notice that the uncertainty bands on the robust `soft_l1` fit are much narrower than those on the standard fit.  The robust fit correctly identifies most points as inliers with small residuals, giving tight parameter estimates; the standard fit is dragged towards the outliers, inflating $S$ and thus $\hat{\sigma}^2 = S/\nu$ and the uncertainty bands.
 
+<!--
 :::{note} Gradient descent and stochastic gradient descent
-**Gradient descent** is an iterative algorithm for minimising a loss function $L(\boldsymbol\theta)$ when no closed-form solution exists.  Starting from an initial guess $\boldsymbol\theta_0$, it updates the parameters by stepping in the direction of steepest descent:
+**Gradient descent** is an iterative algorithm for minimising a loss function $L(\boldsymbol\theta)$ when no closed-form solution exists.  Starting from an initial guess $\boldsymbol\theta_0$, it updates the parameters by stepping in the direction of steepest descent (see {ref}`sec:mma_grad`):
 
 $$\boldsymbol\theta_{j+1} = \boldsymbol\theta_j - \gamma\,\nabla_{\boldsymbol\theta} L(\boldsymbol\theta_j),$$
 
@@ -1228,6 +1237,7 @@ where $\gamma > 0$ is the **learning rate** (step size).  Choosing $\gamma$ too 
 
 In **Stochastic Gradient Descent (SGD)**, the gradient is estimated from a randomly selected **mini-batch** of data points rather than the full dataset.  Each update is noisier but computationally cheaper, and the stochasticity helps the algorithm escape shallow local minima.  SGD and its variants (Adam, RMSProp) are the backbone of modern **neural network** training, where the gradient of the loss with respect to millions of parameters is computed efficiently by **backpropagation** — a systematic application of the chain rule through the network’s layered structure.
 :::
+-->
 
 <!--
 (sec:lse_nonlin)=
@@ -1288,6 +1298,33 @@ Outliers.
 :::
 
 -->
+
+---
+
+(sec:lse_bey)=
+### Beyond Gaussian and Poisson Measurements
+
+<!--
+:::{note} Loss function vs. distributional assumption
+The `loss` argument and the distributional assumption of the model are **two separate choices**:
+
+* **`loss`** controls *outlier robustness* — how much a large residual is allowed to influence the parameter estimates.  It says nothing about the distribution of the measurement uncertainties.
+* **Distributional assumption** determines *which likelihood* underpins the fit.  Gaussian errors → standard LS (minimise $\chi^2$).  Non-Gaussian errors require a different model.
+-->
+
+For non-Gaussian/non-Poisson measurements, a [Generalised Linear Model (GLM)](https://www.statsmodels.org/stable/glm.html) provides the appropriate framework. `statsmodels.genmod` implements GLMs for the most common families:
+
+| Distribution | Typical use | `statsmodels` family |
+|--------------|-------------|----------------------|
+| Gaussian | Continuous measurements with additive noise | `families.Gaussian()` |
+| Poisson | Count data (events per bin, photons, etc.) | `families.Poisson()` |
+| Binomial | Binary outcomes, proportions | `families.Binomial()` |
+| Gamma | Positive-valued, skewed continuous data | `families.Gamma()` |
+
+<!--
+Using `loss='soft_l1'` with standard `least_squares` does **not** make your model Poisson or Binomial; it only changes how outliers are weighted.  To fit a Poisson model properly, maximise the Poisson log-likelihood (see [](#chapter:mle)).
+-->
+
 
 ---
 

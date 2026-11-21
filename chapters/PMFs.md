@@ -344,7 +344,11 @@ $\dfrac{d}{dp} \ln\mathcal{L}(p;\mathbf{k}) = \dfrac{n_1}{p} - \dfrac{n_0}{1-p} 
 
 and find:
 
-$\hat{p}_{\mathsf{MLE}} = \dfrac{n_1}{n_0+n_1} = \dfrac{n_1}{N}$
+```{math}
+:label: eq:pmf_mle_bern
+
+\hat{p}_{\mathsf{MLE}} = \dfrac{n_1}{n_0+n_1} = \dfrac{n_1}{N}
+```
 
 
 The MLE for the Bernoulli probability is simply the observed fraction of successes — which is exactly what we would expect it to be.

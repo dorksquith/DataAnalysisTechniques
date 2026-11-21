@@ -16,7 +16,7 @@ numbering:
 (workshop-10)=
 # Workshop 10: Bayesian Inference — Conjugate Priors
 
-This workshop introduces **Bayesian parameter estimation** using a conjugate prior, which allows the posterior to be computed analytically. Material is drawn from [Bayesian Inference](#chapter:BayesianInference).
+This workshop introduces **Bayesian parameter estimation** using a conjugate prior, which allows the posterior to be computed analytically. Material is drawn from [Bayesian Inference](#chapter:bay).
 
 The dataset `DataW9.txt` contains hourly meteor counts recorded at an observatory over 40 hours. Load it as:
 

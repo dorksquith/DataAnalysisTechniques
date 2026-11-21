@@ -10,141 +10,65 @@ kernelspec:
 ---
 
 (chapter:mcmc)=
-# Markov Chain Monte Carlo
+# Predicting the Future
 
+<!--
 This chapter covers a powerful technique for working with uncertainty when analytical solutions are unavailable: **Markov Chain Monte Carlo** (sampling from complex posterior distributions). We then walk through the workshop Python file `PoissonGamma-v2.py`, which implements Metropolis-Hastings MCMC for the Poisson-Gamma model introduced in the [previous chapter](#chapter:bay).
 
 Key Python tools used in this chapter:
 * `scipy.stats`: `norm`, `gamma`, `poisson`, `bootstrap`
 * `numpy`: `random.choice`
-* Workshop file: `PoissonGamma-v2.py`
+-->
 
 ---
 
+---
+
+(sec:bay_predpost)=
+## Predictive Posterior
+
+
+
+In the [previous chapter](#chapter:bay) we derived the conjugate models analytically for Bernoulli-Beta, Binomial-Beta, Poisson-Gamma, and Exponential-Gamma, and Normal-Normal. This allowed use to generate Posterior Probability distributions on the parameters, which gave us the Maximum A Posteriori (MAP) estimates and credible intervals.
+
+
+We can continue analytically to find the **Predictive Posterior** distributions in some cases. These are not distributions on the parameter space but on the sample space: they are **predictive distributions of data not yet seen**.
+
+The Predictive distribution is recovered by integrating out the parameter uncertainty, as illustrated in [](#fig:mcmc_pred).
 <!--
-## Resampling
-
-### The Problem: Never Enough Data
-
-There is no such thing as enough data. If you have just enough to do what you want now, that analysis will give you a new idea that requires a subset — and now the subset is too small. One way to tackle the chronic data shortage is to generate "new" samples from your existing dataset. This is called **Resampling**.
-
-### Parametric vs Non-Parametric Resampling
-
-Suppose you toss a coin 1000 times, then discover you need 1100 data points. You have two options:
-
-1. Find the MLE for $\hat{p}$ and generate 100 new tosses using $\text{Bernoulli}(\hat{p})$. ← **Parametric Resampling**
-2. Randomly pick one value from your dataset and repeat 100 times. ← **Non-Parametric Resampling**
-
-These two options are the **same option phrased differently**. If the MLE gives $\hat{p} = 0.54$, then:
-- **Parametric**: generating with $\text{Bernoulli}(0.54)$ gives 54 expected heads.
-- **Non-Parametric**: 540 out of 1000 data values are heads, so randomly drawing 100 gives 54 expected heads.
-
-The equivalence holds because the MLE estimate *is* the empirical frequency. You need to know the form of the underlying distribution to use the parametric approach; the non-parametric approach works without that assumption.
-
----
-
-## The Bootstrap
-
-### Non-Parametric Bootstrap
-
-The **bootstrap** is a specific resampling technique for estimating the uncertainty on a sample statistic (such as the mean, standard deviation, or $\chi^2$). It does **not** work for min/max.
-
-The procedure for a dataset of size $N$:
-1. Randomly select a value from the data.
-2. Repeat $N$ times, **with replacement** (you may select the same value more than once).
-3. Calculate the statistic of interest on this resampled dataset.
-4. Repeat steps 1–3 many times (e.g. 9999).
-
-The distribution of the statistic over the 9999 resampled datasets gives you its uncertainty.
-
-**Why bother when you already have the sample statistic?** Because now you have an **uncertainty on the sample statistic**.
-
-**Example — standard deviation of a Normal sample:**
-
-```python
-import numpy as np
-from scipy.stats import norm
-
-np.random.seed(123)
-sample = norm.rvs(loc=6.0, scale=3.77, size=100)
-
-print(f'sample sigma: {np.std(sample):.2f}')
-# sample sigma: 4.25
-
-sigmas = []
-for i in range(9999):
-    bs = []
-    for j in range(100):
-        a = np.random.choice(sample, replace=True)
-        bs.append(a)
-    sigmas.append(np.std(bs))
-
-print(f'bootstrap: {np.mean(sigmas):.2f} +/- {np.std(sigmas):.2f}')
-# bootstrap: 4.23 +/- 0.24
+```{math}
+P(\tilde{y}|y) = \int f(\tilde{y}|\theta)\,P(\theta|y)\,d\theta = \text{NBinom}\!\left(\alpha + n\bar{y},\; \frac{\beta+n}{\beta+n+1}\right)
 ```
+-->
 
-### Scipy Bootstrap
 
-The `scipy.stats.bootstrap` function is a clean, feature-rich implementation that computes a confidence interval automatically (default 95%, configurable):
+:::{figure}
+:label: fig:mcmc_pred
+![](/figures/predD.png)
+:::
 
-```python
-from scipy.stats import bootstrap
 
-bs_result = bootstrap((sample,), np.std)
+The Predictive Posterior distributions and parameters for the most common data distributions are given in [](#tab:conjugate_table).
 
-print(f'scipy bootstrap: {np.mean(bs_result.bootstrap_distribution):.2f} +/- {bs_result.standard_error:.2f}')
-# scipy bootstrap: 4.22 +/- 0.25
 
-low, high = bs_result.confidence_interval
-print(f'95% CI: [{low:.2f}, {high:.2f}]')
-# 95% CI: [3.83, 4.83]
-```
+:::{table}
+:label: tab:conjugate_table
 
-Note that `bootstrap` expects the data as a tuple `(sample,)` and takes the statistic as a callable.
+| Likelihood | Likelihood kernel | Conjugate prior | Prior kernel | Prior params | Posterior | Posterior params | Predictive posterior | Predictive params |
+|---|---|---|---|---|---|---|---|---|
+| **Bernoulli** | $\theta^x(1-\theta)^{1-x}$ | Beta | $\theta^{\alpha-1}(1-\theta)^{\beta-1}$ | $\alpha,\beta>0$ | Beta | $\alpha'=\alpha+s$ $\beta'=\beta+N-s$ | Beta-Bernoulli | $\alpha',\beta'$; $\;\text{P}(\tilde{x}=1)=\dfrac{\alpha'}{\alpha'+\beta'}$ |
+| **Binomial** (fixed $n$) | $\theta^k(1-\theta)^{n-k}$ | Beta | $\theta^{\alpha-1}(1-\theta)^{\beta-1}$ | $\alpha,\beta>0$ | Beta | $\alpha'=\alpha+s$ $\beta'=\beta+Nn-s$ | Beta-Binomial | $n,\;\alpha',\;\beta'$ |
+| **Negative Binomial** (fixed $r$) | $\theta^r(1-\theta)^x$ | Beta | $\theta^{\alpha-1}(1-\theta)^{\beta-1}$ | $\alpha,\beta>0$ | Beta | $\alpha'=\alpha+Nr$ $\beta'=\beta+s$ | Beta-Negative Binomial | $r,\;\alpha',\;\beta'$ |
+| **Multinomial** (fixed $n$) | $\displaystyle\prod_k \theta_k^{x_k}$ | Dirichlet | $\displaystyle\prod_k \theta_k^{\alpha_k-1}$ | $\alpha_k>0\;\forall k$ | Dirichlet | $\alpha_k'=\alpha_k+s_k$† | Dirichlet-Multinomial | $n,\;(\alpha_1',\ldots,\alpha_K')$ |
+| **Poisson** | $e^{-\lambda}\lambda^x$ | Gamma | $\lambda^{\alpha-1}e^{-\beta\lambda}$ | $\alpha,\beta>0$ | Gamma | $\alpha'=\alpha+s$ $\beta'=\beta+N$ | Negative Binomial | $r=\alpha',\;p=\dfrac{\beta'}{\beta'+1}$ |
+| **Uniform(0,θ)** | $\theta^{-1}\mathbf{1}(x\leq\theta)$ | Pareto | $\theta^{-(\alpha+1)}\mathbf{1}(\theta\geq\beta)$ | $\alpha,\beta>0$ | Pareto | $\alpha'=\alpha+N$ $\beta'=\max(\beta,\,x_{(N)})$ | Piecewise‡ | — |
+| **Exponential** | $\lambda e^{-\lambda x}$ | Gamma | $\lambda^{\alpha-1}e^{-\beta\lambda}$ | $\alpha,\beta>0$ | Gamma | $\alpha'=\alpha+N$ $\beta'=\beta+s$ | Lomax (Pareto II) | shape $\alpha'$, scale $\beta'$ $f(\tilde{x})=\dfrac{\alpha'}{\beta'}\!\left(1+\dfrac{\tilde{x}}{\beta'}\right)^{\!-(\alpha'+1)}$ |
+| **Normal** (unknown $\mu$, known $\sigma^2$) | $\exp\!\left(-\dfrac{(x-\mu)^2}{2\sigma^2}\right)$ | Normal | $\exp\!\left(-\dfrac{(\mu-\mu_0)^2}{2\sigma_0^2}\right)$ | $\mu_0\in\mathbb{R},\;\sigma_0^2>0$ | Normal | $\mu_N,\;\sigma_N^2$§ | Normal | mean $\mu_N$, variance $\sigma^2+\sigma_N^2$ |
+| **Normal** (known $\mu$, unknown $\tau=1/\sigma^2$) | $\tau^{1/2}\exp\!\left(-\dfrac{\tau(x-\mu)^2}{2}\right)$ | Gamma | $\tau^{\alpha-1}e^{-\beta\tau}$ | $\alpha,\beta>0$ | Gamma | $\alpha'=\alpha+\dfrac{N}{2}$ $\beta'=\beta+\dfrac{1}{2}\sum(x_i-\mu)^2$ | Student's $t$ | $\nu=2\alpha'$, location $\mu$, scale $\sqrt{\beta'/\alpha'}$ |
 
-### Parametric Bootstrap
+:::
 
-The **parametric bootstrap** generates resampled datasets by fitting the MLE parameters and generating new data from that fitted distribution. You need to know the form of the underlying distribution:
-
-```python
-samp_mean  = np.mean(sample)
-samp_sigma = np.std(sample)
-
-para_sigmas = []
-for i in range(9999):
-    respin_data = norm.rvs(loc=samp_mean, scale=samp_sigma, size=100)
-    para_sigmas.append(np.std(respin_data))
-
-print(f'parametric respin: {np.mean(para_sigmas):.2f} +/- {np.std(para_sigmas):.2f}')
-# parametric respin: 4.23 +/- 0.30
-```
-
-### Smoothed Bootstrap
-
-A variation called **smoothed bootstrap** adds a small amount of noise to each resampled value. This inflates the uncertainty but does not change the mean:
-
-```python
-noisy_sigmas = []
-for i in range(9999):
-    bs = [np.random.choice(sample, replace=True) for j in range(100)]
-    noisy_std = norm(np.std(bs), 0.5).rvs()   # add noise with std=0.5
-    noisy_sigmas.append(noisy_std)
-
-print(f'noisy bootstrap: {np.mean(noisy_sigmas):.2f} +/- {np.std(noisy_sigmas):.2f}')
-# noisy bootstrap: 4.22 +/- 0.56
-```
-
-The noise is centred on the bootstrap statistic, so the mean is unchanged, but the spread is larger.
-
-### Interpreting Bootstrap Results
-
-We can quote the sample standard deviation as $\sigma_s = 4.23 \pm 0.30$ (taking the most conservative of the three methods). This is a **frequentist** process: the true value of $\sigma$ is expected to lie within our error margin 68% **of the time** (over repeated experiments).
-
----
-
-## Back to Bayes: Motivation for MCMC
-
-In the [previous chapter](#chapter:bay) we derived the **Poisson-Gamma** conjugate model analytically. Recall:
+<!--Recall:
 
 ```{math}
 :label: eq:poisson_gamma_recap
@@ -152,23 +76,67 @@ In the [previous chapter](#chapter:bay) we derived the **Poisson-Gamma** conjuga
 \text{Likelihood: } \mathcal{L}(y|\theta) &\propto \theta^{n\bar{y}} e^{-n\theta} \\
 \text{Posterior: } P(\theta|y) &= \text{Gamma}(\alpha + n\bar{y},\; \beta + n)
 ```
+-->
 
+
+
+
+<!--
 We also found the **Predictive Posterior** — integrating out $\theta$ to get the distribution over new data $\tilde{y}$:
 
 $$P(\tilde{y}|y) = \int f(\tilde{y}|\theta)\,P(\theta|y)\,d\theta = \text{NBinom}\!\left(\alpha + n\bar{y},\; \frac{\beta+n}{\beta+n+1}\right)$$
 
 This was possible because Poisson-Gamma is a **conjugate pair** with a known closed-form solution.
+-->
 
-**What if we cannot construct an analytical posterior?**
+
+
+
+
+
+So far, the Posterior gives us a distribution over the **parameter** $\theta$. The **Predictive Posterior** instead gives us a distribution over a **future observation** $\tilde{y}$, integrating out the parameter uncertainty:
+
+```{math}
+:label: eq:bay_pred
+
+P(\tilde{y} \mid y) = \int_\Theta f(\tilde{y} \mid \theta)\; P(\theta \mid y)\, d\theta
+```
+
+For the Poisson-Gamma case, this integral can be computed analytically. The result is a **Negative Binomial** distribution:
+
+```{math}
+:label: eq:bay_nbinpred
+
+P(\tilde{y} \mid y) = \text{NBinom}\!\left(\alpha + n\bar{y},\;\frac{\beta+n}{\beta+n+1}\right)
+```
+
+The Negative Binomial models the number of failures before a fixed number of successes. As a predictive distribution it has a key property: unlike the Posterior (which shrinks to a spike at $\hat{\theta}$ as $n \to \infty$), the Predictive Posterior maintains the same shape as the data distribution, because it integrates over parameter uncertainty.
+
+The Poisson-Gamma chain in full:
+
+$$\underbrace{\mathsf{Gamma}(\alpha, \beta)}_{\text{Prior}} \xrightarrow{\text{Poisson data}} \underbrace{\mathsf{Gamma}(\alpha+n\bar{y},\; \beta+n)}_{\text{Posterior}} \xrightarrow{\text{integrate out }\theta} \underbrace{\text{NBinom}\!\left(\alpha+n\bar{y},\; \frac{\beta+n}{\beta+n+1}\right)}_{\text{Predictive Posterior}}$$
+
+
+:::{figure}
+:label: fig:mcmc_bbanim
+![](../figures/hnBB-a2-b8-panels3.gif)
+
+Caption to be added 
+:::
 
 In general, the posterior integral $\int \mathcal{L}(y|\theta)\,\pi(\theta)\,d\theta$ cannot be solved analytically. We can approximate the posterior by **sampling** from it using a Markov Chain.
--->
+
+
 ---
 
-## Markov Chain Monte Carlo
+(sec:mcmc_mcmc)=
+## Markov Chain Monte Carlo (MCMC)
+
+<!--
+## 
 
 ### The Idea
-
+-->
 Rather than integrating analytically, MCMC builds up an **empirical sampling distribution** that approximates the posterior. We:
 
 1. Start at some value of the parameter $\theta$.
@@ -185,11 +153,7 @@ The key insight is that we only ever need the **ratio** of posteriors between tw
 p_a = \frac{P(\theta_1|y)}{P(\theta_0|y)} = \frac{\mathcal{L}(y|\theta_1)\,\pi(\theta_1)}{\mathcal{L}(y|\theta_0)\,\pi(\theta_0)}
 ```
 
----
-
-## Metropolis-Hastings
-
-### The Algorithm
+### The Metropolis-Hastings Algorithm
 
 One **Metropolis-Hastings** iteration:
 

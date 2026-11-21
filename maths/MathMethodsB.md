@@ -194,6 +194,42 @@ See also the example in [PMFs](#sec:pmf_gamln).
 
 ---
 
+(sec:mmb_betafun)=
+## The Beta Function
+
+
+```{math}
+:label: eq:mmb_betadef
+B(a,b) = \dfrac{\Gamma(a)\,\Gamma(b)}{\Gamma(a+b)}
+```
+
+where $\Gamma$ is the [Gamma function](#eq:mmb_gamdef).
+
+---
+
+(sec:mmb_betavar)=
+## The Beta PDF Expectation and Variance
+
+
+The Beta Expectation can be calculated by writing 
+
+$E[\theta] = \int_0^1 \theta\, f_\theta(\theta)\, d\theta$ 
+
+and using the identity 
+
+$B(a+1,b)=\tfrac{a}{a+b}B(a,b)$:
+
+$E[\theta] = \dfrac{1}{B(a,b)}\int_0^1 \theta^a (1-\theta)^{b-1}\, d\theta = \dfrac{B(a+1,b)}{B(a,b)} = \dfrac{a}{a+b}$
+
+The **Variance** follows similarly using $E[\theta^2]$ and $V[\theta]=E[\theta^2]-E^2[\theta]$:
+
+$V[\theta] = \dfrac{ab}{(a+b)^2(a+b+1)}$
+
+
+---
+
+
+
 (sec:mmb_trans)=
 ## Transforms: Changing Variables
 

@@ -30,5 +30,5 @@ Workshop 7 [Numerical MLE and Model Comparison (LLR)](#workshop-7), example solu
 
 Workshop 8+9 [Linear Regression (Least Squares)](#workshop-8)
 
-<!--Workshop 10 [Bayesian Inference](#workshop-10)-->
+Workshop 10 [Bayesian Inference](#workshop-10)
 

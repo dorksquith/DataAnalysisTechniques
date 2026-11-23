@@ -24,8 +24,8 @@ project:
     - file: chapters/PDFs.md
     - file: chapters/MaxLike.md
     - file: chapters/LeastSquares.md
-    #- file: chapters/BayesianInference.md
-    #- file: chapters/MCMC.md
+    - file: chapters/BayesianInference.md
+    - file: chapters/MCMC.md
     #- file: chapters/DistributionsOverview.md
     #- file: chapters/Vocab.md    
     - file: coding/Coding.md

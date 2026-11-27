@@ -313,7 +313,7 @@ The Metropolis-Hastings (MH) algorithm is an iterative process that implements t
 
 1. **Start**: current value $\theta_0$ (initial guess).
 2. **Propose**: add random noise to get a candidate $\theta_1 \sim \mathsf{Norm}(\theta_0, \sigma_\mathsf{step})$, where $\sigma_\mathsf{step})$ is the noise level or **step size**, a hyperparameter of the MH algorithm.
-3. **Compare**: compute the [posterior ratio](eq:mh_ratio) $p_a = P(\theta_1|y)/P(\theta_0|y)$:
+3. **Compare**: compute the [posterior ratio](#eq:mh_ratio) $p_a = P(\theta_1|y)/P(\theta_0|y)$:
    - If $p_a > 1$: **accept** $\theta_1$ (it's better).
    - If $p_a > \mathsf{U}(0,1)$[^note2]: **randomly accept** $\theta_1$ (it's worse but not by much — this is what allows the chain to explore).
    - Otherwise: **reject**, keep $\theta_0$.

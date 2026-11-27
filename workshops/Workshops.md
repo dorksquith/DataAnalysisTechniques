@@ -28,7 +28,7 @@ Workshop 6 [Likelihoods & Bootstrapping](#workshop-6), example solutions [here](
 
 Workshop 7 [Numerical MLE and Model Comparison (LLR)](#workshop-7), example solutions [here](#workshop-7-solutions)
 
-Workshop 8+9 [Linear Regression (Least Squares)](#workshop-8)
+Workshop 8+9 [Linear Regression (Least Squares)](#workshop-8), example solutions [here](#workshop-8-solutions)
 
 Workshop 10 [Bayesian Inference](#workshop-10)
 

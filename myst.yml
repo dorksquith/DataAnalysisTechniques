@@ -59,8 +59,9 @@ project:
         - file: workshops/Workshop7.md
         - file: workshops/Workshop7_solutions.md
         - file: workshops/Workshop8.md
-        #- file: workshops/Workshop8_solutions.md	
-        - file: workshops/Workshop10.md                        
+        - file: workshops/Workshop8_solutions.md	
+        - file: workshops/Workshop10.md
+	#- file: workshops/Workshop10_solutions.md                        
   numbering:
     title: true
     headings: true

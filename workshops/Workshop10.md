@@ -16,7 +16,7 @@ numbering:
 (workshop-10)=
 # Workshop 10: Bayesian Inference — Conjugate Priors
 
-This workshop introduces **Bayesian parameter estimation** using a conjugate prior, which allows the posterior to be computed analytically. Material is drawn from [Bayesian Inference](#chapter:bay).
+This workshop introduces **Bayesian parameter estimation** using a conjugate prior, which allows the posterior to be computed analytically. Material is drawn from [Bayesian Inference](#chapter:bay) and, for Task 4, the [Posterior Predictive](#sec:mcmc_predpost) section of [MCMC](#chapter:mcmc).
 
 The dataset `DataW10.txt` contains hourly meteor counts recorded at an observatory over 40 hours. Load it as:
 
@@ -59,7 +59,7 @@ State whether each of the following is **True** or **False**, and give a one-sen
 
 a) Choose a weakly informative Gamma prior with $\alpha_0 = 2$ and $\beta_0 = 0.5$. Using `scipy.stats.gamma`, plot the prior PDF for $\theta \in [0, 20]$. Mark the prior mean ($\alpha_0 / \beta_0$) with a dashed vertical line and label it.
 
-b) Write a function `log_likelihood_poisson(theta, data)` returning $\ln\mathcal{L}(\theta)$ for a Poisson model. Plot the (normalised) likelihood as a function of $\theta$ over $[0, 20]$ on the same axes as the prior. You can normalise by dividing by `np.trapz(likelihood_vals, theta_vals)`.
+b) Write a function `log_likelihood_poisson(theta, data)` returning $\ln\mathcal{L}(\theta)$ for a Poisson model. Plot the (normalised) likelihood as a function of $\theta$ over $[0, 20]$ on the same axes as the prior. You can normalise by dividing by `np.trapezoid(likelihood_vals, theta_vals)`.
 
 c) What is the MLE $\hat{\theta}_{\mathsf{MLE}}$? (You may compute it analytically as the sample mean, or use `minimize_scalar` as in Workshop 7.)
 
@@ -77,23 +77,23 @@ a) Derive (or simply state from the notes) the updated posterior parameters afte
 
 b) Plot the prior, (normalised) likelihood, and posterior on the same axes. Use different line styles and colours. What do you observe about how the posterior relates to the prior and likelihood?
 
-c) Compute and print a 95% **credible interval** for $\theta$ using `scipy.stats.gamma.ppf(0.025, a=alpha_N, scale=1/beta_N)` for the lower bound and `.ppf(0.975, ...)` for the upper.
+c) Compute and print a 95% **equal-tailed credible interval** for $\theta$ (see [Credible Intervals](#sec:bay_ci)) using `scipy.stats.gamma.ppf(0.025, a=alpha_N, scale=1/beta_N)` for the lower bound and `.ppf(0.975, ...)` for the upper.
 
-d) Repeat the analysis with a **stronger** prior: $\alpha_0 = 10, \beta_0 = 2$. How do the posterior mean and credible interval change compared to the weakly informative prior? What does this show about the influence of the prior?
+d) Repeat the analysis with a **strong** prior centred away from the data: $\alpha_0 = 100, \beta_0 = 10$ (prior mean 10, prior standard deviation 1). Plot the strong prior, the likelihood and the new posterior. How do the posterior mean and credible interval change compared to the weakly informative prior? What does this show about the influence of the prior?
 
 ---
 
 ## Task 4: Posterior Predictive Distribution
 
-The **posterior predictive PMF** gives the probability of observing a new count $\tilde{y}$, averaged over the posterior uncertainty in $\theta$. For Poisson data with a Gamma posterior, this is a **Negative Binomial** distribution:
+The **posterior predictive PMF** gives the probability of observing a new count $\ynew$, averaged over the posterior uncertainty in $\theta$. For Poisson data with a Gamma posterior, this is a **Negative Binomial** distribution:
 
 $$
-p(\tilde{y} \mid \text{data}) = \binom{\tilde{y} + \alpha' - 1}{\tilde{y}} \left(\frac{\beta'}{1 + \beta'}\right)^{\alpha'} \left(\frac{1}{1 + \beta'}\right)^{\tilde{y}}.
+p(\ynew | \text{data}) = \binom{\ynew + \alpha' - 1}{\ynew} \left(\frac{\beta'}{1 + \beta'}\right)^{\alpha'} \left(\frac{1}{1 + \beta'}\right)^{\ynew}.
 $$
 
 In `scipy.stats`, this is `nbinom(n=alpha_N, p=beta_N/(1+beta_N))`.
 
-a) Compute and plot the posterior predictive PMF for $\tilde{y} = 0, 1, \ldots, 20$. Overplot the empirical frequency histogram of the observed data (normalised to a probability mass).
+a) Compute and plot the posterior predictive PMF for $\ynew = 0, 1, \ldots, 20$. Overplot the empirical frequency histogram of the observed data (normalised to a probability mass).
 
 b) Compute the **Poisson predictive** using only the MLE: `scipy.stats.poisson(theta_hat).pmf(y_vals)`. Overplot this on the same axes.
 
@@ -103,5 +103,5 @@ c) The Negative Binomial is wider than the Poisson with the same mean. Compute a
    
    Why is the Negative Binomial wider?
 
-d) For a new 2-hour observation block, what is the probability of observing **10 or more** meteors in a single hour? Use the posterior predictive PMF (NegBinom). Compare to the Poisson predictive answer.
+d) What is the probability of observing **10 or more** meteors in the next hour? Use the posterior predictive PMF (NegBinom). Compare to the Poisson predictive answer.
 

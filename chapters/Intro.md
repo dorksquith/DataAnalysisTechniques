@@ -19,7 +19,7 @@ This module explores how to use probability and statistics to analyse data and i
 (coursework)=
 ::::{dropdown} Quick Start (Coursework) Instructions
 
-If you have setup python, pip on your computer and are in a folder containing the myst.yml, requirements.txt, and eg Report.md files (for example if you are in one of the template coursework folders I have provided), you can run these steps:
+If you have set up python, pip on your computer and are in a folder containing the myst.yml, requirements.txt, and eg Report.md files (for example if you are in one of the template coursework folders I have provided), you can run these steps:
 
 ```
 # 1. Create virtual python environment
@@ -44,6 +44,8 @@ jupyter book start --execute
 
 ```
 ::::
+
+---
 
 ## Volume 1: Probability & Statistics
 
@@ -141,7 +143,7 @@ Volume 1 focuses on continuous and numerical data — the setting where probabil
 - [ ] Correctly interpret Venn diagrams
 - [ ] Calculate the Union and Intersection of sets
 - [ ] Describe the meaning of Independent and Mutually Exclusive (Disjoint) sets
-- [ ] Calculating the Conditional Probability from a Contingency Table
+- [ ] Calculate the Conditional Probability from a Contingency Table
 - [ ] Describe the terms in Bayes' Theorem
 :::
 
@@ -181,7 +183,7 @@ Volume 1 focuses on continuous and numerical data — the setting where probabil
 (los:Norm)=
 :::{dropdown} The Normal Distribution
 - [ ] Explain why the normal distribution is so prevalent
-- [ ] Explain why the CDF, rather than PDF, must be used for calculating probabilities for continous RVs
+- [ ] Explain why the CDF, rather than PDF, must be used for calculating probabilities for continuous RVs
 - [ ] Plot the Normal PDF and CDF 
 - [ ] State the formula for calculating the Z value, and calculate Z values
 - [ ] Describe the terms present in the Gaussian PDF
@@ -228,7 +230,7 @@ Volume 1 focuses on continuous and numerical data — the setting where probabil
 - [ ] Design a Z Test to compare the mean of a dataset with the null hypothesis, and calculate the test statistic
 - [ ] Describe the T Test and state when it is preferred over the Z Test
 - [ ] Design a T Test to compare the means of two datasets, and calculate the test statistic
-- [ ] Design a F Test (ANOVA) to compare the variances of two datasets, and calculate the test statistic
+- [ ] Design an F Test (ANOVA) to compare the variances of two datasets, and calculate the test statistic
 :::
 
 
@@ -236,13 +238,7 @@ Volume 1 focuses on continuous and numerical data — the setting where probabil
 
 ## Volume 2: Parameter Estimation & Fitting 
 
-<!--
-This volume forms the second part of the module, and all the topics are ```wip``` (**work in progress**, marked with 🚧 ). I have put the Outline/ Learning Objectives here so you can get an idea of what will we cover. **These may well be subject to minor changes** as we get our ducks in a row.
--->
 
-<!--
-> My student feedback from 2025 was that the level and speed of the maths was 😱 for people without a maths degree. I agree. My current strategy is to keep the hard maths bits in this jupyter book, but not dwell on the proofs and derivations during our lecture time.
--->
 
 [//]: # ( Estimation Essentials)
 [//]: # ( Relies on: )
@@ -257,7 +253,6 @@ This volume forms the second part of the module, and all the topics are ```wip``
 - [ ] Define Consistency, Bias, and Minimum Variance and explain their importance for estimators
 - [ ] Understand the relationship between Bias, Variance, and Mean Squared Error
 - [ ] Explain the Bootstrap Method and implement it to estimate parameter uncertainties
-<!--[ ] Maybe,  Method of Moments-->
 :::
 
 
@@ -268,12 +263,6 @@ This volume forms the second part of the module, and all the topics are ```wip``
 [//]: # ( scipy.stats: )
 [//]: # ( matplotlib.pyplot:)
 [//]: # ( openstax: )
-<!--
-	- Bayes theorem revisited: for discrete RVs
-- Bernoulli: "the single coin toss"
-- Binomial: "repeated coin tosses"
-- Poisson: "number of emails per hour"
--->
 
 (los:PMFLikelihood)=
 :::{dropdown} Discrete Probabilities & Likelihoods
@@ -281,12 +270,12 @@ This volume forms the second part of the module, and all the topics are ```wip``
 - [ ] Plot the Bernoulli PMF for some data
 - [ ] Show that the Bernoulli PMF is a valid probability distribution
 - [ ] Calculate Bernoulli probabilities using the PMF
-- [ ] Show that the Expectation and Variance of $K\sim \mathsf{Bernoulli}(p)$ are both equal to p 
+- [ ] Show that the Expectation of $K\sim \mathsf{Bernoulli}(p)$ is $p$ and its Variance is $p(1-p)$
 - [ ] Explain the relationship between the Bernoulli and Binomial distributions and parameters
 - [ ] Calculate the Binomial Coefficient
 - [ ] Calculate the Expectation and Variance for $K\sim \mathsf{Binomial}(n,p)$
 - [ ] Estimate the fairness of a coin using the Binomial Likelihood
-- [ ] Describe the properties of $k\sim \mathsf{Poisson}(\lambda)$
+- [ ] Describe the properties of $K\sim \mathsf{Poisson}(\lambda)$
 - [ ] Calculate and use the Poisson Likelihood
 - [ ] Derive the MLE $\hat{p}$ from Binomial data and interpret it
 - [ ] Derive the MLE $\hat{\lambda}$ from Poisson data and interpret it
@@ -300,13 +289,6 @@ This volume forms the second part of the module, and all the topics are ```wip``
 [//]: # ( scipy.stats: )
 [//]: # ( matplotlib.pyplot:)
 [//]: # ( openstax: )
-<!--
-- Bayes theorem revisited: for continuous RVs
-- Uniform: "flat"
-- Exponential: "waiting time for a taxi"
-- Gamma: "waiting time for $n^{th}$ taxi"
-- Beta: "the chameleon"
--->
 (los:PDFLikelihood)=
 :::{dropdown} Continuous Probabilities & Likelihoods
 - [ ] Show that the Uniform PDF is valid
@@ -334,14 +316,6 @@ This volume forms the second part of the module, and all the topics are ```wip``
 [//]: # ( scipy.stats: )
 [//]: # ( matplotlib.pyplot:)
 [//]: # ( openstax: )
-<!--
-	- The MLE for Norm(mu,sigma)
-- Estimator Bias and Mean Squared Error
-- Parameter Uncertainties
--- Monte Carlo
--- Fisher Information and Minimum Variance Bound
--- Graphical Method
--->
 
 (los:MLM)=
 :::{dropdown} Maximum Likelihood Method
@@ -349,7 +323,7 @@ This volume forms the second part of the module, and all the topics are ```wip``
 - [ ] Derive the MLEs $\hat\mu$ and $\hat\sigma^2$ for Normal data
 - [ ] Explain what the Hessian (curvature) of the log-likelihood represents physically
 - [ ] Describe the three methods for estimating MLE parameter uncertainties: Monte Carlo, Fisher Information, and the Graphical method
-- [ ] Define the Fisher Information and Information Matrix, and state the Cram\'{e}r--Rao (Minimum Variance) Bound
+- [ ] Define the Fisher Information and Information Matrix, and state the Cramér–Rao (Minimum Variance) Bound
 - [ ] Compare nested models using the Log Likelihood Ratio test and Wilks' theorem
 - [ ] Calculate AIC and BIC and use Akaike weights to quantify relative model support
 :::
@@ -362,14 +336,6 @@ This volume forms the second part of the module, and all the topics are ```wip``
 [//]: # ( scipy.stats: )
 [//]: # ( matplotlib.pyplot:)
 [//]: # ( openstax: )
-<!--
-	- Chi Squared with binned data
-- The method of Least Squares (LSQ)
-- Parameter uncertainties with LSQ
-- Python methods
-- Outliers
-- Nonlinear Methods
--->
 
 (los:LSQ)=
 :::{dropdown} Linear Regression
@@ -398,30 +364,17 @@ This volume forms the second part of the module, and all the topics are ```wip``
 [//]: # ( scipy.stats: )
 [//]: # ( matplotlib.pyplot:)
 [//]: # ( openstax: )
-<!--- Bayes theorem revisited: evidence, prior, likelihood, posterior
-- Bernoulli Likelihood example: covid tests 
-- Constant Evidence
-- Prior Distribution
-- Conjugacy
-- Bernoulli-Beta
-- Maximum A Posteriori (MAP) Estimation
-- Credible Intervals
-- Poisson-Gamma
-- Predictive Posterior
--->
 (los:Bayes)=
 :::{dropdown} Bayesian Inference
 - [ ] Apply Bayes theorem to Bernoulli data
-- [ ] Correctly apply the distinction between $P(\mathsf{sick}\mid\mathsf{test}^+)$ and $P(\mathsf{test}^+\mid\mathsf{sick})$
+- [ ] Correctly apply the distinction between $P(\mathsf{sick}|\mathsf{test}^+)$ and $P(\mathsf{test}^+|\mathsf{sick})$
 - [ ] Describe the meaning of the terms prior, evidence, and posterior
 - [ ] Understand the meaning and use of conjugate priors
 - [ ] Recognise the kernel of the $\mathsf{Beta}(\alpha, \beta)$ PDF and describe what the parameters mean
-<!--- [ ] Don't mix up ```scipy.stats.beta``` (the PDF) and ```scipy.special.beta``` (the function)-->
-- [ ] Recognise the kernel of the $\mathsf{Gamma}(\alpha)$ PDF and describe what the parameters mean
-<!--- [ ] Don't mix up ```scipy.stats.gamma``` (the PDF) and ```scipy.special.gamma``` (the function)-->
+- [ ] Recognise the kernel of the $\mathsf{Gamma}(\alpha, \beta)$ PDF and describe what the parameters mean
 - [ ] Calculate the Maximum A Posteriori (MAP) and Credible Interval
 - [ ] Explain the difference between a Credible Interval and a Confidence Interval
-- [ ] Understand what a Predictive Posterior is
+- [ ] Understand what a Posterior Predictive distribution is
 :::
 
 [//]: # ( Predictions)
@@ -436,9 +389,11 @@ This volume forms the second part of the module, and all the topics are ```wip``
 - [ ] Understand the method of Markov Chain Monte Carlo (MCMC)
 - [ ] Describe the Metropolis Hastings algorithm
 - [ ] Make a predictive sampling distribution with the Metropolis Hastings algorithm 
-- [ ] Demonstrate the importance of Hyperparamer Tuning
+- [ ] Demonstrate the importance of Hyperparameter Tuning
 :::
 
+
+---
 
 ## Resources
 
@@ -451,7 +406,7 @@ I recommend Bookmarking these 3 excellent resources:
 
 * **[Probability Playground](https://probabilityplayground.com/normal.html)**: A great resource for visual learners to enhance understanding of PDFs. Also useful as a quick lookup when deciding which PDF is appropriate. I 💜 this.
 
-* **[Stat Proofs](https://statproofbook.github.io/I/PbT)**: Hallulajah! Almost all the proofs you will ever need. I 💜 this.
+* **[Stat Proofs](https://statproofbook.github.io/I/PbT)**: Hallelujah! Almost all the proofs you will ever need. I 💜 this.
 
 
 ### Computing 
@@ -468,11 +423,6 @@ If you are new to pip / python, see [this guide](https://packaging.python.org/en
 Also, ask Lily and Tom in the week 1 workshop.
 :::
 
-<!--
-If you find that the [Good Research Code Handbook](https://goodresearch.dev/) is not everything you need (I have only skimmed it, but experienced elation when doing so[^except]) these links may be helpful:
-
-* **[Essential: Github Quickstart](https://docs.github.com/en/get-started/git-basics/set-up-git)**: If you don't already have a github, please set one up. Set up a repository for this module. You will not regret getting on top of this.
--->
 
 * **[Scientific Python](https://lectures.scientific-python.org/)**: Superb long-term reference. I expect it will help you in this module and beyond.
 
@@ -481,26 +431,15 @@ If you find that the [Good Research Code Handbook](https://goodresearch.dev/) is
 
 
 
-<!--
-:::{dropdown} Other useful computing references
-- [Python Book](https://www.acsu.buffalo.edu/~adamcunn/downloads/PythonBook.pdf)
-- [Jupyter](https://jupyter.org/)
-- [numpy](https://numpy.org/devdocs/user/absolute_beginners.html)
-- [scipy stats](https://docs.scipy.org/doc/scipy/tutorial/stats.html#)
-- [matplotlib](https://matplotlib.org/stable/users/explain/quick_start.html)
-- [seaborn](https://seaborn.pydata.org/tutorial/introduction.html)
-- [pandas](https://pandas.pydata.org/docs/user_guide/10min.html)
-:::
--->
 
 ### Math
 
-The vast majority of humans are in a state of **Unconscious Ignorance**[^unknownunknowns] when it comes to statistics and probability, and choosing to leave that very comfortable state is brave and noble in my opinion. And entirely achievable. In my experience as a student and educator **it takes at least three passes to really understand something new**; this is very likely to be the case for the more advance topics we will explore in Volume 2, but there are "gotchas" even in the Volume 1 topics.
+The vast majority of humans are in a state of **Unconscious Ignorance**[^unknownunknowns] when it comes to statistics and probability, and choosing to leave that very comfortable state is brave and noble in my opinion. And entirely achievable. In my experience as a student and educator **it takes at least three passes to really understand something new**; this is very likely to be the case for the more advanced topics we will explore in Volume 2, but there are "gotchas" even in the Volume 1 topics.
   * 🌵 First Rodeo: we find out that there are things we don't understand: **Conscious Ignorance**. 
   * 🌵🌵 Second Rodeo: we figure out what those things mean for us: **Conscious Competence**.
   * 🌵🌵🌵 Third Rodeo: we get an instinct for how to apply them: **Unconscious Competence**.
 
-[^unknownunknowns]: Unconcious Ignorance: I don't know anything, and I am not aware that I don't know anything. See the [Rumsfeld Matrix](https://en.wikipedia.org/wiki/There_are_unknown_unknowns)
+[^unknownunknowns]: Unconscious Ignorance: I don't know anything, and I am not aware that I don't know anything. See the [Rumsfeld Matrix](https://en.wikipedia.org/wiki/There_are_unknown_unknowns)
 
 
 :::{tip} Avoiding Overwhelm
@@ -512,49 +451,12 @@ My advice is to make yourself comfortable, and follow the suggested module struc
 * **[Math Methods A](#chapter:mma)** and **[Math Methods B](#chapter:mmb)**: Dedicated appendices in these notes collecting the longer derivations referenced from the main chapters. Math Methods A covers functions, logarithms, differentiation, and integration. Math Methods B covers the Gamma function, variable transforms, proofs of variance estimator bias and MSE, the Delta Method, and the Cramér–Rao bound.
 * **[Helping Engineers Learn Math (HELM)](https://www.lboro.ac.uk/departments/mlsc/student-resources/helm-workbooks/)**: If your math is rusty, I recommend looking at the relevant workbooks here.
 * **[Stats Course by Glen Cowan](https://www.pp.rhul.ac.uk/~cowan/stat_course.html)**: If this is not your first rodeo, this is a good lecture course to dip into for more challenging work. It is the one I followed as a PhD student, and is geared towards particle physicists. 
-* **[Graduate Lectures on Statistics by Mark Thomson](https://www.hep.phy.cam.ac.uk/~thomson/lectures/lectures.html)**: If this is not your second rodeo, these is an excellent set of very condensed notes - best suited to experts who need to brush up. Also geared towards particle physicists.
-
-
-<!--
-:::{tip} Avoiding Overwhelm
-If you go through all the links in the dropdown below, you will find yourself in a situation of lots of open browser tabs, an impending feeling of doom, and no more insight the math than you had before you looked at this page.
-
-Make yourself comfortable, and follow the suggested module structure in these notes. These resources are not going anywhere, and the notes will refer to them at the appropriate moments.
+* **[Graduate Lectures on Statistics by Mark Thomson](https://www.hep.phy.cam.ac.uk/~thomson/lectures/lectures.html)**: If this is not your second rodeo, this is an excellent set of very condensed notes - best suited to experts who need to brush up. Also geared towards particle physicists.
 
 
 
-:::
--->
-
-<!--
-:::{dropdown} The HELM workbooks relevant to this module
-
- - [HELM 6](https://www.lboro.ac.uk/media/media/schoolanddepartments/mlsc/downloads/HELM%20Workbook%206%20Exponential%20and%20Logarithmic%20Functions.pdf): Exponential and Logarithmic Functions
- - [HELM 7](https://www.lboro.ac.uk/media/media/schoolanddepartments/mlsc/downloads/HELM%20Workbook%207%20Matrices.pdf): Matrices
- - [HELM 11](https://www.lboro.ac.uk/media/media/schoolanddepartments/mlsc/downloads/HELM%20Workbook%2011%20Differentiation.pdf): Differentiation
- - [HELM 28](https://www.lboro.ac.uk/media/media/schoolanddepartments/mlsc/downloads/HELM%20Workbook%2028%20Differential%20Vector%20Calculus.pdf): Differential Vector Calculus
- - [HELM 13](https://www.lboro.ac.uk/media/media/schoolanddepartments/mlsc/downloads/HELM%20Workbook%2013%20Integration.pdf): Integration
- - [HELM 16](https://www.lboro.ac.uk/media/media/schoolanddepartments/mlsc/downloads/HELM%20Workbook%2016%20Sequences%20and%20Series.pdf): Sequences & Series (includes binomial and Taylor)
- - [HELM 35](https://www.lboro.ac.uk/media/media/schoolanddepartments/mlsc/downloads/HELM%20Workbook%2035%20Sets%20and%20Probability.pdf): Sets and Probability (probability essentials)
- - [HELM 36](https://www.lboro.ac.uk/media/media/schoolanddepartments/mlsc/downloads/HELM%20Workbook%2036%20Descriptive%20Statistics.pdf): Descriptive Statistics (sample mean and variance)
-- [HELM 37](https://www.lboro.ac.uk/media/media/schoolanddepartments/mlsc/downloads/HELM%20Workbook%2037%20Discrete%20Probability%20Distributions.pdf): Discrete Probability Distributions (Binomial and Poisson)
-- [HELM 38](https://www.lboro.ac.uk/media/media/schoolanddepartments/mlsc/downloads/HELM%20Workbook%2038%20Continuous%20Probability%20Distributions.pdf): Continuous Probability Distributions (Uniform and Expon)
-- [HELM 39](https://www.lboro.ac.uk/media/media/schoolanddepartments/mlsc/downloads/HELM%20Workbook%2039%20The%20Normal%20Distribution.pdf): The Normal Distribution (includes CLT)
--[HELM 40](https://www.lboro.ac.uk/media/media/schoolanddepartments/mlsc/downloads/HELM%20Workbook%2040%20Sampling%20Distributions%20and%20Estimation.pdf): Sampling and Estimation (SEM, CUE, Point:mean, Interval:variance)
-- [HELM 41](https://www.lboro.ac.uk/media/media/schoolanddepartments/mlsc/downloads/HELM%20Workbook%2041%20Hypothesis%20Testing.pdf): Hypothesis Testing (includes Z and T)
-- [HELM 42](https://www.lboro.ac.uk/media/media/schoolanddepartments/mlsc/downloads/HELM%20Workbook%2042%20Goodness%20of%20Fit%20and%20Contingency%20Tables.pdf): Goodness of Fit (Chi Squared)
-- [HELM 43](https://www.lboro.ac.uk/media/media/schoolanddepartments/mlsc/downloads/HELM%20Workbook%2043%20Regression%20and%20Correlation.pdf): Regression and Correlation (Least Squares, Pearson correlation coefficient)
-- [HELM 44](https://www.lboro.ac.uk/media/media/schoolanddepartments/mlsc/downloads/HELM%20Workbook%2044%20Analysis%20of%20Variance.pdf): Analysis of Variance (Anova)
-
-:::
--->
 
 
-<!--## What issues might we face?
-
-1. Bad information: on the topics of statistics and probability, there is an especially high amount of trash on the internet. I think this is because truly understanding the concepts behind the tools requires a lot of study and re-study, and the topics needed are quite long and boring with no clear pathways and definitely no quick rewards.
-2. Unclear information: this is partly a notation issue - if you don't have a degree in maths the notation is misery-inducing - but I have also found that experts and educators are unneccessarily vague on the particularly hard and/or boring topics. I think this is because they are scared of saying something incorrect as per point 1.
-3. Inaccessible information: the assumption of prior knowledge and/or the use of terminology, notation that is unfamiliar to the students.-->
 
 
 

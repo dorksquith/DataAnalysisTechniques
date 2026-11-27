@@ -71,7 +71,12 @@ c) It can be shown (using the [delta method](#sec:mmb_deltam)) that for a normal
 
    $$\hat{\sigma}(\hat{\sigma}_x) \approx \frac{\hat{\sigma}_x}{\sqrt{2(N-1)}}$$
 
-   Using this result and your values from (b), compute the analytical SEV. Keep a note of this number.
+   Using this result and your values from (b), compute the analytical SES. Keep a note of this number.
+
+   :::{note} Correction (27 Nov 2026)
+   An earlier version of this workshop called this quantity the SEV. It is the **SES**, the Standard Error of the Standard Deviation ([](#eq:mmb_ses)). The SEV is the Standard Error of the Variance ([](#eq:ei_sev)), which has units of $\sigma^2$ rather than $\sigma$.
+   :::
+
 
 d) Now run `LongBootstrap(data, seed=111)`. How does the bootstrap uncertainty compare to your analytical estimate from (c)?
 

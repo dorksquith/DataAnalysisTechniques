@@ -31,10 +31,12 @@ Don't forget to press ⏻ then ▷ as per the [intro](#chapter:intro)
 :::
 
 
+---
+
 (sec:pe_twophi)=
 ## Two Philosophies
 
-There are two ways of viewing probabilities: Frequentist and Bayesian. The default meaning of the word "Probability" in this module (and everywhere) is Frequentist. When people are talking about Bayesian Probabilities they specifically state this, using the term "Posterior Probability" to describe the Bayesian Probability interpretation. We will introduce Bayesian Inference towards the end of the module.
+There are two ways of viewing probabilities: Frequentist and Bayesian. In this module, "Probability" means Frequentist probability unless we say otherwise. Bayesian probabilities are usually flagged explicitly, for example a **Posterior Probability**: the probability of a hypothesis after updating on the data. We will introduce Bayesian Inference towards the end of the module.
 
 **Frequentist**: everything is defined in terms of repeated experiments. The probability of something happening can only be defined in terms of how often it is observed to happen.
 
@@ -79,6 +81,8 @@ Fernanda and Betty have each misplaced their keys. They will each adopt a differ
 > It may appear that the Bayesian approach is prone to bias, so I should note that the Bayesian does not "stick to their guns" on the prior knowledge aspect. If the data indicate their prior knowledge is unlikely to be correct, then the prior is updated. 
 
 
+
+---
 
 (sec:pe_set)=
 ## Sets
@@ -239,13 +243,11 @@ Two events A and B are **Independent** if the occurrence of one does not affect 
 
 $$P(A \cap B) = P(A) \, P(B)$$
 
-For sets (as opposed to events), independence means the sets are defined without reference to one another. We could construct **dependent** sets like this for example:
-* $K = {\mathbb{N}}$
-* $J = {K^2}$
-
-[Our sets](#fig:pe_ourset) are independent.
+For [our sets](#fig:pe_ourset), $P(A\cap B) = 0.2$ and $P(A)\,P(B) = 0.5 \times 0.4 = 0.2$, so A and B are independent: knowing that a number is in B (it is between 1 and 4) does not change the probability that it is even. We will calculate these probabilities below.
 
 Two sets are **Mutually Exclusive** if there is no overlap between them. Another word for this is **Disjoint**.
+
+---
 
 (sec:pe_fre)=
 ## Frequentist Probability
@@ -253,6 +255,8 @@ Two sets are **Mutually Exclusive** if there is no overlap between them. Another
 
 The **Frequentist Probability** of A is written $P(A) = \dfrac{N_A}{N_S}$: the number of times A occurs in the sample, divided by the number of possible outcomes
 in the sample.
+
+> Strictly, counting equally likely outcomes like this is the *classical* definition of probability. The frequentist definition is the long-run fraction of repeated trials in which A occurs; for equally likely outcomes the two agree.
 
 Probabilities for [our sets](#fig:pe_ourset):
 * $P(S) = N_S/N_S =1$
@@ -287,7 +291,7 @@ The **Probability of Intersection** $P(A\cap B)$ is the probability that **both 
 
 The Joint Probability is zero when A and B are **Disjoint** (no overlap: **Mutually Exclusive**):
 
-$P(A\cap B) =0$ when $(A\cap B)'$
+$P(A\cap B) =0$ when $A\cap B = \emptyset$ (the empty set)
 
 For [our sets](#fig:pe_ourset):
 * The intersection is $A\cap B = \{2,4\}$
@@ -322,7 +326,7 @@ print(f"P(A) +P(B) - P(AnB) = {P_A} + {P_B} - {P_AnB} = {P_A+P_B-P_AnB}")
 (sec:pe_kol)=
 ### The Kolmogorov Axioms
 
-> [Andrey Kolmogorov](https://en.wikipedia.org/wiki/Andrey_Kolmogorov) was a Russian mathematician. You may have heard of the 'KS test', which is used to eg check for overtraining by comparing ML classifier outputs for test and train samples. This is named for Kolomogorov and Nikolai Smirnov. See also 'KANs' - Kolmogorov Arnold Networks [arXiv:2404.19756](https://arxiv.org/abs/2404.19756).
+> [Andrey Kolmogorov](https://en.wikipedia.org/wiki/Andrey_Kolmogorov) was a Russian mathematician. You may have heard of the 'KS test', which is used to eg check for overtraining by comparing ML classifier outputs for test and train samples. This is named for Kolmogorov and Nikolai Smirnov. See also 'KANs' - Kolmogorov Arnold Networks [arXiv:2404.19756](https://arxiv.org/abs/2404.19756).
 
 The **Non-Negativity Axiom**
 : The probability of any event A must be a real number greater than or equal to zero.
@@ -344,6 +348,13 @@ The **Countable Additivity Axiom**
   :label: eq:pe_kol3
   P(A\cup B) =P(A)+P(B)
   ``` 
+  More generally, for any countable sequence of mutually exclusive events $A_1, A_2, \ldots$:
+  ```{math}
+  :label: eq:pe_kol3gen
+  P(A_1 \cup A_2 \cup \ldots) = P(A_1) + P(A_2) + \ldots
+  ```
+
+---
 
 (sec:pe_conpro)=
 ## Conditional Probability $P(A | B)$
@@ -354,7 +365,7 @@ $$\label{eq:pe_conp} P(A | B) = \dfrac{P(A\cap B)}{P(B)}$$
 
 The notation $ P(A | B) $ means 'the probability of A, given that B is true'. 
 
-> When we define a function of some variables and parameters as $f(x,y;\theta)$, the semicolon ";" is used to indicate the conditional, just as the pipe "|" is used to indicate the conditional in standard probability notation. The function has variables x and y, and is conditional on the parameter $\theta$.
+> When we define a function of some variables and parameters as $f(x,y;\theta)$, the semicolon ";" separates the variables $x$ and $y$ from the parameter $\theta$, which is treated as fixed. This is similar to conditioning with the pipe "|" in standard probability notation, but here $\theta$ is not a random variable.
 
 We can understand where [](#eq:pe_conp) comes from as follows:
 
@@ -457,7 +468,7 @@ $P(six \cap six) = P(six) P(six) = \dfrac{1}{6} \dfrac{1}{6}  = \dfrac{1}{36}$
 (sec:pe_totpro)=
 ### Total Probability
 
-In the below tryptich of Venn diagrams, I have divided the Sample Space S into four quadrants, each of which is a set $B_i$. There are N=4 disjoint sets $B_i$ intersecting with A. 
+In the below triptych of Venn diagrams, I have divided the Sample Space S into four quadrants, each of which is a set $B_i$. There are N=4 disjoint sets $B_i$ intersecting with A. 
 
 The **Total Probability** of A can be written as a sum over the four quadrants:
 
@@ -480,6 +491,8 @@ $$\label{eq:pe_totp} P(A) = \sum \limits_i^N P(A | B_i) P(B_i)$$
 This may seem a bit contrived, but we will see soon that it is useful.
 
 > The Total Probability P(A) is also referred to as the **Marginal Probability** of A. This is because we have "Marginalised Out" the probability of B, and are only considering A.
+
+---
 
 (sec:pe_baythm)=
 ## Bayes' Theorem
@@ -528,7 +541,7 @@ Using Bayes' theorem does not make one a Bayesian. It is used by Frequentists an
 Our generic demonstration of Bayes' theorem for two sets of numbers was a bit disappointing. Bayes gets interesting when we consider, for example, a set of hypotheses and a set of measurements.
 
 **Example**:
-In one universe, inhabited by Zorgs, the **Yellow Zorgs** had better starting conditions than the red Zorgs, eg they had more fruit trees. The yellow Zorgs cherished their privilege and came to opress the red Zorgs at every chance they got in order to cling onto it in the face of other random events. In another universe, **Red Zorgs** had better starting conditions. These are the only possible universes.
+In one universe, inhabited by Zorgs, the **Yellow Zorgs** had better starting conditions than the red Zorgs, eg they had more fruit trees. The yellow Zorgs cherished their privilege and came to oppress the red Zorgs at every chance they got in order to cling onto it in the face of other random events. In another universe, **Red Zorgs** had better starting conditions. These are the only possible universes.
 
 ::::{tab-set}
 :::{tab-item} Hypotheses
@@ -544,9 +557,9 @@ Conditional probability:  $P(Y | Y') = 0$
 : The probability of Yellow Zorgs being dominant, given that Red Zorgs are dominant, is zero. [](#eq:pe_conp)
 
 Probability of union: $P(Y \cup Y') = P(Y) + P(Y') = 1$
-: The probability of Yellow Zorgs being dominant, plus that of Red Zorgs being dominant, plus the intersection (zero) is 1. This must be the case, because these are the only two universes, and the total probability must be 1.
+: The probability of Yellow Zorgs being dominant, plus that of Red Zorgs being dominant, minus the intersection (zero) is 1. This must be the case, because these are the only two universes, and the total probability must be 1.
 
-The set of hypotheses is $H = Y + Y'$
+The set of hypotheses is $H = Y \cup Y'$
 
 :::
 
@@ -563,9 +576,9 @@ Conditional probability:  $P(y | y') = 0$
 : The probability of Yellow Zorgs being happiest, given that Red Zorgs are happiest, is zero. [](#eq:pe_conp)
 
 Probability of union: $P(y \cup y') = P(y) + P(y') = 1$
-: The probability of Yellow Zorgs being happiest, plus that of Red Zorgs being happiest, plus the intersection (zero) is 1. This must be the case, because these are the only two outcomes, and the total probability must be 1.
+: The probability of Yellow Zorgs being happiest, plus that of Red Zorgs being happiest, minus the intersection (zero) is 1. This must be the case, because these are the only two outcomes, and the total probability must be 1.
 
-The set of measurements (or outcomes) is $D = y + y'$
+The set of measurements (or outcomes) is $D = y \cup y'$
 
 :::
 ::::
@@ -574,19 +587,8 @@ The data are as follows:
 * In universe Y where Yellow Zorgs are dominant, 100% of Yellow Zorgs are happiest.
 * In universe Y' where Red Zorgs are dominant, 90% of Red Zorgs are happiest.
 
-Note: these data are percentages **with respect to the given universe**; in other words the assumption is that the total probability of being in universe Y is 1, and that the total probability of being universe Y' is 1. This makes them **Conditional Probabilities**.
+Note: these data are percentages **with respect to the given universe**; in other words the assumption is that the total probability of being in universe Y is 1, and that the total probability of being in universe Y' is 1. This makes them **Conditional Probabilities**.
 
-<!--
-:::{table} Tabulated Conditional Probabilities for Zorgs
-:align: center
-:label: tab:pe_zorgs1
-
-|            | $B$   | $B'$  | 
-| ---        | --- | --- | 
-| $A$        | $P(y|Y)=1$  | $P(y'|Y) = 0$  | 0.5 |
-| $A'$       | $P(y|Y')=0.1$ | $P(y'|Y') = 0.9$ |
-:::
--->
 
 :::{table} Tabulated Conditional Probabilities for Zorgs
 :align: center
@@ -603,7 +605,12 @@ Note that [](#tab:pe_zorgs1) has the **Conditional Probabilities**, while a regu
 The difference between these is the **Total Probability**, as per [](#eq:pe_conp).
 
 
-To build a contingency table of valid Probabilities, we need to calculate the Total Probability [](#sec:pe_totpro) using our prior probabilities P(Y) and P(Y’).
+To build a contingency table of valid Probabilities, we need to know P(Y) and P(Y') : the Total Probability of being in one universe or the other. In Bayesian terms, these are our **Prior Probabilities**. 
+
+**Some additional data:**
+: In 25% of universes, Yellow Zorgs are dominant.
+
+So $P(Y) = 0.25$ and $P(Y') = 0.75$, and we can calculate the Total Probability [](#sec:pe_totpro) of the data:
 
 ```{math}
 \begin{aligned}
@@ -612,11 +619,6 @@ P(y) & = P(y \cap Y) + P(y \cap Y') \\
      & = (1)(0.25) + (0.1)(0.75) = 0.325 \\
 \end{aligned}
 ```
-
-To do this, we need to know P(Y) and P(Y') : the Total Probability of being in one universe or the other. In Bayesian terms, these are our **Prior Probabilities**. 
-
-**Some additional data:**
-: In 25% of universes, Yellow Zorgs are dominant.
 
 Now we can build a "proper" contingency table, because [](#eq:pe_conp) gives us the relationship:
 
@@ -642,8 +644,10 @@ The **Total Probability** of the data: $P(y)$
 
 The **Likelihood** of the data, given a specific hypothesis: $P(y|Y)$.
 
-The **Prior Probability** of a specific specific hypothesis: $P(Y)$.
+The **Prior Probability** of a specific hypothesis: $P(Y)$.
 
+
+---
 
 (sec:pe_probdis)=
 ## Probability Distributions
@@ -784,7 +788,7 @@ Notice that we label the y-axis as **Density** rather than Probability for the P
 
 We will meet the Normal PDF in [](#chapter:norm), and explore several other special distributions provided by the ```scipy.stats``` library later, such as the Poisson PMF and Exponential PDF. The distributions provided by ```scipy.stats``` are incredibly convenient because they provide a host of built-in methods.
 
-Any function of a continuous RV can be turned into a PDF; the requirement that its integral must equal 1, as per [](#eq:pe_kol2pdf) can be satisfied by multiplying the function by a **Normalisation Constant**.
+Any non-negative function of a continuous RV with a finite integral over its support can be turned into a PDF; the requirement that its integral must equal 1, as per [](#eq:pe_kol2pdf) can be satisfied by multiplying the function by a **Normalisation Constant**.
 
 
 :::{figure}
@@ -817,7 +821,7 @@ We can now write our function as a **Valid PDF**: $$\label{eq:pe_ourpdf} f_X(x) 
 
 Let's sanity-check[^sanity] our conclusion that [](#eq:pe_ourpdf) is a valid PDF using ```sympy```:
 
-[^sanity]: I have more confidence in my ability to solve a simple integral than I have in my ability do it with sympy, so this is really a "reverse sanity check"...
+[^sanity]: I have more confidence in my ability to solve a simple integral than I have in my ability to do it with sympy, so this is really a "reverse sanity check"...
 
 ```{code-cell} python
 import sympy
@@ -842,7 +846,7 @@ We can also ask ```sympy``` to find solutions to indefinite integrals of special
 my_other_func = sympy.exp(3*x)
 sympy.integrate( my_other_func, x )
 ```
-See [sympy_in_10_minutes](https://github.com/sympy/sympy-notebooks/blob/master/beginner/sympy_in_10_minutes.ipynb) for a quick walk-through some of the most useful methods.
+See [sympy_in_10_minutes](https://github.com/sympy/sympy-notebooks/blob/master/beginner/sympy_in_10_minutes.ipynb) for a quick walk-through of some of the most useful methods.
 :::
 
 
@@ -874,11 +878,13 @@ print(f" MyDist Total probability: {cdf}")
 # example of why using a scipy dist is useful - can ask its properties directly
 mean, variance = dist.stats()
 
-# this {mean:.3f} prints the mean formatted to 3 significant figures
+# this {mean:.3f} prints the mean formatted to 3 decimal places
 print(f" mean:  {mean:.3f}, variance: {variance:.3f}")
 
 
 ```
+
+---
 
 (sec:pe_har)=
 ## 🆕 Harmonising Different Notations
@@ -890,7 +896,7 @@ Define event A: the continuous RV $X$ has a value $X\leq x$.
 ```{math}
 \begin{aligned}
 P(A) &= P(X\leq x) \\
-     &= \int \limits_{-\infty}^{x} f_{X}(x)\, dx & \leftarrow f_X(x) \mathsf{\; is\; the\; PDF} \\ 
+     &= \int \limits_{-\infty}^{x} f_{X}(x')\, dx' & \leftarrow f_X(x) \mathsf{\; is\; the\; PDF} \\ 
      &= F_{X}(x)& \leftarrow F_X(x) \mathsf{\; is\; the\; CDF\; at\;}X=x \\ 
 \end{aligned}
 ```
@@ -903,7 +909,7 @@ Define event B: the continuous RV $Y$ has a value $Y \leq y$.
 ```{math}
 \begin{aligned}
 P(A \cap B) &= P(A | B ) \, P(B) \\ 
-            &= \int \limits_{x_0}^{x} \int \limits_{y_0}^{y} f_{XY}(x,y)\, dx\, dy & \leftarrow f_{XY}(x,y) \mathsf{\; is\; the\;joint\; PDF} \\  
+            &= \int \limits_{-\infty}^{x} \int \limits_{-\infty}^{y} f_{XY}(x',y')\, dx'\, dy' & \leftarrow f_{XY}(x,y) \mathsf{\; is\; the\;joint\; PDF} \\  
             &= F_{XY}(x,y) &\leftarrow F_{XY}(x,y) \mathsf{\; is\; the\;joint\; CDF} \\
 \end{aligned}
 ```           
@@ -914,7 +920,7 @@ P(A \cap B) &= P(A | B ) \, P(B) \\
 
 ```{math}
 \begin{aligned}
-P(A) &= \int \limits_{x_0}^{x} \int \limits_{-\infty}^{\infty} f_{XY}(x,y)\, dy\, dx & \leftarrow \mathsf{integrating\; out\; }Y \\  
+P(A) &= \int \limits_{-\infty}^{x} \int \limits_{-\infty}^{\infty} f_{XY}(x',y)\, dy\, dx' & \leftarrow \mathsf{integrating\; out\; }Y \\  
      &= F_{X}(x) &\leftarrow F_{X}(x) \mathsf{\; is\; the\;marginal\; CDF\; for\; X} \\
 \end{aligned}
 
@@ -926,7 +932,7 @@ P(A) &= \int \limits_{x_0}^{x} \int \limits_{-\infty}^{\infty} f_{XY}(x,y)\, dy\
 (sec:pe_exe)=
 ### Exercises
 
-If you want some extra practise on these essential probability concepts, the (free) OpenStax Text Book [Introductory Statistics](https://openstax.org/details/books/introductory-statistics-2e) has some [Chapter 3 Practice](https://openstax.org/books/introductory-statistics-2e/pages/3-practice).
+If you want some extra practice on these essential probability concepts, the (free) OpenStax Text Book [Introductory Statistics](https://openstax.org/details/books/introductory-statistics-2e) has some [Chapter 3 Practice](https://openstax.org/books/introductory-statistics-2e/pages/3-practice).
 
 
 

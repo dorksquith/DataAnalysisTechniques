@@ -17,6 +17,8 @@ The aim of this topic is to assist you in joining the tiny minority of people wh
 * ```scipy.stats``` methods: ```ppf, sf```
 
 
+---
+
 (sec:hyp_hyp)=
 ## Hypotheses
 
@@ -53,6 +55,8 @@ bad soldering and a ferret, we started to see ‘Higgs-like’ signs in 2011. Th
 Higgs hunting, back in the day.
 :::
 
+
+---
 
 (sec:hyp_des)=
 ## Designing a Test
@@ -130,14 +134,14 @@ The **Confidence Level** is also set by our choice of $\alpha$, as
 $$\label{eq:hyp_cl} CL = 1-\alpha$$.
 
 
-Once we when we have decided on $W$ and $\alpha$, we can look at (‘unblind’) our data.
+Once we have decided on $W$ and $\alpha$, we can look at (‘unblind’) our data.
 
 
 
 **Choosing a Critical Region is challenging**
 
 
-In reality, it is impossible to find a $W$ that is not consistent with both $H_0$ and $H_1$. There will always be overlap between them, as I have attempted to illustrate in [](#fig:hyp_crit). 
+In reality, we can rarely find a $W$ that contains $H_1$ but none of $H_0$. There will always be overlap between them, as I have attempted to illustrate in [](#fig:hyp_crit). 
 
 
 :::{figure} 
@@ -150,11 +154,13 @@ In reality, it is impossible to find a $W$ that is not consistent with both $H_0
 A cartoon showing the PDFs for the Null (top) and Alternative (bottom) hypotheses.
 :::
 
-In the simplified example of [](#fig:hyp_crit), the critical region that provides us with a significance level of $\alpha=5\%$ exludes more than half of the distribution for the Alternative Hypothesis. In life, we may find that our critical region eliminates much larger fractions of $H_1$. We need to think carefully about how we define our critical regions to ensure we maximize our **Sensitivity** to the data. 
+In the simplified example of [](#fig:hyp_crit), the critical region that provides us with a significance level of $\alpha=5\%$ excludes more than half of the distribution for the Alternative Hypothesis. In life, we may find that our critical region eliminates much larger fractions of $H_1$. We need to think carefully about how we define our critical regions to ensure we maximize our **Sensitivity** to the data. 
 
 The **Sensitivity** of a test for a given $H_1$ is also called the **Power of the test**, and is determined by the proportion of $H_1$ **not excluded** by our choice of $W$ and $\alpha$: 
 
-$$\label{eq:hyp_power} \mathsf{Power} = 1-\beta$$.
+$$\label{eq:hyp_power} \mathsf{Power} = 1-\beta$$
+
+where $\beta$ is the Type 2 error rate, defined [below](#sec:hyp_cond).
 
 
 
@@ -233,7 +239,7 @@ And as a conditional probability:
 (sec:hyp_contab)=
 ### Contingency Tables
 
-A Contingency Table allows us to summarise the efficiency and purity of a test statistic in terms of the Truth: True/False and the Classification:Postive/Negative[^nonbin].
+A Contingency Table allows us to summarise the efficiency and purity of a test statistic in terms of the Truth: True/False and the Classification: Positive/Negative[^nonbin].
 
 > Reminder: The notation $A'$ indicates the [Complement](#sec:pe_com) of A, meaning "not A".
 
@@ -295,23 +301,17 @@ I would conclude that this classifier has quite good efficiency, as it misses on
 
 
 (sec:hyp_roc)=
-### The Purity versus Efficiency play-off: ROC curve
+### The Purity versus Efficiency trade-off: ROC curve
 
-Choosing a small value of $\alpha$ in the construction of our [test](#eq:hyp_testw) results in high **purity** for $H_0$, meaning you are very unlikely to find the data in $W$ if $H_0$ is true. 
+Choosing a small value of $\alpha$ in the construction of our [test](#eq:hyp_testw) makes the critical region $W$ very **pure**: you are very unlikely to find the data in $W$ if $H_0$ is true, so few positives are false. 
 
-> Small $\alpha$ = high purity for $H_0$ = high [Confidence Level](#eq:hyp_cl) 
+> Small $\alpha$ = high purity of $W$ = high [Confidence Level](#eq:hyp_cl) 
 
-But, a smaller value of $\alpha$ is achieved by shifting the region such that we increase the overlap with  $H_1$, lowering the test's **efficiency** for the alternative hypothesis. The efficiency for $H_1$ is referred to as the **Power of the test**.
+But a smaller value of $\alpha$ means a smaller $W$, which also contains less of $H_1$, lowering the test's **efficiency** for the alternative hypothesis. The efficiency for $H_1$ is referred to as the **Power of the test**.
 
 > Small $\alpha$ = low efficiency for $H_1$ = low [Power](#eq:hyp_power) 
 
 
-<!--
-The purity of our critical region W, which is designed to exclude the null hypothesis $H_0$, is the proportion of the region not overlapping with $H_0$:
-$$
-:label: fig:hyp_purnull
-p_W = P( H_0' | W )  = 1-\alpha
-$$-->
 
 
 
@@ -355,36 +355,16 @@ The **False Positive Rate (FPR)** is [](#eq:hyp_fpr):
 FPR = \dfrac{N(a \cap A')}{N(A')} = P(a|A')
 ```
 
-<!--
-:::{figure} 
-:label: fig:hyp_robcrit
-:align: right
-:width: 40%
-
-![](../figures/RobotCritRegion.png)
-
-A Robot showing their friends the overlap between the null and alternative hypotheses.
-:::
--->
 
 
 
 
 
-<!--Is purity or efficiency more important to
-you? High purity means small α(small
-contamination) and lower power (you have
-cut out a lot of your sample).
-Are you suffering from a small dataset? If
-so, you will probably have to maximise
-power at the cost of purity.
-Will your funding be withdrawn if you
-don’t publish? This is not a valid reason
-to make a scientific decision, but is
-shockingly common (see later).-->
 
 
 
+
+---
 
 (sec:hyp_lim)=
 ## Limitations of the Statistical Test
@@ -392,7 +372,7 @@ shockingly common (see later).-->
 If we find our data excludes $H_0$ according to our [predefined statistical test](#eq:hyp_testw) (ie, if we find our data $x$ in $W$, $x\in W$) then this is a **Positive Result** and we have some responsibility to publish.
 
 :::{note}
-It is very common in many fields of research to choose a **Significance Level** of $\alpha= 5\%$, but this would give me major heebie jeebies. The statistical test for rejecting $H_0$ has a **False Positive Rate** of up to 5%, which to me seems enormous. This is a one in twenty chance that I could make a claim that is wrong.
+It is very common in many fields of research to choose a **Significance Level** of $\alpha= 5\%$, but this would give me major heebie jeebies. The statistical test for rejecting $H_0$ has a **False Positive Rate** of up to 5%, which to me seems enormous. If $H_0$ is true, there is a one in twenty chance that I would wrongly reject it.
 :::
 
 If we find a Positive Result and are wrong, this is a **False Positive**, and is called a **Type 1 Error** 😱.
@@ -440,6 +420,8 @@ The values of $\alpha$ and $\beta$ are of no use whatsoever to our interpretatio
 :::
 
 
+---
+
 (sec:hyp_con)=
 ## The Confusion Matrix
 
@@ -457,6 +439,8 @@ My interpretation of the Confusion Matrix. You may have to click on it to make i
 :::
 
 
+---
+
 (sec:hyp_sig)=
 ## Significance: P values and Z values
 
@@ -469,7 +453,7 @@ The **P value is very often misinterpreted**. It is hard to understand what it m
 
 ![](../figures/CriticalRegionPvalue.png)
 
-We measure the test statistic in our data (physical universe). We compare this with the hypothetical distribution of $H_0$ (theoretical universe), and define the area intersected by our data and $H_0$ as the P Value.
+We measure the test statistic in our data (physical universe). We compare this with the hypothetical distribution of $H_0$ (theoretical universe). The P Value is the area under the $H_0$ curve beyond our measured value.
 :::
 
 Once we have made a measurement of our test statistic, indicated by the green line on [](#fig:hyp_pval), we calculate the P Value as **the area under the Null Hypothesis curve beyond our measured value**. If the P Value is smaller than the chosen significance level $\alpha$, indicated by the pink dashed line in [](#fig:hyp_pval) we have a Positive Result.
@@ -478,7 +462,7 @@ If we measure a test statistic that yields a P Value of 3%, we can say that our 
 
 This is a strange thing to say, if you think about it. We can never know if the null hypothesis is true or not, but we are quoting a result conditional on it being so.
 
-> I would personally not interpret a p value of 3% as suggestive that we should reject $H_0$. In particle physics, we only claim "discovery" if we measure a p value of < 0.00006%, and would not even raise an eyebrow for p values above 1%. However, we are very spoiled in terms of how much data we have...
+> I would personally not interpret a p value of 3% as suggestive that we should reject $H_0$. In particle physics, we only claim "discovery" if we measure a (one-sided) p value of < 0.00003% ($5\sigma$, $p = 2.9 \times 10^{-7}$), and would not even raise an eyebrow for p values above 1%. However, we are very spoiled in terms of how much data we have...
 
 
 :::{figure} 
@@ -486,12 +470,14 @@ This is a strange thing to say, if you think about it. We can never know if the 
 
 ![](../figures/StandardNormPvalZval.png)
 
-We measure the test statistic in our data (physical universe). We compare this with the hypothetical distribution of $H_0$ (theoretical universe), and define the area intersected by our data and $H_0$ as the p value.
+The p value is the area under the Standard Normal curve beyond the measured Z value.
 :::
 
 
 
 
+
+---
 
 (sec:hyp_wor)=
 ## Worked Example: Standard Norm
@@ -513,22 +499,22 @@ The Normal PDF is often referred to with shorthand: 
 The Standard Normal PDF shown as a blue dotted line. The pink vertical dashed lines indicate the range of the critical regions $W$, for which the probability of finding our data is very small. This is a two-sided distribution, so there are critical regions on each side, extending outwards to the left (right) of the left (right) dashed pink line. The shaded areas under the curve on the left and right are each 2.5\% of the area under the entire PDF.
 :::
 
-Because Norm describes the behaviour of a Continous RV, we must use the **Cumulative Distribution Function (CDF)** to calculate probabilities.
+Because Norm describes the behaviour of a Continuous RV, we must use the **Cumulative Distribution Function (CDF)** to calculate probabilities.
 
-The CDF on the LHS of [](#fig:hyp_pzcdf) is given in [](#eq:cdf-alpha), where the $\alpha/2$ is because the Normal distribution is symmetric (two-tailed), such that we can define our critical region on either side, and the total integral of both sides is our significance level, $\alpha$.
+The CDF on the LHS of [](#fig:hyp_pzcdf) is given in [](#eq:cdf-alpha), where the $\alpha/2$ is because this is a two-sided test on a symmetric distribution, such that we can define our critical region on either side, and the total integral of both sides is our significance level, $\alpha$.
 
 ```{math} 
 :label: eq:cdf-alpha 
 
-\mathsf{P(X \leq x_L) = \displaystyle \int \limits_{-\infty}^{x_L} f_X(x|\theta)\, dx = \alpha/2}
+\mathsf{P(X \leq x_L) = \displaystyle \int \limits_{-\infty}^{x_L} f_X(x'|\theta)\, dx' = \alpha/2}
 ```
 
-For the RHS of [](#fig:hyp_pzcdf), the distribution we would have the same integral with opposite limits:
+For the RHS of [](#fig:hyp_pzcdf), we have the same integral with opposite limits:
 
 ```{math} 
 :label: eq:cdf-alpha2 
 
-\mathsf{P(X\geq x_R) = \displaystyle \int \limits_{x_R}^{\infty} f_X(x|\theta)\, dx} = \alpha/2
+\mathsf{P(X\geq x_R) = \displaystyle \int \limits_{x_R}^{\infty} f_X(x'|\theta)\, dx'} = \alpha/2
 
 ```
 
@@ -588,7 +574,7 @@ InsideProbability(3.65)
 (sec:hyp_pfromz)=
 ### Find the p value from the Z value
 
-The (one-sided) P Value is the area under one tail of the distribution, with one limit being infinity and the other being the RV value that we measure. The inside probability corresponding to a Z value is given by the CDF, accessible with `norm.cdf()`, while the p value (outside probability) is given by the survival function, accessible with `norm.sf()`.
+The (one-sided) P Value is the area under one tail of the distribution, with one limit being infinity and the other being the RV value that we measure. The probability below a Z value is given by the CDF, `norm.cdf()`; the inside probability $P(|Z| \leq z)$ is `norm.cdf(z) - norm.cdf(-z)`. The one-sided p value (outside probability) is given by the survival function, `norm.sf()`, and the two-sided p value is twice that.
 
 ```{code-cell} python
 def OutsideProbability(z):
@@ -617,7 +603,7 @@ The "outside probability" for $|Z|> 1$ is  100% - 68.3% = 31.7%. This is our **
 (sec:hyp_findcrit)=
 ### Find the Critical Region for a chosen significance level
 
-If we know we want eg $\alpha=5\%$ for our significance level, we can find the corresponding critical region boundaries using the **Percent Point Function**,  ```z_crit = ppf(alpha)```. 
+If we know we want eg $\alpha=5\%$ for our significance level, we can find the corresponding critical region boundaries using the **Percent Point Function**: for a two-sided test, ```z_crit = ppf(1 - alpha/2)``` (and its negative). 
 
 
 ```{code-cell} python
@@ -642,6 +628,8 @@ CriticalValue(0.05)
 
 ```
 
+---
+
 (sec:hyp_cau)=
 ## A Cautionary Tale
 
@@ -656,15 +644,15 @@ CriticalValue(0.05)
 Histogram of the Z values reported in a few decades of articles.
 :::
 
-The sides of the distribution look Gaussian, which is what we would expect, but is has a gigantic hole blown out of the centre, which is where we could expect most of the data to be.
+The sides of the distribution look Gaussian, which is what we would expect, but it has a gigantic hole blown out of the centre, which is where we could expect most of the data to be.
 
-The hole is for results reporting z values of less than around 2 standard deviations, which correspond to p values of greater than about 2%. The data we expect to see in the middle is for all of the experiments which fail to reject the Null Hypothesis, given that Significance Levels between around 1-5% are commonly chosen.
+The hole is for results reporting z values of less than around 2 standard deviations, which correspond to (two-sided) p values of greater than about 5%. The data we expect to see in the middle is for all of the experiments which fail to reject the Null Hypothesis, given that Significance Levels between around 1-5% are commonly chosen.
 
 Why aren't these people reporting findings with large p values?
 
 What this indicates is that medical scientists are not publishing results that fail to reject the null hypothesis, which is bad science.
 
-Given that experiments can take years of work, one would strongly expect people to publish even if their work did not support some flashy alternative hypothesis, and get them a new espresso machine or similar. So, this jagged edge with enormous spikes at "just enough to support a flashy claim" p values is suggestive of dodgy practices, for example designing the test to support the alternative hypothesis :scream:. This is terrible science. The analysis of this data has hopefully led to much more stringent peer review of these kinds of results.
+Given that experiments can take years of work, one would strongly expect people to publish even if their work did not support some flashy alternative hypothesis, and get them a new espresso machine or similar. So, this jagged edge with enormous spikes at "just enough to support a flashy claim" p values is suggestive of dodgy practices, for example designing the test to support the alternative hypothesis 😱. This is terrible science. The analysis of this data has hopefully led to much more stringent peer review of these kinds of results.
 
 (sec:hyp_sum)=
 ### Summary of some useful `scipy.stats` methods
@@ -678,30 +666,30 @@ from scipy.stats import norm
 mynorm = norm(loc=3, scale=4)
 
 # statistics
-# z = x-mu / sigma
+# z = (x - mu) / sigma
 
 # choose a value of the RV
 x = 1
 
 # returns the PDF (density) value for X=x. This is NOT a probability! If it were, it would be zero.
-mynorm.pdf(x)    
+print(f"pdf({x}) = {mynorm.pdf(x)}")
 
 # returns the CDF: the probability that X <= x
-mynorm.cdf(x)
+print(f"cdf({x}) = {mynorm.cdf(x)}")
 
 # sanity check: CDF at x=infinity must equal 1
 import numpy as np
-mynorm.cdf(np.inf)
+print(f"cdf(inf) = {mynorm.cdf(np.inf)}")
 
-# returns the probability of finding X >= x. This is the p value.
-mynorm.sf(x) 
+# returns the probability of finding X >= x. This is the (one-sided) p value.
+print(f"sf({x}) = {mynorm.sf(x)}")
 
 
 # returns the value (x) for which the cumulative probability X<=x is 95%
-mynorm.ppf(0.95)  
+print(f"ppf(0.95) = {mynorm.ppf(0.95)}")
 
-# returns the value (x) for which the p value is 0.05
-mynorm.isf(0.05)  
+# returns the value (x) for which the (one-sided) p value is 0.05
+print(f"isf(0.05) = {mynorm.isf(0.05)}")
 
 # Note that ppf(a) is equivalent to isf(1-a)
 

@@ -18,9 +18,10 @@ kernelspec:
 * `scipy.special` methods: `binom, gammaln`
 * `sympy` methods: `diff, solve, lambdify` 
 
-<!--LectureSlides2025/MaxLike.tex-->
-<!--PythonWorkshopsAndExamples2025/Week8-MathHelpers-and-MLE.py-->
-<!--PythonWorkshopsAndExamples2025/MaximumLikelihood.py-->
+% LectureSlides2025/MaxLike.tex
+% PythonWorkshopsAndExamples2025/Week8-MathHelpers-and-MLE.py
+% PythonWorkshopsAndExamples2025/MaximumLikelihood.py
+
 
 
 Given a set of data $\{x_1, x_2, \ldots, x_N\}$, we want to estimate the unknown parameter(s) $\theta$ of the distribution from which the data were drawn. **Maximum Likelihood Estimation** (MLE) answers: *which value of $\theta$ makes the observed data most probable?*
@@ -115,7 +116,7 @@ $$\ln \mathcal{L}_{\mu,\sigma} = -N\ln\sigma - N\ln\sqrt{2\pi} - \frac{1}{2\sigm
 
 **MLE for $\mu$**: setting $\dfrac{ \partial \ln \mathcal{L}}{\partial \mu} = 0$:
 
-$$\sum_{i=1}^N(x_i - \mu) = 0\;\; \mathsf{when}\;\;\sum_{i=1}^N x_i = N\mu$$
+$$\frac{\partial \ln\mathcal{L}}{\partial\mu} = \frac{1}{\sigma^2}\sum_{i=1}^N(x_i - \mu) = 0 \implies \sum_{i=1}^N x_i = N\hat{\mu}$$
 
 ```{math}
 :label: eq:mle_mu
@@ -124,14 +125,16 @@ $$\sum_{i=1}^N(x_i - \mu) = 0\;\; \mathsf{when}\;\;\sum_{i=1}^N x_i = N\mu$$
 
 **MLE for $\sigma$**: setting $\dfrac{ \partial \ln \mathcal{L}}{\partial \sigma} = 0$:
 
-$$-\frac{N}{\sigma} + \frac{1}{\sigma^3}\sum_{i=1}^N(x_i - \hat{\mu})^2 = 0 \implies \hat{\sigma}^2 = \frac{1}{N}\sum_{i=1}^N(x_i - \bar{x})^2$$
+$$\frac{\partial \ln\mathcal{L}}{\partial\sigma} = -\frac{N}{\sigma} + \frac{1}{\sigma^3}\sum_{i=1}^N(x_i - \hat{\mu})^2 = 0$$
+
+Multiplying through by $\sigma^3/N$ and using $\hat{\mu} = \bar{x}$:
 
 ```{math}
 :label: eq:mle_sig
 \hat{\sigma}^2 = \frac{1}{N}\sum_{i=1}^N(x_i - \bar{x})^2
 ```
 
-Note: the factor $N$ (rather than $N-1$) arises in [](#eq:mle_sig) because we used the MLE $\hat{\mu}=\bar{x}$ rather than the true $\mu$. Recall from [](#sec:ei_varest) that the **unbiased** sample variance divides by $N-1$.
+Note: the MLE divides by $N$, which comes straight from the $-N/\sigma$ term in the derivative. Because the deviations are measured from $\hat{\mu}=\bar{x}$ rather than the true $\mu$, this makes $\hat{\sigma}^2$ slightly too small on average: it is the **biased** sample variance. Recall from [](#sec:ei_varest) that the **unbiased** sample variance divides by $N-1$. MLEs are not guaranteed to be unbiased, although the bias vanishes as $N\to\infty$.
 
 
 ---
@@ -172,6 +175,10 @@ E[s_1] &= \int s_1\, f_X\, dx\\[4pt]
 \end{aligned}
 ```
 
+:::{note}
+The third line swaps the derivative and the integral. This is allowed when the support of $f_X$ does not depend on $\theta$, which is true for the Bernoulli, Binomial, Poisson, Exponential, Normal and $\chi^2$ distributions, but not for the [Uniform](#sec:pdf_unilike), whose support $[a,b]$ *is* the parameter. That is also why the Uniform MLE could not be found by setting the derivative to zero, and why the Fisher Information results below do not apply to it.
+:::
+
 Since $E[s_1] = 0$, its derivative with respect to $\theta$ is also zero. Differentiating both sides and unpacking the result gives a useful identity (using $\partial f_X/\partial\theta = s_1 f_X$):
 
 ```{math}
@@ -203,7 +210,7 @@ E[s_1^2] = -E\!\left[\frac{\partial s_1}{\partial\theta}\right]
 (sec:mle_inf)=
 ## The Fisher Information
 
-The **Variance of the Score** for a single measurement is known as the **single-measurement Fisher Information** $\mathcal{J}_1$. Using the two results above for [$E[s_1]$](#eq:mle_escpro) and [$E[s_1^2]$](#eq:mle_descpro):
+The **Variance of the Score** for a single measurement is known as the **single-measurement Fisher Information** $\mathcal{J}_1$. Using the two results above for [$E[s_1]$](#eq:mle_escpro) and [$E[s_1^2]$](#eq:mle_descres):
 
 
 ```{math}
@@ -227,19 +234,21 @@ The Fisher Information for $N$ measurements is $\mathcal{J}_\theta = N\,\mathcal
 A large $\mathcal{J}_\theta$ means the log-likelihood is sharply peaked: the data carry a lot of information about $\theta$, and we can discriminate close values of $\theta$ well.
 
 
-The **Observed Information** for a single measurement is the curvature at $\hat{\theta}$ :
+The **Observed Information** uses the data we actually have. For a single measurement $x_i$ it is the curvature at $\hat{\theta}$ :
 
 ```{math}
 :label: eq:mle_inf1
-\mathcal{J}_1^{\text{obs}} = -\frac{\partial^2 \ln f_X}{\partial \theta^2}\bigg|_{\hat{\theta}}
+\mathcal{J}_{1,i}^{\text{obs}} = -\frac{\partial^2 \ln f_X(x_i;\theta)}{\partial \theta^2}\bigg|_{\hat{\theta}}
 ```
 
-and for all $N$ measurements is:
+and for all $N$ measurements it is the sum, which is the curvature of the full log-likelihood:
 
 ```{math}
 :label: eq:mle_infn
-\mathcal{J}_\theta^{\text{obs}} = N\mathcal{J}_1^{\text{obs}} 
+\mathcal{J}_\theta^{\text{obs}} = \sum_{i=1}^{N} \mathcal{J}_{1,i}^{\text{obs}} = -\frac{\partial^2 \ln \mathcal{L}_\theta}{\partial \theta^2}\bigg|_{\hat{\theta}}
 ```
+
+When the curvature does not depend on $x$ (for example for $\mu$ of a Normal, where it is $1/\sigma^2$ for every measurement), every term in the sum is the same and $\mathcal{J}_\theta^{\text{obs}} = N\mathcal{J}_1^{\text{obs}}$.
 
 **Example (Normal PDF for $\mu$).** For a single Normal measurement, $\partial^2 \ln f_X/\partial\mu^2 = -1/\sigma^2$, so from [](#sec:mle_gau), the Fisher Information for $\mu$ from $N$ measurements is:
 
@@ -353,7 +362,11 @@ The diagonal entries in e.g. [](#eq:mle_infmatnorm) are the individual Fisher in
 
 The MVB for $\hat{\mu}$ is $\sigma^2/N$, which is the **variance of the sample mean** $\bar{x}$ (the squared [SEM](#eq:normt_sem)) — confirming that $\bar{x}$ is an efficient estimator (it "saturates the bound").
 
-The MVB for $\hat{\sigma}$ is $\sigma^2/(2N)$, which is half the bound for $\hat{\mu}$. **This makes sense**: every observation contributes two pieces of information about $\sigma$: how far it sits from the mean (via $(x_i - \mu)^2$), and the sign of that deviation (which contributes to estimating $\mu$ but averages out for $\sigma$). So $\sigma$ is actually easier to pin down precisely than $\mu$ from the same dataset.
+The MVB for $\hat{\sigma}$ is $\sigma^2/(2N)$, half the bound for $\hat{\mu}$: each observation carries twice as much Fisher information about $\sigma$ as about $\mu$ ([](#eq:mle_infmatnorm)). So with the same data, $\hat{\sigma}$ has a standard error $\sqrt{2}$ times smaller than $\hat{\mu}$ (both are in the units of $x$, so they can be compared directly).
+
+One way to see where the factor 2 comes from: writing $z = (x-\mu)/\sigma$, the score for $\mu$ is $z/\sigma$, and the score for $\sigma$ is $(z^2-1)/\sigma$. The Fisher information is the variance of the score. $V[z] = 1$, but $z^2 \sim \chi^2(1)$ has [variance](#eq:pdf_varchi2) $2$, so the information about $\sigma$ is twice that about $\mu$.
+
+The square root of this bound, $\sigma/\sqrt{2N}$, is the large-$N$ form of the [SES](#eq:mmb_ses), $\sigma/\sqrt{2(N-1)}$: the Standard Error of the Standard Deviation.
 
 More generally, a larger diagonal entry in the $\mathcal{J}_\theta$ matrix means a smaller MVB, i.e. the parameter is more precisely estimable. The diagonal entries grow linearly with $N$ (**more data $\rightarrow$ more information**, as expected) and shrink with $\sigma^2$ (noisier data → harder to estimate $\mu$, which also makes intuitive sense).
 
@@ -370,7 +383,7 @@ $$\ln \mathcal{L}_\theta = \ln \mathcal{L}_{\hat{\theta}} + \underbrace{\frac{d\
 
 The first derivative at $\hat{\theta}_{\mathsf{MLE}}$ (the **Score**) is zero by definition. 
 
-The second derivative at $\hat{\theta}$ is the (negative) of the Observed Fisher information [$-\mathcal{J}_1^{obs}$](#eq:mle_inf1), which is the (negative) of the [MVB](#eq:mle_rcf): $-\dfrac{1}{V[\hat{\theta}]}$, so:
+The second derivative at $\hat{\theta}$ is the negative of the Observed Fisher information for all $N$ measurements, [$-\mathcal{J}_\theta^{obs}$](#eq:mle_infn). For large $N$ this is $-\dfrac{1}{V[\hat{\theta}]}$, where $V[\hat{\theta}]$ is the [MVB](#eq:mle_rcf) (the information is the inverse of the MVB), so:
 
 
 
@@ -399,7 +412,7 @@ and similarly at $\theta = \hat{\theta} - \sigma_{\hat{\theta}}$,
 
 ```{math}
 :label: eq:mle_thetam
- \ln \mathcal{L}_{\hat{\theta}} - \ln \mathcal{L}_{\hat{\theta} - \sigma_{\hat{\theta}}} \approx \dfrac{1}{2} \left( \frac{-\sigma_{\hat{\theta}}}{\,\sigma_{\hat{\theta}}}\right)^2 = -\dfrac{1}{2},
+ \ln \mathcal{L}_{\hat{\theta}} - \ln \mathcal{L}_{\hat{\theta} - \sigma_{\hat{\theta}}} \approx \dfrac{1}{2} \left( \frac{-\sigma_{\hat{\theta}}}{\,\sigma_{\hat{\theta}}}\right)^2 = \dfrac{1}{2},
 ```
 
 
@@ -410,7 +423,6 @@ The uncertainty $\sigma_{\hat{\theta}} = \sqrt{V[\hat{\theta}]}$ can be read off
 \ln \mathcal{L}_{\hat{\theta}} - \ln \mathcal{L}_{\hat{\theta}\pm\sigma_{\hat{\theta}}} = \frac{1}{2}
 ```
 
-<!--In practice: plot $\ln \mathcal{L}_\theta$ vs $\theta$, as per the example in [](#fig:mle_grph), find the peak $\hat{\theta}$, and read off the values of $\theta$ where the curve drops by $1/2$ from the peak. The half-width is $\sigma_{\hat{\theta}}$.-->
 
 This cute way of estimating the MLE uncertainty is illustrated in [](#fig:mle_grph); find the peak $\hat{\theta}$, and read off the values of $\theta$ where the curve drops by $1/2$ from the peak. The half-width is $\sigma_{\hat{\theta}}$
 
@@ -430,7 +442,7 @@ When the Log Likelihood has no closed-form derivative, or when there are many pa
 
 
 Here we look at what can be done with ```sympy``` and at a few of the (many) methods ```scipy``` offers:
-* ```fit``` [ [scipy.stats.fit](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.fit.html) ] is a particularly easy way to get the Maximum Likelihood pararameter estimate when using specific probability distributions
+* ```fit``` [ [scipy.stats.fit](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.fit.html) ] is a particularly easy way to get the Maximum Likelihood parameter estimate when using specific probability distributions
 * ```fsolve``` [ [scipy.optimize.fsolve](https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.fsolve.html)
  ] is a method for doing the same if you can figure out the first derivative of the function.
 * ```minimize_scalar```  [ [scipy.optimize.minimize_scalar](https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize_scalar.html#scipy.optimize.minimize_scalar
@@ -496,7 +508,6 @@ Plotting the function over various ranges allows us to see that what looks like 
 
 Let's use the `minimize_scalar` method to find the coordinates of the global minimum.
 
-<!--### `minimize_scalar` for f(x)-->
 
 
 
@@ -515,7 +526,7 @@ mini_x, mini_f = minimize_demo(f1)
 print(f" * minimize_scalar minimum at x = {mini_x:.3f}, f = {mini_f:.3f}")
 ```
 
-Lets replot around the lowest of the two minima, $x\approx 1.28$, to check the result by eye.
+Let's replot around the lowest of the two minima, $x\approx 1.28$, to check the result by eye.
 
 ```{code-cell} python
 plot_func(1,1.5)
@@ -532,7 +543,7 @@ Scipy's `minimize_scalar` result of `(x=1.28, f(x)=-9.91)` looks legit. How did 
 We find the minimum of a function by differentiating it, as the derivative of a function evaluated at some point is its gradient (or slope), and the gradient is zero at points where the function turns over.
 
 1. Find the function's turning points. We do this by taking the derivative and using sympy's `solve` to find the roots.
-2. Determine if the points are minima or maxima. We use the second derivative for this. If it is **positive**, we have a **minimum**, because the function is curving upwards in the positive direction on either side of the turning point. Vice versa for **negative: maximum**. If the second derivative is zero, the turning point is an "inflection point", rather than a maximum or minimum.
+2. Determine if the points are minima or maxima. We use the second derivative for this. If it is **positive**, we have a **minimum**, because the function is curving upwards in the positive direction on either side of the turning point. Vice versa for **negative: maximum**. If the second derivative is zero, this test can't tell: the point could be a minimum, a maximum or an inflection point (e.g. $x^4$ has a minimum at $x=0$ but $x^3$ has an inflection point there, and both have zero second derivative). Plotting the function close to the point settles it.
 3. Select the minimum with the lowest function value.
 
 
@@ -609,14 +620,14 @@ We will use the Binomial distribution and ask the question "what is the most lik
 We will try this a few different ways.
 
 Reminder of the forms of the **Binomial PMF**
-$$p_K(k) = C_k^n\, p^k\, (1-p)^{n-k}\;\;\;\;\; 0\leq k \leq n$$,
+$$p_K(k) = \binom{n}{k}\, p^k\, (1-p)^{n-k}\;\;\;\;\; k = 0, 1, \ldots, n$$
 
 and the **Binomial Coefficient**:
-$$C_k^n = \dfrac{n!}{k!(n-k)!}$$,
+$$\binom{n}{k} = \dfrac{n!}{k!(n-k)!}$$
 
 and the general form for the **Negative Log Likelihood**:
 
-$$\mathsf{NLL} = - \ln\mathcal{L} = \sum\limits_i^N \ln {p_K(k_i)}$$.
+$$\mathsf{NLL} = - \ln\mathcal{L} = -\sum\limits_i^N \ln {p_K(k_i)}$$
 
 ---
 
@@ -632,7 +643,7 @@ The code below has the following steps:
 * The negative log of this, `sym_nll`, which is the Negative Log Likelihood (NLL),
 * The first derivative of the NLL, `sym_dnll_dp`, provides the Objective Function which has a value of zero at the mle estimate for `p`.
 
-Note that the Binomial Coefficient does not depend on `p`. As such, $C_k^n$ will vanish when we take the derivative of the NLL with respect to p. We do not need to calculate it explicitly in this example, but we would need to calculate it for the PMF probabilities, in which case we would use:
+Note that the Binomial Coefficient does not depend on `p`. As such, $\binom{n}{k}$ will vanish when we take the derivative of the NLL with respect to p. We do not need to calculate it explicitly in this example, but we would need to calculate it for the PMF probabilities, in which case we would use:
 
 
 
@@ -648,7 +659,7 @@ binco = bnc(n,k)
 
 There are several subtleties needed for maximising the helpfulness of `sympy`. Relevant here:
 1. When defining the `symbols`, if they are constrained to positive values you should mark them as such with the flag `positive=True`.
-2. `sympy` will not simplify/expand/cancel the results it finds unless you explictly ask it to. In the example below we use `expand_log` to put the result in the helpful log rules form of `log(abc) = log(a) + log(b) + log(c)`, and we use `cancel` to cancel terms like `a**b * a**-b = a**0 = 1`
+2. `sympy` will not simplify/expand/cancel the results it finds unless you explicitly ask it to. In the example below we use `expand_log` to put the result in the helpful log rules form of `log(abc) = log(a) + log(b) + log(c)`, and we use `cancel` to cancel terms like `a**b * a**-b = a**0 = 1`
 
 :::
 
@@ -663,7 +674,7 @@ def estimate_binomial_p_sympy():
     # Important Note: the positive=True flag is crucial for getting a sensible answer from solve
     c,n,p,k = symbols('c n p k', positive=True)
 
-    #  does not depend on p, so when we take the derivative with respect to p it will disappear. So can just call it c.
+    # the binomial coefficient does not depend on p, so when we take the derivative with respect to p it will disappear. So can just call it c.
     def sym_pmf(c, n, p, k):
         return  c * p**k * (1-p)**(n-k)
 
@@ -746,7 +757,7 @@ In this example we pass three things to `fit()`:
 * The data, ```data=data```, which is an array of values for the RV (e.g. number of heads)
 * The bounds, ```bounds = {'n': (n,n), 'p': (0.001, 0.999) }```, on the parameters `n` and `p` of the Binomial distribution. For the `n` parameter we fix it by setting the lower and upper bound to the same value. For the `p` parameter we let it vary between 0.001-0.999, which is close to the maximum range allowed for a probability ($0\leq\,$`p`$\,\leq 1$).
 
-The fit function returns a dictionary with the keys ```params, success, message```. The ```params``` key has three elements for the three possible parameters of the binomial distribution, in the order ```n, p, loc```.
+The fit function returns a `FitResult` object with the attributes ```params, success, message```. The ```params``` attribute has three elements for the three possible parameters of the binomial distribution, in the order ```n, p, loc```.
 
 ```{code-cell} python
 # ------------------------#
@@ -781,11 +792,11 @@ The job of ```fsolve``` is to provide the roots of a function or system of funct
 This method is well-suited for the first derivative of the Log Likelihood function, $\dfrac{d}{dp} \ln \mathcal{L}$, as this is zero at the maximum likelihood estimate for `p`; or in other words, the root of the derivative LL function is `p`.
 
 In this example we pass three things to ```fsolve```:
-* The Objective Function, ```func=dLL_dp```, is the derivative, $\dfrac{d}{dp} \ln \mathcal{L}$, which the algorithm sets to zero in order to determine the root, ```p```.
+* The Objective Function, ```func=dNLL_dp```, is the derivative of the NLL, $\dfrac{d}{dp} (-\ln \mathcal{L})$, which has the same root as $\dfrac{d}{dp} \ln \mathcal{L}$, and which the algorithm sets to zero in order to determine the root, ```p```.
 * An initial guess at the parameter, ```x0=p_guess```, which gives the algorithm a starting point.
 * The names of the objective function arguments that we are **not** seeking to estimate, ```args=spectators```. In this the objective function requires the data and n parameter, but these are known and are therefore not the job of the algorithm to solve for.
 
-The ```fsolve``` function returns an array of the roots. In our example here there is only one root, as there is only one peak in a well-constructed Likelihood (or Log Likelihood, or Negative Log Likelihood) distribution.
+The ```fsolve``` function returns an array of the roots. In our example there is only one root, because the Binomial Log Likelihood has a single peak. This is not guaranteed in general: some likelihoods have more than one peak (see [](#fig:bay_hpd_bimodal) for an example), and `fsolve` will return a root that depends on the initial guess. As always, plot the (Negative) Log Likelihood first!
 
 ```{code-cell} python
 # ------------------------------#
@@ -797,10 +808,10 @@ def estimate_binomial_p_scipy_fsolve(n,data):
   import numpy as np
 
   # we have some fail-safes in this function to catch cases where p=0,1, because there is no option for bounds in fsolve
-  # the dLL_dp form was provided to us above in the printout from sympy:
+  # the dNLL_dp form was provided to us above in the printout from sympy:
   # Derivative of Negative Log Likelihood:
   # (k - n*p)/(p**2 - p)
-  def dLL_dp(p, n, data):
+  def dNLL_dp(p, n, data):
       k = data
       if(p==0 or p==1):
           return -np.inf         
@@ -810,7 +821,7 @@ def estimate_binomial_p_scipy_fsolve(n,data):
 
   spectators = (n, data)
 
-  result_fsolve = opt.fsolve(func=dLL_dp, x0=p_guess, args=spectators )
+  result_fsolve = opt.fsolve(func=dNLL_dp, x0=p_guess, args=spectators )
 
   mle_est_p = result_fsolve[0]
 
@@ -989,9 +1000,9 @@ Example 1
   The difference in degrees of freedom $\nu$ is $|\nu_A - \nu_B| = 1$.
 
 Example 2
-: $f_{X,A} =  ax^3,\;\;\; 0.1< a < 0.2$ and $f_{X,B} =  ax^3,\;\;\;0 < a < 1$. 
+: $f_{X,A} =  ax^3$ with $a$ fixed at $0.15$ (e.g. a theoretical prediction), and $f_{X,B} =  ax^3$ with $a$ free. 
 
-  Model A has an additional **constraint** with respect to model B. 
+  Model A has $N_p=0$ free parameters, Model B has $N_p=1$. Model A is nested in Model B, because fixing $a=0.15$ in Model B gives Model A. 
 
   $|\nu_A - \nu_B| = 1$
 
@@ -1015,21 +1026,21 @@ Since $\chi^2_1(0.05)=3.84$ and $0.320 < 3.84$, the $p$-value is $0.57$: we **fa
 ### Akaike and Bayes Information Criteria (AIC and BIC)
 
 If we want to compare un-nested models, we can use the AIC or BIC statistics. They
-both balance the simplicity of the model (k: number of model parameters) with the
+both balance the simplicity of the model ($N_p$: number of model parameters) with the
 quality of fit to data.
 
 The Akaike Information Criterion (AIC):
 
 ```{math}
 :label: eq:mle_aic
-   \mathsf{AIC} = 2k - 2\ln\mathcal{L}_{\hat{\theta}}.
+   \mathsf{AIC} = 2N_p - 2\ln\mathcal{L}_{\hat{\theta}}.
 ```
 
 The Bayesian Information Criterion (BIC):
 
 ```{math}
 :label: eq:mle_bic
-   \mathsf{BIC} = k\ln N - 2\ln\mathcal{L}_{\hat{\theta}}.
+   \mathsf{BIC} = N_p\ln N - 2\ln\mathcal{L}_{\hat{\theta}}.
 ```
 
 A smaller Information Criterion value is better, eg $\mathsf{AIC}_{a} < \mathsf{AIC}_{b}$ identifies the preferred model as a.
@@ -1044,7 +1055,7 @@ The Likelihood under Model $b$ (p=27/50)
 : $$\mathcal{L}_b = \dfrac{50!}{27! 23!} (27/50)^{27} (23/50)^{23} = 0.11263$$
 
 
-Model $a$ fixes $p=0.5$ (a theoretical prediction, so $k_a=0$ free parameters). Model $b$ fits $p$ from the data ($k_b=1$). For BIC we take $N=50$ Bernoulli trials as the sample size.
+Model $a$ fixes $p=0.5$ (a theoretical prediction, so $N_{p,a}=0$ free parameters). Model $b$ fits $p$ from the data ($N_{p,b}=1$). For BIC we take $N=50$ Bernoulli trials as the sample size.
 
 The AICs
 : $\mathsf{AIC}_a = 2(0) - 2\ln(0.09596) = 4.688$
@@ -1074,11 +1085,11 @@ The Relative Likelihoods for AIC are:
 : $r_b = \exp\!\left[\tfrac{1}{2}(m - \mathsf{AIC}_b)\right] = \exp\!\left[\tfrac{1}{2}(4.688 - 6.367)\right] = 0.432$
 
 The Akaike Weights are:
-: $p_a = r_a / (r_a + r_b) = 1.000 / 1.432 = 0.699$
+: $p_a = r_a / (r_a + r_b) = 1.000 / 1.432 = 0.698$
   
   $p_b = r_b / (r_a + r_b) = 0.432 / 1.432 = 0.302$
 
-The weight $p_a = 0.699$ means model $a$ (fair coin, $p=0.5$) is the better-supported model with probability 70%. Since $|\mathsf{AIC}_a - \mathsf{AIC}_b| = 1.68 < 2$, this is classified as "not worth more than a bare mention" — see [Kass 1995](https://sites.stat.washington.edu/raftery/Research/PDF/kass1995.pdf). All three tests (LLR, AIC, BIC) agree: the data cannot meaningfully distinguish a fair coin from $p=0.54$.
+The weight $p_a = 0.698$ means model $a$ (fair coin, $p=0.5$) is the better-supported model with probability 70%. Since $|\mathsf{AIC}_a - \mathsf{AIC}_b| = 1.68 < 2$, both models have substantial support by the usual rule of thumb for AIC (Burnham & Anderson, 2002). For BIC, the difference approximates twice the log of the Bayes factor, so we can use the scale of [Kass & Raftery (1995)](https://sites.stat.washington.edu/raftery/Research/PDF/kass1995.pdf): $|\mathsf{BIC}_a - \mathsf{BIC}_b| = 3.59$ falls in the 2–6 range, "positive" evidence for the fair coin. None of the three tests gives strong evidence either way: the data cannot convincingly distinguish a fair coin from $p=0.54$, and BIC leans most towards the simpler model, as expected from its larger penalty.
 
 
 
@@ -1103,20 +1114,20 @@ def model_comparison(n=50, k=27):
     LLR  = 2 * (lnL_b - lnL_a)
     pval = chi2.sf(LLR, df=1)
     print(f"LLR = {LLR:.4f},  chi2(1) p-value = {pval:.3f}")
-    print(f"  -> {{'Fail to reject' if pval > 0.05 else 'Reject'}} fair-coin hypothesis\n")
+    print(f"  -> {'Fail to reject' if pval > 0.05 else 'Reject'} fair-coin hypothesis\n")
 
-    # AIC  (k_a = 0, k_b = 1)
+    # AIC  (N_p,a = 0, N_p,b = 1)
     AIC_a = 2*0 - 2*lnL_a
     AIC_b = 2*1 - 2*lnL_b
     print(f"AIC_a = {AIC_a:.4f},  AIC_b = {AIC_b:.4f}")
-    print(f"  -> Model {{'a' if AIC_a < AIC_b else 'b'}} preferred  (|DELTA_AIC| = {abs(AIC_a-AIC_b):.3f})\n")
+    print(f"  -> Model {'a' if AIC_a < AIC_b else 'b'} preferred  (|DELTA_AIC| = {abs(AIC_a-AIC_b):.3f})\n")
 
-    # BIC  (k_a = 0, k_b = 1,  N = n Bernoulli trials)
+    # BIC  (N_p,a = 0, N_p,b = 1,  N = n Bernoulli trials)
     N = n
     BIC_a = 0*np.log(N) - 2*lnL_a
     BIC_b = 1*np.log(N) - 2*lnL_b
     print(f"BIC_a = {BIC_a:.4f},  BIC_b = {BIC_b:.4f}")
-    print(f"  -> Model {{'a' if BIC_a < BIC_b else 'b'}} preferred  (|DELTA_BIC| = {abs(BIC_a-BIC_b):.3f})")
+    print(f"  -> Model {'a' if BIC_a < BIC_b else 'b'} preferred  (|DELTA_BIC| = {abs(BIC_a-BIC_b):.3f})")
 
 model_comparison()
 ```
@@ -1130,12 +1141,12 @@ model_comparison()
 |---|---|---|---|
 | Models must be nested | Yes | No | No |
 | Gives a $p$-value | Yes (via $\chi^2_\nu$) | No | No |
-| Parameter penalty | via $\nu$ | $+2k$ per param | $+k\ln N$ per param |
+| Parameter penalty | via $\nu$ | $+2$ per param ($2N_p$ total) | $+\ln N$ per param ($N_p\ln N$ total) |
 | Penalises complexity more as $N$ grows | No | No | Yes |
 
-**Use LLR** when the models are nested — one is a special case of the other. It gives an explicit $p$-value via Wilks' theorem and is the most statistically powerful test when it applies.
+**Use LLR** when the models are nested — one is a special case of the other. It gives an explicit $p$-value via Wilks' theorem, and it is usually a very powerful test (for two fully specified hypotheses it is provably the most powerful, by the [Neyman–Pearson lemma](https://en.wikipedia.org/wiki/Neyman%E2%80%93Pearson_lemma)).
 
 **Use AIC or BIC** when models are non-nested: for example, comparing a Gaussian to an Exponential fit to the same data. A smaller value identifies the preferred model.
 
-**AIC vs BIC**: BIC penalises extra parameters more heavily as $N$ grows — the $k\ln N$ factor exceeds $2k$ whenever $N > e^2 \approx 7.4$. For large datasets BIC therefore favours simpler models more aggressively than AIC. If the goal is predictive accuracy, AIC is usually preferred; if the goal is recovering the true model structure, BIC is more conservative and often appropriate.
+**AIC vs BIC**: BIC penalises extra parameters more heavily as $N$ grows — the $N_p\ln N$ factor exceeds $2N_p$ whenever $N > e^2 \approx 7.4$. For large datasets BIC therefore favours simpler models more aggressively than AIC. If the goal is predictive accuracy, AIC is usually preferred; if the goal is recovering the true model structure, BIC is more conservative and often appropriate.
 

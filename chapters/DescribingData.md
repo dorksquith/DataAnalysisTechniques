@@ -14,10 +14,12 @@ kernelspec:
 
 This topic is a journey towards calculating uncertainties and linear correlations in multidimensional datasets.
 
-* ```numpy``` methods: ```random, stack, cov, corrcoef, pearsonr```
-* ```scipy.stats``` methods: ```rvs, spearmanr```
+* ```numpy``` methods: ```random, stack, cov, corrcoef```
+* ```scipy.stats``` methods: ```rvs, pearsonr, spearmanr```
 
 
+
+---
 
 (sec:dd_meanex)=
 ## Mean and Expectation
@@ -30,14 +32,14 @@ The **True Mean** (aka **Expectation**), $E[X]$, is a **parameter** of the true 
 (sec:dd_dis)=
 ### Discrete Data
 
-For [Discrete data](#sec:tandc_dis), if we known the underlying probabilities we can calculate the **Expectation** in a similar way to [the sample mean](#eq:tandc_mean):
+For [Discrete data](#sec:tandc_dis), if we know the underlying probabilities we can calculate the **Expectation** in a similar way to [the sample mean](#eq:tandc_mean):
 
 ```{math}
 :label: eq:dd_exp
 E[X]  = \sum\limits_i^\infty  x_i p_i
 ```
 
-* The sum is infinite because in Truth, there are $\infty$ possible values for X.
+* The sum is over all possible values of X, of which there may be infinitely many.
 * The Probability of observing the value $x_i$ is $p_i$. 
 * Because Probabilities must sum (or integrate) to 1 [Kolmogorov's normalisation axiom](#eq:pe_kol2), the normalisation factor $\dfrac{1}{N}$ used for [the sample mean](#eq:tandc_mean) is not needed. Via use of the probability $p_i$, we are normalising every term in the sum individually.
 
@@ -98,8 +100,10 @@ For the **special case of Independent RVs only**, the expectation of the product
 
 $$\label{eq:dd_expmulind} E(XY) = E(X) E(Y) $$
 
-[](#eq:dd_expmulind) **is only true if X and Y are mutually independent**. <!--See [](#eq:pe_mulrul).-->
+[](#eq:dd_expmulind) **is true if X and Y are independent**. (More precisely, it holds whenever they are uncorrelated, $\mathsf{cov}(X,Y) = 0$, which independence guarantees.)
 
+
+---
 
 (sec:dd_lln)=
 ## The Law of Large Numbers (LLN)
@@ -120,7 +124,7 @@ The symbol $\alpha$  is a small number of our choosing, which we can think of as
 
 As is often the case with Statistics, it is helpful to think about what the LLN is **not** telling us. 
 
->The LLN does not imply that if we add some new measurements to a dataset, the sample mean will (necesarily) get closer to the true mean. We can observe fluctuations of $\overline{x}$ away from $\mu$ for any number of measurements $N<\infty$. 
+>The LLN does not imply that if we add some new measurements to a dataset, the sample mean will (necessarily) get closer to the true mean. We can observe fluctuations of $\overline{x}$ away from $\mu$ for any number of measurements $N<\infty$. 
 
 We can see a fluctuation in the image series [](#fig:dd_meanex) when we compare the $N=1k$ dataset with the $N=10k$ dataset. This is examined in [](#fig:dd_fluc).
 
@@ -136,6 +140,8 @@ For $N=1k$ measurements, we observe $|\overline{x} - \mu |=0.0044$. For $N=10k$ 
 The mean measured in the smaller $N=1k$ sample is closer to the expectation $\mu$ than the mean of the $N=10k$ sample. This is a natural **Statistical Fluctuation**, and does not imply that the LLN is wrong.
 
 
+---
+
 (sec:dd_varsd)=
 ## Variance and Standard Deviation
 
@@ -149,54 +155,13 @@ The problem with the sample variance is that we can't relate it directly to the 
 :::{figure} 
 :label: fig:dd_varcar
 :align: left
-![](../figures/variance-cartoon)
+![](../figures/variance-cartoon.png)
 
 Cartoon showing $N=5$ measurements of X, with the standard deviation $\sigma_x$ of the dataset indicated on the plot.
 :::
 
-It is the sample Standard Deviation that we use to quantify the spread of our data points, giving us an intrinsic **Uncertainty** on each measurement. This is usually provided visually as error bars or bands.
+The sample Standard Deviation quantifies the spread of our data points. When the spread comes from repeated measurements of the same quantity, it is the **Uncertainty** on a single measurement, usually shown as error bars or bands. When it comes from real differences (for example the heights of different people), it describes variability, not uncertainty.
 
-<!--
-(sec:dd_truvar)=
-### True Variance and Standard Deviation
-
-The most basic definition of the [sample variance](#eq:tandc_var) is with respect to the sample mean. Analogous to the [true mean](#eq:dd_exp), if we know the underlying probabilities we can write down the true variance as:
-
-$$\label{eq:dd_truvar1} V[x]  = \sum\limits_i^{\infty}  (x_i - \overline{x})^2\, p_i$$
-
-To write [](#eq:dd_truvar1) in a more useful form, we can then follow these logical steps:
-
-Sample Mean to True Mean
-: Use the expectation $\mu \equiv E[x]$ in place of the sample mean $\overline{x}$
-  
-  $(x_i - \overline{x})^2\;\; \rightarrow \;\;(x_i - \mu)^2$
-
-Expectation definition
-: Use [](#eq:dd_exp) to write:  
-  
-  $E[X^2]  = \sum\limits_i^\infty  x^2_i p_i \;\; \mathsf{\textcolor{blue}{with\; X\rightarrow X^2} \;\;} $
-  
-  $E[(X-\mu)^2]  = \sum\limits_i^\infty  (x_i-\mu)^2 p_i \;\; \mathsf{\textcolor{blue}{with\; X\rightarrow X-\mu} \;\;} $
-
-We can happily let $X\rightarrow X-\mu$ in the second step because if X is a RV, then $X-\mu$ is also a RV.
-
-The above steps allow us to write the true variance in terms of the expectation:
-
-```{math}
-:label: eq:dd_truvar
-
-V[X] = E[(X-\mu)^2]
-```
-
-Or, with [a bit of algebra](#a-bit-of-algebra), in the equally useful form:
-
-```{math}
-:label: eq:dd_truvar2
-
-V[X] = E[X^2] - E^2[X]
-```
-
--->
 (sec:dd_truvar)=
 ### True Variance and Standard Deviation
 
@@ -227,7 +192,7 @@ V[X] = E[X^2] - E^2[X]
 ```
 
 
-The True Standard Deviation $\sigma_X$ [](#eq:dd_trusig) is a measure of variability in the true distribution. For measured data, $\sigma_x$ tells us the statistical uncertainty within our dataset. For the true distribution, there is no uncertainty, only variability.
+The True Standard Deviation $\sigma_X$ [](#eq:dd_trusig) is a measure of variability in the true distribution. For measured data, $\sigma_x$ describes the spread within our dataset. For the true distribution, there is no uncertainty, only variability.
 
 
 ```{math}
@@ -243,7 +208,7 @@ The True Standard Deviation $\sigma_X$ [](#eq:dd_trusig) is a measure of variabi
 
 Some very useful properties of Variance:
 
-If we multiply an RV by a constant $a$ , we multiply its expectation by the same constant **squared** (see [proof](#sec:mmb_varlinf) ).
+If we multiply an RV by a constant $a$ , we multiply its variance by the same constant **squared** (see [proof](#sec:mmb_varlinf) ).
 
 $$\label{eq:dd_varmulc} V[aX] = a^2 V[X]$$
 
@@ -258,11 +223,13 @@ For the **special case of Independent RVs only**, the variance of a sum is the s
 
 $$\label{eq:dd_varsum} V[X + Y] = V[X] + V[Y]$$
 
-> [](#eq:dd_varsum) **is only true if X and Y are mutually independent.** <!--Compare with [](eq:expect_multind).-->
+> [](#eq:dd_varsum) **is true if X and Y are independent.** (More precisely, it holds whenever they are uncorrelated, $\mathsf{cov}(X,Y) = 0$, which independence guarantees.)
 
 
 
 
+
+---
 
 (sec:dd_mul)=
 ## Multivariate Data
@@ -345,7 +312,7 @@ If we have two RVs (eg weight and height) and they are **Independent**, we can c
 
 ```
 
-If our RVs are **Dependent**, (if changing one of them affects the other, ie if y is a function of x) then we will also have **cross-terms** between their variances. These cross-terms are known as **Covariance** terms. 
+If our RVs are **Dependent** (if changing one of them affects the other), then we will usually also have **cross-terms** between their variances. These cross-terms are known as **Covariance** terms. (Not always: we will see [later](#sec:dd_limcor) that dependent RVs can have zero covariance.) 
 
 ```{math}
 :label: eq:dd_covdep
@@ -385,7 +352,7 @@ y = [1.45373536, 0.48405628, 1.54298594, 0.21109356, 1.38629819, 1.00615679, 1.6
 
 # put the two lists of fake data points in a 2D array
 
-xy=np.stack((x,y)) # <= dont forget nested parentheses for np.stack
+xy=np.stack((x,y)) # <= don't forget nested parentheses for np.stack
 
 # let numpy calculate the covariance matrix
 
@@ -423,7 +390,7 @@ $$
 \mathsf{cov}(x_i,y_i) = (x_i - \overline{x}) (y_i - \overline{y})
 $$
 
-The covariance cov(x,y) is then the (unbiased) normalised sum over these, analagous to [V[x]](#eq:tandc_varu):
+The covariance cov(x,y) is then the (unbiased) normalised sum over these, analogous to [V[x]](#eq:tandc_varu):
 
 ```{math}
 :label: eq:dd_covterm
@@ -448,18 +415,18 @@ mean_b = np.mean(b)
 # calculate the deviation of each point in a from the mean of a:
 
 # individual steps for clarity:
-# da_0 = a[0] - mean_a  # 1.17
-# da_1 = a[1] - mean_a  # -0.13
-# da_2 = a[2] - mean_a  # -1.03
+# da_0 = a[0] - mean_a  # -1.17
+# da_1 = a[1] - mean_a  # 0.13
+# da_2 = a[2] - mean_a  # 1.03
 
 # one-liner, giving us da = [da_0 , da_1, da_2]
 da =  [ai - mean_a  for ai in a]
 
 # same thing for b:
 
-# db_0 = b[0] - mean_b # -2.33
-# db_1 = b[1] - mean_b # -0.33
-# db_2 = b[2] - mean_b # 2.67
+# db_0 = b[0] - mean_b # 2.33
+# db_1 = b[1] - mean_b # 0.33
+# db_2 = b[2] - mean_b # -2.67
 db =  [bi - mean_b for bi in b]
 
 # multiply together point-by-point:
@@ -642,7 +609,7 @@ plt.scatter(x,y)
 # the r"" string allows us to put LaTeX equation on the plot
 func_label = r"$y=x^3$"
 
-# the f" :.3f" string allows us to pass in the Pearson r with 3 sig figs
+# the f" :.3f" string allows us to pass in the Pearson r to 3 decimal places
 r_label = f"Pearson r = {r_xy:.3f}"
 plt.text(0.6, 7, func_label +", "+ r_label, ha='center', fontsize=16)
 plt.xlabel("x")
@@ -657,17 +624,17 @@ We have confirmed that we are in a situation with total Dependence between the R
 ```{code-cell} python
 from scipy.stats import spearmanr
 
-# check the spearman ranking correlation efficient with scipy's spearmanr
+# check the spearman rank correlation coefficient with scipy's spearmanr
 spr_xy = spearmanr(x,y)[0]
 
 print(f" spearman r = {spr_xy:.3f}")
 ```
 
-Spearman found 100% **Rank Correlation** between $X$ and $Y=X^3$. This squared relationship between $X$ and $Y$ is exactly what Spearman's r is built to look for, providing the relationship between RVs is **Monotonic**  [](#fig:dd_mono).
+Spearman found 100% **Rank Correlation** between $X$ and $Y=X^3$. This cubic relationship between $X$ and $Y$ is exactly what Spearman's r is built to look for, providing the relationship between RVs is **Monotonic**  [](#fig:dd_mono).
 
 :::{figure}
 :label: fig:dd_mono
-![](../figures/monotone)
+![](../figures/monotone.png)
 
 A monotonic function is shown on the left, and a non-monotonic function on the right. Monotonic means that y increases or remains constant as x increases. [By Oleg Alexandrov](https://commons.wikimedia.org/w/index.php?curid=2267780)
 :::
@@ -756,14 +723,14 @@ V[ g ] = E[ (g - E[g])^2 ] = E[g^2] - E^2[g]
 
 or by [Taylor expansion](#sec:mmb_varlinf2) (also known as the Delta Method): 
 
-For a linear function of one RV, $X$:
+For a function of one RV, $X$ (exact if the function is linear, approximate otherwise):
 
 ```{math}
 :label: eq:dd_varft1
 V[g] = \frac{dg}{dx}\bigg|_{x=\mu}^{\!2} V[X]
 ```
 
-For a linear function of $Z$ RVs, $X_{(1)}, ..., X_{(Z)}$:
+For a function of $Z$ RVs, $X_{(1)}, ..., X_{(Z)}$ (again exact if the function is linear, approximate otherwise):
 
 ```{math}
 :label: eq:dd_varftz
@@ -796,15 +763,15 @@ Variance
 : $V[ g ] = V[ aX + b] =  a^2 V[X]$
 
 Standard Deviation (statistical uncertainty)
-: $\sigma_g =  a\, \sigma_X$ 
+: $\sigma_g =  |a|\, \sigma_X$ 
 
 The statistical uncertainty on a linear function of one RV is the uncertainty on the RV multiplied by the constant scale.
 
 Example
-: I ask for a quote from a taxi company to take me from Brighton to Gatwick airport. They use the formula $g(x) = ax + b$ to estimate the fare, where the RV is $X$: distance in km, and the constants are $a$: price per mile and $b$: callout charge (base rate).
+: I ask for a quote from a taxi company to take me from Brighton to Gatwick airport. They use the formula $g(x) = ax + b$ to estimate the fare, where the RV is $X$: distance in km, and the constants are $a$: price per km and $b$: callout charge (base rate).
   The distance in km is uncertain because there are several different routes that might be chosen, dependent on traffic conditions at the time and other random factors such as weather. The estimate is $x = 45 \pm 5$ km.
 
-  Let's choose the parameters: Price per mile: $a=£1.50$ and callout charge $b=£5$.
+  Let's choose the parameters: Price per km: $a=£1.50$ and callout charge $b=£5$.
 
   The estimated cost of the ride is $g(x) = (£1.50) \times (45) + (£5) = £72.50$
 
@@ -839,7 +806,7 @@ V[ g] & = E[\, (g - E[g]\,)^2\, ] \\ \\
 $$
 
 Variance (using Taylor expansion)
-: The function has two RVS, so use [](#eq:dd_varftz):
+: The function has two RVs, so use [](#eq:dd_varftz):
 
   The Jacobian is:
 
@@ -888,7 +855,7 @@ Index Notation
   The variance is
 
   $V[g] = \sum\limits_{i=1}^{2}\sum\limits_{j=1}^{2} \alpha_i \alpha_j \mathsf{cov}( X_{(i)}, X_{(j)} ) = \sum\limits_{i=1}^{2} \sum\limits_{j=1}^{2} 
-\frac{\partial f}{\partial x_{(i)}} \frac{\partial f}{\partial x_{(j)}}\bigg|_{\boldsymbol{\mu}}\,
+\frac{\partial g}{\partial x_{(i)}} \frac{\partial g}{\partial x_{(j)}}\bigg|_{\boldsymbol{\mu}}\,
 \mathsf{cov}(x_{(i)}, x_{(j)})= \mathsf{J}\,\Sigma\,\mathsf{J}^{\mathsf{T}}$ 
 
   - When $i=j$ we get terms like $a^2 V[X]$ because $\mathsf{cov}(X, X) = V[X]$; 
@@ -929,7 +896,7 @@ Expectation
 
 Variance
 : $V[ g ] = \sum\limits_{i=1}^{3} \sum\limits_{j=1}^{3} \alpha_i\, \alpha_j\, \mathsf{cov}(X_{(i)}, X_{(j)}) = \sum\limits_{i=1}^{3} \sum\limits_{j=1}^{3} 
-\frac{\partial f}{\partial x_{(i)}} \frac{\partial f}{\partial x_{(j)}}\bigg|_{\boldsymbol{\mu}}\,
+\frac{\partial g}{\partial x_{(i)}} \frac{\partial g}{\partial x_{(j)}}\bigg|_{\boldsymbol{\mu}}\,
 \mathsf{cov}(x_{(i)}, x_{(j)}) = \mathsf{J}\,\Sigma\,\mathsf{J}^{\mathsf{T}}$
 
 
@@ -961,6 +928,8 @@ Example: uncertainty on a container volume
 
   Uncertainty on the volume: $\sigma_{f} = \sqrt{V[f]} = 12.67$ (cm$^3$)
 
+  The volume is a nonlinear function of $l$, $w$ and $h$, so this is the Delta-method approximation (see [](#sec:dd_nonlinear)).
+
 ---
 
 (sec:dd_linearz)=
@@ -974,66 +943,31 @@ Expectation
 
 Variance
 : $V[ g ]  = \sum\limits_i^Z \sum\limits_j^Z \alpha_i \alpha_j\, \mathsf{cov}( X_{(i)}, X_{(j)})  = \sum\limits_i^Z \sum\limits_j^Z 
-\left.\frac{\partial f}{\partial x_{(i)}} \frac{\partial f}{\partial x_{(j)}}\right|_{\boldsymbol{\mu}}\,
+\left.\frac{\partial g}{\partial x_{(i)}} \frac{\partial g}{\partial x_{(j)}}\right|_{\boldsymbol{\mu}}\,
 \mathsf{cov}(x_{(i)}, x_{(j)}) = \mathsf{J}\,\Sigma\,\mathsf{J}^{\mathsf{T}}$
 
 ---
 
-<!--
-```{math}
-V[f_Z] = 
-\underbrace{
-\begin{bmatrix}
-\dfrac{\partial f_Z}{\partial x_{(1)}} & \cdots & \dfrac{\partial f_Z}{\partial x_{(Z)}}
-\end{bmatrix}
-}_{\mathsf{J}\;[1\times Z]}
-\underbrace{
-\begin{bmatrix}
-\sigma^2_{x_{(1)}} & \cdots & \mathsf{cov}(x_{(1)}, x_{(Z)})\\
-\vdots & \ddots & \vdots\\
-\mathsf{cov}(x_{(Z)}, x_{(1)}) & \cdots & \sigma^2_{x_{(Z)}}
-\end{bmatrix}
-}_{\Sigma\;[Z\times Z]}
-\underbrace{
-\begin{bmatrix}
-\dfrac{\partial f_Z}{\partial x_{(1)}}\\
-\vdots\\
-\dfrac{\partial f_Z}{\partial x_{(Z)}}
-\end{bmatrix}
-}_{\mathsf{J}^{\mathsf{T}}\;[Z\times 1]}
-```
-
-Matrix multiplication rules give $[1\times Z]\cdot[Z\times Z]\cdot[Z\times 1] = [1\times 1]$: we obtain a single value for the variance, as required.
--->
 
 (sec:dd_nonlinear)=
 ### A Nonlinear function of $Z$ RVs
 
-A nonlinear function can be written as a product of linear functions:
+For a nonlinear function $h(X_{(1)}, \ldots, X_{(Z)})$ we use the same recipe:
 
 ```{math}
-h(X) = \prod_{k=1}^M f_k(X)
+:label: eq:dd_varnonlin
+V[h] \approx \mathsf{J}\,\Sigma\,\mathsf{J}^{\mathsf{T}}
 ```
 
-For example, $h(X) = aX^2$ is nonlinear; it can be written as $(aX)(X)$, the product of two linear functions $f_1 = aX$ and $f_2 = X$. Here $M=2$ functions and $Z=1$ RV.
+where $\mathsf{J}$ holds the partial derivatives of $h$, evaluated at the means $\boldsymbol{\mu}$. This is the **Delta Method**: it replaces $h$ by its first-order Taylor expansion around $\boldsymbol{\mu}$, which is a linear function. So it is exact for linear functions, and an approximation otherwise. The approximation is good when the uncertainties are small compared with how quickly $h$ curves.
 
-A product of $M$ functions leads to an $[M\times Z]$ Jacobian matrix. Instead of a single value for the variance we obtain an $[M\times M]$ matrix:
+Example
+: $h(X) = aX^2$ is nonlinear. Its derivative is $\dfrac{dh}{dx} = 2aX$, so
 
-```{math}
-V[h] = \mathsf{J}\,\Sigma\,\mathsf{J}^{\mathsf{T}}
-```
+  ```{math}
+  V[h] \approx (2a\mu)^2\, V[X], \qquad \sigma_h \approx |2a\mu|\, \sigma_X
+  ```
 
-Each element $V_{kl}$ of this matrix is:
-
-```{math}
-V_{kl} = \sum_i^Z \sum_j^Z \left.\frac{\partial f_k}{\partial x_{(i)}} \frac{\partial f_l}{\partial x_{(j)}}\right|_{\boldsymbol{\mu}} \mathsf{cov}(x_{(i)}, x_{(j)})
-```
-
-<!--
-:::{seealso}
-The scalar (1D) case of the Delta Method — including a full derivation and an application to the Standard Error of the Standard Deviation — is worked out in [Math Methods B](#sec:mmb_deltam).
-:::
--->
 
 (sec:dd_statsyst)=
 ### Combining Systematic and Statistical Uncertainties
@@ -1131,7 +1065,7 @@ A continuous RV $X$ has PDF
 f_X(x) = 
 \begin{cases}
      0\; & x < 0\\[1ex] 
-  \lambda e^{-\lambda x}\; & 0 \leq x \leq \infty \\[2ex]
+  \lambda e^{-\lambda x}\; & x \geq 0 \\[2ex]
 \end{cases}
 ```
 
@@ -1210,7 +1144,7 @@ Option B
 
 ::::{dropdown} Show ```sympy``` solution 
 
-```{code-cell}python
+```{code-cell} python
 import numpy as np
 import sympy
 sympy.init_printing()

@@ -19,7 +19,7 @@ Kind: *(sec)* = section/heading, *(eq)* = equation, *(fig)* = figure, *(adm)* = 
 - `eq:bay_bbpost` *(eq)*
 - `eq:bay_gammapdf` *(eq)*
 - `bayesian:poisson_gamma` *(?)* — Suppose we observe Poisson-distributed counts (e.g. particle
-- `eq:bay_pred` *(eq)*
+- `eq:mcmc_pred` *(eq)*
 - `eq:bay_nbinpred` *(eq)*
 
 ---

@@ -129,14 +129,6 @@ $$\Gamma(s+1) = \left[-x^s e^{-x}\right]_0^{\infty} + s\int_0^{\infty} x^{s-1}e^
 :label: eq:mmb_gamfac
 \Gamma(n) = (n-1)! \qquad (n = 1, 2, 3, \ldots)
 ```
-<!--
-This can be demonstrated by repeatedly applying [](#eq:mmb_gamrec):
-
-* $\Gamma(1) = 1 = 0!$
-* $\Gamma(2) = 1\cdot\Gamma(1) = 1 = 1!$
-
- and so on.
--->
 
 
 **Half-integer values:**
@@ -229,6 +221,102 @@ $V[\theta] = \dfrac{ab}{(a+b)^2(a+b+1)}$
 ---
 
 
+
+(sec:mmb_predint)=
+## Posterior Predictive Integrals
+
+The [posterior predictive distribution](#eq:mcmc_pred) of a new observation $\ynew$ is
+
+$$P(\ynew | y) = \int_\Theta f(\ynew | \theta)\; P(\theta | y)\, d\theta .$$
+
+For conjugate models this integral can be done analytically, because the $\theta$ terms combine into a standard Gamma or Beta integral. The results are used in [](#sec:mcmc_predpost).
+
+(sec:mmb_predlomax)=
+### Exponential-Gamma $\rightarrow$ Lomax
+
+The Exponential likelihood for a new observation is $f(\ynew|\theta) = \theta\, e^{-\theta\ynew}$, and the Posterior is $\mathsf{Gamma}(\alpha',\beta')$ (see [](#sec:mcmc_predlomax)).
+
+```{math}
+:label: eq:mcmc_lomax
+\begin{aligned}
+P(\ynew | y)
+  &= \int_0^{\infty} f(\ynew | \theta)\; P(\theta | y)\; d\theta \\[8pt]
+  &= \int_0^{\infty}
+       \theta\, e^{-\theta\ynew}
+       \cdot
+       \frac{\beta'^{\alpha'}}{\Gamma(\alpha')}\,\theta^{\alpha'-1}\,e^{-\beta'\theta}
+     \; d\theta \\[8pt]
+  &= \frac{\beta'^{\alpha'}}{\Gamma(\alpha')}
+     \int_0^{\infty}
+       \theta^{\,1}\cdot\theta^{\alpha'-1}\; e^{-\theta\ynew}\cdot e^{-\beta'\theta}
+     \; d\theta \\[8pt]
+  &= \frac{\beta'^{\alpha'}}{\Gamma(\alpha')}
+     \int_0^{\infty}
+       \theta^{\alpha'}\, e^{-(\beta'+\ynew)\,\theta}
+     \; d\theta
+\end{aligned}
+```
+
+The remaining integral is a **standard Gamma integral**: for any $n > 0$ and $c > 0$,
+
+$$\int_0^{\infty} \theta^{n-1}\, e^{-c\theta}\, d\theta = \frac{\Gamma(n)}{c^{\,n}}$$
+
+Our integrand has $\theta^{\alpha'}$, so $n - 1 = \alpha'$, i.e. $n = \alpha' + 1$; and $c = \beta' + \ynew$:
+
+```{math}
+:label: eq:mcmc_lomax2
+\begin{aligned}
+P(\ynew | y)
+  &= \frac{\beta'^{\alpha'}}{\Gamma(\alpha')} \cdot \frac{\Gamma(\alpha'+1)}{(\beta'+\ynew)^{\,\alpha'+1}} \\[8pt]
+  &= \frac{\beta'^{\alpha'}}{\Gamma(\alpha')} \cdot \frac{\alpha'\,\Gamma(\alpha')}{(\beta'+\ynew)^{\,\alpha'+1}}
+     \qquad \bigl[\,\Gamma(\alpha'+1) = \alpha'\,\Gamma(\alpha')\,\bigr] \\[8pt]
+  &= \frac{\alpha'\,\beta'^{\alpha'}}{(\beta'+\ynew)^{\,\alpha'+1}}
+\end{aligned}
+```
+
+(sec:mmb_predbetabinom)=
+### Binomial-Beta $\rightarrow$ Beta-Binomial
+
+The Binomial likelihood for a new observation is $f(\ynew|\theta) = \binom{n}{\ynew} \theta^{\ynew}(1-\theta)^{n-\ynew}$, and the Posterior is $\mathsf{Beta}(\alpha',\beta')$ (see [](#sec:mcmc_predbetabinom)).
+
+```{math}
+:label: eq:mcmc_betabinom
+\begin{aligned}
+P(\ynew | y)
+  &= \int_0^{1} f(\ynew | \theta)\; P(\theta | y)\; d\theta \\[8pt]
+  &= \int_0^{1}
+       \binom{n}{\ynew} \theta^{\ynew}\,(1-\theta)^{n-\ynew}
+       \cdot
+       \frac{\theta^{\alpha'-1}(1-\theta)^{\beta'-1}}{B(\alpha',\beta')}
+     \; d\theta \\[8pt]
+  &= \frac{\dbinom{n}{\ynew}}{B(\alpha',\beta')}
+     \int_0^{1}
+       \theta^{\,\ynew}\cdot\theta^{\alpha'-1}\;
+       (1-\theta)^{n-\ynew}\cdot(1-\theta)^{\beta'-1}
+     \; d\theta \\[8pt]
+  &= \frac{\dbinom{n}{\ynew}}{B(\alpha',\beta')}
+     \int_0^{1}
+       \theta^{\alpha'+\ynew-1}\,
+       (1-\theta)^{\beta'+n-\ynew-1}
+     \; d\theta
+\end{aligned}
+```
+
+The remaining integral is a **standard Beta integral**: for any $a, b > 0$,
+
+$$\int_0^{1} \theta^{a-1}(1-\theta)^{b-1}\, d\theta = B(a,\,b)$$
+
+Here $a = \alpha' + \ynew$ and $b = \beta' + n - \ynew$:
+
+```{math}
+:label: eq:mcmc_betabinom2
+\begin{aligned}
+P(\ynew | y)
+  &= \frac{\dbinom{n}{\ynew}}{B(\alpha',\beta')}
+     \cdot B\!\left(\alpha'+\ynew,\; \beta'+n-\ynew\right) \\[8pt]
+  &= \binom{n}{\ynew}\, \frac{B\!\left(\alpha'+\ynew,\; \beta'+n-\ynew\right)}{B(\alpha',\beta')}
+\end{aligned}
+```
 
 (sec:mmb_trans)=
 ## Transforms: Changing Variables
@@ -362,33 +450,6 @@ So $f(r,\theta) = r\, g(x,y)$: if $(x,y)$ are uniform (constant $g$), then $f(r,
 :::
 ---
 
-<!--
-(sec:mmb_varbias)=
-## Bias of the Sample Variance
-
-:::{note}
-This replaces the uploaded png of my ipad proof, finally :)
-:::
-
-
-The [sample variance](#eq:tandc_var) is a **biased** estimator of the true variance $\sigma^2 = V[X]$, as stated in the main notes [](#eq:vartruesamp).
-
-Notation
-: $\theta$ denotes the true variance $V[X]$
-  
-  $\hat{\theta}$ denotes the estimated variance $v_x$
-  
-  $\overline{x}$ denotes the sample mean
-  
-  $\mu$ denotes the true mean
-
-**Key identity.** For any sample $\{x_i\}$ with mean $\overline{x}$ and true mean $\mu$:
-
-```{math}
-:label: eq:mmb_varid
-\sum_{i=1}^N (x_i - \overline{x})^2 = \sum_{i=1}^N (x_i - \mu)^2 - N(\overline{x} - \mu)^2
-```
--->
 
 (sec:mmb_varbias)=
 ## Bias of the Sample Variance
@@ -491,42 +552,6 @@ $$\hat{\theta}_u = \frac{1}{N-1}\sum_i(x_i-\overline{x})^2
 \quad\Rightarrow\quad E[\hat{\theta}_u] = V[X] \checkmark$$
 
 
-<!--
-**Proof** 
-
-```{math}
-:label: eq:mmb_varidpro
-x_i - \overline{x} = (x_i - \mu) - (\overline{x} - \mu)
-
-```
-
-
-Write $x_i - \overline{x} = (x_i - \mu) - (\overline{x} - \mu)$, expand the square, and sum over $i$. The cross-term gives $-2(\overline{x}-\mu)\sum_i(x_i-\mu) = -2N(\overline{x}-\mu)^2$, and the third term gives $N(\overline{x}-\mu)^2$, leaving the result above.
-
-**Taking expectations.** Each $x_i$ is independent with $E[(x_i - \mu)^2] = V[X] = \sigma^2$, and $E[(\overline{x}-\mu)^2] = V[\overline{x}] = \sigma^2/N$. Therefore:
-
-```{math}
-\begin{aligned}
-E\!\left[\sum_{i=1}^N (x_i - \overline{x})^2\right]
-&= \sum_{i=1}^N E\!\left[(x_i - \mu)^2\right] - N\, E\!\left[(\overline{x} - \mu)^2\right] \\
-&= N\sigma^2 - N \cdot \dfrac{\sigma^2}{N} \\
-&= (N-1)\sigma^2
-\end{aligned}
-```
-
-Dividing through by $N$:
-
-```{math}
-:label: eq:mmb_vartspro
-E\!\left[v_{x,b}\right] = E\!\left[\hat{V}[X]\right] = \dfrac{N-1}{N}\,\sigma^2
-```
-
-The bias is $b = E[\hat{V}] - \sigma^2 = -\sigma^2/N$. The **unbiased** estimator divides by $(N-1)$ instead:
-
-```{math}
-v_{x} = \dfrac{1}{N-1}\sum_{i=1}^N (x_i - \overline{x})^2 \;\; \Rightarrow \;\; E[v_{x}] = \sigma^2
-```
--->
 
 ---
 
@@ -565,23 +590,6 @@ where $b = \mu - \theta = E[\hat{\theta}] - \theta$ is the **bias**.
 \mathsf{MSE}(\hat{\theta}) = V[\hat{\theta}] + b^2
 ```
 
-<!--
-**Application to the variance estimators.** Using the results from [](#sec:normal-sev) (assuming Normality):
-
-Biased estimator $v_{x,b}$ ($b = -\sigma^2/N$, $V[v_{x,b}] = 2(N-1)\sigma^4/N^2$):
-
-```{math}
-\mathrm{MSE}(v_{x,b}) = \dfrac{2(N-1)\sigma^4}{N^2} + \dfrac{\sigma^4}{N^2} = \dfrac{(2N-1)\sigma^4}{N^2}
-```
-
-Unbiased estimator $v_{x}$ ($b = 0$, $V[v_{x}] = 2\sigma^4/(N-1)$):
-
-```{math}
-\mathrm{MSE}(v_{x}) = \dfrac{2\sigma^4}{N-1}
-```
-
-For large $N$ both are $\sim 2\sigma^4/N$, but the biased estimator has slightly smaller MSE for finite $N$: $\mathrm{MSE}(v_{x,b}) < \mathrm{MSE}(v_x)$ since $(2N-1)/N^2 < 2/(N-1)$ for all $N \geq 2$.
--->
 ---
 
 (sec:mmb_cenmo)=
@@ -739,7 +747,6 @@ With the result [](#eq:mmb_recursion_p) we have proven [](#eq:mmb_recursion) - t
 | 3 | $E[Z^{6}] = 5\cdot E[Z^{4}]$ | 15 |
 | n | $E[Z^{2n}]$ | $(2n-1)!!$ |
 :::
-<!--Recall that we can write the Variance in terms of the Expectation, [](#eq:dd_truvar). The Variance is the "second central moment", where the central moments $\mu_n$ are as follows:-->
 
 
 
@@ -1122,7 +1129,7 @@ This is one reason the biased estimator $v_{x,b}$ can have smaller MSE for finit
 
 The **Rao–Blackwell theorem** gives a systematic way to improve estimators. If $\hat{\theta}$ is any unbiased estimator and $T$ is a **sufficient statistic** for $\theta$ (a statistic that captures all the information in the data about $\theta$), then:
 
-$$\tilde{\theta} = E[\hat{\theta} \mid T]$$
+$$\tilde{\theta} = E[\hat{\theta} | T]$$
 
 is also unbiased and has $V[\tilde{\theta}] \leq V[\hat{\theta}]$. Iterating this process leads to the MVUE.
 

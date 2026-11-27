@@ -26,11 +26,11 @@ numbering:
 
 3. **False.** The p-value is the probability of obtaining a result as extreme as (or more extreme than) the observed data, *assuming the null hypothesis is true*. It is **not** the probability that your conclusions are wrong, nor the probability that $H_0$ is true.
 
-4. **True.** The False Positive rate (also called the Type I error rate) is $P(\text{reject } H_0 \mid H_0 \text{ true}) = \alpha$, by construction of the test.
+4. **True.** The False Positive rate (also called the Type I error rate) is $P(\text{reject } H_0 | H_0 \text{ true}) = \alpha$, by construction of the test.
 
 5. **False.** The False Positive rate and True Positive rate are conditional on *different* hypotheses — FP on $H_0$ true, TP on $H_0$ false — so they need not sum to anything in particular.
 
-6. **True.** The False Positive rate and True Negative rate are both conditioned on $H_0$ being true: $P(\text{reject} \mid H_0) + P(\text{fail to reject} \mid H_0) = 1$.
+6. **True.** The False Positive rate and True Negative rate are both conditioned on $H_0$ being true: $P(\text{reject} | H_0) + P(\text{fail to reject} | H_0) = 1$.
 
 7. **True.** A hypothesis test is defined by: a null hypothesis, a significance level $\alpha$, and a critical region. Without specifying the critical region (one- or two-sided, which test statistic) the test is not fully defined.
 

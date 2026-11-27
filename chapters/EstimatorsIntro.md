@@ -16,19 +16,14 @@ kernelspec:
 * `numpy` methods: `random.default_rng, argmin, allclose`
 * `scipy.stats` methods: `bootstrap`
 
+% Week7-Tools/Tools.tex
+% Week8-Tools/MaxLike.tex
+% Week9-Fits-Tests/LeastSquares.tex
 
 
 
-<!--Week7-Tools/Tools.tex-->
-<!--Week8-Tools/MaxLike.tex-->
-<!--Week9-Fits-Tests/LeastSquares.tex-->
 
-<!--
-Describe Point and Interval Estimation with examples
-Explain the Bootstrap Method
-Implement the Bootstrap Method to esimate uncertainties
-Define Consistency, Bias, and Minimum Variance and explain their importance for estimators
--->
+
 We have considered **Estimates** a couple of times, most recently in [](#sec:normt_semsec), where we noted that the sample standard deviation, $\sigma_x$, is a good estimate for the true standard deviation.
 
 In every day life, when we say "estimate" we mean "educated guess". In statistics the meaning is the same, but we have a very clear framework for how to go about making the educated guess. An Estimator should be **Consistent**, **Unbiased**, and **Minimum Variance**. We combine the **Bias** and **Variance** of an estimator into a single metric, the **Mean Squared Error**.
@@ -62,10 +57,10 @@ Mean Squared Error (MSE)
 :label: fig:ei_biasvar
 ![](../figures/Goldilocks.png)
 
-A biased estimator is innaccurate. A large-variance estimator is imprecise.
+A biased estimator is inaccurate. A large-variance estimator is imprecise.
 :::
 
-Estimating a parameter of a true distribution using data is known as **Point Estimation** because we are estimating a single value: a point. Providing a range of values in which we have some confidence is **Interval Estimation**; for example a Confidence Interval represents a range of values in which we expect some proportion of repeated experiments to fall. The proportion is the Confidence Level ([CL](#eq:hyp_cl)), and can be quoted as a percentage eg $95\%$, or in terms of standard deviations eg $1\sigma$[^sigmaCL].
+Estimating a parameter of a true distribution using data is known as **Point Estimation** because we are estimating a single value: a point. Providing a range of values in which we have some confidence is **Interval Estimation**; for example a Confidence Interval is a range of values, computed from the data, constructed so that if the experiment were repeated many times, a given proportion of such intervals would contain the true parameter value. The proportion is the Confidence Level ([CL](#eq:hyp_cl)), and can be quoted as a percentage eg $95\%$, or in terms of standard deviations eg $1\sigma$[^sigmaCL].
 
 [^sigmaCL]: The CL expressed as a percentage is $1-\alpha$, where $\alpha$ is the **Significance Level** (SL). There is clearly a redundancy between the terms CL and SL. When someone says their CL is $n\sigma$, they have also told you what the significance level is, but it is not $1-n\sigma$ because the $n\sigma$ is relative to the distribution, not to the number 1.
 
@@ -212,11 +207,13 @@ The Expectation and Bias for the two choices of variance estimator are given in 
 
 
 Consistency Check
-: Does $\hat{\theta} \rightarrow \theta\; as \; N\rightarrow \infty$?
+: Does $\hat{\theta} \rightarrow \theta\; as \; N\rightarrow \infty$? For this we need the expectation to tend to $\theta$ **and** the variance of the estimator to tend to zero.
 
-  In the biased variance case, we can see that in the **Asymptotic Limit** ($N\to\infty$), $ \dfrac{N-1}{N} \to 1$, so this estimator is consistent.
+  In the biased variance case, in the **Asymptotic Limit** ($N\to\infty$), $\dfrac{N-1}{N} \to 1$, so $E[\hat{\theta}_b] \to \theta$.
 
-  In the unbiased variance case, we found $E[\hat{\theta}_u] = \theta$, so this estimator is consistent.
+  In the unbiased variance case, we found $E[\hat{\theta}_u] = \theta$ for any $N$.
+
+  For both estimators the variance shrinks like $1/N$ (we will see this in [](#tab:ei_varest_var)), so both are consistent.
 
 
 
@@ -227,7 +224,7 @@ Bias Check
 Bias is not the only thing that matters. Sometimes, the Best Estimator is not the zero bias estimator.
 :::
 
-It makes sense that the biased variance estimator $\hat{\theta}$ is smaller than the true variance $\theta$, because in our Estimator we have used a finite number of measurements, which will be clustered around the sample mean $\overline{x}$. The True Variance uses **all possible measurements**. Given that these will include all of the measurements used for the sample variance plus a great deal more, it makes sense that the True Variance is larger than the sample variance. The larger we make $N$, the closer the Estimator gets to the True Variance.
+It makes sense that the biased variance estimator $\hat{\theta}_b$ is, on average, smaller than the true variance $\theta$, because we measure the spread around the sample mean $\overline{x}$, which is calculated from the same measurements and so is always pulled towards them. Take the extreme case of a single measurement: its "spread" around itself is zero, however wide the true distribution is. With two measurements, $\overline{x}$ sits exactly halfway between them. As $N$ grows, $\overline{x}$ gets closer to the true mean $\mu$, less of the spread is hidden, and $E[\hat{\theta}_b] = \frac{N-1}{N}\theta \to \theta$.
 
 :::{tip}
 I acknowledge that thinking about the "variance on the variance" can cause issues in terms of making new neural connections[^neurons] in the old wheelbox[^wot]. The approach that works for me is to think of the variance as a parameter of the distribution; some number. All numbers have some uncertainty.
@@ -235,7 +232,7 @@ I acknowledge that thinking about the "variance on the variance" can cause issue
 
 [^neurons]: Learning new things means that neurons in our brains have formed new and lasting connections with other neurons.
 
-[^wot]: The "old wheelbox" is a colloquialism; this is the affectionate yet somewhat frustrated way in which I refer to my brain, as a slightly dusty and creaky machine that nonetheless does what it I want it to most of the time.
+[^wot]: The "old wheelbox" is a colloquialism; this is the affectionate yet somewhat frustrated way in which I refer to my brain, as a slightly dusty and creaky machine that nonetheless does what I want it to most of the time.
 
 
 Variance Check
@@ -287,7 +284,6 @@ In the **general case**, with **no Normality assumption**, the variances on the 
 
 
 
-<!--For those with a mathematical bent, there is a somewhat accessible proof of [](#eq:sev-gen) on mathematics stack exchange [here](https://math.stackexchange.com/questions/72975/variance-of-sample-variance).-->
 
 The **Standard Error on the Variance [SEV](#eq:ei_sev)** is the square root of the variance, which takes one of the four forms given in [](#tab:ei_varest_var) and [](#tab:ei_varest_var_gen).
 
@@ -307,9 +303,8 @@ For a single RV, we can Estimate the variance and its uncertainty directly from 
 
 where the SEV is the Standard Error (uncertainty) on the Variance, and is most easily and efficiently calculated using e.g. the [**Bootstrap Method**](#sec:ei_res), as we shall see.
 
-<!--We noted in [](#eq:vartruesamp) that the [sample variance](#eq:tandc_var) is a biased estimator for the true variance, hence the modified definition of [unbiased sample variance](#eq:tandc_varu). -->
 
-Before deciding that the the unbiased variance is the better estimator, we need to consider overall quality metric, the Mean Squared Error, for the two choices.
+Before deciding that the unbiased variance is the better estimator, we need to consider the overall quality metric, the Mean Squared Error, for the two choices.
 
 ````
 
@@ -393,7 +388,7 @@ Discrete RV $K$: probability $K=k$ from PMF
 : $P(K=k | \theta) = p_K(k; \theta)$
 
 Continuous RV $X$: probability $X\leq x$ from CDF
-: $P(X\leq x | \theta) = \int\limits_{x\in S} f_X(x;\theta) dx$
+: $P(X\leq x | \theta) = \int_{-\infty}^{x} f_X(x';\theta)\, dx'$
 
 
 * We know the true parameter.
@@ -409,11 +404,6 @@ If we are trying to estimate the unknown underlying true distribution parameter(
 
 How to do this?
 
-<!--
-We could try turning around the PMF definition, letting the parameter $\theta$ be the RV, as this is the thing we seek to measure, and using the data as the conditional:
-
-$P(\theta=\theta_a | k) = p_\theta(\theta_a; k)$
--->
 
 (sec:ei_toy_single)=
 ### Toy Example: Single data point
@@ -436,7 +426,7 @@ $\mathcal{L_{\theta}}(\theta_a; k_1) = p_K(k_1; \theta_a)$
 
 The Likelihood of true parameter $\theta_a$, given the single-valued data point $k_1$ is equal to the probability of measuring $k_1$, given the single-valued true parameter is $\theta_a$.
 
-Ine the example shown in [](#fig:ei_toyl1) I find $\mathcal{L_{\theta}}(\theta_a; k_1) > \mathcal{L_{\theta}}(\theta_b; k_1)$, and therefore conclude that $\theta_a$ is the most likely of the two parameter values I considered.
+In the example shown in [](#fig:ei_toyl1) I find $\mathcal{L_{\theta}}(\theta_a; k_1) > \mathcal{L_{\theta}}(\theta_b; k_1)$, and therefore conclude that $\theta_a$ is the most likely of the two parameter values I considered.
 
 This is a toy version of the **Maximum Likelihood Method** for parameter estimation. The "toy" aspect arises from an important issue with the above example: we only used one data point. **We are very unlikely to successfully estimate a parameter using a single data point!**. The uncertainty on such an estimate would be so large as to make the estimate useless.
 
@@ -498,11 +488,13 @@ $P(\theta_a | \text{data}) = \dfrac{ \mathcal{L}_\theta(\text{data}\,|\,\theta_a
 
 If the parameter $\theta$ is continuous (a **continuous parameter space**):
 
-$P(\theta_a | \text{data}) = \dfrac{ \mathcal{L}_\theta(\text{data}\,|\,\theta_a) }{ \int \mathcal{L}_\theta(\text{data}\,|\,\theta_j)\, d\theta }$
+$p(\theta_a | \text{data}) = \dfrac{ \mathcal{L}_\theta(\text{data}\,|\,\theta_a) }{ \int \mathcal{L}_\theta(\text{data}\,|\,\theta)\, d\theta }$
+
+For a continuous parameter this is a probability density: we get a probability by integrating it over a range of $\theta$, e.g. a credible interval.
 
 Note that the sum/integral is over **parameter values** $\theta_j$, not over values of the random variable. For example, in the Poisson case the RV $K$ is discrete, but the rate parameter $\theta$ is continuous — so we integrate over $\theta$.
 
-The probability that this parameter value (given the data) is the best parameter estimate is equal to the Likelihood of the data for this parameter divided by the Total Likelihood for all possible parameter values (given the same data).
+With a uniform prior, the probability that $\theta_a$ is the true parameter value (given the data) is equal to the Likelihood of the data for this parameter divided by the Total Likelihood for all possible parameter values (given the same data).
 
 (sec:ei_nll)=
 ### Negative Log Likelihood 
@@ -549,11 +541,11 @@ The most useful base for the logarithm is $e$: Euler's number, which is called t
 The default assumed by `numpy` is that when we ask for `log(a)` we want the **Natural Logarithm**, $\ln{a}$. If we want a log with base 10, we must use `log10(a)`.
 :::
 
-Notice that the log of any number in the range (0,1) is **Negative**, so the Log Likelihood is destined to always be a negative number. This is fine of course, negative numbers being perfectly valid, but the tradition in statistics is to **Minimise** functions rather than **Maximise** them, so we more often quote the Negative Log Likelihood, which has a postive value and has a minimum at the most likely parameter value.
+Notice that the log of any number in the range (0,1) is **Negative**, so for discrete data (where each probability is at most 1) the Log Likelihood is always a negative number. For continuous data the Likelihood is built from probability densities, which can be larger than 1, so the Log Likelihood can be positive; its sign does not matter, only where its maximum is. Negative numbers are perfectly valid of course, but the tradition in statistics is to **Minimise** functions rather than **Maximise** them, so we more often quote the Negative Log Likelihood, which has a minimum at the most likely parameter value.
 
 :::{card}
 
-In summary, we calculate the **Negative Log Likelihood (NLL)** because it is numerically manageable for our computer and it is always a positive value, so we can use lots of nice `scipy` tools to `minimise` it and find the most likely parameter values, given some data.
+In summary, we calculate the **Negative Log Likelihood (NLL)** because it is numerically manageable for our computer and, following the tradition of minimising rather than maximising, we can use lots of nice `scipy` tools to `minimise` it and find the most likely parameter values, given some data.
 
 
 ```{math}
@@ -564,7 +556,7 @@ In summary, we calculate the **Negative Log Likelihood (NLL)** because it is num
 :::
 
 
-The Likelihood, Log Likelihood, and Negative Log Likelihood for some data are shown in [](#fig:ei_likelogneg). The maxima of the Likelihood and Log Likelihood distributions and the minimum of the Negative Log Likelihood are found at the most likely parameter value parameter value. This value is the **Maximum Likelihood Estimate** for the parameter: $\hat{\theta}_{_{\mathsf{MLE}}}$
+The Likelihood, Log Likelihood, and Negative Log Likelihood for some data are shown in [](#fig:ei_likelogneg). The maxima of the Likelihood and Log Likelihood distributions and the minimum of the Negative Log Likelihood are found at the most likely parameter value. This value is the **Maximum Likelihood Estimate** for the parameter: $\hat{\theta}_{_{\mathsf{MLE}}}$
 
 
 There is a turning point in the distributions at the maximum, which means the derivative is zero at this point. This is how we calculate the MLE, by setting the derivative of the Likelihood to zero and solving for the parameter.
@@ -573,7 +565,7 @@ There is a turning point in the distributions at the maximum, which means the de
 :label: fig:ei_likelogneg
 ![](../figures/LikeLogNeg.png)
 
-The maxima of the Likelihood and Log Likelihood distributions and the minimum of the NLL are found at the most likely parameter value parameter value. This value is the Maximum Likelihood Estimate for the parameter.
+The maxima of the Likelihood and Log Likelihood distributions and the minimum of the NLL are found at the most likely parameter value. This value is the Maximum Likelihood Estimate for the parameter.
 :::
 
 ````{card}
@@ -612,7 +604,7 @@ For smooth likelihood functions, using `argmin` is equivalent to taking the deri
 
 
 ```{math}
-\argmin_{\theta}{( - \ln \mathcal{L}_{\theta} )} = \hat{\theta}_{_{\mathsf{MLE}}}
+\operatorname*{argmin}_{\theta}{( - \ln \mathcal{L}_{\theta} )} = \hat{\theta}_{_{\mathsf{MLE}}}
 ```
 
 
@@ -685,19 +677,14 @@ N       = 100  # number of data points
 like_loglike_nll(mu_true, sigma, N)
 
 ```
-<!--
-Exercises:
-1. Show yourself that `np.argmin(nll_vals)` returns the same trial parameter index as `np.argmax(lnL_vals)`
-2. What happens if you increase or decrease the number of measurements, $N$?
--->
 
 :::{warning}
 
 Simply quoting the MLE, e.g. $\hat{\mu}_{_{\mathsf{MLE}}} = 4.89$, without an uncertainty is not helpful!
 
-Consider the exercise above; you could estimate the MLE using $N=10$ or using $N=1000$, and would (very likely!) get different estimates, with different uncertainties.
+For example, you could estimate the MLE using $N=10$ or using $N=1000$, and would (very likely!) get different estimates, with different uncertainties.
 
-We must always give the uncertainty on our estimates, e.g. $\hat{\mu}_{_{\mathsf{MLE}}} = 4.89 \pm 1.10$. We will look at one nice way of estimating the MLE uncertainty in [](#sec:ei_res).
+We must always give the uncertainty on our estimates, e.g. $\hat{\mu}_{_{\mathsf{MLE}}} = 4.89 \pm 0.10$. We will look at one nice way of estimating the MLE uncertainty in [](#sec:ei_res).
 :::
 
 ---
@@ -705,12 +692,12 @@ We must always give the uncertainty on our estimates, e.g. $\hat{\mu}_{_{\mathsf
 (sec:ei_intest)=
 ## Interval Estimation
 
-A **Confidence Interval** is an estimated range of values such that we expect CL% of repeated experiments to yield a value within that range. CL is the Confidence Level, for example 95% CL means that in 95% of repeated experiments, we expect the value to fall in the Confidence Interval. The Confidence Interval is a Frequentist construct. Like all frequentist statistics, it tells us nothing about a single experiment.
+A **Confidence Interval** is a range of values computed from the data by a procedure chosen so that, if we repeated the experiment many times, CL% of the intervals constructed this way would contain the true parameter value. CL is the Confidence Level: for example, 95% CL means that 95% of such intervals would contain the true value. The Confidence Interval is a Frequentist construct. Like all frequentist statistics, it tells us nothing about a single experiment.
 
-A **Credible Interval** is, in my opinion, a much more intuitive interval. It represents the most probable range of outcomes for a given single experiment. The Credible Interval is a Bayesian construct. It uses Prior Knowledge to allow us to estimate the range of probable outcomes for a single experiments.
+A **Credible Interval** is, in my opinion, a much more intuitive interval. It is a range of parameter values that contains the true value with a stated probability (e.g. 95%), given the data from this single experiment and our prior knowledge. The Credible Interval is a Bayesian construct: it combines Prior Knowledge with the data, so it does make a statement about the single experiment we actually did.
 
 :::{note}
-People such as myself (particle physicists or similarly dorky types) might get home from work to find the oven on, and declare "I am 3 sigma confident that I did not leave the oven on". Because **Confidence Levels are frequentist**, this should be interpreted as "In 741 days, with conditions identical to today, where I came home to find the oven on, only 1 of these occasions would be my fault." Of course this is not actually what I mean when I say that. I mean I am 99.73% sure I did not leave the oven on **this morning**. So I should really say "I did not leave the oven on- 3 sigma credible interval" (the Bayesian interval). 
+People such as myself (particle physicists or similarly dorky types) might get home from work to find the oven on, and declare "I am 3 sigma confident that I did not leave the oven on". Because **Confidence Levels are frequentist**, this should be interpreted as "In 370 days, with conditions identical to today, where I came home to find the oven on, only 1 of these occasions would be my fault." Of course this is not actually what I mean when I say that. I mean I am 99.73% sure I did not leave the oven on **this morning**. So I should really say "I did not leave the oven on- 3 sigma credible interval" (the Bayesian interval). 
 :::
 
 We have seen [](#sec:hyp_critreg) that the size of the confidence interval is set using a predefined significance level $\alpha$, for example $\alpha=5\%$ gives us a 95% CL, and the confidence interval represents the central 95% of a normal distribution centered on the estimated mean $\hat{\mu} = \overline{x}$. The 95% CL can also be expressed as $\pm 1.96\sigma$, which means the same thing. Note that the Confidence Interval is predefined - it does not rely on the measured p value and Z value from the data.
@@ -735,9 +722,9 @@ An example of using the Bootstrap method is as follows (assume a starting datase
 3. Calculate the statistic of interest from the 100 measurements you randomly selected. 
 4. Repeat the above three steps 9999 times.
 
-[^imp]: It is crucial that selected measurement are not removed from the dataset once they have been selected. If we removed them we would simply end up with the 100 data points we had in the original dataset!
+[^imp]: It is crucial that selected measurements are not removed from the dataset once they have been selected. If we removed them we would simply end up with the 100 data points we had in the original dataset!
 
-The point of this process is not to recalculate the statistic - you have already calculated that from the original dataset. The point is to estimate the statistical uncertainty on that measured value. The larger dataset allows for a smaller Estimator Variance: a **more precise estimate of the statistical uncertainty**.
+The point of this process is not to recalculate the statistic - you have already calculated that from the original dataset. The point is to estimate the statistical uncertainty on that measured value. Each resampled dataset is the same size as the original, so the bootstrap does not give us more data; instead, the spread of the statistic across the many resampled datasets mimics the spread we would see across repeated experiments. Using more resamples does not shrink that spread, it just gives a **more precise estimate of the statistical uncertainty**.
 
 (sec:ei_bootstep)=
 ### Bootstrap Example: step-by-step
@@ -768,7 +755,7 @@ data = generate_data(seed=42)
 
 ```
 
-Now we have a fake dataset of 100 measurements, we can find $\overline{x}$ and $\sigma_x$ of the dataset using the usual `numpy` methods, but what is the **uncertainty** on $\sigma_x$? We could calculate this using the appropriate [SEV](#eq:ei_sev) formula, but we can't use that approach if we don't know anything about the data's true underlying distribution, or if it doesn't have a simple true underlying distribution.
+Now we have a fake dataset of 100 measurements, we can find $\overline{x}$ and $\sigma_x$ of the dataset using the usual `numpy` methods, but what is the **uncertainty** on $\sigma_x$? We could calculate this using the [SES](#eq:mmb_ses) formula (the Standard Error of the Standard Deviation), but we can't use that approach if we don't know anything about the data's true underlying distribution, or if it doesn't have a simple true underlying distribution.
 
 **Let's bootstrap!**
 
@@ -787,14 +774,14 @@ def LongBootstrap(data, seed=None):
   # Make an empty container to put our bootstrap stats in
   sigmas=[]
 
-  # loop over the number of boostraps we want
+  # loop over the number of bootstraps we want
   for i in range(9999):
 
     # Draw 100 random measurements from our dataset 
     # Important! values can be drawn more than once because we have replace=True. 
     # If we don't use replace=True, we will just get the original dataset back!
     
-    rdata = rng.choice(data,replace=True, size=100)
+    rdata = rng.choice(data,replace=True, size=len(data))
 
     # Get the standard deviation of _this set_ of 100 measurements
     rsigma = np.std(rdata)
@@ -820,15 +807,19 @@ byhand_sigmas = LongBootstrap(data,seed=111)
 
 ```
 
-The uncertainty found by the boostrap method provides a Confidence Interval. I set the seed, so the result I am reading in my browser will be the same one you see in these notes. The "one sigma" **Confidence Interval** in this case is:
+The uncertainty found by the bootstrap method provides a Confidence Interval. I set the seed, so the result I am reading in my browser will be the same one you see in these notes. The "one sigma" **Confidence Interval** in this case is:
 
-$2.703 \leq \sigma_{\mathsf{true}} \leq 3.085\;\;$ (68.27% CL).
+$2.704 \leq \sigma_{\mathsf{true}} \leq 3.085\;\;$ (68.27% CL).
 
 
 The 68.27% CL corresponds to the $\pm 1\sigma$ region we calculated using bootstrap method, which involves random sampling, so will give a slightly different interval each time we run it (unless we set the seed). The interpretation of this interval is a little fiddly (as with all things frequentist): 
 
 :::{card}
-If we repeat the above boostrap process (unseeded!) a large number of times, the computed interval would contain $\sigma_{\mathsf{true}}$ 68.27% of the time. 
+If we repeat the whole experiment a large number of times (a new dataset each time, then the bootstrap), the computed intervals would contain $\sigma_{\mathsf{true}}$ 68.27% of the time. 
+:::
+
+:::{note} This interval misses the true value
+The data were generated with $\sigma_{\mathsf{true}} = 3.77$, which is **outside** the interval above. This is not a bug: a 68.27% CL interval should miss the true value in about one experiment in three. Our seeded dataset happens to have a sample standard deviation, 2.91, about three SES below the true value, so it is one of the unlucky ones. Re-running the bootstrap on the same data will not fix this, because every resample is drawn from the same unlucky dataset. Try `generate_data()` without a seed a few times and see how often the interval contains 3.77.
 :::
 
 
@@ -836,7 +827,7 @@ If we repeat the above boostrap process (unseeded!) a large number of times, the
 (sec:ei_bootsp)=
 ### Bootstrap Example: `scipy`
 
-The "by hand" example above was an unneccessary "re-invention of the wheel", as `scipy.stats` provides a `boostrap` method [scipy.stats.bootstrap](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.bootstrap.html). It is helpful to illustrate what the bootstrap method actually does. Let's use the `scipy` method for the same job:
+The "by hand" example above was an unnecessary "re-invention of the wheel", as `scipy.stats` provides a `bootstrap` method [scipy.stats.bootstrap](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.bootstrap.html). It is helpful to illustrate what the bootstrap method actually does. Let's use the `scipy` method for the same job:
 
 ```{code-cell} python
 
@@ -853,7 +844,7 @@ def ScipyBootstrap(data, seed=None):
   # optional rng parameter is for reproducibility
   # optional confidence_level parameter sets the CL
 
-  # we would like a 1sigma CL, convert this to % to pass to bootstrap
+  # we would like a 1sigma CL, pass this to bootstrap as a fraction
   from scipy.stats import norm
   CL = norm.cdf(1) - norm.cdf(-1)
 
@@ -862,7 +853,7 @@ def ScipyBootstrap(data, seed=None):
   # extract the mean from the bootstrap_distribution
   sp_mean = np.mean(sbs.bootstrap_distribution)
   
-  # extract the SEM directly
+  # extract the bootstrap standard error of sigma directly
   sp_ser = sbs.standard_error
 
   # extract the confidence interval directly
@@ -922,7 +913,7 @@ This is a frequentist process, so the true value of $\sigma$ is expected to lie 
 
 ```{code-cell} python
 
-def PlotBootsraps(a,b,c):
+def PlotBootstraps(a,b,c):
 
   import numpy as np
   import matplotlib.pyplot as plt
@@ -962,7 +953,7 @@ def PlotBootsraps(a,b,c):
 
 # call the function
 
-PlotBootsraps(byhand_sigmas,scipy_sigmas,parametric_sigmas)
+PlotBootstraps(byhand_sigmas,scipy_sigmas,parametric_sigmas)
 ```
 
 ---
@@ -1000,7 +991,7 @@ rng = np.random.default_rng(seed=42)
 data1 = norm.rvs(loc=mu, scale=sigma, size=N, random_state=rng)
 data2 = norm.rvs(loc=mu, scale=sigma, size=N, random_state=rng)
 
-# print the arrays of values, rounding all values up to two decimal places
+# print the arrays of values, rounding all values to two decimal places
 print("data1:", data1.round(2))
 print("data2:", data2.round(2))
 

@@ -12,22 +12,22 @@ kernelspec:
 (chapter:normt)=
 # Normal Tests
 
-Normal Tests compare the mean or variance with a dataset with that of a hypothesis (Z,T) or another dataset (T2, F). We will explore this using a "Three Cities" dataset I faked. 
+Normal Tests compare the mean or variance of a dataset with that of a hypothesis (Z,T) or another dataset (T2, F). We will explore this using a "Three Cities" dataset I faked. 
 
 * ```numpy``` methods: ```random.seed, random.choice```
 * ```scipy.stats``` distributions: ```t,f```
 * `scipy.stats` [Hypothesis Tests and Related Functions](https://docs.scipy.org/doc/scipy/reference/stats.html#hypothesis-tests-and-related-functions): `ttest_1samp`, `ttest_ind`, `f_oneway`
+
+---
 
 (sec:normt_dis)=
 ## Distribution of Means
 
 Real world measurements do not have infinite datasets. One consequence of this is that the variance in our small datasets will not accurately reflect the true variance of the underlying PDF.
 
-<!--A set of 50 measurements of X will have some mean, $\overline{x}$, which is a summary statistic of the measurements. A different set of 50 measurements of X will have some other mean, because real world measurements are samples from a distribution (PDF or PMF) of an infinite number of measurements, languishing in the theoretical universe.-->
 
 We know from the [CLT](#sec:norm_clt) that if we measure the mean from many independent samples, then plot the measured means, we will get a Gaussian distribution (given large enough sample sizes, although the  $N\rightarrow \infty$ criterion in the CLT is clearly impossible to achieve in real life!).
 
-<!--Note: I am using $N$ to denote the size of each sample, which is what the CLT cares about. I am using $n$  for the number of samples, which is the number of means we will have to plot.-->
 
 **Example**:
 
@@ -41,7 +41,7 @@ I have $n=80$ employees, and send each of them to a different town in the UK and
 **Question**:  How confident are we in this resulting Gaussian-like distribution of means?
 
 
-If I did this exact same experiment again on a different day in 80 other towns, I would not get exactly the same distribution of means. Would the mean of my resulting distribution be fairly stable, or would it be likely to fluctuate significantly? If the variable is IID, then this depends only on the number of people asked (in each town) $N$.
+If I did this exact same experiment again on a different day in 80 other towns, I would not get exactly the same distribution of means. Would the mean of my resulting distribution be fairly stable, or would it be likely to fluctuate significantly? If the variable is IID, this depends on the spread of the data, $\sigma$, and on how many people were asked in total, $nN$: the more people, the more stable the mean.
 
 We quantify the uncertainty on the mean of the Gaussian using the [**Standard Error on the Mean (SEM)**](#sec:normt_sem).
 
@@ -80,14 +80,11 @@ We can [show](#eq:expect_mean) that the Expectation of (each of) the sample mean
 (sec:normt_var)=
 ### Variance $v_{\overline{x}} = \dfrac{1}{N}V[X]$
 
-The Standard Deviation of our measurements (the SEM) will also not be the same as the True Standard Deviation , and we don't expect it to ever be, even if each employee asks a million people, because they are different things. The SEM is the measured variation of the means, which will depend on $N$ (how many people each of my employees ask for their data), whereas the True Standard Deviation is a fixed value, a parameter of the underlying distribution.
+The Standard Deviation of our measurements (the SEM) will also not be the same as the True Standard Deviation , and we don't expect it to ever be, even if each employee asks a million people, because they are different things. The SEM is the spread we would expect in the means if we repeated the experiment many times, which will depend on $N$ (how many people each of my employees ask for their data), whereas the True Standard Deviation is a fixed value, a parameter of the underlying distribution.
 
 
-We can show [](#eq:var_mean) that the Variance of the sample means $v_{\overline{x}} \equiv V[\overline{x}]$ is equal to the True Variance[X] divided by the number of measurements $N$, where we have used [](#eq:dd_varsum) and [](#eq:dd_varmulc).
+We can show [](#eq:var_mean) that the Variance of the sample means $v_{\overline{x}} \equiv V[\overline{x}]$ is equal to the True Variance V[X] divided by the number of measurements $N$, where we have used [](#eq:dd_varsum) and [](#eq:dd_varmulc).
 
-<!--The Variance on the measured means is $\mathsf{V[\,\overline{x}\,] = \sigma^2_{\overline{x}} = \mathsf{SEM}^2}$.
-
-The True Variance is $\mathsf{V[X] = \sigma^2_{true} }$.-->
 
 
 ```{math}
@@ -126,11 +123,8 @@ v_{\overline{x}} = \dfrac{1}{N} V[X]
 
 ```
 
-<!--If my employees asked ten times as many people for their data, the means they get will be more reliable, and the variances would become ten times smaller.
 
-The True Variance is irreducible. It is a property of the underlying PDF that lives in the theoretical universe.-->
-
-The Variance on the  Means is a (linear) function of this True Mean, and also has a strong inverse dependence on the number of measurements we take. In a nutshell, **the more measurements we take, the smaller the uncertainty on our measurement becomes**.
+The Variance on the Means is a (linear) function of the True Variance, and also has a strong inverse dependence on the number of measurements we take. In a nutshell, **the more measurements we take, the smaller the uncertainty on our measurement becomes**.
 
 ---
 
@@ -163,7 +157,7 @@ Let's consider the data displayed in [](#fig:normt_sem1) below. This is simulate
 :label: fig:normt_sem1
 ![](../figures/MDA-demo-N2-semFalse-seed1.png)
 
-My fake data for the hours slept each night in three cities, with $N=2$. The green star and shaded bar at the top shows the true distribution I used to generate the data. I used Norm( $\mu$ =7.5H , $\sigma$=1.2H). The blue crosses show the data points, the circles show their means, and the shaded blue-grey bars show the $1\sigma$ ranges.
+My fake data for the hours slept each night in three cities, with $N=2$. The green star and shaded bar at the top shows the true distribution I used to generate the data. I used Norm( $\mu$ =7.3H , $\sigma$=1.2H). The blue crosses show the data points, the circles show their means, and the shaded blue-grey bars show the $1\sigma$ ranges.
 
 :::
 
@@ -171,7 +165,7 @@ My fake data for the hours slept each night in three cities, with $N=2$. The gre
 
 The two people asked in Glasgow both gave very similar answers, which has resulted in a small [standard deviation](#eq:tandc_std) on the Glasgow sample. **Using the standard deviation for the shaded "error" bar is misleading** - it suggests that we have more confidence in the Glasgow measurement, when in fact they are all statistically equivalent in their uncertainty, which is large.
 
-This becomes apparent as we take more data, and the means start to approach the expected value of 7.5 H. The mean number of hours slept in three different cities, using sample sizes of 3, 30, and 100, are shown in [](#fig:normt_sem2), [](#fig:normt_sem3), and [](#fig:normt_sem4) respectively. The blue shaded bars represent the standard deviations on the samples, which is **not** a good estimate for the uncertainty on the mean, as it represents the range in which 68\% of the data fall. 
+This becomes apparent as we take more data, and the means start to approach the expected value of 7.3 H. The mean number of hours slept in three different cities, using sample sizes of 3, 30, and 100, are shown in [](#fig:normt_sem2), [](#fig:normt_sem3), and [](#fig:normt_sem4) respectively. The blue shaded bars represent the standard deviations on the samples, which is **not** a good estimate for the uncertainty on the mean, as it represents the range in which 68\% of the data fall. 
 
 
 :::{figure} 
@@ -200,7 +194,7 @@ We have two problems:
 
 1. How do we factor in our increased confidence as the number of measurements increases?
 
-2. How to we express the uncertainty on the mean when we have a tiny number of measurements?
+2. How do we express the uncertainty on the mean when we have a tiny number of measurements?
 
 ---
 (sec:normt_semsec)=
@@ -217,7 +211,7 @@ The solution to problem 1 is to use the [SEM](#eq:normt_sem), but we must assume
 Here $\sigma_x$ must be computed with $N-1$ in the denominator (``ddof=1`` in numpy). Using $N$ instead (``ddof=0``) systematically underestimates the true variance — see [Math Methods B](#sec:mmb_varbias) for a proof — which would make $\widehat{\mathsf{SEM}}$ too small. Correcting for this bias by using $N-1$ gives an unbiased estimate of the true variance, and therefore a reliable estimate of the SEM.
 
 
-I have replaced the standard deviation with the $\mathsf{\widehat{SEM}}$ for the blue shaded barsin the  plots for [N=3](#fig:normt_sem5), [N=30](#fig:normt_sem6), and [N=100](#fig:normt_sem7).[^estsem]
+I have replaced the standard deviation with the $\mathsf{\widehat{SEM}}$ for the blue shaded bars in the plots for [N=3](#fig:normt_sem5), [N=30](#fig:normt_sem6), and [N=100](#fig:normt_sem7).[^estsem]
 
 [^estsem]: $\mathsf{\widehat{SEM}}$ is a good estimate for the uncertainty on the mean if the sample size is not very small. A rule of thumb for "very small" is $N \lessapprox 30$. 
 
@@ -226,7 +220,7 @@ I have replaced the standard deviation with the $\mathsf{\widehat{SEM}}$ for the
 :label: fig:normt_sem5
 ![](../figures/MDA-demo-N3-semTrue-seed1.png)
 
-Fake data, N=3, with the shaded blue bar now giving what would be a sensible estimate of the uncertainty if we weren't suffering from such devestatingly small dataset [](#sec:normt_sosmall).
+Fake data, N=3, with the shaded blue bar now giving what would be a sensible estimate of the uncertainty if we weren't suffering from such devastatingly small dataset [](#sec:normt_sosmall).
 :::
 
 :::{figure} 
@@ -259,15 +253,18 @@ If we have only a handful of measurements, and there is no way to collect more d
 
   Dangerous! Almost everyone has almost no understanding of statistics and uncertainty. Because it is both hard and boring :).
 
-**Option2 - The Frequentist Approach**
+**Option 2 - Abstain**
 : I cannot know my uncertainty from such a small sample, so I will not share the incomplete measurement of the mean.
 
   Sad but safe.
 
-**Option3 - The Bayesian approach**
+**Option 3 - The Bayesian approach**
 : Use "common sense": my own experience of sleeping tells me that there can be natural +/- 1.5 H fluctuations on the number of hours I sleep each night. I expect that this could be as high as +/- 3H  in some people. I will use $\mathsf{\widehat{\sigma} = \mathsf{3H}}$. 
   
-  Less sad and safe than the frequentists' "abstinence" approach, but reasonable in my opinion, given the very conservative (over-inflated, really) estimate. And it just feels wrong to not share my data at all, given that there is some limited information in it.
+  Less sad and safe than the "abstinence" approach, but reasonable in my opinion, given the very conservative (over-inflated, really) estimate. And it just feels wrong to not share my data at all, given that there is some limited information in it.
+
+**Option 4 - The Frequentist approach**
+: Use the Student's T distribution, which accounts for the extra uncertainty in $\sigma$ that comes from a small sample. See [](#sec:normt_ttest).
 
 ---
 
@@ -278,7 +275,6 @@ If we have only a handful of measurements, and there is no way to collect more d
 
 ```{code-cell} python
 import numpy as np
-np.random.default_rng()
 from scipy.stats import norm
 
 def three_cities_data( reproducible=True ):
@@ -413,7 +409,7 @@ print(f" true_mu = {true_mu} ")
 
 ````{card} [1] Design Test
 - Significance Level : $\alpha=0.05$
-- Alternate hypothesis, $H_1$:  $\mathsf{\mu_0 \textcolor{red}{\neq} 7.33\,H}$ : this means the test is two-sided.
+- Alternate hypothesis, $H_1$:  $\mathsf{\mu \textcolor{red}{\neq} 7.33\,H}$ : this means the test is two-sided.
 
 ```{code-cell} python
 alpha  = 0.05
@@ -450,11 +446,6 @@ The denominator is calculated as:
 
 $\mathsf{SEM} = \sigma_{\overline{x}}  = \dfrac{\sigma_{true} }{\sqrt{N}}$
 
-<!--
-We don't know $\sigma_{true}$, so we **Estimate** the SEM rather than calculating it [^note1]:
-
-$\mathsf{ \widehat{SEM}} =\dfrac{\sigma_{x} }{\sqrt{N-1}}$[^note2]
--->
 
 
 ```{code-cell} python
@@ -472,20 +463,8 @@ print(f"Our data mean {mean:.2f} is {Zstat:.2f} sigmas from the null hypothesis 
 
 
 
-<!--
-$\mathsf{V[X] = \dfrac{N}{N-1}\; V[x]}$
-: The true variance V[X] is slightly underestimated by the sample variance V[x].
-
-$\mathsf{\sigma_{true} = \sqrt{ \dfrac{N}{N-1}}\; \sigma_{x}}$
-: The standard deviation is the square root of the variance.
-
-$\mathsf{\dfrac{\sigma_{true}}{\sqrt{N}} =  \dfrac{1}{\sqrt{N}} \dfrac{\sqrt{N}}{\sqrt{N-1}}\; \sigma_{x}
-=  \dfrac{\sigma_{x}}{\sqrt{N-1}}\; }$
-: We recover our Unbiased Estimate of the True Variance.
--->
 
 
-<!--An estimated  test statistic of 0.538 means that our data mean is 0.538 standard deviations above the value the Null Hypothesis claims is the true mean.-->
 
 
 
@@ -498,7 +477,7 @@ from scipy.stats import norm
 # the two-sided p-value is 2* the survival function
 p_value = nsided * norm.sf( abs(Zstat) )
 
-print(f"P value: {p_value:.2f} (2sf)")
+print(f"P value: {p_value:.2f} (2 d.p.)")
 
 if(p_value > alpha):
 	print(f" => Test Negative, we do not reject the null hypothesis")
@@ -525,7 +504,7 @@ For a Normal distribution, the p value and Z value are different ways of stating
 
 The one-sample T Test is very similar to the Z Test, but is **particularly well suited to small datasets**. This is because instead of using the Normal distribution, it uses the Student's T[^student] distribution, which is like the Normal distribution but with fatter tails [](#fig:normt_tpdf).
 
-[^student]: William Gosset is the Student. He used a code name at his employers' (Guiness Brewery) request.
+[^student]: William Gosset is the Student. He used a code name at his employers' (Guinness Brewery) request.
 
 **Example usage**
 : Test if the sample mean $\overline{x}$ equals a hypothesised mean $\mu_0$.
@@ -586,7 +565,7 @@ The T PDF for different values of the parameter $\nu$ (Number of degrees of free
 
 ````{card} [1] Design Test
 - Significance Level : $\alpha=0.05$
-- Alternate hypothesis, $H_1$:  $\mathsf{\mu_0 \textcolor{red}{\neq} 7.33\,H}$ : this means the test is two-sided.
+- Alternate hypothesis, $H_1$:  $\mathsf{\mu \textcolor{red}{\neq} 7.33\,H}$ : this means the test is two-sided.
 
 ```{code-cell} python
 alpha  = 0.05
@@ -611,7 +590,7 @@ sigma = np.std(data,ddof=1)
 
 ````
 
-````{card} [3] Calculate [Test Statistic](#eq:zstat)
+````{card} [3] Calculate [Test Statistic](#eq:tstat)
 
 T Test Statistic, using the [Estimated SEM](#eq:est-sem):
 
@@ -644,7 +623,7 @@ from scipy.stats import t # <= t is scipy stats name for the T distribution
 
 p_value = nsided * t.sf( abs(Tstat), df = N-1 ) # <= df is scipy's name for the parameter nu
 
-print(f"P value: {p_value:.2f} (2sf)")
+print(f"P value: {p_value:.2f} (2 d.p.)")
 if(p_value > alpha):
 	print(f" => Test Negative, we do not reject the null hypothesis")
 else:
@@ -718,8 +697,8 @@ nsided = 1
 ````
 
 ````{card} [2] Look at Data. Brixton: $x$, Glasgow: $y$
-- Sample means: $\overline{x} = \mathsf{7.60\,H}$, $\overline{y} = \mathsf{7.44\,H}$
-- Sample variances: $v_x = \mathsf{1.19\,H^2}$, $v_y = \mathsf{0.91\,H^2}$,
+- Sample means: $\overline{x} = \mathsf{7.19\,H}$, $\overline{y} = \mathsf{6.91\,H}$
+- Sample variances: $v_x = \mathsf{1.89\,H^2}$, $v_y = \mathsf{2.06\,H^2}$,
 - Sample sizes: $N_x=10$, $N_y=10$
 
 ```{code-cell} python
@@ -797,7 +776,7 @@ from scipy.stats import t
 
 p_value = nsided * t.sf(T2, df=nuB+nuG) 
 
-print(f"P value: {p_value:.2f} (2sf)")
+print(f"P value: {p_value:.2f} (2 d.p.)")
 
 if(p_value > alpha):
 	print(f" => Test Negative, we do not reject the null hypothesis")
@@ -812,6 +791,8 @@ else:
 
 
 
+---
+
 (sec:normt_ftest)=
 ## The F Test (one-way ANOVA)
 
@@ -824,7 +805,7 @@ Another way to compare groups is via ANalysis Of VAriance. The F test statistic 
 
 ```
 
-The F Test has the same Example Usage and Restrictions as the T Test, as it is a "generalised" T Test for comparing more than two samples. For two samples, the F Test and T Test are identical, with the F test statistic being the square of the two-sample T test statistic $\mathsf{T_2}$.
+The F Test has the same Example Usage and Restrictions as the T Test, as it is a "generalised" T Test for comparing more than two samples. For two samples, the F Test and the two-sided T Test are identical, with the F test statistic being the square of the two-sample T test statistic $\mathsf{T_2}$.
 
 (sec:normt_varbet)=
 ### The Variance Between groups
@@ -878,7 +859,6 @@ The Variance Within is the weighted sum of the unbiased variances, divided by th
 
 2. Divide by the number of degrees of freedom within the subsets: $\mathsf{\nu_{within} = N_x + N_y - N_s}$
 
-<!--Note that this is the same as summing the number of degrees of freedom within each subset.-->
 
 In this case we find: $\mathsf{ V_{within} = \dfrac{ (N_x-1)v_x  + (N_y-1) v_y }{\,N_x + N_y -N_s } }$
 
@@ -896,9 +876,6 @@ V_{within}=
 }
 ```
 
-<!--:::{tip}Notation
- In the general form for $N_s$ subsets of size $N_j$, the subsets are represented by $\mathsf{x_{(j)} = x,y,...}$. It is common to use parentheses in the subscript $\mathsf{ x_{(j)} }$  for a variable, to distinguish it from \mathsf{ x_{i} } which is used for individual values of that variable. $\mathsf{x_{(j)} }$ would be an array of all the \mathsf{ x_{i} } values.
-:::-->
 
 
 The denominator $\mathsf{ \sum \limits_{j}  N_j - N_s}$  is the number of degrees of freedom within the subsets in the group, $\mathsf{ \nu_{within} }$. Note that this depends on both the number of subsets (2 in our example) and on the sample sizes.
@@ -915,13 +892,13 @@ We now have the ingredients to calculate the **F statistic**:
 (sec:normt_fpdf)=
 ### The F PDF
 
-The F PDF is shown in [](#fig:normt_fpdf) for cases where we have between 2 and 10 subsets, such that the variance between, $\nu_b = N_s -1 $, ranges from 1 to 9.
+The F PDF is shown in [](#fig:normt_fpdf) for cases where we have between 2 and 10 subsets, such that the degrees of freedom between, $\nu_b = N_s -1 $, ranges from 1 to 9.
 
 :::{figure}
 :label: fig:normt_fpdf
 ![](../figures/F-dist-nu_w100.png)
 
-Notice that the F PDF is **asymmetric**, unlike the normal and T distributions. The number of degrees of freedom within the subsets is the same in each case, $\mathsf{ \nu_{within} = \sum \limits_{j}^{ N_{s}}  N_j - N_s =100}$. <!--With one degree of freedom between the samples (as in the case of comparing two samples, as $\mathsf{\nu_{between} = N_s-1}$ ), the F test statistic grows exponentially for F statistic values approaching zero.-->
+Notice that the F PDF is **asymmetric**, unlike the normal and T distributions. The number of degrees of freedom within the subsets is the same in each case, $\mathsf{ \nu_{within} = \sum \limits_{j}^{ N_{s}}  N_j - N_s =100}$.
 
 :::
 
@@ -938,7 +915,7 @@ Notice that the F PDF is **asymmetric**, unlike the normal and T distributions. 
 
 ```{card} [1] Design Test
 - Significance Level : $\alpha=0.05$
-- Alternate hypothesis, $H_1$: Glaswegians sleep less than Brixtonians : this means the test is one-sided.
+- Alternate hypothesis, $H_1$: the mean hours slept in Glasgow and Brixton are different. The F test is always two-sided, because F only measures how far apart the means are, not which is larger.
 ```
 
 **This one I have left for you to pythonise and find the F statistic and p value Go ahead and try it using the examples above**. You will want to use the [f distribution](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.f.html) for the p value.
@@ -946,7 +923,7 @@ Notice that the F PDF is **asymmetric**, unlike the normal and T distributions. 
 
 
 :::{tip} Eyeballing
-Note that we can eyeball the PDF plot above (the closest one to our situation is $\mathsf{\nu_b =1, \nu_w=100}$ ) to get a rough idea of whether we were going to be close to rejecting $H_0$. An F statistic of 0.108 leaves a big fat tail to the right which clearly has more than 5% of the distribution in it, so I would have guessed we were not in the ballpark for a positive result.
+Note that we can eyeball the PDF plot above (the closest one to our situation is $\mathsf{\nu_b =1, \nu_w=100}$; ours has $\mathsf{\nu_w = 10 + 10 - 2 = 18}$) to get a rough idea of whether we were going to be close to rejecting $H_0$. An F statistic of 0.19 (the square of our $\mathsf{T_2} = 0.44$) leaves a big fat tail to the right which clearly has more than 5% of the distribution in it, so I would have guessed we were not in the ballpark for a positive result.
 :::
 
 
@@ -954,7 +931,8 @@ Note that we can eyeball the PDF plot above (the closest one to our situation is
 
 ::::
 
-[^thiscase]: In this special case, our samples are the same size, so we can just take the mean of the two means. In general we would have to combined the datasets or calculated the weighted mean.]
+
+---
 
 (sec:normt_sum)=
 ## Summary of some useful `scipy.stats` methods
@@ -963,7 +941,7 @@ The `scipy` team have a vast number of helpful methods for performing normal tes
 
 For example, for the [one sample T Test](#sec:normt_ttest) we thought about in these notes, we can use the `ttest_1samp` method demonstrated below. 
 
-```{code-cell}python
+```{code-cell} python
 
 # ====================
 # Generate some data 

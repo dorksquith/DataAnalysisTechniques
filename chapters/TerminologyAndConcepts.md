@@ -19,6 +19,8 @@ A **brief tour** of the important terms and concepts for this module, almost all
 Don't forget to press ⏻ then ▷ as per the [intro](#chapter:intro)
 :::
 
+---
+
 (sec:tandc_hypmod)=
 ## Hypotheses, Models, and Theories
 
@@ -29,7 +31,7 @@ A **Hypothesis** is an educated guess at the outcome of a specific event.
 
 For example:
 - $H_0$: There is no correlation between how long we sleep and how long we live.
-- $H_1$: People who sleep well live longer.
+- $H_1$: There is a correlation between how long we sleep and how long we live.
 
 
 A **Model** is an object, a computer program, or a mathematical equation that can explain how something works, and/or be used to make predictions. 
@@ -38,17 +40,17 @@ A **Model** is an object, a computer program, or a mathematical equation that ca
 :::{figure} /figures/models.png
 :label: fig:tandc_mod
 
-A Scale Model of a Delorian, a Computer Model of Earth's temperature, and the Standard Model of particle physics.
+A Scale Model of a DeLorean, a Computer Model of Earth's temperature, and the Standard Model of particle physics.
 :::
 
 
 For example:
-- A **Scale Model** of a delorian (a toy car based on time-travelling car in back to the future movies, which captures the visual appearance of the machine)  
+- A **Scale Model** of a DeLorean (a toy car based on the time-travelling car in the *Back to the Future* films, which captures the visual appearance of the machine)  
 - a **Climate Model** (a complex computer program that tells us how much trouble we are in existentially) 
 - the **Standard Model** of particle physics (a set of mathematical equations describing how the universe works at a fundamental level)
 
 :::{important} Toys?
-When statisticians talk about Toy Models (often shortened to "Toys"), they are referring to a mathematical model that has been simplified. Not Delorians, sadly.
+When statisticians talk about Toy Models (often shortened to "Toys"), they are referring to a mathematical model that has been simplified. Not DeLoreans, sadly.
 :::
 
 A **Theory** is the description of a set of models, and the relationships between them. It is complete, and is a candidate explanation for the "Underlying Truth". The Underlying Truth is an abstract concept which cannot be known with certainty. We can test our models and theories, and those which we do not prove wrong tend to grow in esteem. 
@@ -61,6 +63,8 @@ It is not possible to prove that a hypothesis or theory is correct. We can only 
 A theory that passes all the tests accessible by our imaginations and technological capability may well be wrong - we just haven't asked the right questions or gathered enough data to see it.
 
 
+---
+
 (sec:tandc_popsam)=
 ## Population and Sample
 
@@ -72,12 +76,14 @@ To test our models we must gather data as evidence. How much data do we need? No
 A robot who loves data.
 :::
 
-The **Population** refers to the maximum number of data points we can possibly gather in terms of the subject of our hypothesis or model. If we are modelling adult human heights in 2026, the population would be all human beings alive in 2026. If we are modelling the heights of women between the ages of 22-25, our population would be all women between the ages of 22 and 25.
+The **Population** refers to the maximum number of data points we can possibly gather in terms of the subject of our hypothesis or model. If we are modelling adult human heights in 2026, the population would be all adults alive in 2026. If we are modelling the heights of women between the ages of 22-25, our population would be all women between the ages of 22 and 25.
 
 A **Sample** is a subset of the population. If certain criteria are met, we can use the sample as a proxy for the population. For a sample to be **Representative** of the Population, it must be reasonably large and it must be unbiased. Lots more on this to come.
 
 > Even if we use the entire population at a given moment as our dataset, we must still recognise that our dataset is limited in size (ie it is not infinite). Lots of resources use the Population and the Truth interchangeably, though, because they have made the decision not to poke around in the Truth.
 
+
+---
 
 (sec:tandc_ranvar)=
 ## Random Variables, Parameters, and Statistics
@@ -98,6 +104,8 @@ A **Parameter** is a number that describes some characteristic of the Underlying
 A **Statistic** is a number that describes some characteristic of a sample, for example the mean height of all humans in Sussex Uni. 
 
 
+---
+
 (sec:tandc_discon)=
 ## Discrete and Continuous Data
 
@@ -117,10 +125,12 @@ The probability of measuring a given value $x$ for a Discrete RV $X$ is describe
 
 **Continuous RVs** are measurements such as height or temperature that can theoretically take any value on the real number line. 
 
-Note that in the real world, measurements always have a finite precision, so the measurements of a continuous RV will not strictly be continuous. What is true in the real world is also in true in your computer. The precision with which python generates CRVs on my machine is ```float64```: precision 15.
+Note that in the real world, measurements always have a finite precision, so the measurements of a continuous RV will not strictly be continuous. What is true in the real world is also true in your computer. Python stores continuous RVs on my machine as ```float64```, which has a precision of about 15–16 significant figures.
 
 > A continuous RV is still continuous even though its measurements cannot be.
 
+
+---
 
 (sec:tandc_iid)=
 ## Independent & Identically Distributed (IID) Data
@@ -149,12 +159,14 @@ The probability of each toss coming up heads is identical, so the RVs are **Iden
 
 
 
+---
+
 (sec:tandc_sumsta)=
 ## Summary Statistics 
 
 **Summary statistics** are numbers that describe the properties of a whole sample (dataset), rather than a single data point. Examples of summary statistics we will use in this module are the sample Sum, Mean, Minimum, Maximum, Variance, and Standard Deviation.
 
-We can calculate the ```sum```, ```min```, and ```max``` of a dataset in ```python``` with the ```numpy``` libraray methods like so:
+We can calculate the ```sum```, ```min```, and ```max``` of a dataset in ```python``` with the ```numpy``` library methods like so:
 
 ```{code-cell} python
 :name: code:tandc_sma
@@ -244,7 +256,7 @@ The **Mode** is the value that occurs with the greatest frequency.
  
 median_x = np.median(x)
 
-print(f" median x: { median_x })")
+print(f" median x: { median_x }")
 
 # numpy doesn't have a mode method, but scipy.stats does
 
@@ -252,11 +264,11 @@ from scipy.stats import mode
 
 mode_x = mode(x)
 
-print(f" mode x: { mode_x })")
+print(f" mode x: { mode_x }")
 
 ```
 
- Notice that for our little dataset ```x = [5,10,12]``` all values occur with the same frequency of 1: in this case, ```scipy.stats mode``` will return the first value it finds with the winning frequency.
+ Notice that for our little dataset ```x = [5,10,12]``` all values occur with the same frequency of 1: in this case, ```scipy.stats mode``` returns the smallest of the values with the winning frequency.
 
 
 We won't be using the median and mode in this module, just including them for reference.
@@ -272,7 +284,7 @@ $$
 v_x  = \frac{1}{N} \sum\limits_i^N  (x_i - \overline{x})^2
 $$
 
-Each term in the sum $$\label{eq:tandc_vari}(x_i - \overline{x})^2$$ is the variance of the $i^{th}$ measurement, $x_i$, wrt to the mean. The sum is over the $N$ measurements.
+Each term in the sum $$\label{eq:tandc_vari}(x_i - \overline{x})^2$$ is the squared deviation of the $i^{th}$ measurement, $x_i$, from the mean. The sum is over the $N$ measurements.
 
 Sometimes we will see the **Unbiased Variance**:
 
@@ -326,10 +338,11 @@ std_x_check = np.sqrt(var_x)
 
 print(f" std x : {std_x}, check: {std_x_check }")
 
-# to get the unbiased std with numpy we pass ddof=1, which means "delta degrees of freedom"=1
-unbiased_std_x = np.std(x,ddof=1)
+# passing ddof=1 gives the square root of the unbiased variance.
+# Note: this std is itself still slightly biased - the square root of an unbiased estimate is not unbiased.
+std_x_ddof1 = np.std(x,ddof=1)
 
-print(f" (unbiased std x : {unbiased_std_x})")
+print(f" (std x with ddof=1 : {std_x_ddof1})")
 
 ```
 
@@ -348,13 +361,15 @@ $$
 ```{code-cell} python
 :name: code:tandc_coevar
 
-coefficient_of_variation = np.std(x,ddof=1) / np.mean(x)
+coefficient_of_variation = np.std(x) / np.mean(x) * 100
 
-print(f" (coefficient_of_variation : {coefficient_of_variation})")
+print(f" (coefficient_of_variation : {coefficient_of_variation:.1f}%)")
 
 ```
 
 We won't be using this in this module, just including it for reference.
+
+---
 
 (sec:tandc_perqua)=
 ## Percentiles & Quartiles
@@ -367,15 +382,14 @@ perc95 = np.percentile(data, 95)
 
 quant95 = np.quantile(data, 0.95)
 
-print(f" 95% percentile : {perc95}%)")
-print(f" 0.95 quantile : {quant95}%)")
+print(f" 95th percentile : {perc95}")
+print(f" 0.95 quantile : {quant95}")
 
 ```
 
 We won't be using these in this module, just including for reference.
-<!--## Test Statistics
 
-**Test statistics** are numbers that describe the compatibility of a sample with a hypothesis, or with another sample. Examples are the p value, Z score, Chi squared. We will discuss these at length later.-->
+---
 
 (sec:tandc_ranpse)=
 ## Random and Pseudorandom Numbers
@@ -396,7 +410,7 @@ We can extract (a limited number of) truly random numbers from eg [random.org](h
 True Random Number Generation (TRNG) is an active area of research, and is rapidly changing. Whatever I write here will likely be out of date in two years. A recent (Summer 2025) exciting development was published in [Nature](https://www.nature.com/articles/s41586-025-09054-3).
 
 
-A **Pseudorandom Number** (PRN) is a term used to describe a number in a sequence that appears random, but is produced by a deterministic process. Deterministic means that an outcome is caused by preceeding events.
+A **Pseudorandom Number** (PRN) is a term used to describe a number in a sequence that appears random, but is produced by a deterministic process. Deterministic means that an outcome is caused by preceding events.
 
 In this module we will generate PRNs using ```numpy``` and ```scipy```.
 
@@ -441,6 +455,8 @@ Credit: DILBERT © 2001 Scott Adams [All rights reserved].
 :::
 
 
+
+---
 
 (sec:tandc_ploaxe)=
 ## Plots, axes, histograms, bins
@@ -557,6 +573,6 @@ plt.show()
 ### Exercises
 
 
-If you want some extra practise on these concepts, the (free) OpenStax Text Book [Introductory Statistics](https://openstax.org/details/books/introductory-statistics-2e) has some [Chapter 1 Practice](https://openstax.org/books/introductory-statistics-2e/pages/1-practice).
+If you want some extra practice on these concepts, the (free) OpenStax Text Book [Introductory Statistics](https://openstax.org/details/books/introductory-statistics-2e) has some [Chapter 1 Practice](https://openstax.org/books/introductory-statistics-2e/pages/1-practice).
 
 

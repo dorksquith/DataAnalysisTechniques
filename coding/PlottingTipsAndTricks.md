@@ -343,50 +343,52 @@ joint_integral_plot1()
 
 ---
 
-<!--
-(sec:plot-bivariate-exercise)=
-## Exercise: Adapt `joint_integral_plot1` for a New Function
-
-The function `joint_integral_plot1()` above plots $f(x, y) = 4xy$.
-
-Edit it to instead plot:
-
-$$f(x, y) = e^{2x} - 3y, \qquad -1 \leq x \leq 1, \quad -1 \leq y \leq 1$$
-
-You will need to change:
-
-1. The definition of `Z` inside the function (one line).
-2. The `x_range` and `y_range` keyword arguments in the function call.
-3. The `f_label` string passed to `suptitle`.
-
-```{note}
-This is the same function whose joint integral you computed analytically in [](#sec:joint-integrals): $\displaystyle\int_{-1}^{1}\int_{-1}^{1}(e^{2x}-3y)\,dy\,dx = e^2 - e^{-2} \approx 7.25$. Does the contour plot make the $3y$ term's symmetry visually obvious?
-```
--->
 ---
 
 (sec:plot-methods-ref)=
 ## `matplotlib` Methods Reference
 
-A reference table of plotting methods introduced in this appendix.
+A reference table of the plotting methods used in this appendix and in the chapters.
 
-| Method | Description |
-|--------|-------------|
-| `plt.subplots(m, n, figsize=(...))` | Create a figure with an $m\times n$ grid of axes |
-| `ax.plot(x, y, label=..., color=..., linewidth=...)` | Line plot |
-| `ax.axhline(y)` / `ax.axvline(x)` | Horizontal / vertical reference line |
-| `ax.set_xlabel(s)` / `ax.set_ylabel(s)` | Axis labels (use raw strings for LaTeX) |
-| `ax.set_title(s)` | Panel title |
-| `ax.legend(fontsize=...)` | Add a legend |
-| `plt.suptitle(s, y=...)` | Overall figure title (use `y>1` to lift above panels) |
-| `plt.tight_layout()` | Adjust spacing to prevent label overlap |
-| `ax.semilogy(x, y)` | Line plot with log-scaled y-axis |
-| `ax.semilogx(x, y)` | Line plot with log-scaled x-axis |
-| `np.meshgrid(x_vals, y_vals)` | Build 2-D coordinate arrays from 1-D arrays |
-| `ax.contourf(X, Y, Z, levels=..., cmap=...)` | Filled contour plot |
-| `ax.contour(X, Y, Z, levels=..., colors=...)` | Line contour plot |
-| `ax.clabel(cs, inline=True)` | Add value labels to contour lines |
-| `fig.colorbar(cf, ax=ax, label=...)` | Add a colourbar to a filled contour or surface |
-| `fig.add_subplot(..., projection='3d')` | Add a 3-D axes panel |
-| `ax.plot_surface(X, Y, Z, cmap=..., alpha=...)` | 3-D surface plot |
-| `ax.view_init(elev=..., azim=...)` | Set 3-D camera angle |
+| Method | Description | Chapter(s) |
+|--------|-------------|------------|
+| **Figures and axes** | | |
+| `plt.subplots(m, n, figsize=(...))` | Create a figure with an $m\times n$ grid of axes | [T&C](#chapter:tandc), [EI](#chapter:ei), [ML](#chapter:mle), [LS](#chapter:lse), [BI](#chapter:bay), [MCMC](#chapter:mcmc), this appendix |
+| `plt.figure(figsize=(...))` | Create an empty figure | this appendix |
+| `fig.add_subplot(..., projection='3d')` | Add a 3-D axes panel | this appendix |
+| `plt.show()` | Display the figure | [T&C](#chapter:tandc), [PE](#chapter:pe), [DD](#chapter:dd), [N](#chapter:norm), [EI](#chapter:ei), [ML](#chapter:mle), [LS](#chapter:lse), [BI](#chapter:bay), [MCMC](#chapter:mcmc), this appendix |
+| `plt.savefig(filename)` | Save the figure to a file | [T&C](#chapter:tandc) |
+| `plt.clf()` | Clear the current figure | [T&C](#chapter:tandc) |
+| **Plot types** | | |
+| `ax.plot(x, y, label=..., color=..., linewidth=...)` | Line plot | [T&C](#chapter:tandc), [PE](#chapter:pe), [N](#chapter:norm), [EI](#chapter:ei), [ML](#chapter:mle), [LS](#chapter:lse), [BI](#chapter:bay), [MCMC](#chapter:mcmc), this appendix |
+| `ax.scatter(x, y)` | Scatter plot | [T&C](#chapter:tandc), [DD](#chapter:dd), [LS](#chapter:lse) |
+| `ax.hist(x, bins=..., density=True)` | Histogram (`density=True` normalises it to a probability density) | [T&C](#chapter:tandc), [EI](#chapter:ei), [MCMC](#chapter:mcmc) |
+| `plt.stem(x, y)` | Stem plot, for discrete distributions | [PE](#chapter:pe) |
+| `ax.fill_between(x, y1, y2)` | Shade the region between two curves (e.g. an uncertainty band) | [LS](#chapter:lse) |
+| `ax.semilogy(x, y)` / `ax.semilogx(x, y)` | Line plot with log-scaled y-axis / x-axis | [N](#chapter:norm), this appendix |
+| `np.meshgrid(x_vals, y_vals)` | Build 2-D coordinate arrays from 1-D arrays | this appendix |
+| `ax.contourf(X, Y, Z, levels=..., cmap=...)` | Filled contour plot | this appendix |
+| `ax.contour(X, Y, Z, levels=..., colors=...)` | Line contour plot | this appendix |
+| `ax.clabel(cs, inline=True)` | Add value labels to contour lines | this appendix |
+| `fig.colorbar(cf, ax=ax, label=...)` | Add a colourbar to a filled contour or surface | this appendix |
+| `ax.plot_surface(X, Y, Z, cmap=..., alpha=...)` | 3-D surface plot | this appendix |
+| `ax.view_init(elev=..., azim=...)` | Set 3-D camera angle | this appendix |
+| **Reference lines, shading and text** | | |
+| `ax.axhline(y)` / `ax.axvline(x)` | Horizontal / vertical reference line | [EI](#chapter:ei), [MCMC](#chapter:mcmc), this appendix |
+| `ax.axvspan(x1, x2, alpha=...)` | Shade a vertical band (e.g. a credible interval or burn-in) | [MCMC](#chapter:mcmc) |
+| `ax.text(x, y, s, transform=ax.transAxes)` | Add text; with `transform=ax.transAxes`, (x, y) are fractions of the panel | [DD](#chapter:dd), [MCMC](#chapter:mcmc) |
+| **Labels, limits and layout** | | |
+| `ax.set_xlabel(s)` / `ax.set_ylabel(s)` | Axis labels (use raw strings for LaTeX); `plt.xlabel`, `plt.ylabel` for a single plot | [T&C](#chapter:tandc), [PE](#chapter:pe), [DD](#chapter:dd), [N](#chapter:norm), [EI](#chapter:ei), [ML](#chapter:mle), [LS](#chapter:lse), [BI](#chapter:bay), [MCMC](#chapter:mcmc), this appendix |
+| `ax.set_title(s)` | Panel title | [T&C](#chapter:tandc), [MCMC](#chapter:mcmc), this appendix |
+| `plt.suptitle(s, y=...)` | Overall figure title (use `y>1` to lift above panels) | this appendix |
+| `fig.supxlabel(s)` / `fig.supylabel(s)` | One shared x / y label for a grid of panels | [MCMC](#chapter:mcmc) |
+| `ax.set_xlim(a, b)` / `ax.set_ylim(a, b)` | Axis limits (`plt.xlim`, `plt.ylim` for a single plot) | [PE](#chapter:pe), [N](#chapter:norm), [EI](#chapter:ei), [MCMC](#chapter:mcmc) |
+| `ax.get_ylim()` | Current axis limits | [EI](#chapter:ei) |
+| `ax.legend(fontsize=..., loc=...)` | Add a legend | [T&C](#chapter:tandc), [EI](#chapter:ei), [LS](#chapter:lse), [BI](#chapter:bay), [MCMC](#chapter:mcmc), this appendix |
+| `plt.tight_layout()` / `fig.tight_layout()` | Adjust spacing to prevent label overlap | [EI](#chapter:ei), [MCMC](#chapter:mcmc), this appendix |
+| **Colours** | | |
+| `color='mediumvioletred'` | Named colours: see the [list of named colours](https://matplotlib.org/stable/gallery/color/named_colors.html) | [MCMC](#chapter:mcmc) |
+| `matplotlib.colors.to_rgb(c)` | Convert a named colour to RGB, e.g. to add transparency to a face colour only | [MCMC](#chapter:mcmc) |
+| **`seaborn`** | | |
+| `sns.JointGrid(data, x, y)` | Grid with a joint plot and two marginal plots | [N](#chapter:norm) |
+| `g.plot_joint(sns.kdeplot)` / `g.plot_marginals(sns.histplot)` | Fill the joint and marginal panels | [N](#chapter:norm) |

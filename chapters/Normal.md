@@ -31,15 +31,17 @@ Some examples of normally distributed RVs are shown in [](#fig:norm_eve).
 A selection of normal distributions (sources unclear at time of writing, TBD).
 :::
 
-The RVS plotted are blood pressures, baby birth weights, heights of English criminals in 1900, and the difference between the proton speeds measured with two different detectors. These are very (physically) different RVs, but when we plot their measured values, they all follow this same shape, with a symmetric distribution around a central value. Why?!
+The RVs plotted are blood pressures, baby birth weights, heights of English criminals in 1900, and the difference between the proton speeds measured with two different detectors. These are very (physically) different RVs, but when we plot their measured values, they all follow this same shape, with a symmetric distribution around a central value. Why?!
 
-The reason for the apparently unrelated RVs in [](#fig:norm_eve) having the same underlying distribution is that **they do have something fundamental in common**: they are all the result of many interrelated factors, which makes them "sums" of different independent variables. We will see that the distribution of a sum will always tend towards a Gaussian distribution (the [Central Limit Theorem](#sec:norm_clt)).
+The reason for the apparently unrelated RVs in [](#fig:norm_eve) having the same underlying distribution is that **they do have something fundamental in common**: they are all the result of many interrelated factors, which makes them "sums" of different independent variables. We will see that the distribution of a sum will tend towards a Gaussian distribution (the [Central Limit Theorem](#sec:norm_clt)).
 
+
+---
 
 (sec:norm_pdf)=
 ## The Gaussian PDF
 
-The Gaussian (aka Normal) Probability Distribution Function (PDF) is given in [](#eq:norm_pdf). It describes Continuous RVs (eg blood pressure, height, weight, proton speed differences).
+The Gaussian (aka Normal) Probability Density Function (PDF) is given in [](#eq:norm_pdf). It describes Continuous RVs (eg blood pressure, height, weight, proton speed differences).
 
 $$\label{eq:norm_pdf} f_X (x; \mu,\sigma) = \dfrac{1}{\sqrt{ 2\pi\sigma^2} } \exp{ \left[ -\frac{1}{2} \frac{(x-\mu)^2}{ \sigma^2}  \right]}\; ; \;\;\; -\infty < x < \infty$$
 
@@ -58,7 +60,7 @@ It may be helpful to consider each term in [](#eq:norm_pdf) while looking at the
 
  $f_X (x; \mu,\sigma)$
  : The notation for a PDF describing a continuous RV, X.
-  The value of $f_X$ for a given $x$ depends on (is conditional on) the values of the parameters $\mu$ and $\sigma$.
+  The value of $f_X$ for a given $x$ depends on the values of the parameters $\mu$ and $\sigma$.
 
 $\dfrac{ 1 }{ \sqrt{ 2\pi\sigma^2} }$
 : The "constant" term is a function of the true standard deviation $\sigma$.
@@ -204,15 +206,15 @@ def my_norm_log(mu,sigma):
 my_norm_log(1,2)
 ```
 
-On the log scale plot, we can see that the Gaussian PDF has non-zero probabilities all the way to $\pm 10 \sigma$ (the chosen limits of our x-axis). If it were possible to make a plot with infinite limits, we would see that the PDF goes on for ever. We can also see the the **log of the Gaussian PDF is a parabola** ($y \sim - x^2$).
+On the log scale plot, we can see that the Gaussian PDF has non-zero density all the way to $\pm 5 \sigma$ (the chosen limits of our x-axis). If it were possible to make a plot with infinite limits, we would see that the PDF goes on for ever. We can also see that the **log of the Gaussian PDF is a parabola** ($y \sim - x^2$).
 
-We can write down the most basic form (**Kernel**) of the Gaussian as [](#eq:norm_gaukern); at its heart, the Gaussian is just an exponential distribution of the square of our RV.
+We can write down the most basic form (**Kernel**) of the Gaussian as [](#eq:norm_gaukern); at its heart, the Gaussian is just an exponential function of minus the square of our RV.
 
 $$\label{eq:norm_gaukern} f_X(x) \propto  \exp{\left[-x^2/2\right]} $$
 
 Taking the natural logarithm of this gives us [](#eq:norm_gaulog).
 
-$$\label{eq:norm_gaulog} \ln{f_X(x)} \propto -x^2/2 $$
+$$\label{eq:norm_gaulog} \ln{f_X(x)} = \mathsf{const} - x^2/2 $$
 
 
 :::{dropdown} Calculation of log Norm
@@ -239,16 +241,18 @@ Beautifully, [we can show](https://www.youtube.com/watch?v=fWOGfzC3IeY) that:
 However, the Normal CDF has no closed form in elementary functions. We can always calculate a numerical solution though, so its okay!
 
 
+---
+
 (sec:norm_clt)=
 ## The Central Limit Theorem (CLT)
 
 The **CLT** answers the question: Why are so many things Gaussian-distributed? 
 
-The distribution of a sum (or mean) of independent RVs will always converge to a normal distribution, in the limit of an infinite number of measurements.
+The distribution of a sum (or mean) of $N$ independent, identically distributed RVs with finite variance converges to a normal distribution as $N \to \infty$.
 
 My height is dependent on many factors. My parents' heights are the most obvious ones. Their parents' heights, my great-grandparents' diets, the environment, and all sorts of genes that may be turned on or off.
 
-My height is the result of the sum of all of these effects. That is why the distribution of heights is Gaussian.
+My height is the result of the sum of all of these effects. That is why the distribution of heights is approximately Gaussian.
 
 [](#fig:norm_clt1) is a series of histograms showing the mean and sum of the total scores from rolling 1,2,3,4 dice. We can see the distribution already starts to take a Gaussian shape with $N=4$. [](#fig:norm_clt2) is the mean distribution for larger values of N, with a True Gaussian distribution drawn on the same axes (the red dashed line).
 
@@ -270,6 +274,8 @@ The mean scores from rolling 100,1k, 10k, 100k dice, from left to right.
 
 
 
+---
+
 (sec:norm_prob)=
 ## Probabilities for a Continuous RV
 
@@ -288,14 +294,14 @@ The CDF returns the probability of measuring the RV with some value equal to or 
 ```{math}
 :label: eq:cdf_cont
 
-F(x) = P(X\leq x) = \displaystyle \int \limits_{-\infty}^{x} f_X(x|\theta)\, dx
+F(x) = P(X\leq x) = \displaystyle \int \limits_{-\infty}^{x} f_X(x'|\theta)\, dx'
 
 ```
 
 ```{math}
 :label: eq:cdf_disc
 
-F(k) = P(K\leq k) = \displaystyle \sum_{K\leq k} p_K(k|\theta)
+F(k) = P(K\leq k) = \displaystyle \sum_{k'\leq k} p_K(k'|\theta)
 
 ```
 
@@ -324,7 +330,7 @@ my_norm_cdf(1,2)
 
 Note that the PDF and CDF are arrays of y-values corresponding to the array of x-values we have passed in as the argument.
 
-**The PDF values are not probabilities**. They only have meaning relative to one another, giving us the shape of the distribution in case we want to plot it, for example.
+**The PDF values are not probabilities**: they are probability densities (probability per unit $x$). For a small range of width $dx$, the probability is approximately $f_X(x)\,dx$. They also give us the shape of the distribution, in case we want to plot it, for example.
 
 **The CDF values are probabilities**. They are cumulative. So if $x=0.1$, ```norm.cdf(x)``` is the probability of any value up to and including 0.1.
 
@@ -337,9 +343,13 @@ prob_upto_015 = norm.cdf(0.15, mu, sigma )
 prob_upto_016 = norm.cdf(0.16, mu, sigma )
 
 prob_015_to_016 = prob_upto_016 - prob_upto_015
+
+print(f"P(0.15 < x < 0.16) = {prob_015_to_016:.5f}")
 ```
 
 
+
+---
 
 (sec:norm_mul)=
 ## Multivariate Gaussian
@@ -369,7 +379,7 @@ def MultiVariateGaus(mu,covmat):
 
 	XYdist = multivariate_normal(mu, covmat)
 
-	# pull 1000 random varables from the theoretical universe
+	# pull 1000 random variables from the theoretical universe
 	rvs= XYdist.rvs(size=1_000) 
 
 	# make a pandas DataFrame to hold our RV values

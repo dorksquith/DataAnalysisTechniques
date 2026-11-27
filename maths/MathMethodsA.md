@@ -16,7 +16,7 @@ numbering:
 (chapter:mma)=
 # Math Methods A: Functions and Calculus
 
-This appendix introduces the mathematical tools used throughout the module: functions, logarithms, differentiation, and integration. <!--Plotting examples for the functions and results covered here are collected in [PlottingTipsAndTricks](#chapter:plotting-tips).-->
+This appendix introduces the mathematical tools used throughout the module: functions, logarithms, differentiation, and integration.
 
 ---
 

@@ -12,6 +12,10 @@ kernelspec:
 (chapter:bay)=
 # Bayesian Inference
 
+* `numpy` methods: `round, argsort, cumsum, diff, searchsorted, flatnonzero`
+* `scipy.stats` distributions: `beta, gamma`
+* `scipy.stats` methods: `interval`
+
 Bayesian Inference gives us a framework for **updating our beliefs** about a parameter $\theta$ using data $y$. Rather than treating $\theta$ as a fixed but unknown constant (the Frequentist view), the Bayesian approach treats $\theta$ as a random variable with its own probability distribution, and updates that distribution as data arrive.
 
 
@@ -51,10 +55,10 @@ Each element has a precise name and role:
 
 | Term | Symbol | Meaning |
 |---|---|---|
-| **Posterior** | $P(\theta \mid y)$ | Our updated belief about $\theta$ after seeing data $y$ |
-| **Likelihood** | $\mathcal{L}(\theta \mid y)$ | The probability of observing data $y$ given $\theta$ |
+| **Posterior** | $P(\theta \vert y)$ | Our updated belief about $\theta$ after seeing data $y$ |
+| **Likelihood** | $\mathcal{L}(\theta \vert y)$ | The probability of observing data $y$ given $\theta$ |
 | **Prior** | $\pi(\theta)$ | Our belief about $\theta$ before seeing data |
-| **Evidence** | $\int \mathcal{L}(\theta \mid y)\, \pi(\theta)\, d\theta$ | A normalisation constant ensuring $\int P(\theta \mid y)\, d\theta = 1$ |
+| **Evidence** | $\int \mathcal{L}(\theta \vert y)\, \pi(\theta)\, d\theta$ | A normalisation constant ensuring $\int P(\theta \vert y)\, d\theta = 1$ |
 
 The Prior is a PDF (or PMF for discrete $\theta$), not a single number. In the discrete example below there are only two hypotheses, so the Prior reduces to two numbers: $\pi(\theta_s)$ and $\pi(\theta_h)$. This is a special case; in general $\theta$ ranges continuously over a whole parameter space and the Prior is a full probability distribution over that space.
 
@@ -67,7 +71,7 @@ The Posterior Probability $P(\theta|y)$ is a PDF with a maximum at $\hat{\theta}
 
 The maximum value of the Posterior PDF is the [**Mode**](#sec:tandc_medmod), rather than the mean; the Posterior expectation is not (necessarily) equal to the MAP. The mode and mean are identical for distributions that are symmetric (eg Normal).
 
-If the Prior is **uniform** (uninformative), then $\hat{\theta}_{\mathsf{MAP}} = \hat{\theta}_{\mathsf{MLE}}$. In the limit of large $N$, $\hat{\theta}_{\mathsf{MAP}} \rightarrow \hat{\theta}_{\mathsf{MLE}}$, **regardless of the prior chosen**. This is because the information in the data grows with $N$, while the information in the Prior is static, so quickly becomes irrelevant in the presence of large datasets. We will look at this in the specific examples below.
+If the Prior is **uniform** (uninformative), then $\hat{\theta}_{\mathsf{MAP}} = \hat{\theta}_{\mathsf{MLE}}$. In the limit of large $N$, $\hat{\theta}_{\mathsf{MAP}} \rightarrow \hat{\theta}_{\mathsf{MLE}}$, **regardless of the prior chosen**, as long as the Prior does not rule out the true value: a Prior that is zero somewhere stays zero there, however much data we collect (see the note on [avoiding hard boundaries](#sec:bay_hardbound) in the Notes on Priors). This is because the information in the data grows with $N$, while the information in the Prior is static, so quickly becomes irrelevant in the presence of large datasets. We will look at this in the specific examples below.
 
 :::{tip}
 The key advantage of MAP over MLE is that it incorporates prior beliefs — especially valuable with small datasets. 
@@ -75,13 +79,13 @@ The key advantage of MAP over MLE is that it incorporates prior beliefs — espe
 
 
 
-The Uncertainty on the MAP is provided by the **Credible Interval**: a range of posterior values that contains the true parameter with a specified probability (e.g. 95%). This is the intuitive statement that many people incorrectly associate with Frequentist confidence intervals.
+The Uncertainty on the MAP is provided by the **Credible Interval**: a range of parameter values that contains the true parameter with a specified probability (e.g. 95%), given the data and the prior. This is the intuitive statement that many people incorrectly associate with Frequentist confidence intervals. We look at how to choose a credible interval in [](#sec:bay_ci).
 
 
 ---
 
 (sec:bay_covid)=
-## Bayesian Inference
+## A Screening Test Example
 
 Let's do a toy example that is familiar to us, to get familiar with the terms in [Bayes' theorem](#fig:bay_bayespic).
 
@@ -126,11 +130,11 @@ Let's remind ourselves of the [Bernoulli PMF](#eq:pmf_bernpmf), and adjust the n
 :label: eq:bay_rebern
 \begin{aligned}
 p_K(k) & = p^k (1-p)^{1-k} \\[6pt]
-p_Y(y \mid \theta) &= \theta^y (1-\theta)^{1-y}\\
+p_Y(y | \theta) &= \theta^y (1-\theta)^{1-y}\\
 \end{aligned}
 ```
 
-The PMF $p_K(k)$ tells us the probability of measuring the data with a value $k$ given the Bernoulli parameter $p$. On the second line of [](#eq:bay_rebern) we have rephrased this using using $p \rightarrow \theta$ for the Bernoulli parameter and $k \rightarrow y$ for the data. We have done this to make things more general and less confusing as we go forward.
+The PMF $p_K(k)$ tells us the probability of measuring the data with a value $k$ given the Bernoulli parameter $p$. On the second line of [](#eq:bay_rebern) we have rephrased this using $p \rightarrow \theta$ for the Bernoulli parameter and $k \rightarrow y$ for the data. We have done this to make things more general and less confusing as we go forward.
 
 Recall that the Bernoulli PMF is a product of two terms:
 
@@ -145,8 +149,8 @@ For $N=1$ the Likelihood equals the PMF, and for Bernoulli the PMF is two-valued
 ```{math}
 :label: eq:bay_bernlike
 \begin{aligned}
-\mathcal{L}(\theta_s \mid y) & = \theta_s^y (1-\theta_s)^{1-y} \\[6pt]
-\mathcal{L}(\theta_h \mid y) & = \theta_h^y (1-\theta_h)^{1-y} \\[6pt]
+\mathcal{L}(\theta_s | y) & = \theta_s^y (1-\theta_s)^{1-y} \\[6pt]
+\mathcal{L}(\theta_h | y) & = \theta_h^y (1-\theta_h)^{1-y} \\[6pt]
 \end{aligned}
 ```
 
@@ -157,8 +161,8 @@ For positive tests ($y=1$), the Likelihoods reduce to the "success terms", and f
 :label: tab:bay_covid2
 || Positive, $y=1$  | Negative $y=0$ | 
 |---|---|---|
-| **Sick** ($\theta_s$) | $\mathcal{L}(\theta_s \mid y=1) = \theta_s=1$ | $\mathcal{L}(\theta_s \mid y=0) = 1-\theta_s=0$ |
-| **Healthy** ($\theta_h$) | $\mathcal{L}(\theta_h \mid y=1)=\theta_h=0.05$ | $\mathcal{L}(\theta_h\mid y=0)=1-\theta_h=0.95$ |
+| **Sick** ($\theta_s$) | $\mathcal{L}(\theta_s \vert y=1) = \theta_s=1$ | $\mathcal{L}(\theta_s \vert y=0) = 1-\theta_s=0$ |
+| **Healthy** ($\theta_h$) | $\mathcal{L}(\theta_h \vert y=1)=\theta_h=0.05$ | $\mathcal{L}(\theta_h\vert y=0)=1-\theta_h=0.95$ |
 :::
 
 Under $\theta_s$ a positive test is certain; under $\theta_h$ it occurs with probability 0.05 (the [false positive rate](#eq:hyp_fpr)).
@@ -192,19 +196,19 @@ The denominator of [](#fig:bay_bayespic) is the total probability of the data (a
 :label: eq:bay_evidence
 
 \begin{aligned}
-\text{Evidence} &= \mathcal{L}(\theta_s \mid y=1)\,\pi(\theta_s) + \mathcal{L}( \theta_h \mid y=1)\,\pi(\theta_h) \\
+\text{Evidence} &= \mathcal{L}(\theta_s | y=1)\,\pi(\theta_s) + \mathcal{L}( \theta_h | y=1)\,\pi(\theta_h) \\
 &= 1 \times \tfrac{1}{1000} + 0.05 \times \tfrac{999}{1000} \\
 &= 0.001 + 0.04995 \\
 &= 0.05095
 \end{aligned}
 ```
 
-Note that the integral is over the parameters $d\theta$, not the data $y$: this is the evidence for a positive test result only (one of the two possible outcomes). The same procedure can be done for the other possible outcome, $y=0$.
+Note that the sum is over the parameter values $\theta$ (in the continuous case, an integral over $d\theta$), not the data $y$: this is the evidence for a positive test result only (one of the two possible outcomes). The same procedure can be done for the other possible outcome, $y=0$.
 
 Note also that in the continuous case this sum becomes the integral in [](#fig:bay_bayespic), which is often impossible to compute analytically — a key motivation for the numerical methods in the next chapter, [](#sec:mcmc_mcmc). 
 
 :::{tip} Evidence
-The Evidence is not specific to a particular hypothesis (ie, a particular parameter value). It is just a number, a normalising constant, which ensures the Posterior on the left hand side of bayes is a valid Probability distribution with integral 1. As such, we do not consider the Evidence in the following sections, but it will be crucial in the next chapter when we think about [**Predictive Posteriors**](#sec:mcmc_predpost).
+The Evidence is not specific to a particular hypothesis (ie, a particular parameter value). It is just a number, a normalising constant, which ensures the Posterior on the left hand side of Bayes' theorem is a valid Probability distribution with integral 1. As such, we do not need the Evidence to find the shape of the Posterior, and we do not consider it in the following sections. The Evidence does matter when we compare two different **models** for the same data (via the ratio of their Evidences, the *Bayes factor*).
 :::
 
 ---
@@ -218,7 +222,7 @@ We now have everything we need. For a positive test result $y=1$:
 ```{math}
 :label: eq:bay_covidpost
 
-P(\theta_s \mid y=1) = \frac{\mathcal{L}( \theta_s \mid y=1)\,\pi(\theta_s)}{\text{Evidence}} = \frac{(1)(0.001)}{0.05095} \approx 0.0196
+P(\theta_s | y=1) = \frac{\mathcal{L}( \theta_s | y=1)\,\pi(\theta_s)}{\text{Evidence}} = \frac{(1)(0.001)}{0.05095} \approx 0.0196
 
 ```
 
@@ -227,7 +231,7 @@ Despite a perfect sensitivity — sick people **always** test positive — the p
 
 The full posterior table for positive tests[^note1] for both hypotheses is:
 
-| | Likelihood $\mathcal{L}( \theta \mid y=1)$ | Prior $\pi(\theta)$ | Numerator | Evidence | Posterior $P(\theta \mid y=1)$ |
+| | Likelihood $\mathcal{L}( \theta \vert y=1)$ | Prior $\pi(\theta)$ | Numerator | Evidence | Posterior $P(\theta \vert y=1)$ |
 |---|---|---|---|---|---|
 | $\theta_s$ | 1 | 0.001 | 0.001 | 0.05095 | **0.0196** |
 | $\theta_h$ | 0.05 | 0.999 | 0.04995 | 0.05095 | **0.9804** |
@@ -238,7 +242,7 @@ The full posterior table for positive tests[^note1] for both hypotheses is:
 The use of data to construct a posterior in this way is called **Bayesian Updating**:
 
 - **Before** the test, we held a Prior $\pi(\theta_s) = 0.001$
-- **After** the test, we calculated a Posterior $P(\theta_s \mid y=1) \approx 0.02$
+- **After** the test, we calculated a Posterior $P(\theta_s | y=1) \approx 0.02$
 
 
 ---
@@ -248,7 +252,7 @@ The use of data to construct a posterior in this way is called **Bayesian Updati
 
 In the Bernoulli example above we used a single value prior with no quoted uncertainty ($\pi(\theta_s) = \tfrac{1}{1000}$) - this is just about forgivable for a toy example for pedagogical purposes, but in general **we must insist that all numbers have quoted uncertainties, otherwise they are meaningless**.
 
-Using a PDF as a prior distribution is the proper way forward, as we can extract the uncertainty directly from the Variance. Additionally, using a Prior distribution with a **kernel** that matches our Likelhood allows us to extract the form of the Posterior analytically; the Posterior distribution will have the same form as the Prior, with updated parameters. This kernel-matching is called **Conjugacy**.
+Using a PDF as a prior distribution is the proper way forward, as we can extract the uncertainty directly from the Variance. Additionally, using a Prior distribution with a **kernel** that matches our Likelihood allows us to extract the form of the Posterior analytically; the Posterior distribution will have the same form as the Prior, with updated parameters. This kernel-matching is called **Conjugacy**.
 
 :::{tip} Kernel Matching: Conjugacy
 The **kernel** of a distribution is the part of its PDF or PMF that depends on the random variable — the normalising constant is dropped. Recognising kernel shapes is a powerful shortcut: when two distributions share a kernel shape, one is the natural conjugate prior for the other.
@@ -295,7 +299,7 @@ f_\theta(\theta) = \frac{1}{B(\alpha,\beta)}\, \theta^{\alpha-1} (1-\theta)^{\be
 
   where $B(\alpha, \beta)$ is the [Beta function](#eq:mmb_betadef) (a normalising constant).
 
-The **Mode** of a Beta($\alpha,\beta$) Posterior distribution gives the **Maximum A Posteriori (MAP)** estimate: 
+The **Mode** of a Beta($\alpha,\beta$) Posterior distribution gives the **Maximum A Posteriori (MAP)** estimate (for $\alpha > 1$ and $\beta > 1$; if $\alpha$ or $\beta$ equals 1, the mode is at the edge of the range, $\theta = 0$ or $\theta = 1$): 
 
 ```{math}
 :label: eq:bay_beta_map
@@ -312,7 +316,12 @@ $$\label{eq:bay_betavar}V[\theta] = \frac{E[\theta]\,(1-E[\theta])}{\alpha+\beta
 
 [^note2]: see [MathMethodsB: Beta PDF](#sec:mmb_betavar) for notes on calculating the Beta $E[\theta]$ and $V[\theta]$.
 
-The two **shape HyperParameters** $\alpha$ and $\beta$ allow for the Beta PDF to be something of a "chameleon", taking on any shape we need. A few example distributions are shown in [](#fig:bay_beta11): larger $\alpha$ pulls mass toward $\theta=1$; larger $\beta$ pulls it toward $\theta=0$; large equal values give a symmetric bell.
+The two **shape hyperparameters** $\alpha$ and $\beta$ allow for the Beta PDF to be something of a "chameleon", taking on any shape we need. A few example distributions are shown in [](#fig:bay_beta11): larger $\alpha$ pulls mass toward $\theta=1$; larger $\beta$ pulls it toward $\theta=0$; large equal values give a symmetric bell.
+
+:::{tip} Why "hyperparameters"?
+:label: tip:bay_hyper
+In Bayesian inference the word *parameter* is already taken: $\theta$ is the parameter of the data distribution (e.g. the Bernoulli probability of success). The Beta distribution is a distribution *for* $\theta$, and it has parameters of its own, $\alpha$ and $\beta$. To keep the two levels apart, we call $\alpha$ and $\beta$ **hyperparameters**: parameters of the Prior, one level "above" the parameter we are trying to learn about. When the data turn the Prior into the Posterior, it is the hyperparameters that change ($\alpha \to \alpha'$, $\beta \to \beta'$).
+:::
 
 ::::{grid} 2 2 2 2
 
@@ -351,14 +360,14 @@ $\mathsf{Beta}(100,100)$: symmetric bell at 0.5 — strong belief that $\theta \
 (sec:bay_berbet)=
 ### Bernoulli-Beta 
 
-The **Conjugate Prior** for $Y\sim \mathsf{Bernoulli}(\theta)$ data is $\theta \sim \mathsf{Beta}(\theta)$.
+The **Conjugate Prior** for $Y\sim \mathsf{Bernoulli}(\theta)$ data is $\theta \sim \mathsf{Beta}(\alpha, \beta)$.
 
 
 The **Posterior Probability** is proportional to the Likelihood multiplied by the Prior:
 
 ```{math}
 :label: eq:bay_propto
-P(\theta \mid y) \propto \mathcal{L}(\theta \mid y)\; \pi(\theta)
+P(\theta | y) \propto \mathcal{L}(\theta | y)\; \pi(\theta)
 ```
 
 
@@ -379,13 +388,13 @@ Let's calculate the shape hyperparameters, $\alpha', \beta'$,  of the **Beta Pos
 
 
 \mathsf{Bernoulli\; Likelihood\;\;} &
-\mathcal{L}(\theta\mid y) &
+\mathcal{L}(\theta| y) &
 \propto &\; \theta^{y}(1-\theta)^{1-y} &\\[8pt]
 \mathsf{Beta\; Prior\;\;} &
 \pi(\theta) &
 \propto &\; \theta^{\alpha-1}(1-\theta)^{\beta-1} &\\[8pt]
 \mathsf{Beta\; Posterior\;\;} &
-P(\theta \mid y) &
+P(\theta | y) &
 \propto &\; \theta^{\alpha'-1}(1-\theta)^{\beta'-1} &\\[8pt]
 \end{aligned}
 ```
@@ -397,7 +406,7 @@ Matching powers ($A^{a} A^{b} = A^{a+b}$), we have:
 ```{math}
 \begin{aligned}
 \theta^{\alpha'-1} &= \theta^{y} \, \theta^{\alpha-1} \quad &\implies\quad \alpha' &= \alpha + y \\[6pt]
-\theta^{\beta'-1} &= \theta^{1-y} \, \theta^{\beta-1} \quad &\implies\quad \beta' &= \beta + 1 -y\\[6pt]
+(1-\theta)^{\beta'-1} &= (1-\theta)^{1-y} \, (1-\theta)^{\beta-1} \quad &\implies\quad \beta' &= \beta + 1 -y\\[6pt]
 \end{aligned}
 ```
 
@@ -410,7 +419,7 @@ For a single **Bernoulli** data point with $y$ successes (zero or one!), the **P
 
 ```{math}
 :label: eq:bay_postbern1
-P(\theta \mid y) \propto \mathsf{Beta}(\alpha+y,\; \beta+1-y)
+P(\theta | y) \propto \mathsf{Beta}(\alpha+y,\; \beta+1-y)
 ```
 
 :::{tip} 
@@ -423,7 +432,7 @@ We will commonly have more than one data point, and if we have $N$ Bernoulli tri
 ```{math}
 :label: eq:bay_bernsums
 \begin{aligned}
-\mathcal{L}(\theta\mid y) &= \prod\limits_i^N \theta^{y_i}(1-\theta)^{1-y_i} \\[12pt]
+\mathcal{L}(\theta| y) &= \prod\limits_i^N \theta^{y_i}(1-\theta)^{1-y_i} \\[12pt]
 & =  \theta^{\sum_i y_i}(1-\theta)^{\sum_i (1- y_i)} \\[8pt]
 \end{aligned}
 ```
@@ -441,7 +450,7 @@ For N **Bernoulli** data points with $s = \sum y$ successes, the **Posterior** d
 
 ```{math}
 :label: eq:bay_postbernN
-P(\theta \mid y) \propto \mathsf{Beta}(\alpha+s,\; \beta+N-s)
+P(\theta | y) \propto \mathsf{Beta}(\alpha+s,\; \beta+N-s)
 ```
 
 The plots in [](#fig:bay_bb4) attempt to illustrate the conjugate update for a Bernoulli likelihood: the first panel compares the true Bernoulli probabilities (outlined bars) with the observed frequencies (filled bars), **in data space**, ie as a function of $y$, while the remaining panels show the Likelihood, Prior, and Posterior as functions of $\theta$ in parameter space.
@@ -465,13 +474,13 @@ I have no prior knowledge of whether the coin is fair or not, so I decide to sta
 
 
 
-The $\mathsf{Beta}(\alpha, \beta)$ [expectation](#eq:bay_betaexp) is $\alpha/(\alpha+\beta) =  1/2$.
+The $\mathsf{Beta}(1, 1)$ [expectation](#eq:bay_betaexp) is $\alpha/(\alpha+\beta) =  1/2$.
 
 I toss the coin and observe heads, $y=1$. The Posterior distribution, taking into account this one data point and using the [parameter update rule](#eq:bay_postbern1), is:
 
 ```{math}
 \begin{aligned}
-P(\theta \mid y=1) & \propto \mathsf{Beta}(\alpha+y,\; \beta+1-y)\\[6pt]
+P(\theta | y=1) & \propto \mathsf{Beta}(\alpha+y,\; \beta+1-y)\\[6pt]
 				   & \propto \mathsf{Beta}(\alpha+1,\; \beta+1-1)\\[6pt]
 				   & \propto \mathsf{Beta}(2,\; 1)\\[6pt]
 
@@ -486,11 +495,11 @@ The Likelihood, and therefore the Posterior, are updated with every new data mea
 * $\hat{\theta}_{\mathsf{MLE}}$: mode of the Likelihood distribution,
 * $\hat{\theta}_{\mathsf{MAP}}$: mode of the Posterior distribution,
 
-are identical when the Prior distribution is uniform, as it is in this case.
+are identical when the Prior distribution is uniform, as it is in this case. With an informative Prior they differ, because the MAP includes the Prior, but they converge for large $N$ because the information in the data (via the Likelihood) overwhelms the Prior. We will see this in the examples that follow.
 
-The Posterior Expectation $E[\theta]$ differs from $\hat{\theta}_{\mathsf{MAP}}$ because the mode and mean of the Posterior Beta are not equal; the distribution is not symmetric [](#fig:bay_bb4).
+The Posterior Expectation $E[\theta]$ differs from $\hat{\theta}_{\mathsf{MAP}}$ because the mode and mean of the Posterior Beta are not equal; the distribution is not symmetric. They converge for large $N$, as the Posterior becomes narrower and more symmetric.
 
-The $\pm 1\sigma$ Credible Interval on the MAP is also shown. See [](#sec:bay_python_berbet) for an example of this calculation in python.
+The 68.3% [HPD credible interval](#sec:bay_hpd) (the same probability as $\pm 1\sigma$ of a Normal) is also shown. See [](#sec:bay_python_berbet) for an example of this calculation in python.
 
 
 
@@ -510,7 +519,7 @@ The MLE, MAP, and Posterior expectation for Bernoulli data with a Beta(1,1) **Un
 (sec:bay_binbet)=
 ### Binomial-Beta 
 
-The **Conjugate Prior** for $Y\sim \mathsf{Binom}(n,\theta)$ data is also $\theta \sim \mathsf{Beta}(\theta)$. Just as for the Bernoulli case, a Beta Prior yields a Beta Posterior with updated shape hyperparameters $\alpha', \beta'$:
+The **Conjugate Prior** for $Y\sim \mathsf{Binom}(n,\theta)$ data is also $\theta \sim \mathsf{Beta}(\alpha, \beta)$. Just as for the Bernoulli case, a Beta Prior yields a Beta Posterior with updated shape hyperparameters $\alpha', \beta'$:
 
 ```{math}
 :label: eq:bay_post_binom
@@ -522,9 +531,9 @@ Let's calculate the shape hyperparameters, $\alpha', \beta'$,  of the **Beta Pos
 
 ```{math}
 \begin{aligned}
-\mathsf{Binomial\; Likelihood}& \quad \mathcal{L}(\theta\mid y) &\propto &\;\;\theta^y(1-\theta)^{n-y} \\[8pt]
+\mathsf{Binomial\; Likelihood}& \quad \mathcal{L}(\theta| y) &\propto &\;\;\theta^y(1-\theta)^{n-y} \\[8pt]
 \mathsf{Beta\; Prior} & \quad \pi(\theta) & \propto &\;\;\theta^{\alpha-1}(1-\theta)^{\beta-1} \\[8pt]
-\mathsf{Beta\; Posterior} & \quad P(\theta \mid y) &\propto &\;\;\theta^{\alpha'-1}(1-\theta)^{\beta'-1} \\[8pt]
+\mathsf{Beta\; Posterior} & \quad P(\theta | y) &\propto &\;\;\theta^{\alpha'-1}(1-\theta)^{\beta'-1} \\[8pt]
 \end{aligned}
 ```
 
@@ -537,21 +546,21 @@ We find:
 \end{aligned}
 ```
 
-Just as for Bernoulli, a **positive** result ($y=1$) increments $\alpha$; a **negative** result ($y=0$) increments $\beta$. 
+Each success adds 1 to $\alpha$ and each failure adds 1 to $\beta$, just as for Bernoulli: an experiment with $y$ successes in $n$ trials adds $y$ to $\alpha$ and $n-y$ to $\beta$. 
 
 
 For a single **Binomial** experiment with $n$ trials and $y$ successes the **Posterior** is:
 
 ```{math}
 :label: eq:bay_postbin1
-P(\theta \mid y) \propto \mathsf{Beta}(\alpha+y,\; \beta + n - y)
+P(\theta | y) \propto \mathsf{Beta}(\alpha+y,\; \beta + n - y)
 ```
 
 For N **Binomial** experiments with $s = \sum y$ total successes from $nN$ total trials:
 
 ```{math}
 :label: eq:bay_postbinN
-P(\theta \mid y) \propto \mathsf{Beta}(\alpha+s,\; \beta + nN - s)
+P(\theta | y) \propto \mathsf{Beta}(\alpha+s,\; \beta + nN - s)
 ```
 
 The plots in [](#fig:bay_binb4) attempt to illustrate the conjugate update for a Binomial likelihood: the first panel compares the true Binomial probabilities (outlined bars) with the observed frequency (filled bar), **in data space**, ie as a function of $y$, while the remaining panels show the Likelihood, Prior, and Posterior as functions of $\theta$ in parameter space.
@@ -605,7 +614,7 @@ The Posterior distribution, taking into account my choice of Prior, $\mathsf{Bet
 
 ```{math}
 \begin{aligned}
-P(\theta \mid y) & \propto \mathsf{Beta}(\alpha+s,\; \beta + nN - s)\\[6pt]
+P(\theta | y) & \propto \mathsf{Beta}(\alpha+s,\; \beta + nN - s)\\[6pt]
 				 & \propto \mathsf{Beta}(2+7,\; 8 + 30 - 7)\\[6pt]
 				 & \propto \mathsf{Beta}(9,\; 31)\\[6pt]
 
@@ -630,13 +639,7 @@ As we accumulate data, the Posterior distribution $P(\theta | y)$ gets closer to
 :::
 
 
-The Likelihood, and therefore the Posterior, are updated with every new data measurement, as illustrated in [](#fig:bay_bbanim) and [](#fig:bay_map_n_bin). The corresponding parameter estimates:
-* $\hat{\theta}_{\mathsf{MLE}}$: mode of the Likelihood distribution,
-* $\hat{\theta}_{\mathsf{MAP}}$: mode of the Posterior distribution,
-
-are different - because the MAP includes the Prior - but converge for large $N$ because the information in the data (via the Likelihood) overwhelms the Prior distribution on $\theta$.
-
-The Posterior Expectation $E[\theta]$ differs from the $\hat{\theta}_{\mathsf{MAP}}$ because the mode and mean of the Posterior Beta are not equal; the distribution is not symmetric. They converge for large $N$ as the Posterior distribution converges on the MAP.
+As in the [coin-toss example](#sec:bay_toyber), [](#fig:bay_bbanim) and [](#fig:bay_map_n_bin) show the MLE, MAP and Posterior expectation as data accumulate. This time the Prior is informative, so the MAP and MLE differ at small $N$, and converge as the data overwhelm the Prior. The Posterior Beta is skewed, so its expectation and MAP also differ until $N$ is large.
 
 
 
@@ -647,7 +650,7 @@ The Posterior Expectation $E[\theta]$ differs from the $\hat{\theta}_{\mathsf{MA
 
 ![](/figures/Bayes_MLE_MAP_v_N_BinomialBeta.png)
 
-The MLE, MAP, and Posterior expectation for Binomial data with a Beta(2,8) **Informative Prior**, as a function of the number of measurements $N$. The $\pm 1\sigma$ Credible Interval on the MAP is also shown. See [](#sec:bay_python_binbet) for an example of this calculation in python.
+The MLE, MAP, and Posterior expectation for Binomial data with a Beta(2,8) **Informative Prior**, as a function of the number of measurements $N$. The 68.3% HPD credible interval (the same probability as $\pm 1\sigma$ of a Normal) is also shown. See [](#sec:bay_python_binbet) for an example of this calculation in python.
 :::
 
 
@@ -657,14 +660,12 @@ The MLE, MAP, and Posterior expectation for Binomial data with a Beta(2,8) **Inf
 (sec:bay_gampdf)=
 ### The Gamma Distribution
 
-(bayesian:gamma)=
-
 The Gamma PDF is the **Conjugate Prior** for the Poisson and Exponential likelihoods. If we have Poisson or Exponential data, using a Gamma Prior will produce a Gamma Posterior whose shape hyperparameters we can calculate analytically using kernel matching.
 
 ```{math}
 \begin{aligned}
-\mathsf{Poisson\,}\mathcal{L}(\theta\mid y) \times \mathsf{Gamma\,}\pi(\theta) &\rightarrow \mathsf{Gamma\,}P(\theta | y)\\[8pt]
-\mathsf{Exponential\,}\mathcal{L}(\theta\mid y) \times \mathsf{Gamma\,}\pi(\theta) &\rightarrow \mathsf{Gamma\,}P(\theta | y)\\
+\mathsf{Poisson\,}\mathcal{L}(\theta| y) \times \mathsf{Gamma\,}\pi(\theta) &\rightarrow \mathsf{Gamma\,}P(\theta | y)\\[8pt]
+\mathsf{Exponential\,}\mathcal{L}(\theta| y) \times \mathsf{Gamma\,}\pi(\theta) &\rightarrow \mathsf{Gamma\,}P(\theta | y)\\
 \end{aligned}
 ```
 
@@ -733,9 +734,9 @@ $$\label{eq:bay_gamexp}E[\theta] = \frac{\alpha}{\beta}$$
 
 $$\label{eq:bay_gamvar}V[\theta] = \frac{\alpha}{\beta^2}$$
 
-[^note3]: The Expectation and Variance can be calculated using [integration by parts](#sec:mma_intbypar), as per for the exponential PDF.
+[^note3]: The Expectation and Variance can be calculated using [integration by parts](#sec:mma_intbypar), as for the exponential PDF.
 
-The two **shape HyperParameters** $\alpha$ and $\beta$ allow the Gamma PDF to be flexible in the same way as for the [Beta PDF](#eq:bay_betapdf): larger $\alpha$ shifts mass rightward toward larger rates; larger $\beta$ compresses the distribution and reduces variance; $\alpha = \beta = 1$ gives an Exponential distribution, as shown in [](#fig:bay_gamma11)
+The two **shape hyperparameters** $\alpha$ and $\beta$ allow the Gamma PDF to be flexible in the same way as for the [Beta PDF](#eq:bay_betapdf): larger $\alpha$ shifts mass rightward toward larger rates; larger $\beta$ compresses the distribution and reduces variance; $\alpha = 1$ gives an Exponential distribution, as shown in [](#fig:bay_gamma11) and [](#fig:bay_gamma15)
 
 
 ::::{grid} 2 2 2 2
@@ -802,9 +803,9 @@ Let's calculate the shape hyperparameters, $\alpha', \beta'$, of the Gamma Poste
 ```{math}
 \begin{aligned}
 
-\mathsf{Poisson\; Likelihood\;\;} & \mathcal{L}(\theta\mid y) & \propto&\;\; \theta^{y}\, e^{-\theta} \\[6pt]
+\mathsf{Poisson\; Likelihood\;\;} & \mathcal{L}(\theta| y) & \propto&\;\; \theta^{y}\, e^{-\theta} \\[6pt]
 \mathsf{Gamma\; Prior\;\;} & \pi(\theta) & \propto &\;\;\theta^{\alpha-1}\,e^{-\beta\theta} \\[6pt]
-\mathsf{Gamma\; Posterior\;\;}  & P(\theta \mid y)  & \propto &\;\;\theta^{\alpha'-1}\,e^{-\beta'\theta} \\[6pt]
+\mathsf{Gamma\; Posterior\;\;}  & P(\theta | y)  & \propto &\;\;\theta^{\alpha'-1}\,e^{-\beta'\theta} \\[6pt]
 \end{aligned}
 ```
 
@@ -821,16 +822,16 @@ A single Poisson observation adds $y$ to $\alpha$ and 1 to $\beta$, such that th
 
 ```{math}
 :label: eq:bay_postpoiss1
-P(\theta \mid y) \propto \mathsf{Gamma}(\alpha + y,\; \beta + 1)
+P(\theta | y) \propto \mathsf{Gamma}(\alpha + y,\; \beta + 1)
 ```
 
-Because the data is in the exponent (see [](#eq:bay_bernsums) ), the Likelihood product over PMFs results in $y\rightarrow \sum_i y_i$ with respect to the single data-point case. When we were doing counting experiments ([](#sec:bay_berbet) and [](#sec:bay_binbet)) it was natural to leave this expressed as a sum, $s=\sum_i y_i$, but as the Poisson distribution models a rate, it is more natural to write the "sum of rates" in terms of the mean rate, $\bar{y}$, so we will use $N\bar{y} = \sum_i y_i$.
+Because the data is in the exponent (see [](#eq:bay_bernsums) ), the Likelihood product over PMFs results in $y\rightarrow \sum_i y_i$ with respect to the single data-point case. When we were doing counting experiments ([](#sec:bay_berbet) and [](#sec:bay_binbet)) it was natural to leave this expressed as a sum, $s=\sum_i y_i$. For Poisson data, each $y_i$ is a count in one interval (e.g. dogs in one hour), and it is natural to write the sum in terms of the mean count per interval, $\bar{y}$, which is our estimate of the rate: $N\bar{y} = \sum_i y_i$.
 
-For $N$ Poisson rate observations with mean observed rate $\bar{y}$:
+For $N$ Poisson observations (counts in $N$ intervals) with mean count per interval $\bar{y}$:
 
 ```{math}
 :label: eq:bay_postpoissN
-P(\theta \mid y) \propto \mathsf{Gamma}(\alpha + N\bar{y},\; \beta + N)
+P(\theta | y) \propto \mathsf{Gamma}(\alpha + N\bar{y},\; \beta + N)
 ```
 
 The plots in [](#fig:bay_pg4) attempt to illustrate the conjugate update for a Poisson likelihood: the first panel compares the true Poisson probabilities (outlined bars) with the observed frequency (filled bars), **in data space**, ie as a function of $y$, while the remaining panels show the Likelihood, Prior, and Posterior as functions of $\theta$ in parameter space.
@@ -861,7 +862,7 @@ $E[\theta] = \dfrac{\alpha}{\beta} = 15$, $\;V[\theta] = \dfrac{\alpha}{\beta^2}
 
 Solving:
 
-$$\frac{V[\theta]}{E[\theta]} = \frac{1}{\beta} = 1 \quad\implies\quad \beta = 1 \qquad \text{then} \qquad \frac{\alpha}{\beta} = \alpha = 15$$.
+$$\frac{V[\theta]}{E[\theta]} = \frac{1}{\beta} = 1 \quad\implies\quad \beta = 1 \qquad \text{then} \qquad \frac{\alpha}{\beta} = \alpha = 15$$
 
 
 A quick sanity-check of the $\mathsf{Gamma}(15, 1)$ distribution:
@@ -898,13 +899,7 @@ The posterior is $\mathsf{Gamma}(75, 6)$, with expectation $E[\theta] = \dfrac{\
 
 
 
-The Likelihood, and therefore the Posterior, are updated with every new data measurement, as illustrated in [](#fig:bay_map_n_pois). The corresponding parameter estimates:
-* $\hat{\theta}_{\mathsf{MLE}}$: mode of the Likelihood distribution,
-* $\hat{\theta}_{\mathsf{MAP}}$: mode of the Posterior distribution,
-
-are different - because the MAP includes the Prior - but converge for large $N$ because the information in the data (via the Likelihood) overwhelms the Prior distribution on $\theta$.
-
-The Posterior Expectation $E[\theta]$ differs from $\hat{\theta}_{\mathsf{MAP}}$ because the mode and mean of the Posterior Gamma are not equal; the distribution is not symmetric. They converge for large $N$ as the Posterior distribution converges on the MAP.
+As in the [coin-toss example](#sec:bay_toyber), [](#fig:bay_map_n_pois) shows the MLE, MAP and Posterior expectation as data accumulate. This time the Prior is informative, so the MAP and MLE differ at small $N$, and converge as the data overwhelm the Prior. The Posterior Gamma is skewed, so its expectation and MAP also differ until $N$ is large.
 
 
 
@@ -915,7 +910,7 @@ The Posterior Expectation $E[\theta]$ differs from $\hat{\theta}_{\mathsf{MAP}}$
 
 ![](/figures/Bayes_MLE_MAP_v_N_PoissonGamma.png)
 
-The MLE, MAP, and Posterior expectation for Poisson data with a Gamma(15,1) **Informative Prior**, as a function of the number of measurements $N$. The $\pm 1\sigma$ Credible Interval on the MAP is also shown. See [](#sec:bay_python_poisgam) for an example of this calculation in python.
+The MLE, MAP, and Posterior expectation for Poisson data with a Gamma(15,1) **Informative Prior**, as a function of the number of measurements $N$. The 68.3% HPD credible interval (the same probability as $\pm 1\sigma$ of a Normal) is also shown. See [](#sec:bay_python_poisgam) for an example of this calculation in python.
 :::
 
 
@@ -931,12 +926,12 @@ The **Conjugate Prior** for Exponential data is also Gamma. A Gamma Prior yields
 \mathsf{Gamma}(\alpha', \beta') \propto \mathsf{Expon}(\theta) \; \mathsf{Gamma}(\alpha, \beta)
 ```
 
-Let's calculate the shape hyperparameters, $\alpha', \beta'$, of the Gamma Posterior for a Exponential Likelihood:
+Let's calculate the shape hyperparameters, $\alpha', \beta'$, of the Gamma Posterior for an Exponential Likelihood:
 
 ```{math}
 \begin{aligned}
-\mathsf{Gamma\; Posterior}  \quad P(\theta \mid y)  & \propto \theta^{\alpha'-1}\,e^{-\beta'\theta} \\
-\mathsf{Exponential\; Likelihood} \quad \mathcal{L}(\theta\mid y) & \propto \theta\, e^{-\theta y} \\
+\mathsf{Gamma\; Posterior}  \quad P(\theta | y)  & \propto \theta^{\alpha'-1}\,e^{-\beta'\theta} \\
+\mathsf{Exponential\; Likelihood} \quad \mathcal{L}(\theta| y) & \propto \theta\, e^{-\theta y} \\
 \mathsf{Gamma\; Prior} \quad \pi(\theta) & \propto \theta^{\alpha-1}\,e^{-\beta\theta} \\
 \end{aligned}
 ```
@@ -954,17 +949,17 @@ A single Exponential observation adds 1 to $\alpha$ and $y$ to $\beta$, such tha
 
 ```{math}
 :label: eq:bay_postexpon1
-P(\theta \mid y) \propto \mathsf{Gamma}(\alpha + 1,\; \beta + y)
+P(\theta | y) \propto \mathsf{Gamma}(\alpha + 1,\; \beta + y)
 ```
 
-For $N$ Exponential waiting time observations with mean observed rate $\bar{y}$:
+For $N$ Exponential waiting time observations with mean waiting time $\bar{y}$:
 
 ```{math}
 :label: eq:bay_postexponN
-P(\theta \mid y) \propto \mathsf{Gamma}(\alpha + N,\; \beta + N\bar{y})
+P(\theta | y) \propto \mathsf{Gamma}(\alpha + N,\; \beta + N\bar{y})
 ```
 
-The plots in [](#fig:bay_eg4) attempt to illustrate the conjugate update for a Exponential likelihood: the first panel compares the true Exponential probabilities (solid line) with the observed frequency (vertical lines), **in data space**, ie as a function of $y$, while the remaining panels show the Likelihood, Prior, and Posterior as functions of $\theta$ in parameter space.
+The plots in [](#fig:bay_eg4) attempt to illustrate the conjugate update for an Exponential likelihood: the first panel compares the true Exponential probabilities (solid line) with the observed frequency (vertical lines), **in data space**, ie as a function of $y$, while the remaining panels show the Likelihood, Prior, and Posterior as functions of $\theta$ in parameter space.
 
 :::{figure}
 :label: fig:bay_eg4
@@ -1026,13 +1021,7 @@ As we accumulate inter-arrival time data, the Posterior distribution $P(\theta |
 
 
 
-The Likelihood, and therefore the Posterior, are updated with every new data measurement, as illustrated in [](#fig:bay_map_n_exp). The corresponding parameter estimates:
-* $\hat{\theta}_{\mathsf{MLE}}$: mode of the Likelihood distribution,
-* $\hat{\theta}_{\mathsf{MAP}}$: mode of the Posterior distribution,
-
-are different - because the MAP includes the Prior - but converge for large $N$ because the information in the data (via the Likelihood) overwhelms the Prior distribution on $\theta$.
-
-The Posterior Expectation $E[\theta]$ differs from $\hat{\theta}_{\mathsf{MAP}}$ because the mode and mean of the Posterior Gamma are not equal; the distribution is not symmetric. They converge for large $N$ as the Posterior distribution converges on the MAP.
+As in the [coin-toss example](#sec:bay_toyber), [](#fig:bay_map_n_exp) shows the MLE, MAP and Posterior expectation as data accumulate. This time the Prior is informative, so the MAP and MLE differ at small $N$, and converge as the data overwhelm the Prior. The Posterior Gamma is skewed, so its expectation and MAP also differ until $N$ is large.
 
 
 
@@ -1043,7 +1032,7 @@ The Posterior Expectation $E[\theta]$ differs from $\hat{\theta}_{\mathsf{MAP}}$
 
 ![](/figures/Bayes_MLE_MAP_v_N_ExponentialGamma.png)
 
-The MLE, MAP, and Posterior expectation for Exponential data with a Gamma(15,1) **Informative Prior**, as a function of the number of measurements $N$. The $\pm 1\sigma$ Credible Interval on the MAP is also shown. See [](#sec:bay_python_expgam) for an example of this calculation in python.
+The MLE, MAP, and Posterior expectation for Exponential data with a Gamma(15,1) **Informative Prior**, as a function of the number of measurements $N$. The 68.3% HPD credible interval (the same probability as $\pm 1\sigma$ of a Normal) is also shown. See [](#sec:bay_python_expgam) for an example of this calculation in python.
 :::
 
 
@@ -1084,7 +1073,7 @@ It is convenient to work with **precision** $\lambda = 1/\sigma^2$. The **Poster
 
 ```{math}
 :label: eq:bay_postnorm
-P(\mu \mid \mathbf{y}) \sim \mathsf{Norm}(\mu_n,\, \sigma_n), \qquad
+P(\mu | \mathbf{y}) \sim \mathsf{Norm}(\mu_n,\, \sigma_n), \qquad
 \mu_n = \frac{\mu_0\lambda_0 + N\bar{y}\lambda}{\lambda_0 + N\lambda}, \qquad
 \sigma_n^2 = \frac{1}{\lambda_0 + N\lambda}
 ```
@@ -1095,7 +1084,7 @@ where $\lambda_0 = 1/\sigma_0^2$. The posterior mean $\mu_n$ is a **precision-we
 Expanding and collecting terms in $\mu$, the product of likelihood and prior gives
 
 ```{math}
-P(\mu \mid \mathbf{y}) \propto \exp\!\left[-\tfrac{1}{2}(\lambda_0 + N\lambda)
+P(\mu | \mathbf{y}) \propto \exp\!\left[-\tfrac{1}{2}(\lambda_0 + N\lambda)
 \!\left(\mu - \frac{\mu_0\lambda_0 + N\bar{y}\lambda}{\lambda_0 + N\lambda}\right)^{\!2}\right]
 ```
 
@@ -1122,13 +1111,7 @@ $$\mu_n = \frac{37.0 \times 4 + 37.52 \times 125}{129} = \frac{148 + 4690}{129} 
 
 The five measurements (each with precision 25) vastly outweigh the prior (precision 4): the data precision $5 \times 25 = 125$ is 31 times larger than $\lambda_0 = 4$, so $\mu_n$ is pulled almost all the way to $\bar{y}$. The posterior is also much narrower than either the prior or any single measurement: $\sigma_n \approx 0.088^\circ\text{C}$ versus $\sigma_0 = 0.5^\circ\text{C}$ and $\sigma = 0.2^\circ\text{C}$.
 
-The Likelihood, and therefore the Posterior, are updated with every new data measurement, as illustrated in [](#fig:bay_map_n_norm). The corresponding parameter estimates:
-* $\hat{\mu}_{\mathsf{MLE}}$: mode of the Likelihood distribution,
-* $\hat{\mu}_{\mathsf{MAP}}$: mode of the Posterior distribution,
-
-are different - because the MAP includes the Prior - but converge for large $N$ because the information in the data (via the Likelihood) overwhelms the Prior distribution on $\mu$.
-
-The Posterior Expectation $E[\mu]$ is identical to $\hat{\mu}_{\mathsf{MAP}}$ because **the mode and mean of the Posterior Normal are equal**; the distribution is symmetric.
+As in the [coin-toss example](#sec:bay_toyber), [](#fig:bay_map_n_norm) shows the MLE, MAP and Posterior expectation as data accumulate. The Prior is informative, so the MAP and MLE differ at small $N$, and converge as the data overwhelm the Prior. Here the Posterior is Normal, so it is symmetric and **the MAP and Posterior expectation are identical**.
 
 
 
@@ -1139,7 +1122,7 @@ The Posterior Expectation $E[\mu]$ is identical to $\hat{\mu}_{\mathsf{MAP}}$ be
 
 ![](/figures/Bayes_MLE_MAP_v_N_NormNorm.png)
 
-The MLE, MAP, and Posterior expectation for Normal data with a Norm(37,0.5) **Informative Prior**, as a function of the number of measurements $N$. The $\pm 1\sigma$ Credible Interval on the MAP is also shown. See [](#sec:bay_python_normnorm) for an example of this calculation in python.
+The MLE, MAP, and Posterior expectation for Normal data with a Norm(37,0.5) **Informative Prior**, as a function of the number of measurements $N$. The 68.3% HPD credible interval (the same probability as $\pm 1\sigma$ of a Normal) is also shown. See [](#sec:bay_python_normnorm) for an example of this calculation in python.
 :::
 
 
@@ -1169,7 +1152,13 @@ A summary of the Conjugate Priors and Posterior hyperparameters is given in [](#
 ## Notes on Priors
 
 **Why do we need a Prior?**
-A Frequentist does not use a Prior, so the posterior is proportional to the likelihood: $P(\theta \mid y) \propto \mathcal{L}(\theta \mid y)$. The Bayesian counter-argument is that sampling distributions are also a form of subjective prior knowledge — we still have to choose a distribution family for the likelihood.
+Bayes' theorem needs a Prior to turn the Likelihood into a probability distribution for $\theta$, the Posterior.
+
+A **Frequentist** does not do this. For a Frequentist, $\theta$ is a fixed (unknown) constant, not a random variable, so there is no Prior and no Posterior: only the Likelihood, and estimators such as the MLE.
+
+A **Bayesian** who knows nothing in advance can choose a **uniform** Prior. Then the Posterior is simply proportional to the Likelihood, $P(\theta | y) \propto \mathcal{L}(\theta | y)$, and the MAP equals the MLE. The two approaches give the same number, but they mean different things: the Bayesian can say "there is a 95% probability that $\theta$ is in this interval"; the Frequentist cannot.
+
+The (somewhat exaggerated) rivalry between Frequentists and Bayesians often comes down to the Prior. Frequentists object that a Prior is subjective: it builds the analyst's assumptions into the result, which seems unscientific. Bayesians reply that the Frequentist approach is not assumption-free either: choosing a distribution family for the Likelihood is also an assumption. A Prior at least puts its assumptions in plain view, where they can be checked and criticised.
 
 **Why use a conjugate Prior?**
 Conjugate priors produce a posterior in closed form, making the analysis transparent. Beta is the conjugate prior for probability-valued parameters. Gamma is conjugate for rate/count parameters.
@@ -1177,6 +1166,7 @@ Conjugate priors produce a posterior in closed form, making the analysis transpa
 **Uninformative Priors**
 If you have no prior knowledge, use a uniform (or weakly informative) prior. A uniform prior on the real line integrates to infinity — an **Improper Prior** — but this is acceptable as long as the resulting Posterior is proper (integrates to a finite value). See [Jeffreys Prior](https://en.wikipedia.org/wiki/Jeffreys_prior) for a principled way to choose uninformative priors. Note: a prior uniform in $X$ is not uniform in a transform of $X$.
 
+(sec:bay_hardbound)=
 **Avoid hard boundaries**
 If your parameter must be physically positive but theoretically unrestricted, a uniform prior with a hard boundary at zero causes problems near the boundary. Prefer a soft constraint — a distribution that naturally decays near zero (e.g. a half-normal or exponential prior).
 
@@ -1188,18 +1178,121 @@ Always plot the prior distribution before proceeding. It is easy to accidentally
 
 ---
 
+(sec:bay_ci)=
+## Credible Intervals
+
+A **95% Credible Interval** $[a, b]$ means: given the data and the prior, there is a 95% probability that $\theta \in [a, b]$. There are many intervals that hold 95% of the posterior probability, so we need a rule for choosing one. The two common choices are the **equal-tailed** interval and the **Highest Posterior Density (HPD)** interval.
+
+(sec:bay_eqtail)=
+### Equal-tailed interval
+
+In Python, we can use the `ppf` (percent point function) of the posterior distribution to extract an **equal-tailed** credible interval. For a 95% interval we take `ppf(0.025)` and `ppf(0.975)`, leaving 2.5% of the probability in each tail. The `interval` method provided by `scipy.stats` for continuous distributions gives exactly the same interval.
+
+Because the two tails hold equal probability, the equal-tailed interval is balanced around the **median** of the posterior, not the mode. For a symmetric posterior the median and the mode coincide, but for a skewed posterior the equal-tailed interval is not centred on the MAP, and the MAP can even lie outside it.
+
+(sec:bay_hpd)=
+### Highest Posterior Density (HPD) interval
+
+The **HPD interval** is the *narrowest* interval that contains the required probability. For a single-peaked posterior it always contains the mode, so it is the natural partner for the MAP. Every value of $\theta$ inside the HPD interval has a higher posterior density than every value outside it, and the density is the same height at both ends of the interval (unless one end is at the edge of the range of $\theta$).
+
+:::{figure}
+:label: fig:bay_hpd
+![](/figures/HPD-vs-EqualTailed.png)
+
+95% equal-tailed (orange) and HPD (magenta) credible intervals for two skewed Beta posteriors, both starting from a uniform $\mathsf{Beta}(1,1)$ prior. The HPD interval keeps every $\theta$ whose density lies above the dashed line, which is lowered until 95% of the probability is shaded. Left: $\mathsf{Beta}(2,10)$, the posterior after 1 success in 10 trials. The equal-tailed interval is balanced around the median (dotted) and reaches further into the long right-hand tail; the HPD interval is narrower and shifted towards the MAP (black dot). Right: $\mathsf{Beta}(3,1)$, the posterior after 2 successes in 2 trials, whose mode is at $\theta = 1$. The equal-tailed interval stops at 0.992 and misses the MAP; the HPD interval runs right up to it.
+:::
+
+We can find the HPD interval numerically. Any interval holding 95% of the probability runs from `ppf(q)` to `ppf(q + 0.95)`, where $q$ is the probability left in the lower tail. Moving $q$ slides the interval along the posterior: the HPD interval is the one with the smallest width.
+
+```{code-cell} python
+import numpy as np
+from scipy.stats import beta
+from scipy.optimize import minimize_scalar
+
+def hpd(dist, prob=0.95):
+	"""Highest Posterior Density interval of a frozen, single-peaked scipy distribution."""
+
+	# Any interval holding probability `prob` runs from ppf(q) to ppf(q + prob),
+	# where q is the probability left in the lower tail (0 <= q <= 1 - prob).
+	def width(q):
+		return dist.ppf(q + prob) - dist.ppf(q)
+
+	# The HPD interval is the narrowest one: find the q that minimises the width
+	res = minimize_scalar(width, bounds=(0, 1 - prob), method='bounded')
+	q = res.x
+	return dist.ppf(q), dist.ppf(q + prob)
+
+# Alf's trick shot posterior
+post_dist = beta(a=9, b=31)
+
+print(f"MAP           = {8/38:.3f}")
+print(f"Equal-tailed  : {np.round(post_dist.ppf([0.025, 0.975]), 3)}")
+print(f".interval     : {np.round(post_dist.interval(0.95), 3)}")
+print(f"HPD           : {np.round(hpd(post_dist, 0.95), 3)}")
+```
+
+For [Alf's posterior](#sec:bay_toybin), $\mathsf{Beta}(9,31)$, the two intervals are close because the posterior is only slightly skewed: equal-tailed $[0.111, 0.365]$, HPD $[0.104, 0.354]$. The HPD interval is slightly narrower and shifted towards the MAP, $0.211$.
+
+:::{warning} Look before you calculate
+The `hpd` function looks for a single interval, so it assumes the posterior has a single peak. **Always plot the posterior before you summarise it.** A MAP, an interval or any other single number can hide what the posterior is really telling you.
+:::
+
+#### A posterior with two peaks
+
+Two-peaked posteriors are not as exotic as they sound. Suppose two coaches disagree about [Alf's trick shot](#sec:bay_toybin). One thinks it is hard, $\mathsf{Beta}(2,8)$; the other thinks it is easy, $\mathsf{Beta}(8,2)$. To be fair to both, our prior gives each coach's view a weight of one half. Alf then pots 1 of his 2 shots: data that cannot settle the argument. Each coach's Beta updates in the usual way, to $\mathsf{Beta}(3,9)$ and $\mathsf{Beta}(9,3)$, and the posterior keeps both peaks, at $\theta = 0.2$ and $\theta = 0.8$ ([](#fig:bay_hpd_bimodal)).
+
+:::{figure}
+:label: fig:bay_hpd_bimodal
+![](/figures/HPD-bimodal.png)
+
+A two-peaked posterior. The prior (blue dotted) is half $\mathsf{Beta}(2,8)$ and half $\mathsf{Beta}(8,2)$; the data (green dashed) are 1 success in 2 trials. The posterior (magenta) is half $\mathsf{Beta}(3,9)$ and half $\mathsf{Beta}(9,3)$. The 95% HPD region (shaded) is two separate intervals. The equal-tailed interval (orange) runs straight across the dip at $\theta = 0.5$.
+:::
+
+The HPD idea still works here, but the result is a **region** rather than a single interval: keep every $\theta$ whose density is above a cut, and lower the cut until the region holds 95% of the probability. Here the region is two pieces, $[0.057, 0.471]$ and $[0.529, 0.943]$. The equal-tailed interval, $[0.079, 0.921]$, is one long interval that includes the dip at $\theta = 0.5$. A single MAP would be even more misleading: the two peaks are equally high, so the posterior is just as happy with $\theta \approx 0.2$ as with $\theta \approx 0.8$.
+
+We can find an HPD region on a grid of $\theta$ values: sort them from most to least probable, and keep adding them until we have collected 95% of the probability.
+
+```{code-cell} python
+import numpy as np
+from scipy.stats import beta
+
+theta = np.linspace(0, 1, 100_001)
+dtheta = theta[1] - theta[0]
+
+# Posterior: half Beta(3,9), half Beta(9,3)
+post = 0.5 * beta.pdf(theta, 3, 9) + 0.5 * beta.pdf(theta, 9, 3)
+
+# HPD region on a grid: keep the most probable theta values until we have 95%
+order = np.argsort(post)[::-1]                  # theta values, most probable first
+cum = np.cumsum(post[order]) * dtheta           # probability collected so far
+cut = post[order][np.searchsorted(cum, 0.95)]   # the density at which we reach 95%
+inside = post >= cut                            # True for every theta in the HPD region
+
+# Where the region starts and stops
+edges = theta[np.flatnonzero(np.diff(inside.astype(int)))]
+print(f"HPD cut: density = {cut:.3f}")
+print(f"HPD region: {edges.reshape(-1, 2).round(3).tolist()}")
+```
+
+You may meet two-peaked posteriors when the prior and the data pull in different directions, when the data come from a mixture of two populations, or later with MCMC, where a sampler can get stuck in one peak and never find the other. In every case, the plot shows it straight away.
+
+:::{tip} Which interval should I use?
+Both are valid 95% credible intervals: each contains $\theta$ with 95% posterior probability. They answer slightly different questions.
+
+* **HPD:** the shortest interval, and it always contains the mode, so it pairs naturally with the MAP. Its weaknesses: it can split into pieces (as in the two-peak example above), it needs a numerical minimisation, and it changes if you re-express the parameter. For example, the HPD interval for $\theta$, transformed to $\ln\theta$, is not the HPD interval for $\ln\theta$.
+* **Equal-tailed:** simple to define, always one interval, and unaffected by re-expressing the parameter. This is why many textbooks and software packages, including `scipy.stats`, report it by default. Its weakness is the one we have seen: it is balanced around the median, so with a skewed posterior it can sit off the MAP or miss it entirely.
+
+In this module we use the MAP as our estimate, so we report it with its **HPD interval**. For a symmetric posterior the two intervals are identical, so the choice only matters when the posterior is skewed.
+:::
+
+---
+
 (sec:bay_python)=
 ## Python Examples
 
 The short python examples here demonstrate the use of the conjugate distributions discussed above and the calculation of the MAP estimates and 95% Credible Intervals.
 
-A **95% Credible Interval** $[a, b]$ means: given the data and the prior, there is a 95% probability that $\theta \in [a, b]$.
-
-In Python, we can use the `ppf` (percent point function) of the posterior distribution to extract the credible interval about the mode of the Posterior distribution, which corresponds to the MAP.
-
-Alternatively, there is a `interval` method provided by scipy.stats for continuous distributions. Note that this uses the **median** rather than the mode. They are often very close or equal, but not always. I understand that scipy have gone for this option for computational speed reasons.
-
-I have included the `interval` method in the first example below for Bernoulli-Beta.
+In the examples below we report the MAP with its 95% HPD interval. The first example, Bernoulli-Beta, also shows the equal-tailed interval from `ppf` and from `interval` for comparison.
 
 
 (sec:bay_python_berbet)=
@@ -1209,7 +1302,8 @@ For the [Toy Bernoulli-Beta example](#sec:bay_toyber): Toss a coin N times to de
 
 ```{code-cell} python
 
-def bernoulli_beta(N):
+def bernoulli_beta(N, seed=1):
+	# seed=1 by default so the output is the same on every build: only set the seed for demos!
 
 	print(f"{N} Bernoulli trials with uniform prior")
 	
@@ -1224,8 +1318,8 @@ def bernoulli_beta(N):
 
 	data_dist = bernoulli(true_theta)
 
-	# Draw 10 RVs from the distribution: ten coin flips
-	y = data_dist.rvs(size=10)
+	# Draw N RVs from the distribution: N coin flips
+	y = data_dist.rvs(size=N, random_state=seed)
 
 	# -------------------------
 	# Likelihood: theta ~ Beta(aL,bL)
@@ -1265,15 +1359,16 @@ def bernoulli_beta(N):
 	# MAP for theta is the mode of the Beta posterior
 	map_est = (a - 1) / (a + b - 2)
 
-	# 95% credible interval for the MAP
-	ci1 = post_dist.ppf(q=0.025)
-	ci2 = post_dist.ppf(q=0.975)
+	# 95% HPD credible interval: the narrowest 95% interval, which contains the MAP
+	ci1, ci2 = hpd(post_dist, 0.95)
 
-	print(f"MLE = {mle_est}, MAP={map_est}, 95% CI=[{ci1:.2f},{ci2:.2f}]")
+	print(f"MLE={mle_est:.3f}, MAP={map_est:.3f}, 95% HPD=[{ci1:.3f},{ci2:.3f}]")
 
-	# scipy's built-in interval uses the median, not the mode.
-	ci_med = post_dist.interval(confidence=0.95)
-	print(f"95% CI (.interval): {np.round(ci_med,2)}")
+	# For comparison: the 95% equal-tailed interval, from ppf or from .interval (identical)
+	ci_eq = post_dist.ppf(q=[0.025, 0.975])
+	ci_int = post_dist.interval(confidence=0.95)
+	print(f"95% equal-tailed (ppf):       {np.round(ci_eq,3)}")
+	print(f"95% equal-tailed (.interval): {np.round(ci_int,3)}")
 
 
 bernoulli_beta(10)
@@ -1289,7 +1384,8 @@ bernoulli_beta(100_000)
 For the [Toy Binomial-Beta Example](#sec:bay_toybin): Alf's trick shots: each observation is the number of successes in $n=10$ attempts, prior Beta(2,8).
 
 ```{code-cell} python
-def binomial_beta(N):
+def binomial_beta(N, seed=1):
+	# seed=1 by default so the output is the same on every build: only set the seed for demos!
 	print(f"{N} Binomial observations, n=10 trials each, prior Beta(2,8)")
 	from scipy.stats import binom, beta
 	import numpy as np
@@ -1297,7 +1393,7 @@ def binomial_beta(N):
 	n = 10              # trials per observation
 	true_theta = 0.25
 	data_dist  = binom(n=n, p=true_theta)
-	y = data_dist.rvs(size=N)
+	y = data_dist.rvs(size=N, random_state=seed)
 
 	S = int(np.sum(y))  # total successes across all N observations
 
@@ -1320,11 +1416,10 @@ def binomial_beta(N):
 	# MAP: mode of Beta(a, b)
 	map_est = (a - 1) / (a + b - 2)
 
-	# 95% credible interval for the MAP
-	ci1 = post_dist.ppf(q=0.025)
-	ci2 = post_dist.ppf(q=0.975)
+	# 95% HPD credible interval: the narrowest 95% interval, which contains the MAP
+	ci1, ci2 = hpd(post_dist, 0.95)
 
-	print(f"MLE={mle_est:.3f}, MAP={map_est:.3f}, 95% CI=[{ci1:.3f},{ci2:.3f}]")
+	print(f"MLE={mle_est:.3f}, MAP={map_est:.3f}, 95% HPD=[{ci1:.3f},{ci2:.3f}]")
 
 binomial_beta(10)
 binomial_beta(100_000)
@@ -1338,14 +1433,15 @@ binomial_beta(100_000)
 For the [Toy Poisson-Gamma Example](#sec:bay_toypoi): Dog counts: $Y_i \sim \mathsf{Poisson}(\theta)$, prior Gamma(15, 1) so $E[\theta_0]=15$.
 
 ```{code-cell} python
-def poisson_gamma(N):
+def poisson_gamma(N, seed=1):
+	# seed=1 by default so the output is the same on every build: only set the seed for demos!
 	print(f"{N} Poisson observations, prior Gamma(15,1)")
 	from scipy.stats import poisson, gamma
 	import numpy as np
 
 	true_theta = 12.0
 	data_dist  = poisson(mu=true_theta)
-	y = data_dist.rvs(size=N)
+	y = data_dist.rvs(size=N, random_state=seed)
 
 	S = np.sum(y)       # sum of counts
 
@@ -1368,11 +1464,10 @@ def poisson_gamma(N):
 	# MAP: mode of Gamma(a, rate=b) = (a-1)/b
 	map_est = (a - 1) / b
 
-	# 95% credible interval for the MAP
-	ci1 = post_dist.ppf(q=0.025)
-	ci2 = post_dist.ppf(q=0.975)
+	# 95% HPD credible interval: the narrowest 95% interval, which contains the MAP
+	ci1, ci2 = hpd(post_dist, 0.95)
 
-	print(f"MLE={mle_est:.3f}, MAP={map_est:.3f}, 95% CI=[{ci1:.3f},{ci2:.3f}]")
+	print(f"MLE={mle_est:.3f}, MAP={map_est:.3f}, 95% HPD=[{ci1:.3f},{ci2:.3f}]")
 
 poisson_gamma(10)
 poisson_gamma(100_000)
@@ -1386,14 +1481,15 @@ poisson_gamma(100_000)
 For the [Toy Expon-Gamma Example](#sec:bay_toyexp): Waiting times between dogs: $Y_i \sim \mathsf{Exponential}(\theta)$, prior Gamma(15, 1).
 
 ```{code-cell} python
-def expon_gamma(N):
+def expon_gamma(N, seed=1):
+	# seed=1 by default so the output is the same on every build: only set the seed for demos!
 	print(f"{N} Exponential observations, prior Gamma(15,1)")
 	from scipy.stats import expon, gamma
 	import numpy as np
 
 	true_theta = 12.0                        # true rate (dogs per hour)
 	data_dist  = expon(scale=1.0/true_theta)
-	y = data_dist.rvs(size=N)
+	y = data_dist.rvs(size=N, random_state=seed)
 
 	S = np.sum(y)       # sum of waiting times
 
@@ -1416,11 +1512,10 @@ def expon_gamma(N):
 	# MAP: mode of Gamma(a, rate=b) = (a-1)/b
 	map_est = (a - 1) / b
 
-	# 95% credible interval for the MAP
-	ci1 = post_dist.ppf(q=0.025)
-	ci2 = post_dist.ppf(q=0.975)
+	# 95% HPD credible interval: the narrowest 95% interval, which contains the MAP
+	ci1, ci2 = hpd(post_dist, 0.95)
 
-	print(f"MLE={mle_est:.3f}, MAP={map_est:.3f}, 95% CI=[{ci1:.3f},{ci2:.3f}]")
+	print(f"MLE={mle_est:.3f}, MAP={map_est:.3f}, 95% HPD=[{ci1:.3f},{ci2:.3f}]")
 
 expon_gamma(10)
 expon_gamma(100_000)
@@ -1434,7 +1529,8 @@ expon_gamma(100_000)
 For the [Toy Normal-Normal Example](#sec:bay_toynorm): Estimate the mean body temperature $\mu$, given a thermometer with known noise $\sigma = 0.2^\circ\text{C}$ and a prior $\mathsf{Norm}(37.0,\; 0.5)$ based on NHS guidance.
 
 ```{code-cell} python
-def normal_normal(N):
+def normal_normal(N, seed=1):
+	# seed=1 by default so the output is the same on every build: only set the seed for demos!
 	print(f"{N} Normal observations, sigma=0.2 known, prior Norm(37.0, 0.5)")
 	from scipy.stats import norm
 	import numpy as np
@@ -1442,7 +1538,7 @@ def normal_normal(N):
 	sigma     = 0.2     # known thermometer noise (°C)
 	true_mu   = 37.5    # true mean temperature (°C)
 	data_dist = norm(loc=true_mu, scale=sigma)
-	y = data_dist.rvs(size=N)
+	y = data_dist.rvs(size=N, random_state=seed)
 
 	ybar = np.mean(y)
 
@@ -1470,11 +1566,10 @@ def normal_normal(N):
 	# MAP = posterior mean (Normal is symmetric: mode = mean)
 	map_est = mu_n
 
-	# 95% credible interval for the MAP
-	ci1 = post_dist.ppf(q=0.025)
-	ci2 = post_dist.ppf(q=0.975)
+	# 95% HPD credible interval: the narrowest 95% interval, which contains the MAP
+	ci1, ci2 = hpd(post_dist, 0.95)
 
-	print(f"MLE={mle_est:.3f}, MAP={map_est:.3f}, 95% CI=[{ci1:.3f},{ci2:.3f}]")
+	print(f"MLE={mle_est:.3f}, MAP={map_est:.3f}, 95% HPD=[{ci1:.3f},{ci2:.3f}]")
 
 normal_normal(5)
 normal_normal(100_000)

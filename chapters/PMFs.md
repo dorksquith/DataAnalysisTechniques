@@ -67,10 +67,10 @@ The Bernoulli PMF is:
 
 ```{math}
 :label: eq:pmf_bernpmf
-p_K(k) = (1-p)^{(1-k)}\, p^k\;\; ; \;\; 0 \leq k \leq 1
+p_K(k) = (1-p)^{(1-k)}\, p^k\;\; ; \;\; k \in \{0, 1\}
 ```
 
-The **Support** of $K$ is $0 \leq k \leq 1$: all the values $k$ with non-zero probability. 
+The **Support** of $K$ is $k \in \{0, 1\}$: the two values with non-zero probability. 
 
 For the two possible outcomes, we let $k=1$ represent success and $k=0$ represent failure.
 
@@ -82,10 +82,10 @@ The first term, $(1-p)^{(1-k)}$
 The second term, $p^k$
 : $k=1$: Probability of success ($p$) to the power one ($k$) = $p$
   
-  $k=0$: Probability of success ($p^0=1$) to the power zero ($0$) = 1
+  $k=0$: Probability of success ($p$) to the power zero ($k$) = 1
 
 :::{note}
-I acknowledge the PMF seems a b it contrived, as one of the two terms is always going to be equal to one, given that any number to the power zero is equal to one. But keeping it explicit in this way will help us with the next PMF, Binomial.
+I acknowledge the PMF seems a bit contrived, as one of the two terms is always going to be equal to one, given that any number to the power zero is equal to one. But keeping it explicit in this way will help us with the next PMF, Binomial.
 :::
 
 The **Kernel** of the Bernoulli PMF is given in [](#eq:pmf_bernkern); this is the part of the PMF that depends on the RV, $k$, which in this case is the whole PMF.
@@ -134,7 +134,7 @@ Example
   \end{aligned}
   ```
 
-For a PMF to be valid, it must satistify [Kolmogorov's normalisation axiom](#eq:pe_kol2).
+For a PMF to be valid, it must satisfy [Kolmogorov's normalisation axiom](#eq:pe_kol2).
 
 Is $\sum\limits_{k_i \in S} p_K(k_i) =1$ ?
 
@@ -147,13 +147,13 @@ Normalisation check
 (sec:pmf_bernprob)=
 ### Probabilities
 
-The Cumulative Probability (CDF) for a discrete RV is the sum over the range of the lower bound of the support to the value at which we want to know the CDF.
+The Cumulative Probability (CDF) for a discrete RV is the sum from the lower bound of the support up to the value at which we want to know the CDF.
 
 The sum is over the PMFs calculated at each possible value, $k_i$.
 
 ```{math}
 :label: eq:pmf_disccdf
-F_K(k) = P(K\leq k) = \sum\limits_{k_i}^{k} p_K(k_i)
+F_K(k) = P(K\leq k) = \sum\limits_{k_i \leq k} p_K(k_i)
 ```
 
 The Bernoulli CDF is:
@@ -309,21 +309,8 @@ Using [MathMethodsA: Derivatives of Special Functions](#sec:mma_derspec) and [Ma
 | $f(\,g(\theta)\,)$ | $\dfrac{df}{dg}\,\dfrac{dg}{d\theta}$ | Derivative of (function of function) |
 :::
 
-<!--
-Derivative of Log
-: $\dfrac{d}{d\theta} \ln{\theta} = \dfrac{1}{\theta}$
 
-Derivative of Log times constant
-: $\dfrac{d}{d\theta} a\ln{\theta} = \dfrac{a}{\theta}$
-
-Derivative of Log of constant
-: $\dfrac{d}{d\theta} \ln{a} = 0$
-
-Chain Rule
-: $\dfrac{d}{d\theta} f(g(\theta)) = \dfrac{df}{dg}\,\dfrac{dg}{d\theta}$
--->
-
-The derivative of [](#eq:pmf_bernll3) is:
+The derivative of [](#eq:pmf_bernll4) is:
 
 
 ```{math}
@@ -331,8 +318,8 @@ The derivative of [](#eq:pmf_bernll3) is:
 \begin{aligned}
 \dfrac{d}{dp} \ln\mathcal{L}(p;\mathbf{k}) &= \dfrac{d}{dp} \left( n_1\ln p + n_0\ln(1-p) \right)\\
 &= \dfrac{d}{dp} n_1\ln p + \dfrac{d}{dp} n_0\ln(1-p)\\
-&= \dfrac{n_1}{p} + (-1) ( \dfrac{n0}{1-p} )\\
-&= \dfrac{n_1}{p} - \dfrac{n0}{1-p} \\
+&= \dfrac{n_1}{p} + (-1) ( \dfrac{n_0}{1-p} )\\
+&= \dfrac{n_1}{p} - \dfrac{n_0}{1-p} \\
 \end{aligned}
 ```
 
@@ -353,6 +340,10 @@ and find:
 
 The MLE for the Bernoulli probability is simply the observed fraction of successes — which is exactly what we would expect it to be.
 
+:::{tip}
+Setting the derivative to zero finds a stationary point, which could be a maximum or a minimum. Here the second derivative, $-\dfrac{n_1}{p^2} - \dfrac{n_0}{(1-p)^2}$, is always negative, so it is a maximum. The same is true for the Binomial and Poisson Log Likelihoods below.
+:::
+
 
 ---
 
@@ -363,7 +354,7 @@ We will stick with the coin toss for one more PMF. This time we will **toss the 
 
 $K\sim$ Binomial($n,p$)
 
-The parameters are $n,p$ where $p$ is again the probability of success for a single coin toss, just as for [Bernoulli](#sec:pmf_bern). Note that one Binomial trial consists of $n$ Bernoulli trials.
+The parameters are $n,p$ where $p$ is again the probability of success for a single coin toss, just as for [Bernoulli](#sec:pmf_bern). Note that one Binomial experiment consists of $n$ Bernoulli trials.
 
 ---
 
@@ -374,10 +365,10 @@ The Binomial PMF is:
 
 ```{math}
 :label: eq:pmf_binpmf
-p_K(k) = \binom{n}{k} \, p^k\, (1-p)^{n-k} \;\; ; \;\;  0\leq k \leq n
+p_K(k) = \binom{n}{k} \, p^k\, (1-p)^{n-k} \;\; ; \;\;  k = 0, 1, \ldots, n
 ```
 
-The **Support** of $K$ is $0 \leq k \leq n$: all values $k$ with non-zero probability. 
+The **Support** of $K$ is $k = 0, 1, \ldots, n$: all whole numbers from $0$ to $n$. 
 
 The **Kernel** of the Binomial PMF is given in [](#eq:pmf_binkern); this is the part of the PMF that depends on the RV, $k$, which in this case is the whole PMF.
 
@@ -388,6 +379,10 @@ The **Kernel** of the Binomial PMF is given in [](#eq:pmf_binkern); this is the 
 
 :::{warning}
 I incorrectly claimed the Binomial Kernel was $p^k\, (1-p)^{n-k}$ in a previous draft of these notes - this is not correct of course because the binomial coefficient is a function of the RV $K$, so belongs in the kernel.
+:::
+
+:::{note}
+The kernel depends on which variable we are interested in. Here we treat the PMF as a function of the RV $k$, so the binomial coefficient belongs in the kernel. When we read the same expression as a Likelihood, a function of the parameter $p$ with the data $k$ fixed, $\binom{n}{k}$ is just a constant and the kernel in $p$ is $p^k(1-p)^{n-k}$. This is the version we will use for [conjugacy](#chapter:bay).
 :::
 
 
@@ -404,14 +399,14 @@ coin tosses you would get **one data point for each experiment**, where an exper
 
 ![image](../figures/BinomCoin.png)
 
-The Binomial PMF is shown in blue with reference to the left-hand $y$-axis, and the CDF is shown in red with reference to the right-hand $y$-axis. The parameter values are $p=0.5$, meaning the outcome of each experiment has a 50% probability of success, and $n=50$, meaning the total number of trials is 50. Because $K$ is a discrete RV, the prrobabilities can be read directly from the left-hand $y$-axis. The CDF is the Cumulative probability, which must total 1 as a sum over all possible outcomes.
+The Binomial PMF is shown in blue with reference to the left-hand $y$-axis, and the CDF is shown in red with reference to the right-hand $y$-axis. The parameter values are $p=0.5$, meaning the outcome of each experiment has a 50% probability of success, and $n=50$, meaning the total number of trials is 50. Because $K$ is a discrete RV, the probabilities can be read directly from the left-hand $y$-axis. The CDF is the Cumulative probability, which must total 1 as a sum over all possible outcomes.
 :::
 
 
 Let's examine the PMF.
 
 $ p_K(k) = \binom{n}{k}\, p^k \,(1-p)^{n-k}
-\;\; ; \;\;  0\leq k \leq n $
+\;\; ; \;\;  k = 0, 1, \ldots, n $
 
 $\binom{n}{k}$ is called the **Binomial Coefficient**. We need it
 because our RV $K$ is the number of heads, and **there is more than
@@ -423,15 +418,15 @@ observed, $k$
 $(1-p)^{n-k}$: probability of "not heads", $1-p$, to the power of the number of "not-heads" observed, $n-k$.
 
 
-For a PMF to be valid, it must satistify [Kolmogorov's normalisation axiom](#eq:pe_kol2).
+For a PMF to be valid, it must satisfy [Kolmogorov's normalisation axiom](#eq:pe_kol2).
 
 Is $\sum\limits_{k_i \in S} p_K(k_i) =1$ ?
 
-The parameter $n$ has limits $1 \leq n \leq \infty$, and $k$ can take any non-negative value up to and including $n$: we have a sum to infinity. When that happens we need a **Series**. The series we need in this case is provided by the **Binomial Theorem**.
+The parameter $n$ is a whole number of trials, $n \geq 1$, and $k$ can take any whole-number value from $0$ up to and including $n$. So this is a finite sum of $n+1$ terms. Rather than adding them up one by one, we can use the **Binomial Theorem**, which gives the sum in closed form.
 
 ```{math}
 :label: eq:pmf_binthm
-(a+b)^n = \sum\limits_{k=0}^{\infty} \binom{n}{k}\; a^k\; b^{n-k}:
+(a+b)^n = \sum\limits_{k=0}^{n} \binom{n}{k}\; a^k\; b^{n-k}
 ```
 
 Comparing [](#eq:pmf_binthm) with [](#eq:pmf_binpmf) we have $a=p$, $b=1-p$.
@@ -439,12 +434,12 @@ Comparing [](#eq:pmf_binthm) with [](#eq:pmf_binpmf) we have $a=p$, $b=1-p$.
 ```{math}
 :label: eq:pmf_binser2
 
-(p+1-p)^n = \sum\limits_{k=0}^{\infty} \binom{n}{k}\; p^k\; (1-p)^{n-k}\\
+(p+1-p)^n = \sum\limits_{k=0}^{n} \binom{n}{k}\; p^k\; (1-p)^{n-k}\\
 
 ```
 
 Normalisation check
-: $\sum\limits_{k=0}^{\infty}  p_K(k_i) = (p+(1-p))^n =1^n = 1$: the
+: $\sum\limits_{k=0}^{n}  p_K(k) = (p+(1-p))^n =1^n = 1$: the
 Binomial PMF is valid.
 
 ---
@@ -459,7 +454,7 @@ Example
 
   HHHT, HHTH, HTHH, THHH: four different ways:
 
-  $C_k^n =4$.
+  $\binom{4}{3} =4$.
 
 Thankfully, there is a formula for calculating the Binomial Coefficient:
 
@@ -480,7 +475,7 @@ $1! = 1$
 
 $0! =1\;\;$ (by definition!)
 
-$-1!=$ undefined
+$(-1)!=$ undefined
 
 Note that $\dfrac{ a!}{(a-1)!} = a$
 
@@ -502,13 +497,13 @@ print(f"bnc(n=20,k=9)= {ByHandBNC(20,9)}")
 # n=30 tosses, k=15 heads
 print(f"bnc(n=30,k=15)= {ByHandBNC(30,15)}")
 
-# n=200 tosses, k=171 heads
+# n=200 tosses, k=172 heads
 print(f"bnc(n=200,k=172)= {ByHandBNC(200,172)}")
 ```
 
-Unsurprisingly, `scipy` has a method for calculating the binomial coefficients, shown below. I do not recommend reinventing the wheel  with eg the `ByHandBNC` function above - I include this for transparency only, as the built-in `scipy` methods tend to be very general and therefore not easy to understand in simple terms. The `scipy.special.binom` method for calculating the binomial coefficient is far superior to my toy version above[^nonintfact] - it works for any value of $k$ (not just integers, and not just $k\leq 170$).
+Unsurprisingly, `scipy` has a method for calculating the binomial coefficients, shown below. I do not recommend reinventing the wheel  with eg the `ByHandBNC` function above - I include this for transparency only, as the built-in `scipy` methods tend to be very general and therefore not easy to understand in simple terms. The `scipy.special.binom` method for calculating the binomial coefficient is far superior to my toy version above[^nonintfact] - it also works for non-integer values of $n$ and $k$.
 
-[^nonintfact]: For $K\sim$ Binomial($n,p$), $n$ and $k$ will always be integers, so the by-hand method is fine, **providing k is not larger than 170**. See [](#sec:pmf_gamln) for a discussion of how to manage large factorials. We can calculate the binomial coefficient for non-integers using the `scipy.special.binom` method via use of Gamma and Beta functions, introduced briefly in [](#sec:pdf_chi2gam)
+[^nonintfact]: For $K\sim$ Binomial($n,p$), $n$ and $k$ will always be integers, so the by-hand method is fine: `math.factorial` works with exact whole numbers, so it copes with large values such as $n=200$ above. The trouble starts with **floating-point** factorials (e.g. `scipy.special.factorial`), which overflow for values larger than 170. See [](#sec:pmf_gamln) for a discussion of how to manage large factorials. We can calculate the binomial coefficient for non-integers using the `scipy.special.binom` method via use of Gamma and Beta functions, introduced briefly in [](#sec:pdf_chi2gam)
 
 
 ```{code-cell} python
@@ -575,7 +570,7 @@ E[K] & = E\left[ \sum\limits_j^n K_j \right] \\
 ```
 
 
-The **Variance** of the Binomial $K$ can likewise be inferred from [](#eq:pmf_bernvar), because the variance of a sum of IID RVs is the sum of their variances [](#sec:dd_varalg). Note that this variance algebra only applies to IID RVs, whereas the expectation algebra does not require independence.
+The **Variance** of the Binomial $K$ can likewise be inferred from [](#eq:pmf_bernvar), because the variance of a sum of independent RVs is the sum of their variances [](#sec:dd_varalg): $V[K] = \sum\limits_j^n V[K_j] = \sum\limits_j^n p(1-p) = np(1-p)$. Note that this variance algebra requires the RVs to be independent, whereas the expectation algebra does not.
 
 ---
 
@@ -685,11 +680,11 @@ For $k=6$ heads from $n=10$ tosses: $\hat{p} = 0.6$. The MLE suggests the coin i
 (sec:pmf_poi)=
 ## The Poisson Distribution
 
-The Poisson distribution models rates rather than counts. The rate is the number of events **in a given time/space period**. For example, emails received in one hour, donuts sold in one day, number of events in one histogram bin. 
+The Poisson distribution models the **number of events (a count) in a given time/space period**, when events happen independently at a constant average rate. For example, emails received in one hour, donuts sold in one day, number of events in one histogram bin. 
 
 $K\sim$ Poisson($\lambda$)
 
-The parameter of the Poisson distribution is $\lambda$: the expected rate.
+The parameter of the Poisson distribution is $\lambda$: the expected rate, i.e. the average number of events per period.
 
 ---
 
@@ -700,10 +695,10 @@ The Poisson PMF is:
 
 ```{math}
 :label: eq:pmf_poipmf
-p_K(k) =  e^{-\lambda}\, \dfrac{ \lambda^k}{k!} \;\; ; \;\;  0\leq k \leq \infty
+p_K(k) =  e^{-\lambda}\, \dfrac{ \lambda^k}{k!} \;\; ; \;\;  k = 0, 1, 2, \ldots
 ```
 
-The **Support** of $K$ is $0 \leq k \leq \infty$: all values of the measured rate $k$ with non-zero probability. 
+The **Support** of $K$ is $k = 0, 1, 2, \ldots$ (every non-negative whole number, with no upper limit): all values of the count $k$ with non-zero probability. 
 
 The **Kernel** of the Poisson PMF is given in [](#eq:pmf_poikern); this is the part of the PMF that depends on the RV.
 
@@ -724,15 +719,15 @@ The Poisson PMF is shown in blue with reference to the left-hand $y$-axis, and t
 :::
 
 
-For a PMF to be valid, it must satistify [Kolmogorov's normalisation axiom](#eq:pe_kol2).
+For a PMF to be valid, it must satisfy [Kolmogorov's normalisation axiom](#eq:pe_kol2).
 
 Is $\sum\limits_{k_i \in S} p_K(k_i) =1$ ?
 
-Note that for infinite sum over [Poisson PMFs](#eq:pmf_poipmf) to equal 1, we need:
+Note that for the infinite sum over [Poisson PMFs](#eq:pmf_poipmf) to equal 1, we need:
 
 ```{math}
 :label: eq:pmf_poival
-\sum\limits_{k_i \in S} \dfrac{\lambda^k}{k!}  = e^{\lambda}
+\sum\limits_{k_i \in S} \dfrac{\lambda^{k_i}}{k_i!}  = e^{\lambda}
 ```
 
 such that:
@@ -741,7 +736,7 @@ such that:
 :label: eq:pmf_poival2
 
 \begin{aligned}
-\sum\limits_{k_i \in S} p_K(k_i) = e^{-\lambda} \sum\limits_{k_i \in S} \dfrac{\lambda^k}{k!} & = e^{-\lambda}e^{\lambda} \\
+\sum\limits_{k_i \in S} p_K(k_i) = e^{-\lambda} \sum\limits_{k_i \in S} \dfrac{\lambda^{k_i}}{k_i!} & = e^{-\lambda}e^{\lambda} \\
 & = e^{-\lambda+\lambda} \\
 & = e^{0} \\
 & = 1 \\
@@ -760,7 +755,7 @@ e^{x} =\sum\limits_{n=0}^{\infty}  \dfrac{x^n}{n!}
 Comparing [](#eq:pmf_exptay) with [](#eq:pmf_poival) with $x \rightarrow \lambda$, $n \rightarrow k$, we see that this is satisfied.
 
 Normalisation check
-: $\sum\limits_{k=0}^{\infty}  p_K(k_i) = 1$: the Poisson PMF is valid.
+: $\sum\limits_{k=0}^{\infty}  p_K(k) = 1$: the Poisson PMF is valid.
 
 ---
 
@@ -769,7 +764,7 @@ Normalisation check
 
 The [CDF](#eq:pmf_disccdf) is calculated as the sum over PMFs.
 
-The Probability of measuring a rate $k \leq m$, given some value of the parameter $\lambda$, is:
+The Probability of observing a count $k \leq m$, given some value of the parameter $\lambda$, is:
 
 ```{math}
 :label: eq:pmf_poicdf
@@ -811,7 +806,7 @@ E[K] &= \sum\limits_{k_i=0}^{\infty} k_i\,  e^{-\lambda}\, \dfrac{ \lambda^{k_i}
 
      &= e^{-\lambda}\, \sum\limits_{k_i=1}^{\infty} \, \dfrac{ 1}{(k_i-1)!}\,\lambda^{k_i}\;\; \mathsf{\textcolor{blue}{Note} }\\
 
-     &= e^{-\lambda}\, \sum\limits_{k_i=0}^{\infty} \, \dfrac{ 1}{(k_i-1)!}\,\lambda^{k_i-1}\,\lambda\\
+     &= e^{-\lambda}\, \lambda\, \sum\limits_{j=0}^{\infty} \, \dfrac{ \lambda^{j}}{j!} \;\; \mathsf{\textcolor{blue}{with}}\; j = k_i - 1\\
 
      &= e^{-\lambda}\, e^{\lambda}\,\lambda\\
 
@@ -819,7 +814,7 @@ E[K] &= \sum\limits_{k_i=0}^{\infty} k_i\,  e^{-\lambda}\, \dfrac{ \lambda^{k_i}
 \end{aligned}
 ```
 
-On the noted line we reindexed from $k_i=0$ to $k_i=1$. The reindexing has no effect, because the $k_i=0$ term does not conntribute to the sum, but this allows use to use the [Taylor Expansion for $e^{\lambda}$](#eq:pmf_exptay) on the next line.
+On the noted line we start the sum at $k_i=1$ instead of $k_i=0$. This has no effect, because the $k_i=0$ term does not contribute to the sum, and it lets us cancel $k_i$ against $k_i!$ to leave $(k_i-1)!$. On the next line we take one factor of $\lambda$ outside the sum and substitute $j = k_i - 1$, so that the sum runs from $j=0$ and matches the [Taylor Expansion for $e^{\lambda}$](#eq:pmf_exptay).
 
 The **Variance** can be calculated by one of the methods shown [here](https://proofwiki.org/wiki/Variance_of_Poisson_Distribution).
 
@@ -829,7 +824,7 @@ The **Variance** can be calculated by one of the methods shown [here](https://pr
 ### Python
 
 :::{warning}
-The greek letter $\lambda$ is spelled "lambda", but `lambda` has a special meaning in python, see [here](https://python-basics-tutorial.readthedocs.io/en/latest/functions/lambda.html). So `scipy.stats` uses `mu` for Poisson $\lambda$ in python. This makes sense to me because it is the true mean rate. 
+The Greek letter $\lambda$ is spelled "lambda", but `lambda` has a special meaning in python, see [here](https://python-basics-tutorial.readthedocs.io/en/latest/functions/lambda.html). So `scipy.stats` uses `mu` for Poisson $\lambda$ in python. This makes sense to me because it is the true mean rate. 
 :::
 
 ```{code-cell} python
@@ -851,13 +846,16 @@ def ExplorePoisson(mu):
   pmf0 = pois.pmf(0)
   print(f"p_K(k=0) = {pmf0:.2f}")
 
-  # calculate the probability of k=mu (mu occurrences in a given time frame)
-  pmf1 = pois.pmf(mu)
-  print(f"p_K(k={mu}) = {pmf1:.2f}")
+  # the PMF is only non-zero at whole numbers k, so use the whole number just below mu
+  k_mid = int(mu)
 
-  # calculate the cumulative probability of k<=mu
-  cdf1 = pois.cdf(mu)
-  print(f"P(K<={mu}) = {cdf1}")
+  # calculate the probability of k=k_mid (k_mid occurrences in a given time frame)
+  pmf1 = pois.pmf(k_mid)
+  print(f"p_K(k={k_mid}) = {pmf1:.2f}")
+
+  # calculate the cumulative probability of k<=k_mid
+  cdf1 = pois.cdf(k_mid)
+  print(f"P(K<={k_mid}) = {cdf1}")
 
   # extract the true mean and variance
   mean, var = pois.stats(moments='mv')
@@ -871,7 +869,7 @@ ExplorePoisson(5.4)
 (sec:pmf_poilike)=
 ### Likelihoods
 
-Poisson distributions model **Rates** (counts in given time periods) — this is something we do a lot of in my field. My friend Alf is not a big fan of work, but he has found an example from his life that he would like me to share.
+Poisson distributions model **counts in given time periods**, which occur at some underlying **Rate** — this is something we do a lot of in my field. My friend Alf is not a big fan of work, but he has found an example from his life that he would like me to share.
 
 Alf measures his donut sales over $N=7$ days and records $\mathbf{k} = (15, 18, 20, 14, 19, 17, 16)$. What is the MLE estimate of his true average daily rate $\lambda$?
 
@@ -911,7 +909,7 @@ The MLE for the Poisson rate is simply the sample mean. For Alf's data: $\hat{\l
 
 :::{tip}
 
-The Poisson Negative Log Likelihood is the objective function that we miniminise to find the parameter estimate $\hat{\lambda}$ using `scipy` methods.
+The Poisson Negative Log Likelihood is the objective function that we minimise to find the parameter estimate $\hat{\lambda}$ using `scipy` methods.
 
 ```{math}
 \begin{aligned}
@@ -922,7 +920,7 @@ The Poisson Negative Log Likelihood is the objective function that we miniminise
 \end{aligned}
 ```
 
-The $\ln(k_i!)$ can be more helpfully written with the [Gamma function](#sec:mmb_gamfun): $\ln(k_i!) = \ln \Gamma(k+1)$.
+The $\ln(k_i!)$ can be more helpfully written with the [Gamma function](#sec:mmb_gamfun): $\ln(k_i!) = \ln \Gamma(k_i+1)$.
 
 An example of using `scipy`'s `gammaln` method is given [below](#sec:pmf_gamln).
 
@@ -1018,10 +1016,13 @@ SpeedTest(123, 100_000)
 The obvious choice for modelling the rate of donut sales in Alf's shop is to go with $K\sim\;$ Poisson($\lambda=17.0$).
 
 
-```{figure}
+:::{figure}
+:label: fig:pmf_donut
+
 ![image](../figures/donut.png)
 
-```
+A tasty looking donut.
+:::
 
 
 A less obvious choice would be to go with $K\sim$ Binomial($n,p$): $n$ is
@@ -1035,21 +1036,23 @@ Compare Expectations
 
 So $\lambda = np$ or $p=\lambda/n$.
 
-Note that the rate $\lambda$ has no limit on the number of people it draws from. In the limit of $n\to \infty$, the Binomial is a valid model. 
+Note that the Binomial can never give more than $n$ sales, whereas the Poisson has no upper limit on $k$: it does not need to know how many people could buy a donut. If we let the number of potential customers grow, $n\to \infty$, while keeping the expected number of sales fixed, $np=\lambda$, then each person's probability $p=\lambda/n$ becomes tiny and the Binomial becomes the Poisson:
 
 Binom($n, \lambda/n$) $\rightarrow$ Poisson($\lambda$) as $n\rightarrow \infty$
+
+This is why the Poisson is the natural model for counts of rare events drawn from a very large population.
 
 ```{figure}
 :label: fig:pmf_alfpoi
 
 ![image](../figures/AlfPoissonBinom.png)
 
-Rates of Donut Sales using the Binomial and Poisson PMFs for left: Binomial $n=30$, right: Binomial $n=1000$.
+Alf's daily donut sales modelled as Poisson($\lambda=17.0$) (bars) and Binomial($n$, $p=\lambda/n$) (line), on the same axis. Left: with only $n=30$ potential customers the Binomial is too narrow, because it can never exceed 30 sales. Right: with $n=1000$ the Binomial is almost identical to the Poisson.
 
 ```
 
 Alf concludes that it is safer to use $K\sim$ Poisson($\lambda$) as his
-model for the hourly rate of donut sales.
+model for the daily rate of donut sales.
 
 ---
 
@@ -1060,9 +1063,9 @@ model for the hourly rate of donut sales.
 
 |  Name | Kernel  | E[K] | V[K] | Support | Parameters  | `scipy.stats` |
 | ---   |  ---     | ---  | ---  | ---     |  ---        |  ---          |
-|  Bernoulli | $(1-p)^{(1-k)}\, p^k$ | p | p(1-p) |$0 \leq k \leq 1$ | $0\leq p \leq 1$ | `bernoulli(p)` |
-|  Binomial | $\binom{n}{k}\,(1-p)^{(n-k)}\, p^k$ | np | np(1-p) |$0 \leq k \leq n$ | $0\leq p \leq 1$, $0\leq n \leq \infty$  | `binom(n,p)` |
-|  Poisson | $\dfrac{\lambda^k}{k!}$ | $\lambda$ | $\lambda$ | $0 \leq k \leq \infty$ | $0\leq \lambda \leq \infty$  | `poisson(mu)` |
+|  Bernoulli | $(1-p)^{(1-k)}\, p^k$ | p | p(1-p) |$k \in \{0, 1\}$ | $0\leq p \leq 1$ | `bernoulli(p)` |
+|  Binomial | $\binom{n}{k}\,(1-p)^{(n-k)}\, p^k$ | np | np(1-p) |$k = 0, 1, \ldots, n$ | $0\leq p \leq 1$, $n \geq 1$ (whole number)  | `binom(n,p)` |
+|  Poisson | $\dfrac{\lambda^k}{k!}$ | $\lambda$ | $\lambda$ | $k = 0, 1, 2, \ldots$ | $\lambda > 0$  | `poisson(mu)` |
 
 
 ```

@@ -224,7 +224,10 @@ A concise reference defining the key terms used throughout this module, organise
 : The SE of the sample mean estimator: $\text{SEM} = \sigma / \sqrt{N}$. See [](#sec:ei_meanest).
 
 **Standard Error of the Variance (SEV)**
-: The SE of the standard deviation estimator: $\text{SEV} \approx \sigma / \sqrt{2(N-1)}$. See [](#sec:ei_sev).
+: The SE of the sample variance estimator: $\text{SEV} = \sigma^2 \sqrt{2/(N-1)}$ (Normal data). See [](#sec:ei_sev).
+
+**Standard Error of the Standard Deviation (SES)**
+: The SE of the sample standard deviation: $\text{SES} \approx \sigma / \sqrt{2(N-1)}$ (Normal data). See [](#sec:mmb_ses).
 
 **Interval Estimation**
 : Expressing an estimate as a range of plausible values (a confidence interval or credible interval) rather than a single point. See [](#sec:ei_intest).
@@ -321,6 +324,9 @@ A concise reference defining the key terms used throughout this module, organise
 
 **Evidence / Marginal Likelihood**
 : The normalising constant $P(\mathbf{x}) = \int \mathcal{L}(\theta)\,\pi(\theta)\,d\theta$; ensures the posterior integrates to 1. See [](#sec:bay_evcon).
+
+**Hyperparameters (Bayesian)**
+: The parameters of the Prior (and Posterior) distribution, e.g. $\alpha$ and $\beta$ of a Beta Prior for a Bernoulli probability $\theta$. They sit one level "above" the model parameter $\theta$, and it is the hyperparameters that the data update ($\alpha \to \alpha'$, $\beta \to \beta'$). Not the same as the [ML meaning](#vocab_hyper_ml) below. See [](#tip:bay_hyper).
 
 **Maximum A Posteriori (MAP) Estimate**
 : The mode of the posterior distribution — the parameter value with the highest posterior probability. See [](#sec:bay_map).
@@ -460,6 +466,10 @@ This section maps common machine learning terms to the language used in this mod
 
 **Model Parameters / Weights**
 : The quantities to be estimated by minimising the objective function, denoted $\boldsymbol{\theta}$ in this module. In ML these are often called **weights** (denoted $\mathbf{w}$), particularly for linear models and neural networks.
+
+(vocab_hyper_ml)=
+**Hyperparameters (ML)**
+: Settings of the learning *algorithm* that are chosen by the user rather than estimated from the data, e.g. the learning rate, number of epochs or batch size. In this module: the MCMC step size, burn-in and number of iterations ([](#sec:mcmc_tuning)). Not the same as Bayesian hyperparameters (parameters of the Prior), but in both cases they are not the parameters $\theta$ being estimated.
 
 **Training**
 : The process of minimising the objective function over the training dataset to find optimal model parameters. In module language: **fitting** or **parameter estimation**. See [](#chapter:mle) and [](#chapter:lse).

@@ -134,7 +134,11 @@ print(f"Sample sigma: {sigma_x:.3f}")
 
 The true parameters are $\mu = 6.0$ and $\sigma = 3.77$; the sample values will be close but not identical.
 
-### c) Analytical SEV for the standard deviation
+### c) Analytical SES for the standard deviation
+
+:::{note} Correction (27 Nov 2026)
+An earlier version of this workshop called this quantity the SEV. It is the **SES**, the Standard Error of the Standard Deviation ([](#eq:mmb_ses)). The SEV is the Standard Error of the Variance ([](#eq:ei_sev)), which has units of $\sigma^2$ rather than $\sigma$.
+:::
 
 Using the quoted result (derived via the delta method in [](#sec:mmb_deltam)):
 
@@ -142,8 +146,8 @@ $$\hat{\sigma}(\hat{\sigma}_x) \approx \frac{\hat{\sigma}_x}{\sqrt{2(N-1)}}$$
 
 ```{code-cell} python
 N = len(data)
-sev_sigma = sigma_x / np.sqrt(2 * (N - 1))
-print(f"Analytical SEV on sigma: {sev_sigma:.3f}")
+ses = sigma_x / np.sqrt(2 * (N - 1))
+print(f"Analytical SES: {ses:.3f}")
 ```
 
 With $\hat{\sigma}_x \approx 2.9$ and $N=100$ this gives roughly $0.21$.
@@ -165,7 +169,7 @@ def LongBootstrap(data, seed=None):
 byhand_sigmas = LongBootstrap(data, seed=111)
 ```
 
-The bootstrap uncertainty should agree closely with the analytical SEV (~0.19–0.21). Both estimate the same quantity — the standard deviation of the estimator $\hat{\sigma}_x$ — by different routes.
+The bootstrap uncertainty should agree closely with the analytical SES (~0.19–0.21). Both estimate the same quantity — the standard deviation of the estimator $\hat{\sigma}_x$ — by different routes.
 
 ### e) Confidence Intervals via percentiles
 

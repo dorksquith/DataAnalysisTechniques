@@ -12,3 +12,5 @@ sympy
 jax
 statsmodels
 scikit-learn
+pymc
+arviz>=1.0
